@@ -4,15 +4,12 @@
 import re
 from docx import Document
 
-
-# 各分区的关键词模式（按优先级排列）
 SECTION_MARKERS = {
     "cover": ["届本科生毕业", "本科毕业论文", "毕业设计（论文）"],
     "declaration": ["原创性声明", "原创性申明", "学术诚信"],
     "abstract_zh": ["摘  要", "摘 要"],
     "abstract_en": ["ABSTRACT", "Abstract"],
     "toc": ["目  录", "目 录"],
-    "body": [],  # 特殊处理
     "conclusion": ["结  论", "结 论", "结论"],
     "acknowledgement": ["致  谢", "致 谢", "致谢"],
     "references": ["参考文献"],
@@ -20,55 +17,50 @@ SECTION_MARKERS = {
 }
 
 
-def scan_structure(doc_path):
+def scan_structure(doc_or_path):
     """
-    扫描文档分区结构。
+    扫描文档分区结构。接受文件路径或 Document 对象。
 
-    返回:
-        {
-            "doc_path": str,
-            "total_paragraphs": int,
-            "total_tables": int,
-            "total_sections": int,
-            "styles_used": {style_name: count},
-            "parts": {
-                "cover": {"start": para_idx, "text": "..."},
-                "abstract_zh": {"start": para_idx, "text": "..."},
-                ...
-            },
-            "body_start": para_idx,
-            "body_end": para_idx,
-        }
+    返回 dict: total_paragraphs, total_tables, total_sections,
+               styles_used, parts, body_start, body_end
     """
-    doc = Document(doc_path)
+    doc = doc_or_path if not isinstance(doc_or_path, str) \
+        else Document(doc_or_path)
     paras = doc.paragraphs
     result = {
-        "doc_path": doc_path,
         "total_paragraphs": len(paras),
         "total_tables": len(doc.tables),
         "total_sections": len(doc.sections),
-        "styles_used": _count_styles(paras),
+        "styles_used": {},
         "parts": {},
     }
 
-    # 定位各分区
-    for name, keywords in SECTION_MARKERS.items():
-        for kw in keywords:
-            for i, p in enumerate(paras):
-                if kw in (p.text or ""):
+    # Count styles
+    for p in paras:
+        name = p.style.name if p.style else "None"
+        result["styles_used"][name] = \
+            result["styles_used"].get(name, 0) + 1
+
+    # Single-pass section detection
+    found = set()
+    for i, p in enumerate(paras):
+        text = p.text or ""
+        for name, keywords in SECTION_MARKERS.items():
+            if name in found:
+                continue
+            for kw in keywords:
+                if kw in text:
                     result["parts"][name] = {
                         "start": i,
-                        "text": (p.text or "").strip()[:60],
+                        "text": text.strip()[:60],
                     }
+                    found.add(name)
                     break
-            if name in result["parts"]:
-                break
 
-    # 正文起始：目录之后，致谢之前，第一个匹配章节标题的段落
+    # Body start: first chapter heading after TOC, before acknowledgement
     toc_end = result["parts"].get("toc", {}).get("start", 0)
     ack_start = result["parts"].get(
         "acknowledgement", {}).get("start", len(paras))
-    # 跳过目录条目（含 tab）
     for i in range(toc_end + 1, ack_start):
         text = (paras[i].text or "").strip()
         if '\t' in text:
@@ -79,14 +71,4 @@ def scan_structure(doc_path):
             break
 
     result["body_end"] = ack_start
-
     return result
-
-
-def _count_styles(paras):
-    """统计使用的段落样式"""
-    styles = {}
-    for p in paras:
-        name = p.style.name if p.style else "None"
-        styles[name] = styles.get(name, 0) + 1
-    return styles

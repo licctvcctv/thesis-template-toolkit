@@ -2,7 +2,7 @@
 核心构建逻辑：将章节数据和参考文献构建为 Word 子文档。
 支持多段落、图片插入、三线表、引用上标。
 """
-from docx.shared import Pt, Cm, Emu
+from docx.shared import Pt, Cm
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
@@ -11,13 +11,12 @@ from docx.oxml.ns import qn
 # 书签 & 引用超链接
 # ================================================================
 
-_bookmark_id = 100
+_bookmark_id_counter = [100]
 
 
 def _next_bookmark_id():
-    global _bookmark_id
-    _bookmark_id += 1
-    return str(_bookmark_id)
+    _bookmark_id_counter[0] += 1
+    return str(_bookmark_id_counter[0])
 
 
 def add_bookmark(paragraph, bookmark_name):
@@ -33,10 +32,13 @@ def add_bookmark(paragraph, bookmark_name):
     p.append(end)
 
 
+def _cite_bookmark(n):
+    return f"_Ref_cite_{n}"
+
+
 def add_citation(paragraph, cite_num):
-    """在段落末尾添加上标引用 [n]"""
     hyperlink = OxmlElement('w:hyperlink')
-    hyperlink.set(qn('w:anchor'), f"_Ref_cite_{cite_num}")
+    hyperlink.set(qn('w:anchor'), _cite_bookmark(cite_num))
     run = OxmlElement('w:r')
     rPr = OxmlElement('w:rPr')
     vertAlign = OxmlElement('w:vertAlign')
@@ -250,6 +252,6 @@ def build_references(doc, references, line_spacing=1.5):
         p.paragraph_format.line_spacing = line_spacing
         run = p.add_run(f"[{i}] {ref}")
         run.font.size = Pt(12)
-        add_bookmark(p, f"_Ref_cite_{i}")
+        add_bookmark(p, _cite_bookmark(i))
 
     return sd

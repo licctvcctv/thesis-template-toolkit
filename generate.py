@@ -1,11 +1,8 @@
 """
 论文生成主入口。
 用法: python3 generate.py
-
-生成结果: output_thesis.docx
 """
 import os
-import sys
 from docxtpl import DocxTemplate
 
 from config import (
@@ -16,24 +13,19 @@ from chapters import CHAPTERS
 from references import REFERENCES
 from builder import build_chapters, build_references
 
-# 模板路径
 TEMPLATE = os.path.join(os.path.dirname(__file__), "thesis_template.docx")
 OUTPUT = os.path.join(os.path.dirname(__file__), "output_thesis.docx")
 
 
 def main():
-    if not os.path.exists(TEMPLATE):
-        print(f"错误：找不到模板文件 {TEMPLATE}")
-        print("请先将 thesis_template.docx 放到本目录下。")
-        sys.exit(1)
+    try:
+        doc = DocxTemplate(TEMPLATE)
+    except FileNotFoundError:
+        raise SystemExit(f"找不到模板文件: {TEMPLATE}")
 
-    doc = DocxTemplate(TEMPLATE)
-
-    # 构建子文档
     chapters_sd = build_chapters(doc, CHAPTERS)
     refs_sd = build_references(doc, REFERENCES)
 
-    # 组装上下文
     context = {
         **COVER,
         "abstract_zh": ABSTRACT_ZH,
