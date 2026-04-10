@@ -1,0 +1,232 @@
+{
+    "title": "第3章 系统设计",
+    "sections": [
+        {
+            "title": "3.1 开发环境与技术选型",
+            "content": [],
+            "subsections": [
+                {
+                    "title": "3.1.1 硬件环境",
+                    "content": [
+                        "本系统全部开发与测试工作在一台笔记本电脑上完成。因为后端需要同时跑IDEA、Docker Desktop和MySQL容器，内存低于12 GB会频繁出现容器OOM。实际使用16 GB DDR5基本够用，编译速度也能接受。表3-1列出了硬件配置。",
+                        "表3-1 开发硬件环境",
+                        {
+                            "type": "table",
+                            "headers": ["项目", "配置", "说明"],
+                            "rows": [
+                                ["处理器", "Intel Core i7-12700H (14核20线程)", "编译与本地容器运行"],
+                                ["内存", "16 GB DDR5", "IDEA + Docker同时运行需12 GB以上"],
+                                ["硬盘", "512 GB NVMe SSD", "MySQL数据文件与镜像层存储"],
+                                ["操作系统", "Windows 11 专业版 22H2", "兼容WSL2 / Docker Desktop"]
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "title": "3.1.2 软件环境",
+                    "content": [
+                        "后端使用Spring Boot 3，最低要求JDK 17。Maven管理依赖，打包成fat JAR后放进Docker镜像。前端是Vue 3 + Vite，Node.js版本16以上就能跑。数据库选MySQL 8.0，本地开发时直接用Docker拉官方镜像，不需要在宿主机安装。表3-2列出了主要软件及版本。",
+                        "表3-2 软件环境",
+                        {
+                            "type": "table",
+                            "headers": ["软件", "版本", "用途"],
+                            "rows": [
+                                ["JDK", "17.0.6 (Eclipse Temurin)", "Spring Boot 3最低要求JDK 17"],
+                                ["Maven", "3.8.7", "统一依赖管理与打包"],
+                                ["Node.js", "16.20.2 / npm 8", "前端Vue 3构建"],
+                                ["MySQL", "8.0.33", "众筹业务数据持久化"],
+                                ["Docker", "20.10.24 + Compose v2", "一键编排后端 + 数据库容器"],
+                                ["IntelliJ IDEA", "2023.1 Ultimate", "后端开发与调试"],
+                                ["VS Code", "1.85", "前端Vue 3开发"],
+                                ["Navicat", "16", "数据库可视化管理"]
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "title": "3.1.3 主要技术",
+                    "content": [
+                        "\"寻乡纪\"采用前后端分离架构。后端Spring Boot 3负责三个角色端的REST API和JWT鉴权逻辑；Spring Cloud Gateway做统一入口，按路径前缀分发请求；前端Vue 3是单页应用，通过路由守卫区分消费者、农户、管理员三套页面。数据库用MySQL 8.0，ORM层用MyBatis + PageHelper处理分页。AI客服调用DeepSeek的chat接口。最终通过Docker Compose把网关、后端、数据库三个容器编排到一起。表3-3列出了各项技术的具体作用。",
+                        "表3-3 主要技术选型",
+                        {
+                            "type": "table",
+                            "headers": ["技术", "定位", "在本项目中的作用"],
+                            "rows": [
+                                ["Spring Boot 3.0.0", "后端主框架", "处理消费者端/农户端/管理端三套REST API，整合JWT鉴权、MyBatis ORM、全局异常处理"],
+                                ["Spring Cloud Gateway 2022.0.0", "API网关", "监听8000端口，按路径前缀/consumer/**、/farmer/**、/admin/**转发到各后端服务"],
+                                ["Vue 3 + Ant Design Vue", "前端SPA", "三端共用同一工程，通过路由守卫实现角色级页面隔离；Ant Design Vue提供表单、表格、弹窗等组件"],
+                                ["MySQL 8.0", "关系数据库", "存储20+张业务表，使用InnoDB引擎、UTF-8MB4字符集"],
+                                ["MyBatis + PageHelper", "ORM与分页", "XML映射SQL，PageHelper拦截器自动拼接LIMIT子句"],
+                                ["JWT", "令牌鉴权", "登录成功后签发token，前端存入SessionStorage，每次请求Header携带；后端三个拦截器分角色校验"],
+                                ["DeepSeek API", "AI客服", "调用deepseek-chat模型实现智能问答客服，上下文窗口限制在5轮对话以内"],
+                                ["Docker Compose", "容器编排", "定义fv-gateway、fv-consumer、fv-mysql三个服务，bridge网络fv-network互联"]
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "3.2 系统架构设计",
+            "content": [
+                "整体架构分三层：前端Vue 3应用、Spring Cloud Gateway网关、后端微服务 + MySQL。用户打开浏览器访问前端页面，所有API请求发往网关的8000端口。网关根据路径前缀做路由转发——/consumer/**和/farmer/**和/admin/**都转到后端消费者服务的8001端口。当前版本只有一个后端服务实例，但网关层已经预留了拆分空间。",
+                "后端服务连接MySQL 8.0数据库。连接串写在application.yml里，Docker环境下用容器名fv-mysql作为host。MyBatis负责SQL映射，PageHelper拦截器自动给分页查询追加LIMIT。JWT鉴权逻辑通过三个HandlerInterceptor实现：ConsumerInterceptor校验消费者token，FarmerLoginInterceptor校验农户token，AdminLoginInterceptor校验管理员token。token解析失败直接返回401。",
+                "DeepSeek AI客服是一个独立的Service类。消费者端发送聊天消息后，后端拼接系统提示词和最近5轮对话历史，调用DeepSeek的/v1/chat/completions接口获取回复。接口密钥配置在application.yml的deepseek.api-key字段，不硬编码到代码里。",
+                {"type": "image", "path": "fig3-1_system_architecture.png", "width": 120},
+                "图3-1 系统架构图",
+                "部署方面，docker-compose.yml定义了三个服务。fv-gateway是网关容器，映射宿主机8000端口。fv-consumer是后端服务容器，映射8001端口。fv-mysql是数据库容器，映射3307端口（避免与宿主机MySQL冲突）。三者接入同一个bridge网络fv-network，通过容器名互相访问。前端打包成静态文件后用nginx容器或直接放到宿主机的nginx上代理。"
+            ]
+        },
+        {
+            "title": "3.3 数据库设计",
+            "content": [
+                "\"寻乡纪\"数据库名为finding_village，字符集utf8mb4，排序规则utf8mb4_general_ci。全库共20余张表，按业务域分成六组。主键全部采用BIGINT类型的雪花算法ID，不用自增。金额字段统一用DECIMAL(10,2)，避免浮点精度问题。时间字段用DATETIME，由后端写入。"
+            ],
+            "subsections": [
+                {
+                    "title": "3.3.1 实体关系",
+                    "content": [
+                        "核心实体关系如下：consumer与biz_order是一对多——一个消费者可以下多笔订单。farmer与project是一对多——一个农户可以发布多个众筹项目。project与project_tier是一对多——一个项目可以设多个支持档位。biz_order通过project_id和tier_id关联到具体的项目与档位。comment表通过project_id和consumer_id实现项目评论功能。project_follow表记录消费者对项目的关注关系，是consumer和project之间的多对多关联。",
+                        {"type": "image", "path": "fig3-2_er_diagram.png", "width": 120},
+                        "图3-2 数据库E-R图",
+                        "下面按域列出所有表。用户域：consumer、farmer、admin、consumer_auth（第三方登录绑定）、consumer_address（收货地址）。项目域：project、project_tier、project_image、project_dynamic（项目动态）、project_follow（关注）、project_question（问答）。订单域：biz_order（订单主表，因为order是MySQL保留字所以加了biz_前缀）、logistics（物流）、refund（退款）。社区域：comment、comment_like、report（举报）。系统域：category（分类）、tag（标签）、announcement（公告）、home_recommend（首页推荐）、faq（常见问题）、sms_code（短信验证码）、system_config（系统配置）。统计域：user_behavior（用户行为埋点）、farmer_income_statistics（农户收入统计）、platform_statistics（平台统计快照）。"
+                    ]
+                },
+                {
+                    "title": "3.3.2 消费者表",
+                    "content": [
+                        "consumer表存储消费者的基本信息。id字段是BIGINT类型的雪花ID，全局唯一。username字段加了UNIQUE索引防止重复注册。password字段存BCrypt哈希值，长度给到VARCHAR(255)。status字段用TINYINT区分正常和禁用状态，管理员可以在后台切换。phone字段用于短信验证码登录和找回密码。",
+                        "表3-4 consumer表字段",
+                        {
+                            "type": "table",
+                            "headers": ["字段名", "含义", "类型", "说明"],
+                            "rows": [
+                                ["id", "主键", "BIGINT", "雪花算法生成，全局唯一"],
+                                ["username", "用户名", "VARCHAR(50)", "登录账号，UNIQUE约束"],
+                                ["password", "密码", "VARCHAR(255)", "BCrypt加密存储"],
+                                ["nickname", "昵称", "VARCHAR(50)", "前端展示名称"],
+                                ["avatar", "头像", "VARCHAR(255)", "OSS对象存储URL"],
+                                ["phone", "手机号", "VARCHAR(20)", "绑定手机，用于短信验证"],
+                                ["status", "状态", "TINYINT", "0-正常 1-禁用"],
+                                ["created_at", "创建时间", "DATETIME", "注册时间戳"]
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "title": "3.3.3 项目表",
+                    "content": [
+                        "project表是整个系统的核心业务表。每一行代表一个众筹项目。farmer_id关联到发布该项目的农户。target_amount是众筹目标金额，current_amount是已经筹到的金额，每次有消费者付款成功就累加。status字段用TINYINT表示项目生命周期：0草稿、1审核中、2众筹中、3成功、4失败。前端根据status值渲染不同的标签颜色和按钮状态。",
+                        "表3-5 project表字段",
+                        {
+                            "type": "table",
+                            "headers": ["字段名", "含义", "类型", "说明"],
+                            "rows": [
+                                ["id", "主键", "BIGINT", "雪花算法生成"],
+                                ["farmer_id", "农户ID", "BIGINT", "外键关联farmer表"],
+                                ["title", "项目名称", "VARCHAR(120)", "众筹标题，首页卡片展示"],
+                                ["description", "项目描述", "TEXT", "富文本，Markdown渲染"],
+                                ["category_id", "分类ID", "BIGINT", "外键关联category表"],
+                                ["target_amount", "目标金额", "DECIMAL(10,2)", "众筹目标，单位元"],
+                                ["current_amount", "已筹金额", "DECIMAL(10,2)", "每次下单后累加"],
+                                ["start_time", "开始时间", "DATETIME", "众筹起始时间"],
+                                ["end_time", "结束时间", "DATETIME", "众筹截止时间"],
+                                ["status", "状态", "TINYINT", "0-草稿 1-审核中 2-众筹中 3-成功 4-失败"],
+                                ["created_at", "创建时间", "DATETIME", "记录创建时间"]
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "title": "3.3.4 项目档位表",
+                    "content": [
+                        "project_tier表存储每个项目的支持档位信息。一个项目可以有多个档位，比如\"助农体验装29.9元\"\"丰收家庭装99元\"。消费者下单时必须选择一个档位。stock字段控制库存，每次下单扣减。limit_per_user字段做限购校验，0表示不限购。",
+                        "表3-6 project_tier表字段",
+                        {
+                            "type": "table",
+                            "headers": ["字段名", "含义", "类型", "说明"],
+                            "rows": [
+                                ["id", "主键", "BIGINT", "雪花算法"],
+                                ["project_id", "项目ID", "BIGINT", "外键关联project表"],
+                                ["tier_name", "档位名称", "VARCHAR(80)", "如\"助农体验装\"\"丰收家庭装\""],
+                                ["price", "价格", "DECIMAL(10,2)", "该档位单价"],
+                                ["description", "描述", "VARCHAR(255)", "档位说明"],
+                                ["stock", "库存", "INT", "剩余可售数量"],
+                                ["limit_per_user", "限购", "INT", "每人最多购买数量，0表示不限"]
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "title": "3.3.5 订单表",
+                    "content": [
+                        "订单主表命名为biz_order，因为order是MySQL保留字，直接用会报语法错误。order_no字段是给用户看的订单号，格式是年月日加六位随机数，比如20260401123456。total_amount等于档位单价乘以数量。status字段记录订单全生命周期，从待付款到已收货再到退款。address_id关联消费者的收货地址。",
+                        "表3-7 biz_order表字段",
+                        {
+                            "type": "table",
+                            "headers": ["字段名", "含义", "类型", "说明"],
+                            "rows": [
+                                ["id", "主键", "BIGINT", "雪花算法"],
+                                ["order_no", "订单号", "VARCHAR(32)", "年月日+随机数生成，前端展示用"],
+                                ["consumer_id", "消费者ID", "BIGINT", "外键关联consumer表"],
+                                ["project_id", "项目ID", "BIGINT", "外键关联project表"],
+                                ["tier_id", "档位ID", "BIGINT", "外键关联project_tier表"],
+                                ["quantity", "数量", "INT", "购买数量"],
+                                ["total_amount", "总金额", "DECIMAL(10,2)", "price * quantity"],
+                                ["address_id", "地址ID", "BIGINT", "外键关联consumer_address表"],
+                                ["status", "状态", "TINYINT", "0-待付款 1-已付款 2-已发货 3-已收货 4-已取消 5-退款中"],
+                                ["pay_time", "支付时间", "DATETIME", "模拟支付成功写入"],
+                                ["created_at", "创建时间", "DATETIME", "下单时间"]
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "3.4 接口设计",
+            "content": [
+                "所有接口遵循RESTful风格，返回统一的JSON结构：code、message、data三个字段。code为200表示成功，401表示未登录，403表示无权限，500表示服务端异常。前端axios拦截器根据code值统一处理弹窗提示和路由跳转。",
+                "鉴权通过三个Spring MVC HandlerInterceptor实现。ConsumerInterceptor拦截/consumer/**下需要登录的接口，从Header中取出Authorization字段解析JWT token，验证签名和过期时间，把consumerId写入ThreadLocal供Controller使用。FarmerLoginInterceptor和AdminLoginInterceptor逻辑相同，分别校验农户和管理员token。不需要登录的接口（如项目列表、项目详情）在WebMvcConfigurer中通过excludePathPatterns排除。",
+                "表3-8列出了主要接口。路径中的/consumer、/farmer、/admin前缀同时也是网关路由的匹配规则——Gateway的predicates按Path前缀把请求转发到对应的后端服务。",
+                "表3-8 主要REST API接口",
+                {
+                    "type": "table",
+                    "headers": ["路径", "方法", "鉴权", "说明"],
+                    "rows": [
+                        ["/consumer/auth/register", "POST", "无", "消费者注册，参数username/password/phone"],
+                        ["/consumer/auth/login", "POST", "无", "消费者登录，返回JWT token"],
+                        ["/consumer/project/list", "GET", "无", "分页查询众筹项目列表，支持分类/关键词过滤"],
+                        ["/consumer/project/detail/{id}", "GET", "无", "项目详情，包含档位列表与图片"],
+                        ["/consumer/order/create", "POST", "Consumer", "创建订单，校验库存与限购"],
+                        ["/consumer/order/pay/{id}", "PUT", "Consumer", "模拟支付，更新状态与已筹金额"],
+                        ["/consumer/order/list", "GET", "Consumer", "当前用户订单列表"],
+                        ["/consumer/ai/chat", "POST", "Consumer", "发送消息到DeepSeek客服，返回回复"],
+                        ["/consumer/comment/save", "POST", "Consumer", "发表评论"],
+                        ["/consumer/project/follow/{id}", "POST", "Consumer", "关注/取消关注项目"],
+                        ["/farmer/auth/login", "POST", "无", "农户登录"],
+                        ["/farmer/project/save", "POST", "Farmer", "创建或更新众筹项目"],
+                        ["/farmer/project/list", "GET", "Farmer", "当前农户的项目列表"],
+                        ["/farmer/order/list", "GET", "Farmer", "当前农户收到的订单"],
+                        ["/farmer/order/ship/{id}", "PUT", "Farmer", "发货操作，填写物流单号"],
+                        ["/farmer/dynamic/save", "POST", "Farmer", "发布项目动态"],
+                        ["/farmer/income/statistics", "GET", "Farmer", "收入统计面板数据"],
+                        ["/admin/auth/login", "POST", "无", "管理员登录"],
+                        ["/admin/project/audit/{id}", "PUT", "Admin", "审核项目，通过或驳回"],
+                        ["/admin/user/list", "GET", "Admin", "用户管理列表，支持禁用操作"],
+                        ["/admin/report/list", "GET", "Admin", "举报列表与处理"],
+                        ["/admin/statistics/overview", "GET", "Admin", "平台统计：用户数、项目数、交易额"],
+                        ["/admin/announcement/save", "POST", "Admin", "发布系统公告"],
+                        ["/admin/category/save", "POST", "Admin", "新增/编辑项目分类"]
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "3.5 本章小结",
+            "content": [
+                "本章从开发环境、技术选型、系统架构、数据库设计和接口设计五个方面完成了\"寻乡纪\"系统的整体设计，为第4章的功能实现提供了技术基础和数据结构依据。"
+            ]
+        }
+    ]
+}

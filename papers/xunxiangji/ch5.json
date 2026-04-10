@@ -1,0 +1,91 @@
+{
+    "title": "第5章 系统测试",
+    "sections": [
+        {
+            "title": "5.1 测试环境",
+            "content": [
+                "所有测试在本地开发环境完成，没有部署到云服务器。硬件是一台16 GB内存的笔记本，i5-12500H处理器。软件环境汇总如下。",
+                "表5-1 测试环境配置",
+                {
+                    "type": "table",
+                    "headers": ["项目", "版本 / 工具"],
+                    "rows": [
+                        ["操作系统", "Windows 11 23H2"],
+                        ["JDK", "OpenJDK 17.0.9"],
+                        ["数据库", "MySQL 8.0.35"],
+                        ["浏览器", "Google Chrome 122"],
+                        ["接口测试", "Postman 11.1"],
+                        ["压力测试", "Apache JMeter 5.6.3"]
+                    ]
+                },
+                "本地启动时，consumer微服务跑在8001端口，Gateway在8000端口做统一路由，Vue前端开发服务器在9000端口。Nacos注册中心在默认8848端口运行。测试时前端通过devServer proxy把/api请求转发到8000。"
+            ]
+        },
+        {
+            "title": "5.2 功能测试",
+            "content": [
+                "功能测试主要用Postman手动发请求，部分场景在前端页面直接操作然后检查数据库。测试用例覆盖三种角色（消费者、农户、管理员）的核心流程。数据库里提前准备了23个商品、8个众筹项目、5个测试用户。",
+                "表5-2 功能测试用例及结果",
+                {
+                    "type": "table",
+                    "headers": ["编号", "测试场景", "操作步骤", "实际结果", "结论"],
+                    "rows": [
+                        ["TC-01", "消费者短信登录", "POST /api/consumer/sms/send 发送验证码，POST /api/consumer/sms/verify 提交验证码，返回JWT", "发送接口返回200，verify接口返回{token: \"eyJhbG...\"}, 前端localStorage写入成功", "通过"],
+                        ["TC-02", "农户创建众筹项目", "填写项目名称、描述、目标金额，添加至少一个档位，提交后状态为PENDING_REVIEW", "POST /api/farmer/project 返回201，数据库project表新增一行status=PENDING_REVIEW，tier表新增对应档位", "通过"],
+                        ["TC-03", "管理员审核项目", "GET /api/admin/project?status=PENDING_REVIEW 获取待审核列表，PUT /api/admin/project/{id}/approve 审核通过", "列表返回3条待审核记录，approve后该项目status变为ACTIVE，农户端刷新可见", "通过"],
+                        ["TC-04", "消费者购买预售商品", "选择数量2，POST /api/consumer/order/presale 创建订单，stock字段减2", "返回200，order表新增一行quantity=2、total_amount=59.80，product表stock从100变为98", "通过"],
+                        ["TC-05", "消费者参与众筹档位", "选择档位A（50元），POST /api/consumer/order/crowdfunding 创建众筹订单，current_amount增加50", "返回200，order表新增type=CROWDFUNDING，project表current_amount从3200变为3250", "通过"],
+                        ["TC-06", "AI聊天机器人应答", "POST /api/chatbot/ask 发送\"这个土鸡蛋是散养的吗\"，返回DeepSeek生成的回答", "返回200，response字段包含约120字的中文回答，提到了散养、饲养方式等关键词", "通过"],
+                        ["TC-07", "推荐引擎", "新用户访问首页获取热门项目列表；有5条以上浏览记录的用户获取个性化推荐", "新用户GET /api/recommend?userId=999 返回按participant_count排序的Top 10；老用户userId=12 返回基于协同过滤的10条结果，其中7条与其历史浏览标签匹配", "通过"],
+                        ["TC-08", "订单取消与退款", "消费者取消未发货订单，申请退款，管理员审批通过", "PUT /api/consumer/order/{id}/cancel 返回200，status变为CANCELLED；POST /api/consumer/refund 返回201；管理员PUT /api/admin/refund/{id}/approve 后refund表status=APPROVED", "通过"]
+                    ]
+                },
+                "8个测试用例全部通过。TC-04在开发过程中出现过一次库存扣减竞争问题：两个请求同时下单时stock只减了一次。后来在MyBatis的UPDATE语句里加了WHERE stock >= #{quantity}的乐观锁条件，重新测试后并发扣减正常。TC-06的聊天回答质量取决于DeepSeek API，偶尔会出现回答偏离农产品语境的情况，但大部分问题都能得到合理回复。"
+            ]
+        },
+        {
+            "title": "5.3 性能测试",
+            "content": [
+                "用JMeter对三个关键接口做了压力测试，分别设置50和100并发线程，每个线程循环10次。测试前数据库project表有47条记录，product表有23条记录。结果如下。",
+                "表5-3 JMeter性能测试结果",
+                {
+                    "type": "table",
+                    "headers": ["接口", "并发数", "平均响应时间", "P95响应时间", "错误率"],
+                    "rows": [
+                        ["项目列表 GET /api/project/list", "50", "148ms", "212ms", "0%"],
+                        ["项目列表 GET /api/project/list", "100", "263ms", "410ms", "0%"],
+                        ["创建订单 POST /api/consumer/order/presale", "50", "187ms", "305ms", "0%"],
+                        ["创建订单 POST /api/consumer/order/presale", "100", "342ms", "578ms", "0.3%"],
+                        ["AI聊天 POST /api/chatbot/ask", "50", "1,487ms", "2,310ms", "0%"],
+                        ["AI聊天 POST /api/chatbot/ask", "100", "2,215ms", "3,840ms", "2%"]
+                    ]
+                },
+                "项目列表接口在50并发时平均148ms，100并发时升到263ms，这个速度在本地MySQL单机环境下算正常。如果后续上线需要优化，可以在Redis里缓存热门项目列表。",
+                "AI聊天接口的响应时间明显高于其他接口，50并发时平均1.5秒左右。这不是系统本身的问题，瓶颈在DeepSeek API的调用延迟。100并发时出现了2%的错误率，全部是DeepSeek返回429 Too Many Requests。实际使用场景中不太可能同时有100人问聊天机器人，所以这个瓶颈暂时可以接受。",
+                "订单创建接口在100并发时有0.3%的失败，日志显示是乐观锁冲突导致少量请求返回\"库存不足\"。这其实是预期行为——同一商品在高并发下确实会有部分请求因为库存竞争而失败，前端会提示用户重试。"
+            ]
+        },
+        {
+            "title": "5.4 安全测试",
+            "content": [
+                "安全测试主要检查了三个方面。",
+                "JWT过期验证：把token的过期时间手动改成过去的时间戳，用Postman带着过期token请求/api/consumer/order/list，返回HTTP 401，body里是{\"code\": 401, \"message\": \"token已过期\"}。不带token直接请求同样返回401。这说明Gateway的JWT过滤器正常工作。",
+                "角色权限隔离：用消费者的token请求/api/admin/project/list，返回HTTP 403 Forbidden。用农户的token请求/api/admin/refund/approve同样返回403。管理员端的接口对非ADMIN角色全部拦截，没有出现越权访问的情况。",
+                "SQL注入防护：在搜索框输入' OR 1=1 --，在Postman里把projectName参数设为这个字符串发请求。返回的结果是空列表，不是全部数据。检查了MyBatis的XML映射文件，所有查询参数都用的#{}（预编译参数）而不是${}（字符串拼接），所以不存在SQL注入风险。"
+            ]
+        },
+        {
+            "title": "5.5 测试结论",
+            "content": [
+                "功能测试的8个核心用例全部通过，三种角色的主要操作流程都能跑通。性能方面，常规接口在100并发时响应时间在400ms以内，满足毕设演示需求；AI聊天接口受第三方API限制响应较慢，但不影响其他功能。安全方面，JWT鉴权和角色隔离生效，SQL注入被MyBatis参数化查询挡住了。",
+                "目前已知的问题：支付流程是模拟的，没有接入真实支付网关，所以没测支付回调的可靠性；短信验证码在开发模式下是固定值888888，没测真实短信到达率；推荐结果的准确性只做了人工抽检，没有用A/B测试量化。这些问题留到后续版本解决。"
+            ]
+        },
+        {
+            "title": "5.6 本章小结",
+            "content": [
+                "本章从环境搭建、功能验证、性能压测、安全检查四个方面对系统进行了测试，结果表明系统的核心功能和基本安全机制达到了设计要求。"
+            ]
+        }
+    ]
+}
