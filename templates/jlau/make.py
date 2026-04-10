@@ -566,15 +566,29 @@ def make(src_path, out_path):
                 refs_done = True
 
         if text in ("致  谢", "致谢"):
-            for j in range(i + 1, min(i + 5, len(doc.paragraphs))):
-                pt = (doc.paragraphs[j].text or "").strip()
-                if pt or doc.paragraphs[j].runs:
-                    if doc.paragraphs[j].runs:
-                        doc.paragraphs[j].runs[0].text = \
-                            "    {{ acknowledgement }}"
-                        for r in doc.paragraphs[j].runs[1:]:
-                            r.text = ""
-                    break
+            # 找致谢标题后的第一个 Normal 段落写入变量
+            # 跳过 Heading 1 段落（避免覆盖标题本身）
+            for j in range(i + 1, min(i + 10, len(doc.paragraphs))):
+                pj = doc.paragraphs[j]
+                style = pj.style.name if pj.style else ""
+                if "Heading" in style:
+                    continue
+                # 找到 Normal 段落，写入致谢变量
+                if pj.runs:
+                    pj.runs[0].text = "    {{ acknowledgement }}"
+                    for r in pj.runs[1:]:
+                        r.text = ""
+                else:
+                    # 空段落没有 run，添加一个
+                    from docx.oxml import OxmlElement
+                    from docx.oxml.ns import qn as _q
+                    wr = OxmlElement('w:r')
+                    wt = OxmlElement('w:t')
+                    wt.set(_q('xml:space'), 'preserve')
+                    wt.text = "    {{ acknowledgement }}"
+                    wr.append(wt)
+                    pj._p.append(wr)
+                break
     # 压缩摘要区域多余空行的行间距
     from docx.shared import Pt as _Pt
     for i, p in enumerate(doc.paragraphs):
