@@ -340,10 +340,10 @@ def make(src_path, out_path):
         for r in p2.runs[1:]:
             r.text = ""
 
-    # p[4]: "摘  要" 标题 - 清掉格式说明
+    # p[4]: "摘  要" 标题 - 清掉格式说明和括号
     p4 = doc.paragraphs[4]
     for r in p4.runs:
-        if "号" in r.text or "黑体" in r.text:
+        if "号" in r.text or "黑体" in r.text or r.text.strip() in ("（", "）", "（）"):
             r.text = ""
 
     # p[6]: 摘要正文
@@ -376,10 +376,12 @@ def make(src_path, out_path):
         for r in p17.runs[1:]:
             r.text = ""
 
-    # p[19]: ABSTRACT 标题 - 清掉说明
+    # p[19]: ABSTRACT 标题 - 清掉说明和括号
     p19 = doc.paragraphs[19]
     for r in p19.runs:
         if "号" in r.text or "Roman" in r.text or "加粗" in r.text:
+            r.text = ""
+        if r.text.strip() in ("（", "）", "（）"):
             r.text = ""
 
     # p[21]: 英文摘要正文
@@ -391,6 +393,12 @@ def make(src_path, out_path):
     # 清空英文摘要说明 p[22]-p[24]
     for i in range(22, 25):
         for r in doc.paragraphs[i].runs:
+            r.text = ""
+
+    # 清除目录标题的残留括号
+    p29 = doc.paragraphs[29]
+    for r in p29.runs:
+        if r.text.strip() in ("（", "）"):
             r.text = ""
 
     # p[25]: KEY WORDS
@@ -544,6 +552,18 @@ def make(src_path, out_path):
                         for r in doc.paragraphs[j].runs[1:]:
                             r.text = ""
                     break
+    # 压缩摘要区域多余空行的行间距
+    from docx.shared import Pt as _Pt
+    for i, p in enumerate(doc.paragraphs):
+        text = (p.text or "").strip()
+        if not text and not p.runs:
+            # 检查是否在摘要区域（前30个段落内）
+            if i < 30:
+                pf = p.paragraph_format
+                pf.space_before = _Pt(0)
+                pf.space_after = _Pt(0)
+                pf.line_spacing = _Pt(1)
+
     doc.save(out_path)
     print("  Step 7: 参考文献/致谢")
 

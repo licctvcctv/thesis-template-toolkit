@@ -8,14 +8,35 @@
                 "表5-1 测试环境配置",
                 {
                     "type": "table",
-                    "headers": ["项目", "版本 / 工具"],
+                    "headers": [
+                        "项目",
+                        "版本 / 工具"
+                    ],
                     "rows": [
-                        ["操作系统", "Windows 11 23H2"],
-                        ["JDK", "OpenJDK 17.0.9"],
-                        ["数据库", "MySQL 8.0.35"],
-                        ["浏览器", "Google Chrome 122"],
-                        ["接口测试", "Postman 11.1"],
-                        ["压力测试", "Apache JMeter 5.6.3"]
+                        [
+                            "操作系统",
+                            "Windows 11 23H2"
+                        ],
+                        [
+                            "JDK",
+                            "OpenJDK 17.0.9"
+                        ],
+                        [
+                            "数据库",
+                            "MySQL 8.0.35"
+                        ],
+                        [
+                            "浏览器",
+                            "Google Chrome 122"
+                        ],
+                        [
+                            "接口测试",
+                            "Postman 11.1"
+                        ],
+                        [
+                            "压力测试",
+                            "Apache JMeter 5.6.3"
+                        ]
                     ]
                 },
                 "本地启动时，consumer微服务跑在8001端口，Gateway在8000端口做统一路由，Vue前端开发服务器在9000端口。Nacos注册中心在默认8848端口运行。测试时前端通过devServer proxy把/api请求转发到8000。"
@@ -28,16 +49,70 @@
                 "表5-2 功能测试用例及结果",
                 {
                     "type": "table",
-                    "headers": ["编号", "测试场景", "操作步骤", "实际结果", "结论"],
+                    "headers": [
+                        "编号",
+                        "测试场景",
+                        "操作步骤",
+                        "实际结果",
+                        "结论"
+                    ],
                     "rows": [
-                        ["TC-01", "消费者短信登录", "POST /api/consumer/sms/send 发送验证码，POST /api/consumer/sms/verify 提交验证码，返回JWT", "发送接口返回200，verify接口返回{token: \"eyJhbG...\"}, 前端localStorage写入成功", "通过"],
-                        ["TC-02", "农户创建众筹项目", "填写项目名称、描述、目标金额，添加至少一个档位，提交后状态为PENDING_REVIEW", "POST /api/farmer/project 返回201，数据库project表新增一行status=PENDING_REVIEW，tier表新增对应档位", "通过"],
-                        ["TC-03", "管理员审核项目", "GET /api/admin/project?status=PENDING_REVIEW 获取待审核列表，PUT /api/admin/project/{id}/approve 审核通过", "列表返回3条待审核记录，approve后该项目status变为ACTIVE，农户端刷新可见", "通过"],
-                        ["TC-04", "消费者购买预售商品", "选择数量2，POST /api/consumer/order/presale 创建订单，stock字段减2", "返回200，order表新增一行quantity=2、total_amount=59.80，product表stock从100变为98", "通过"],
-                        ["TC-05", "消费者参与众筹档位", "选择档位A（50元），POST /api/consumer/order/crowdfunding 创建众筹订单，current_amount增加50", "返回200，order表新增type=CROWDFUNDING，project表current_amount从3200变为3250", "通过"],
-                        ["TC-06", "AI聊天机器人应答", "POST /api/chatbot/ask 发送\"这个土鸡蛋是散养的吗\"，返回DeepSeek生成的回答", "返回200，response字段包含约120字的中文回答，提到了散养、饲养方式等关键词", "通过"],
-                        ["TC-07", "推荐引擎", "新用户访问首页获取热门项目列表；有5条以上浏览记录的用户获取个性化推荐", "新用户GET /api/recommend?userId=999 返回按participant_count排序的Top 10；老用户userId=12 返回基于协同过滤的10条结果，其中7条与其历史浏览标签匹配", "通过"],
-                        ["TC-08", "订单取消与退款", "消费者取消未发货订单，申请退款，管理员审批通过", "PUT /api/consumer/order/{id}/cancel 返回200，status变为CANCELLED；POST /api/consumer/refund 返回201；管理员PUT /api/admin/refund/{id}/approve 后refund表status=APPROVED", "通过"]
+                        [
+                            "TC-01",
+                            "消费者短信登录",
+                            "POST /api/consumer/sms/send 发送验证码，POST /api/consumer/sms/verify 提交验证码，返回JWT",
+                            "发送接口返回200，verify接口返回{token: \"eyJhbG...\"}, 前端localStorage写入成功",
+                            "通过"
+                        ],
+                        [
+                            "TC-02",
+                            "农户创建众筹项目",
+                            "填写项目名称、描述、目标金额，添加至少一个档位，提交后状态为PENDING_REVIEW",
+                            "POST /api/farmer/project 返回201，数据库project表新增一行status=PENDING_REVIEW，tier表新增对应档位",
+                            "通过"
+                        ],
+                        [
+                            "TC-03",
+                            "管理员审核项目",
+                            "GET /api/admin/project?status=PENDING_REVIEW 获取待审核列表，PUT /api/admin/project/{id}/approve 审核通过",
+                            "列表返回3条待审核记录，approve后该项目status变为ACTIVE，农户端刷新可见",
+                            "通过"
+                        ],
+                        [
+                            "TC-04",
+                            "消费者购买预售商品",
+                            "选择数量2，POST /api/consumer/order/presale 创建订单，stock字段减2",
+                            "返回200，order表新增一行quantity=2、total_amount=59.80，product表stock从100变为98",
+                            "通过"
+                        ],
+                        [
+                            "TC-05",
+                            "消费者参与众筹档位",
+                            "选择档位A（50元），POST /api/consumer/order/crowdfunding 创建众筹订单，current_amount增加50",
+                            "返回200，order表新增type=CROWDFUNDING，project表current_amount从3200变为3250",
+                            "通过"
+                        ],
+                        [
+                            "TC-06",
+                            "AI聊天机器人应答",
+                            "POST /api/chatbot/ask 发送\"这个土鸡蛋是散养的吗\"，返回DeepSeek生成的回答",
+                            "返回200，response字段包含约120字的中文回答，提到了散养、饲养方式等关键词",
+                            "通过"
+                        ],
+                        [
+                            "TC-07",
+                            "推荐引擎",
+                            "新用户访问首页获取热门项目列表；有5条以上浏览记录的用户获取个性化推荐",
+                            "新用户GET /api/recommend?userId=999 返回按participant_count排序的Top 10；老用户userId=12 返回基于协同过滤的10条结果，其中7条与其历史浏览标签匹配",
+                            "通过"
+                        ],
+                        [
+                            "TC-08",
+                            "订单取消与退款",
+                            "消费者取消未发货订单，申请退款，管理员审批通过",
+                            "PUT /api/consumer/order/{id}/cancel 返回200，status变为CANCELLED；POST /api/consumer/refund 返回201；管理员PUT /api/admin/refund/{id}/approve 后refund表status=APPROVED",
+                            "通过"
+                        ]
                     ]
                 },
                 "8个测试用例全部通过。TC-04在开发过程中出现过一次库存扣减竞争问题：两个请求同时下单时stock只减了一次。后来在MyBatis的UPDATE语句里加了WHERE stock >= #{quantity}的乐观锁条件，重新测试后并发扣减正常。TC-06的聊天回答质量取决于DeepSeek API，偶尔会出现回答偏离农产品语境的情况，但大部分问题都能得到合理回复。"
@@ -50,14 +125,56 @@
                 "表5-3 JMeter性能测试结果",
                 {
                     "type": "table",
-                    "headers": ["接口", "并发数", "平均响应时间", "P95响应时间", "错误率"],
+                    "headers": [
+                        "接口",
+                        "并发数",
+                        "平均响应时间",
+                        "P95响应时间",
+                        "错误率"
+                    ],
                     "rows": [
-                        ["项目列表 GET /api/project/list", "50", "148ms", "212ms", "0%"],
-                        ["项目列表 GET /api/project/list", "100", "263ms", "410ms", "0%"],
-                        ["创建订单 POST /api/consumer/order/presale", "50", "187ms", "305ms", "0%"],
-                        ["创建订单 POST /api/consumer/order/presale", "100", "342ms", "578ms", "0.3%"],
-                        ["AI聊天 POST /api/chatbot/ask", "50", "1,487ms", "2,310ms", "0%"],
-                        ["AI聊天 POST /api/chatbot/ask", "100", "2,215ms", "3,840ms", "2%"]
+                        [
+                            "项目列表 GET /api/project/list",
+                            "50",
+                            "148ms",
+                            "212ms",
+                            "0%"
+                        ],
+                        [
+                            "项目列表 GET /api/project/list",
+                            "100",
+                            "263ms",
+                            "410ms",
+                            "0%"
+                        ],
+                        [
+                            "创建订单 POST /api/consumer/order/presale",
+                            "50",
+                            "187ms",
+                            "305ms",
+                            "0%"
+                        ],
+                        [
+                            "创建订单 POST /api/consumer/order/presale",
+                            "100",
+                            "342ms",
+                            "578ms",
+                            "0.3%"
+                        ],
+                        [
+                            "AI聊天 POST /api/chatbot/ask",
+                            "50",
+                            "1,487ms",
+                            "2,310ms",
+                            "0%"
+                        ],
+                        [
+                            "AI聊天 POST /api/chatbot/ask",
+                            "100",
+                            "2,215ms",
+                            "3,840ms",
+                            "2%"
+                        ]
                     ]
                 },
                 "项目列表接口在50并发时平均148ms，100并发时升到263ms，这个速度在本地MySQL单机环境下算正常。如果后续上线需要优化，可以在Redis里缓存热门项目列表。",
