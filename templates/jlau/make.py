@@ -46,11 +46,20 @@ def _clear_instruction_paras(doc, start, end):
 
 
 def _setup_jlau_body(doc_path):
-    """手动设置正文循环。吉林农大模板只有 H1 + body 样本。"""
+    """手动设置正文循环。
+
+    吉林农大模板格式规范：
+    - H1: Heading 1 样式, 三号(16pt)黑体加粗居中
+    - H2: 四号(14pt)黑体居左, 无缩进
+    - H3: 小四号(12pt)宋体居左, 无缩进
+    - 正文: 小四号(12pt)宋体, 首行缩进2字符, 行间距固定20磅
+    """
     from docx import Document
     from docx.oxml import OxmlElement
     from docx.oxml.ns import qn
+    from docx.shared import Pt, Emu
     from scanner import scan_structure, scan_body
+    import copy
 
     _NS = {'w': 'http://schemas.openxmlformats.org/wordprocessingml/2006/main'}
 
@@ -66,7 +75,18 @@ def _setup_jlau_body(doc_path):
 
     body = scan_body(doc, bs, be)
     h1_idx = body['h1_samples'][0]['idx'] if body['h1_samples'] else None
-    body_idx = body['body_samples'][0]['idx'] if body['body_samples'] else None
+
+    # 找真正的正文段落（有首行缩进342900 + 宋体 + 小四号）
+    body_idx = None
+    for sample in body.get('body_samples', []):
+        idx = sample['idx']
+        p = paras[idx]
+        indent = p.paragraph_format.first_line_indent
+        if indent and indent > 300000:  # ~342900 = 2字符缩进
+            body_idx = idx
+            break
+    if body_idx is None and body['body_samples']:
+        body_idx = body['body_samples'][0]['idx']
 
     if not h1_idx or not body_idx:
         print(f"  警告: 样本不足 h1={h1_idx} body={body_idx}")
@@ -104,18 +124,28 @@ def _setup_jlau_body(doc_path):
         body_elem.remove(tbl)
 
     # 替换样本文本
-    def _replace(para, text):
+    def _set_text(para, text):
         if para.runs:
             para.runs[0].text = text
             for r in para.runs[1:]:
                 r.text = ""
 
     paras[h1_idx].paragraph_format.page_break_before = True
-    _replace(paras[h1_idx], "{{ ch.title }}")
-    _replace(paras[body_idx], "{{ para }}")
+    _set_text(paras[h1_idx], "{{ ch.title }}")
+    _set_text(paras[body_idx], "{{ para }}")
 
-    # 插入控制标签的辅助函数
-    def _mk_para(text):
+    h1_p = paras[h1_idx]._p
+    body_p = paras[body_idx]._p
+
+    # 先保存 body_p 的完整 XML 副本（在移动前复制）
+    body_copy = copy.deepcopy(body_p)
+
+    # 确保 body 在 h1 后面
+    h1_p.addnext(body_p)
+
+    # 创建带格式的段落辅助函数
+    def _mk_ctrl(text):
+        """创建控制标签段落（无格式）"""
         p = OxmlElement('w:p')
         r = OxmlElement('w:r')
         t = OxmlElement('w:t')
@@ -125,99 +155,141 @@ def _setup_jlau_body(doc_path):
         p.append(r)
         return p
 
-    h1_p = paras[h1_idx]._p
-    body_p = paras[body_idx]._p
+    def _mk_heading(text, font_name, font_size_pt, bold=False):
+        """创建标题段落：指定字体、字号、左对齐、无缩进"""
+        p = OxmlElement('w:p')
+        # 段落属性：左对齐，无缩进
+        pPr = OxmlElement('w:pPr')
+        jc = OxmlElement('w:jc')
+        jc.set(qn('w:val'), 'left')
+        pPr.append(jc)
+        # 行间距固定20磅
+        spacing = OxmlElement('w:spacing')
+        spacing.set(qn('w:line'), '400')  # 20pt = 400 twips
+        spacing.set(qn('w:lineRule'), 'exact')
+        pPr.append(spacing)
+        p.append(pPr)
+        # Run
+        r = OxmlElement('w:r')
+        rPr = OxmlElement('w:rPr')
+        # 字体
+        rFonts = OxmlElement('w:rFonts')
+        rFonts.set(qn('w:eastAsia'), font_name)
+        rFonts.set(qn('w:ascii'), font_name)
+        rFonts.set(qn('w:hAnsi'), font_name)
+        rPr.append(rFonts)
+        # 字号（半磅单位）
+        sz = OxmlElement('w:sz')
+        sz.set(qn('w:val'), str(font_size_pt * 2))
+        rPr.append(sz)
+        szCs = OxmlElement('w:szCs')
+        szCs.set(qn('w:val'), str(font_size_pt * 2))
+        rPr.append(szCs)
+        # 加粗
+        if bold:
+            b = OxmlElement('w:b')
+            rPr.append(b)
+        r.append(rPr)
+        t = OxmlElement('w:t')
+        t.set(qn('xml:space'), 'preserve')
+        t.text = text
+        r.append(t)
+        p.append(r)
+        return p
 
-    # 确保 body 在 h1 后面
-    if body_p is not h1_p:
-        h1_p.addnext(body_p)
+    def _mk_body(text):
+        """创建正文段落：复制 body 样本格式"""
+        p = copy.deepcopy(body_copy)
+        for t_elem in p.findall('.//w:t', _NS):
+            t_elem.text = ""
+        t_elems = p.findall('.//w:t', _NS)
+        if t_elems:
+            t_elems[0].text = text
+        return p
 
-    # 插入循环结构：
-    # {%p for ch in chapters %}
-    # {{ ch.title }}                    ← H1
-    # {%p for sec in ch.sections %}
-    # {{ sec.title }}                   ← 新建，复制 H1 格式但改小
-    # {%p for para in sec.content %}
-    # {{ para }}                        ← BODY
-    # {%p endfor %}
-    # {%p for sub in sec.subsections %}
-    # {{ sub.title }}                   ← 新建
-    # {%p for p2 in sub.content %}
-    # {{ p2 }}                          ← 新建，复制 BODY 格式
-    # {%p endfor %}
-    # {%p endfor %}
-    # {%p endfor %}
-    # {%p endfor %}
+    # 构建完整循环结构（从下往上 addnext 插入）
+    # 最终顺序:
+    # {%p for ch %}
+    # {{ ch.title }}          ← H1 (已有)
+    # {%p for sec %}
+    # {{ sec.title }}         ← H2: 四号(14pt)黑体
+    # {%p for para %}
+    # {{ para }}              ← body (已有)
+    # {%p endfor %}           content
+    # {%p for sub %}
+    # {{ sub.title }}         ← H3: 小四号(12pt)宋体
+    # {%p for p2 %}
+    # {{ p2 }}                ← body 复制
+    # {%p endfor %}           sub.content
+    # {%p endfor %}           subsections
+    # {%p endfor %}           sections
+    # {%p endfor %}           chapters
 
-    # 在 H1 前插入 for ch
-    h1_p.addprevious(_mk_para("{%p for ch in chapters %}"))
+    # 在 H1 前插 for ch
+    h1_p.addprevious(_mk_ctrl("{%p for ch in chapters %}"))
 
-    # 在 H1 后插入 sec 循环
-    p_for_sec = _mk_para("{%p for sec in ch.sections %}")
-    h1_p.addnext(p_for_sec)
+    # 在 body_p 后面按顺序插入
+    anchor = body_p
 
-    # sec.title - 复制 body_p 格式（因为没有 H2 样本）
-    import copy
-    sec_title_p = copy.deepcopy(body_p)
-    for t_elem in sec_title_p.findall('.//w:t', _NS):
-        t_elem.text = ""
-    t_elems = sec_title_p.findall('.//w:t', _NS)
-    if t_elems:
-        t_elems[0].text = "{{ sec.title }}"
-    p_for_sec.addnext(sec_title_p)
+    # body_p 前面插 for sec + sec.title + for para
+    # 需要反过来在 h1_p 后面从上到下构建
+    # 先移除 body_p，重新按正确顺序插入所有元素
+    parent = body_p.getparent()
+    parent.remove(body_p)
 
-    # for para in sec.content
-    p_for_para = _mk_para("{%p for para in sec.content %}")
-    sec_title_p.addnext(p_for_para)
+    # h1_p 后面依次插入
+    cursor = h1_p
 
-    # body_p ({{ para }}) 已经在正确位置，移到 for para 后面
-    p_for_para.addnext(body_p)
+    p_for_sec = _mk_ctrl("{%p for sec in ch.sections %}")
+    cursor.addnext(p_for_sec)
+    cursor = p_for_sec
 
-    # endfor content
-    p_endfor1 = _mk_para("{%p endfor %}")
-    body_p.addnext(p_endfor1)
+    # H2: 四号黑体居左
+    p_sec_title = _mk_heading("{{ sec.title }}", "黑体", 14, bold=False)
+    cursor.addnext(p_sec_title)
+    cursor = p_sec_title
 
-    # for sub in sec.subsections
-    p_for_sub = _mk_para("{%p for sub in sec.subsections %}")
-    p_endfor1.addnext(p_for_sub)
+    p_for_para = _mk_ctrl("{%p for para in sec.content %}")
+    cursor.addnext(p_for_para)
+    cursor = p_for_para
 
-    # sub.title
-    sub_title_p = copy.deepcopy(body_p)
-    for t_elem in sub_title_p.findall('.//w:t', _NS):
-        t_elem.text = ""
-    t_elems = sub_title_p.findall('.//w:t', _NS)
-    if t_elems:
-        t_elems[0].text = "{{ sub.title }}"
-    p_for_sub.addnext(sub_title_p)
+    # 正文段落（用原始 body 样本）
+    cursor.addnext(body_p)
+    cursor = body_p
 
-    # for p2 in sub.content
-    p_for_p2 = _mk_para("{%p for p2 in sub.content %}")
-    sub_title_p.addnext(p_for_p2)
+    p_endfor_c = _mk_ctrl("{%p endfor %}")
+    cursor.addnext(p_endfor_c)
+    cursor = p_endfor_c
 
-    # {{ p2 }}
-    p2_p = copy.deepcopy(body_p)
-    for t_elem in p2_p.findall('.//w:t', _NS):
-        t_elem.text = ""
-    t_elems = p2_p.findall('.//w:t', _NS)
-    if t_elems:
-        t_elems[0].text = "{{ p2 }}"
-    p_for_p2.addnext(p2_p)
+    p_for_sub = _mk_ctrl("{%p for sub in sec.subsections %}")
+    cursor.addnext(p_for_sub)
+    cursor = p_for_sub
+
+    # H3: 小四号宋体居左
+    p_sub_title = _mk_heading("{{ sub.title }}", "宋体", 12, bold=False)
+    cursor.addnext(p_sub_title)
+    cursor = p_sub_title
+
+    p_for_p2 = _mk_ctrl("{%p for p2 in sub.content %}")
+    cursor.addnext(p_for_p2)
+    cursor = p_for_p2
+
+    # p2 正文（复制 body 格式）
+    p_p2 = _mk_body("{{ p2 }}")
+    cursor.addnext(p_p2)
+    cursor = p_p2
 
     # endfor sub.content
-    p_endfor2 = _mk_para("{%p endfor %}")
-    p2_p.addnext(p_endfor2)
-
+    cursor.addnext(_mk_ctrl("{%p endfor %}"))
+    cursor = cursor.getnext()
     # endfor subsections
-    p_endfor3 = _mk_para("{%p endfor %}")
-    p_endfor2.addnext(p_endfor3)
-
+    cursor.addnext(_mk_ctrl("{%p endfor %}"))
+    cursor = cursor.getnext()
     # endfor sections
-    p_endfor4 = _mk_para("{%p endfor %}")
-    p_endfor3.addnext(p_endfor4)
-
+    cursor.addnext(_mk_ctrl("{%p endfor %}"))
+    cursor = cursor.getnext()
     # endfor chapters
-    p_endfor5 = _mk_para("{%p endfor %}")
-    p_endfor4.addnext(p_endfor5)
+    cursor.addnext(_mk_ctrl("{%p endfor %}"))
 
     doc.save(doc_path)
     print(f"  正文循环已设置: {doc_path}")
@@ -368,7 +440,8 @@ def make(src_path, out_path):
                 r.text = t.replace("名称", "")
 
     # 清空正文区域的格式说明段落（非标题非样本）
-    heading_indices = {88, 99, 135, 143, 175, 213, 219}
+    # 保留 p[90] 作为正文格式样本（首行缩进+宋体+小四号）
+    heading_indices = {88, 90, 99, 135, 143, 175, 213, 219}
     for i in range(89, 145):
         if i in heading_indices:
             continue
