@@ -291,6 +291,17 @@ def _setup_jlau_body(doc_path):
     # endfor chapters
     cursor.addnext(_mk_ctrl("{%p endfor %}"))
 
+    # 修正正文段落的英文字体：ascii/hAnsi → Times New Roman
+    # 影响 {{ para }} 和 {{ p2 }}，生成的内容会继承此字体
+    _w = 'http://schemas.openxmlformats.org/wordprocessingml/2006/main'
+    _TNR = 'Times New Roman'
+    for target_p in [body_p, p_p2]:
+        for rFonts in target_p.findall(f'.//{{{_w}}}rFonts'):
+            ascii_val = rFonts.get(qn('w:ascii'))
+            if ascii_val and ascii_val != _TNR:
+                rFonts.set(qn('w:ascii'), _TNR)
+                rFonts.set(qn('w:hAnsi'), _TNR)
+
     doc.save(doc_path)
     print(f"  正文循环已设置: {doc_path}")
 
@@ -409,6 +420,18 @@ def make(src_path, out_path):
             p25.runs[1].text = "{{ keywords_en }}"
         for r in p25.runs[2:]:
             r.text = ""
+
+    # 修正英文摘要和关键词字体：ascii/hAnsi → Times New Roman
+    from docx.oxml.ns import qn as _qn
+    _w = 'http://schemas.openxmlformats.org/wordprocessingml/2006/main'
+    _TNR = 'Times New Roman'
+    for pidx in [21, 25]:  # 英文摘要正文、KEY WORDS
+        for rFonts in doc.paragraphs[pidx]._p.findall(
+                f'.//{{{_w}}}rFonts'):
+            ascii_val = rFonts.get(_qn('w:ascii'))
+            if ascii_val and ascii_val != _TNR:
+                rFonts.set(_qn('w:ascii'), _TNR)
+                rFonts.set(_qn('w:hAnsi'), _TNR)
 
     print("  Step 3: 英文摘要")
 
