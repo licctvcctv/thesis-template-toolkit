@@ -211,6 +211,9 @@ def _post_process(docx_path):
             './/{http://schemas.openxmlformats.org/wordprocessingml/2006/main}drawing'))
         if has_drawing:
             p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+            # 固定行间距(EXACTLY 20pt)会裁切图片，改为单倍行距
+            from docx.enum.text import WD_LINE_SPACING
+            p.paragraph_format.line_spacing_rule = WD_LINE_SPACING.SINGLE
 
         # 图/表标注 → 居中 + 五号（短文本）
         if (fig_pat.match(t) or tbl_cap_pat.match(t)) and len(t) < 50:
