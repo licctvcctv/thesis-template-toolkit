@@ -1,0 +1,47 @@
+{
+    "title_zh": "基于深度学习的海洋鱼类图像识别系统设计与实现",
+    "title_en": "Design and Implementation of Marine Fish Image Recognition System",
+    "college": "信息学院",
+    "class_name": "计算机2201",
+    "name": "张三",
+    "student_id": "2022001234",
+    "advisor": "李教授",
+    "year": "2026",
+    "month": "5",
+    "abstract_zh": "本文提出一种基于深度学习的海洋鱼类图像识别方法，利用卷积神经网络对20种常见海洋鱼类进行自动分类识别，最终在测试集上达到了96.5%的识别准确率。",
+    "keywords_zh": "深度学习；鱼类识别；卷积神经网络；图像分类",
+    "abstract_en": "This paper proposes a marine fish image recognition method based on deep learning with 96.5% accuracy.",
+    "keywords_en": "Deep learning;Fish recognition;CNN;Image classification",
+    "acknowledgement": "感谢指导教师的悉心指导，感谢同学们的帮助，感谢家人的支持。",
+    "fig_caption": "",
+    "chapters": [
+        {
+            "title": "1 绪论",
+            "sections": [
+                {
+                    "title": "1.1 研究背景",
+                    "content": ["海洋鱼类识别是渔业资源管理的重要需求。"],
+                    "subsections": [
+                        {"title": "1.1.1 国外研究现状", "content": ["Deep Fish项目实现了94.3%的分类准确率。"]}
+                    ]
+                },
+                {
+                    "title": "1.2 研究内容",
+                    "content": ["本文构建数据集并设计CNN模型。"],
+                    "subsections": []
+                }
+            ]
+        },
+        {
+            "title": "2 系统设计",
+            "sections": [
+                {"title": "2.1 总体架构", "content": ["系统采用B/S架构。"], "subsections": []}
+            ]
+        }
+    ],
+    "references": [
+        "何凯明. 深度残差学习[C]. CVPR, 2016.",
+        "李明. 图像识别综述[J]. 计算机学报, 2024.",
+        "王海涛. 计算机视觉[M]. 科学出版社, 2023."
+    ]
+}

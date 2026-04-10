@@ -1,99 +1,51 @@
-# 论文模板自动化工具 (Thesis Template Skill)
+# 论文模板自动化工具
 
-将任意学校的毕业论文 Word 模板自动转换为 docxtpl 可填充模板。
+将任意学校的毕业论文 Word 模板自动转换为可填充模板，然后用数据生成论文。
 
-## 核心理念
-
-**只换文字，不碰格式。** 所有样式从原始模板继承，零硬编码。
-
-## 架构
+## 项目结构
 
 ```
-原始论文模板 .docx
-      ↓
-scanner/         ← 扫描器（只看，不改）
-  structure.py   - 识别文档分区（封面/摘要/正文/致谢等）
-  paragraphs.py  - 提取段落和 run 级详细信息
-  report.py      - 生成 AI 可读的扫描报告
-      ↓
-AI 决策           ← AI 看扫描报告，决定哪些 run 要替换成什么
-      ↓
-editor.py        ← 编辑器（只改 run.text，不碰格式）
-      ↓
-docxtpl 模板 .docx
-      ↓
-builder.py       ← 内容构建器（章节/参考文献/表格/图片）
-generate.py      ← 填充数据，生成最终论文
+thesis-template-toolkit/
+├── scanner/              ← 通用：文档扫描器
+├── editor.py             ← 通用：run 级文本替换
+├── body_maker.py         ← 通用：正文 Jinja2 循环设置
+├── refs_maker.py         ← 通用：参考文献循环设置
+├── builder.py            ← 通用：内容构建器
+├── generate.py           ← 通用：论文生成器
+│
+└── templates/            ← 各学校模板
+    └── shou/             ← 上海海洋大学
+        ├── make.py           制作模板的脚本
+        ├── template.docx     制作好的模板（生成后）
+        └── example_data.json 示例数据
 ```
 
 ## 使用流程
 
-### 1. 扫描模板
-```python
-from scanner import scan_structure, scan_paragraphs, generate_report
+### 1. 制作模板（每个学校做一次）
 
-# 扫描整体结构
-structure = scan_structure("学校论文模板.docx")
-
-# 扫描特定区域的段落详情
-paras = scan_paragraphs("学校论文模板.docx", start=0, end=30, detail=True)
-
-# 生成报告（给 AI 看）
-report = generate_report(structure, paras)
-print(report)
+```bash
+cd templates/shou
+python make.py ../../原始模板.docx template.docx
 ```
 
-### 2. AI 决策后，执行替换
-```python
-from editor import TemplateEditor
+### 2. 生成论文（每次写论文时）
 
-editor = TemplateEditor("学校论文模板.docx")
-
-# 封面字段
-editor.replace_run(para=10, run=3, text="{{ name }}")
-editor.replace_run(para=11, run=1, text="{{ student_id }}")
-
-# 摘要
-editor.replace_run(para=39, run=0, text="    {{ abstract_zh }}")
-editor.clear_runs(para=39, runs=[1, 2, 3, 4])
-
-# 正文区域：保留样本段落格式，插入 Jinja2 循环
-editor.insert_before(para=111, text="{%p for ch in chapters %}")
-editor.replace_run(para=111, run=3, text="{{ ch.title }}")
-# ...
-
-editor.save("thesis_template.docx")
+```bash
+python generate.py templates/shou/template.docx data.json output.docx
 ```
 
-### 3. 填充数据生成论文
-```python
-from docxtpl import DocxTemplate
+## 添加新学校
 
-doc = DocxTemplate("thesis_template.docx")
-context = {
-    "name": "张三",
-    "abstract_zh": "本文研究了...",
-    "chapters": [...],
-}
-doc.render(context)
-doc.save("我的毕业论文.docx")
-```
+1. 创建 `templates/<学校名>/` 目录
+2. 用 scanner 扫描原始模板，确定封面字段位置
+3. 写 `make.py`（约 50-80 行，只需指定封面 run 替换位置）
+4. 运行 `make.py` 生成模板
 
-## 文件说明
+正文循环、参考文献、致谢等由通用模块自动处理。
 
-| 文件 | 用途 | 行数 |
-|------|------|------|
-| scanner/__init__.py | 扫描器入口 | ~10 |
-| scanner/structure.py | 文档分区识别 | ~100 |
-| scanner/paragraphs.py | 段落/run 级扫描 | ~120 |
-| scanner/report.py | 报告生成 | ~80 |
-| editor.py | 模板编辑器（只改文字） | ~90 |
-| builder.py | 内容构建器 | ~200 |
-| generate.py | 论文生成入口 | ~50 |
+## 核心原则
 
-## 设计原则
-
-1. **只换文字不换格式** - editor 只修改 run.text
-2. **AI 驱动决策** - scanner 提供信息，AI 决定改什么
-3. **模板继承优先** - 正文用 Jinja2 循环，格式从模板继承
-4. **通用性** - 不针对特定学校，适配 99% 的论文模板
+- **只换文字不换格式** — 所有样式从原始模板继承
+- **Jinja2 循环** — 正文/参考文献通过模板循环生成，不用 subdoc
+- **渐进式扫描** — scanner 粗扫定位，细扫确认 run 位置
