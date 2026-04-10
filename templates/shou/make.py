@@ -24,7 +24,12 @@ def make(src_path, out_path):
     # Step 1: 封面 + 摘要
     ed = TemplateEditor(src_path)
     ed.replace_run(6, 3, "{{ title_zh }}")
+    # 删除题目下方多余的空白下划线段落（原模板给长标题留的第二行）
+    for r in reversed(ed.paras[7].runs):
+        r._r.getparent().remove(r._r)
     ed.replace_run(8, 4, "{{ title_en }}")
+    for r in reversed(ed.paras[9].runs):
+        r._r.getparent().remove(r._r)
     ed.replace_run(10, 1, "学 院：{{ college }}")
     ed.replace_run(11, 0, "   班 级：{{ class_name }}")
     ed.replace_run(12, 0, "   姓 名：{{ name }}")

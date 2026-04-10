@@ -1,0 +1,55 @@
+{
+    "title": "第2章 相关技术介绍",
+    "sections": [
+        {
+            "title": "2.1 NestJS框架",
+            "content": [
+                "NestJS用TypeScript编写，跑在Node.js上。它把代码按业务领域拆成Module，每个Module里Controller负责接路由，Service负责跑逻辑，两者通过依赖注入容器关联起来，不直接互相引用。这种拆法的好处是改一个Module的代码时，只要接口不变，其他Module不受影响。",
+                "在本项目里，认证、课程、社区、问答、班级、管理各占一个Module，共享同一个数据库连接和同一个JWT Guard。如果直接用Express写，四五个业务模块混在一起时路由文件会变得很长，后面加功能时改动范围不好控制。NestJS的装饰器语法把路由定义、参数校验和权限检查写在同一个方法上面，读起来比较集中。"
+            ],
+            "subsections": []
+        },
+        {
+            "title": "2.2 Flutter跨平台开发框架",
+            "content": [
+                "Flutter用Dart语言编写，渲染引擎是Skia，直接画像素，不走平台原生控件。编译产物是ARM二进制文件，一套代码出两个平台的安装包。",
+                "本项目的学生端App用Flutter写，包含首页、课程列表、社区动态和个人中心四个一级页面。视频播放用chewie插件套在video_player上面，社区列表用ListView.builder按需渲染，只有屏幕可见区域的卡片会被创建。",
+                "选Flutter不选React Native，主要看中的是列表滚动和页面切换动画的帧率。在Redmi K60（中端机）上实际跑过，Flutter稳定在55fps以上。Dart的社区生态确实不如JavaScript大，个别第三方库的维护力度一般，这是实际开发中遇到的不足。"
+            ],
+            "subsections": []
+        },
+        {
+            "title": "2.3 Vue.js前端框架",
+            "content": [
+                "Vue.js把模板、脚本和样式写在一个.vue文件里，数据改了DOM自动更新，不用手动去操作页面元素。",
+                "管理后台用Vue 3和Element Plus搭建。教师登录后可以发布课程、上传视频、查看学生提问、审核社区帖子。Element Plus的Table和Form组件直接覆盖了管理后台八成以上的界面需求，省了大量自己写表格和表单的时间。"
+            ],
+            "subsections": []
+        },
+        {
+            "title": "2.4 TypeORM与数据库",
+            "content": [
+                "TypeORM用TypeScript的装饰器语法定义数据表结构，运行时自动建表和拼SQL。它支持多种数据库引擎，切换时只改连接配置，业务代码不用动。",
+                "开发阶段用SQLite，它是单文件数据库，不用装数据库服务，clone下来直接就能跑。SQLite支持并发读，但写操作有文件锁，多人同时写的时候会排队。本项目预期用户在百人以内，SQLite够用。如果后面用户规模上去了，TypeORM配置文件里把driver换成MySQL或PostgreSQL就行。",
+                "TypeORM在NestJS里通过@nestjs/typeorm模块集成，每个Entity对应一张表，用Repository模式封装增删改查，数据操作和业务逻辑分开写。"
+            ],
+            "subsections": []
+        },
+        {
+            "title": "2.5 JWT认证机制",
+            "content": [
+                "JWT把用户ID和角色信息编码成一段Base64字符串，服务端签发后不用在内存或数据库里存会话状态。客户端每次请求在Header里带上这个字符串，服务端验签名就知道是谁。",
+                "本项目通过@nestjs/passport配合passport-jwt策略做认证。登录成功后签发两个Token：Access Token有效期30分钟，每次请求都带着它；Refresh Token有效期7天，Access Token过期了就用它换新的。换的过程对用户来说感觉不到。",
+                "Flutter端和Vue端用同一套认证流程，不需要给移动端单独搞Session。Token泄露后在过期前没法主动作废，本项目靠缩短Access Token有效期加上Refresh Token轮转来控制这个风险。"
+            ],
+            "subsections": []
+        },
+        {
+            "title": "2.6 本章小结",
+            "content": [
+                "本章介绍了项目用到的五个技术：NestJS写后端API，Flutter写移动端，Vue.js写管理后台，TypeORM加SQLite做数据持久化，JWT做三端统一的认证。选这些技术的考虑是：功能上够用，部署上简单，开发人力上省事。"
+            ],
+            "subsections": []
+        }
+    ]
+}

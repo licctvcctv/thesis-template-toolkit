@@ -1,0 +1,336 @@
+{
+    "title": "第4章 系统设计",
+    "sections": [
+        {
+            "title": "4.1 系统架构设计",
+            "content": [
+                "整个平台分三层。表现层有两个客户端：Flutter移动端给学生用，Vue.js管理后台给管理员用，两个客户端通过HTTP请求打同一组RESTful API。",
+                "业务逻辑层跑在NestJS上，按业务边界拆成多个Module，每个Module内部Controller接路由、Service跑逻辑、Entity映射数据库表，三层各管各的。",
+                "数据持久层用TypeORM操作SQLite。Flutter端和Vue.js端不碰数据库，所有数据操作都经过NestJS的Service层，由TypeORM Repository执行SQL。JwtGuard在Controller入口处拦未授权请求，JwtStrategy从Token里把用户信息解出来注入到Request对象，请求到Service层时身份已经确认好了。",
+                {
+                    "type": "image",
+                    "path": "fig4-1_系统架构图.png",
+                    "width": 130
+                },
+                "图4-1 系统总体架构图"
+            ],
+            "subsections": []
+        },
+        {
+            "title": "4.2 数据库设计",
+            "content": [
+                "数据库一共11张表。User表是核心，几乎所有业务表都有user_id外键指向它。",
+                "Course和Lesson是一对多，一门课挂多个课时。Enrollment是User和Course之间的多对多中间表。Progress表记录用户在每个课时上看到了哪里，粒度是课时级别。",
+                "社区相关的表相对独立。Post表存帖子正文和图片路径。Comment表用target_type和target_id两个字段区分评论的是帖子还是课程，省去了拆两张表。Question和Answer组成问答对，Question绑course_id，Answer绑question_id，一个问题可以有多条回答。",
+                "Class和ClassMember处理班级。Class表存班级名和邀请码，ClassMember是Class和User之间的中间表。邀请码字段加了UNIQUE约束，加入班级时后端拿邀请码查到班级ID再写成员记录。",
+                {
+                    "type": "image",
+                    "path": "fig4-3_ER图.png",
+                    "width": 130
+                },
+                "图4-3 系统E-R图",
+                "表4-1 User表字段设计",
+                {
+                    "type": "table",
+                    "caption": "表4-1 User 表字段设计",
+                    "headers": ["字段名", "类型", "说明"],
+                    "rows": [
+                        ["id", "INT", "主键，自增"],
+                        ["username", "VARCHAR(50)", "用户名，UNIQUE 约束"],
+                        ["password", "VARCHAR(255)", "bcrypt 哈希存储"],
+                        ["role", "VARCHAR(20)", "角色标识：user / admin"],
+                        ["avatar", "VARCHAR(255)", "头像文件路径"],
+                        ["phone", "VARCHAR(20)", "手机号，用于注册验证"],
+                        ["status", "TINYINT", "0-正常 1-禁用"],
+                        ["created_at", "DATETIME", "注册时间"]
+                    ]
+                },
+                "表4-2 Course表字段设计",
+                {
+                    "type": "table",
+                    "caption": "表4-2 Course 表字段设计",
+                    "headers": ["字段名", "类型", "说明"],
+                    "rows": [
+                        ["id", "INT", "主键，自增"],
+                        ["title", "VARCHAR(120)", "课程标题，列表页和详情页展示"],
+                        ["description", "TEXT", "课程简介，支持多段文字"],
+                        ["cover", "VARCHAR(255)", "封面图片路径"],
+                        ["category", "VARCHAR(50)", "课程分类：编程 / 设计 / 语言等"],
+                        ["teacher_name", "VARCHAR(50)", "讲师名称"],
+                        ["status", "TINYINT", "0-草稿 1-已上架 2-已下架"],
+                        ["created_at", "DATETIME", "创建时间"]
+                    ]
+                },
+                "表4-3 Lesson表字段设计",
+                {
+                    "type": "table",
+                    "caption": "表4-3 Lesson 表字段设计",
+                    "headers": ["字段名", "类型", "说明"],
+                    "rows": [
+                        ["id", "INT", "主键，自增"],
+                        ["course_id", "INT", "外键关联 Course 表"],
+                        ["title", "VARCHAR(120)", "课时标题"],
+                        ["video_url", "VARCHAR(255)", "视频文件路径或外链"],
+                        ["duration", "INT", "视频时长，单位秒"],
+                        ["sort_order", "INT", "课时排序序号"]
+                    ]
+                },
+                "表4-4 Enrollment表字段设计",
+                {
+                    "type": "table",
+                    "caption": "表4-4 Enrollment 表字段设计",
+                    "headers": ["字段名", "类型", "说明"],
+                    "rows": [
+                        ["id", "INT", "主键，自增"],
+                        ["user_id", "INT", "外键关联 User 表"],
+                        ["course_id", "INT", "外键关联 Course 表"],
+                        ["enrolled_at", "DATETIME", "报名时间"]
+                    ]
+                },
+                "表4-5 Progress表字段设计",
+                {
+                    "type": "table",
+                    "caption": "表4-5 Progress 表字段设计",
+                    "headers": ["字段名", "类型", "说明"],
+                    "rows": [
+                        ["id", "INT", "主键，自增"],
+                        ["user_id", "INT", "外键关联 User 表"],
+                        ["lesson_id", "INT", "外键关联 Lesson 表"],
+                        ["watched_seconds", "INT", "已观看秒数"],
+                        ["completed", "BOOLEAN", "是否看完该课时"],
+                        ["updated_at", "DATETIME", "最近一次进度更新时间"]
+                    ]
+                },
+                "表4-6 Post表字段设计",
+                {
+                    "type": "table",
+                    "caption": "表4-6 Post 表字段设计",
+                    "headers": ["字段名", "类型", "说明"],
+                    "rows": [
+                        ["id", "INT", "主键，自增"],
+                        ["user_id", "INT", "外键关联 User 表"],
+                        ["content", "TEXT", "帖子正文"],
+                        ["images", "TEXT", "图片路径列表，JSON 数组格式"],
+                        ["likes", "INT", "点赞计数，默认 0"],
+                        ["created_at", "DATETIME", "发布时间"]
+                    ]
+                },
+                "表4-7 Comment表字段设计",
+                {
+                    "type": "table",
+                    "caption": "表4-7 Comment 表字段设计",
+                    "headers": ["字段名", "类型", "说明"],
+                    "rows": [
+                        ["id", "INT", "主键，自增"],
+                        ["user_id", "INT", "外键关联 User 表"],
+                        ["target_type", "VARCHAR(20)", "评论对象类型：post / course"],
+                        ["target_id", "INT", "评论对象 ID"],
+                        ["content", "TEXT", "评论内容"],
+                        ["created_at", "DATETIME", "评论时间"]
+                    ]
+                },
+                "表4-8 Question表字段设计",
+                {
+                    "type": "table",
+                    "caption": "表4-8 Question 表字段设计",
+                    "headers": ["字段名", "类型", "说明"],
+                    "rows": [
+                        ["id", "INT", "主键，自增"],
+                        ["user_id", "INT", "外键关联 User 表"],
+                        ["course_id", "INT", "外键关联 Course 表"],
+                        ["title", "VARCHAR(200)", "问题标题"],
+                        ["content", "TEXT", "问题描述"],
+                        ["solved", "BOOLEAN", "是否已采纳答案"],
+                        ["created_at", "DATETIME", "提问时间"]
+                    ]
+                },
+                "表4-9 Answer表字段设计",
+                {
+                    "type": "table",
+                    "caption": "表4-9 Answer 表字段设计",
+                    "headers": ["字段名", "类型", "说明"],
+                    "rows": [
+                        ["id", "INT", "主键，自增"],
+                        ["question_id", "INT", "外键关联 Question 表"],
+                        ["user_id", "INT", "外键关联 User 表"],
+                        ["content", "TEXT", "回答内容"],
+                        ["accepted", "BOOLEAN", "是否被采纳"],
+                        ["created_at", "DATETIME", "回答时间"]
+                    ]
+                },
+                "表4-10 Class表字段设计",
+                {
+                    "type": "table",
+                    "caption": "表4-10 Class 表字段设计",
+                    "headers": ["字段名", "类型", "说明"],
+                    "rows": [
+                        ["id", "INT", "主键，自增"],
+                        ["name", "VARCHAR(80)", "班级名称"],
+                        ["invite_code", "VARCHAR(20)", "邀请码，UNIQUE 约束"],
+                        ["creator_id", "INT", "外键关联 User 表"],
+                        ["created_at", "DATETIME", "创建时间"]
+                    ]
+                },
+                "表4-11 ClassMember表字段设计",
+                {
+                    "type": "table",
+                    "caption": "表4-11 ClassMember 表字段设计",
+                    "headers": ["字段名", "类型", "说明"],
+                    "rows": [
+                        ["id", "INT", "主键，自增"],
+                        ["class_id", "INT", "外键关联 Class 表"],
+                        ["user_id", "INT", "外键关联 User 表"],
+                        ["joined_at", "DATETIME", "加入时间"]
+                    ]
+                }
+            ],
+            "subsections": []
+        },
+        {
+            "title": "4.3 功能模块设计",
+            "content": [
+                "NestJS把代码按业务边界拆成独立Module。每个Module里有Controller、Service、Entity和DTO文件，Module之间通过依赖注入通信，不直接引用对方的内部实现。改一个Module的代码，只要接口签名不变，其他Module不受影响。",
+                {
+                    "type": "image",
+                    "path": "fig4-2_功能结构图.png",
+                    "width": 130
+                },
+                "图4-2 系统功能结构图"
+            ],
+            "subsections": [
+                {
+                    "title": "4.3.1 认证模块设计",
+                    "content": [
+                        "AuthModule处理注册和登录。注册接口收用户名、密码和手机号，密码经bcrypt哈希后写入User表。登录接口校验凭据，通过后用@nestjs/jwt签发令牌，载荷里放用户ID和角色。",
+                        "JwtStrategy挂在需要鉴权的路由上，从Header里解析Bearer Token，把用户信息塞进Request对象。角色校验用自定义的RolesGuard，管理员接口要求role值是admin。"
+                    ]
+                },
+                {
+                    "title": "4.3.2 课程模块设计",
+                    "content": [
+                        "CourseModule管Course和Lesson两张表。列表接口支持分页、分类筛选和关键词搜索，TypeORM QueryBuilder动态拼查询条件。详情接口返回课程基本信息加课时列表，课时按sort_order升序排。",
+                        "课时播放接口返回视频地址。进度上报接口把watched_seconds和completed状态写入Progress表。课程完成度的算法是：已完成课时数除以总课时数，前端拿这个数字渲染进度条。"
+                    ]
+                },
+                {
+                    "title": "4.3.3 班级模块设计",
+                    "content": [
+                        "ClassModule围绕Class和ClassMember两张表。创建班级时后端生成六位随机邀请码写进invite_code字段。加入班级接口收邀请码，先查班级存不存在、用户有没有加过，都过了就写ClassMember记录。成员列表按joined_at升序返回。"
+                    ]
+                },
+                {
+                    "title": "4.3.4 社区与问答模块设计",
+                    "content": [
+                        "PostModule处理帖子的发布、浏览、点赞和评论。发帖时支持多张图片上传，图片路径以JSON数组写进images字段。点赞接口是切换逻辑，点一次加1，再点一次减1。",
+                        "QaModule绑在课程上。用户在课程详情页发起提问，Question记录带course_id。其他用户浏览同一门课的问题列表并提交回答，Answer记录带question_id。提问者采纳一条回答后，Answer的accepted和Question的solved都置为true。"
+                    ]
+                },
+                {
+                    "title": "4.3.5 管理模块设计",
+                    "content": [
+                        "AdminModule的所有接口都挂RolesGuard，只有admin角色能访问。仪表盘接口聚合User、Course和Enrollment三张表的数据，返回用户总数、课程总数、今日新增报名数和近七天趋势数组。用户管理接口查列表和切换状态，课程管理接口做审核、编辑和上下架，帖子管理接口删违规内容。"
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "4.4 接口设计",
+            "content": [
+                "所有接口走RESTful风格，URL路径用资源名词，HTTP方法表达操作：GET查、POST创建、PUT更新、DELETE删除。请求和响应都是JSON格式。认证接口不用带令牌，其他接口在Header里带Bearer Token。管理员接口路径以/api/admin开头，Guard统一拦截。",
+                "表4-12 主要API接口设计",
+                {
+                    "type": "table",
+                    "caption": "表4-12 主要 API 接口设计",
+                    "headers": ["方法", "接口路径", "说明"],
+                    "rows": [
+                        ["POST", "/api/auth/register", "用户注册，参数 username/password/phone"],
+                        ["POST", "/api/auth/login", "用户登录，返回 JWT token 和角色信息"],
+                        ["GET", "/api/courses", "分页查询课程列表，支持分类和关键词筛选"],
+                        ["GET", "/api/courses/:id", "获取课程详情，包含课时列表"],
+                        ["POST", "/api/enrollments", "用户报名课程，写入 Enrollment 记录"],
+                        ["GET", "/api/enrollments/mine", "获取当前用户已报名课程列表"],
+                        ["GET", "/api/lessons/:id", "获取课时详情和视频地址"],
+                        ["PUT", "/api/progress/:lessonId", "上报或更新学习进度"],
+                        ["GET", "/api/progress/course/:courseId", "获取当前用户在指定课程的全部课时进度"],
+                        ["POST", "/api/classes", "创建班级，自动生成邀请码"],
+                        ["POST", "/api/classes/join", "通过邀请码加入班级"],
+                        ["GET", "/api/classes/:id/members", "获取班级成员列表"],
+                        ["GET", "/api/posts", "分页查询社区帖子列表"],
+                        ["POST", "/api/posts", "发布帖子，支持图片上传"],
+                        ["POST", "/api/posts/:id/like", "点赞或取消点赞"],
+                        ["POST", "/api/comments", "发表评论，target_type 区分对象"],
+                        ["GET", "/api/questions/course/:courseId", "获取指定课程的问题列表"],
+                        ["POST", "/api/questions", "发起课程提问"],
+                        ["POST", "/api/answers", "回答问题"],
+                        ["PUT", "/api/answers/:id/accept", "采纳答案"],
+                        ["GET", "/api/admin/dashboard", "管理员仪表盘统计数据"],
+                        ["GET", "/api/admin/users", "管理员查看用户列表"],
+                        ["PUT", "/api/admin/users/:id/status", "禁用或启用用户"],
+                        ["GET", "/api/admin/courses", "管理员查看课程列表"],
+                        ["PUT", "/api/admin/courses/:id/status", "课程上架、下架、审核"],
+                        ["DELETE", "/api/admin/posts/:id", "删除违规帖子"]
+                    ]
+                },
+                {
+                    "type": "image",
+                    "path": "fig4-4_业务流程图.png",
+                    "width": 100
+                },
+                "图4-4 课程报名业务流程图"
+            ],
+            "subsections": [
+                {
+                    "title": "4.4.1 核心接口时序分析",
+                    "content": [
+                        "拿登录接口举例说明请求的流转路径。Flutter客户端通过Dio库向后端发POST /api/auth/login请求，请求体里有用户名和密码。AuthController接到后调AuthService的login方法。AuthService从User表查出用户记录，用bcrypt比对密码哈希。比对通过后调JwtService签发Access Token（30分钟有效期）和Refresh Token（7天有效期），AuthController把这对令牌返回给客户端。Flutter端拿到令牌后存到本地安全存储里，后续请求都在Header里带着Access Token。",
+                        "课程列表接口的路径类似但多一步鉴权。Flutter发GET /api/courses请求，Header里带Bearer Token。JwtGuard先验Token有效性，通过后把用户信息注入Request。CourseController调CourseService的findAll方法，TypeORM Repository查Course表，支持分页和分类筛选参数。查询结果封装成统一格式后返回。",
+                        {
+                            "headers": ["方法", "接口路径", "说明"],
+                            "rows": [
+                                ["POST", "/api/auth/register", "用户注册"],
+                                ["POST", "/api/auth/login", "用户登录，返回JWT"],
+                                ["GET", "/api/courses", "分页查询课程列表"],
+                                ["GET", "/api/courses/:id", "获取课程详情"],
+                                ["POST", "/api/enrollments", "用户报名课程"],
+                                ["PUT", "/api/progress/:lessonId", "上报学习进度"],
+                                ["GET", "/api/posts", "查询社区帖子"],
+                                ["POST", "/api/posts", "发布帖子"],
+                                ["POST", "/api/questions", "发起课程提问"],
+                                ["GET", "/api/admin/dashboard", "管理员统计数据"]
+                            ],
+                            "caption": "表4-12 主要API接口设计",
+                            "type": "table"
+                        }
+                    ]
+                },
+                {
+                    "title": "4.4.2 API响应格式规范",
+                    "content": [
+                        "所有接口返回三个字段：code是业务状态码，message是提示信息，data是实际数据。成功时code为200，出错时返回对应错误码。分页查询的data里包含items数组和分页信息（total总数、page当前页、limit每页条数）。前端用一个通用的响应拦截器统一处理这个格式。"
+                    ]
+                },
+                {
+                    "title": "4.4.3 JWT刷新流程设计",
+                    "content": [
+                        "系统用双令牌。Access Token 30分钟有效期，常规请求带着它做身份验证。Refresh Token 7天有效期，专门用来换新的Access Token。",
+                        "刷新流程：客户端发请求时后端返回401，说明Access Token过期了。客户端的HTTP拦截器自动拿Refresh Token去POST /api/auth/refresh换新的Access Token。后端验完Refresh Token，签发新Access Token返回。客户端更新本地存储，用新令牌重试原来那个请求。如果Refresh Token也过期了，清掉本地令牌信息跳到登录页。整个过程用户感觉不到。"
+                    ]
+                },
+                {
+                    "title": "4.4.4 缓存策略设计",
+                    "content": [
+                        "课程列表和课程详情是读取频率最高的两个接口，在NestJS服务层加了内存缓存。NestJS自带的CacheModule基于cache-manager，可以对指定接口的响应做缓存。课程列表缓存60秒，课程详情缓存120秒。",
+                        "管理员做课程编辑、上下架这些写操作时，相关缓存主动清掉，保证数据一致。Flutter客户端在本地也缓存了课程列表，下拉刷新时清掉重新请求。两级缓存在百人规模下能有效减少数据库查询次数，接口响应也快一些。"
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "4.5 本章小结",
+            "content": [
+                "本章从架构、数据库、功能模块和接口四个方面写了系统设计。架构分三层，NestJS统一跑业务逻辑。数据库11张表，通过外键把业务数据关联起来。功能模块按NestJS的Module机制拆分，各管各的事。接口走RESTful规范，配合JWT刷新流程和两级缓存策略保障可用性和性能。"
+            ],
+            "subsections": []
+        }
+    ]
+}
