@@ -1,0 +1,17 @@
+{
+    "title_zh": "基于NestJS+Flutter的智学云课在线教育平台设计与实现",
+    "title_en": "Design and Implementation of ZhiXue Cloud Course Online Education Platform Based on NestJS and Flutter",
+    "college": "信息工程学院",
+    "class_name": "软件工程2201",
+    "name": "XXX",
+    "student_id": "2022XXXXXX",
+    "advisor": "XXX教授",
+    "year": "2026",
+    "month": "5",
+    "abstract_zh": "随着互联网技术的快速发展和教育信息化进程的不断推进，在线教育平台已成为教育领域的重要组成部分。本文针对当前在线教育平台存在的跨平台兼容性差、后端架构扩展性不足等问题，设计并实现了一套基于NestJS和Flutter的智学云课在线教育平台。系统后端采用NestJS框架构建模块化微服务架构，前端管理系统基于Vue.js开发，移动端采用Flutter实现跨平台部署，数据存储层采用MySQL关系型数据库并结合Redis缓存提升访问性能。平台实现了用户管理、课程管理、视频学习与进度追踪、在线测评、学习数据统计等核心功能模块。系统采用JWT令牌机制实现安全认证，通过RESTful API规范实现前后端分离。功能测试结果表明，系统20个核心功能测试用例全部通过；性能测试显示，在100并发用户条件下，核心接口平均响应时间低于200ms，吞吐量达到每秒85次请求，系统运行稳定可靠，满足在线教育平台的实际应用需求。",
+    "keywords_zh": "在线教育；NestJS；Flutter；跨平台开发；系统设计与实现",
+    "abstract_en": "With the rapid development of Internet technology and the continuous advancement of educational informatization, online education platforms have become an essential component of the education sector. This paper addresses the issues of poor cross-platform compatibility and insufficient backend scalability in current online education platforms by designing and implementing the ZhiXue Cloud Course online education platform based on NestJS and Flutter. The backend adopts a modular microservice architecture built with NestJS, the frontend management system is developed using Vue.js, and the mobile application is implemented with Flutter for cross-platform deployment. The data storage layer utilizes MySQL combined with Redis caching to enhance access performance. The platform implements core functional modules including user management, course management, video learning with progress tracking, online assessment, and learning analytics. Functional testing demonstrates that all 20 core test cases pass successfully, and performance testing shows that under 100 concurrent users, the average response time of core APIs remains below 200ms with a throughput of 85 requests per second.",
+    "keywords_en": "Online education;NestJS;Flutter;Cross-platform development;System design and implementation",
+    "acknowledgement": "本论文的完成离不开许多人的帮助与支持。首先，我要衷心感谢我的指导教师，在论文选题、系统开发和论文撰写等各个环节给予了悉心的指导和耐心的帮助。其次，感谢学院各位老师在本科四年学习期间的辛勤教导。同时，感谢实验室的同学们在系统开发和测试过程中提供的帮助和宝贵建议。最后，感谢我的家人一直以来的理解、支持与鼓励，使我能够顺利完成学业。",
+    "fig_caption": ""
+}
