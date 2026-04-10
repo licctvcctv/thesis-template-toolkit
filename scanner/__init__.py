@@ -1,10 +1,17 @@
 """
-论文模板扫描器 - 分析 Word 文档结构，输出结构化信息供 AI 决策。
+论文模板扫描器 - 渐进式分析，供 AI 决策。
 
-不直接修改文件，只负责"看"和"报告"。
+粗扫: scan_structure() → 文档分区概览
+细扫: scan_paragraphs() → 特定区域的 run 级详情
+正文: scan_body() → 找格式样本（标题/表格/图片）
+报告: generate_report() → AI 可读的文本报告
 """
 from .structure import scan_structure
-from .paragraphs import scan_paragraphs
+from .paragraphs import scan_paragraphs, scan_para_runs
+from .body import scan_body
 from .report import generate_report
 
-__all__ = ['scan_structure', 'scan_paragraphs', 'generate_report']
+__all__ = [
+    'scan_structure', 'scan_paragraphs', 'scan_para_runs',
+    'scan_body', 'generate_report',
+]

@@ -42,14 +42,26 @@ def scan_structure(doc_or_path):
             result["styles_used"].get(name, 0) + 1
 
     # Single-pass section detection
+    # Skip TOC entries (contain tab = page number separator)
+    toc_start = None
     found = set()
     for i, p in enumerate(paras):
         text = p.text or ""
+        # Detect TOC start
+        for kw in SECTION_MARKERS["toc"]:
+            if kw in text:
+                toc_start = i
+                break
         for name, keywords in SECTION_MARKERS.items():
             if name in found:
                 continue
             for kw in keywords:
                 if kw in text:
+                    # Skip TOC entries (tab = page number)
+                    is_toc_entry = ('\t' in text and toc_start
+                                    and i > toc_start and name != "toc")
+                    if is_toc_entry:
+                        continue
                     result["parts"][name] = {
                         "start": i,
                         "text": text.strip()[:60],
