@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="720" viewBox="0 0 1400 720" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#202020" />
+    </marker>
+    <marker id="dashArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#555" />
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="1400" height="720" fill="#ffffff"/>
+  <rect x="40" y="60" width="200" height="50" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="140" y="85" font-family="SimSun, Songti SC, serif" font-size="20" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">Flutter客户端</text>
+<line x1="140" y1="110" x2="140" y2="680" stroke="#888" stroke-width="2" stroke-dasharray="8 6"/>
+<rect x="340" y="60" width="200" height="50" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="440" y="85" font-family="SimSun, Songti SC, serif" font-size="20" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">AuthController</text>
+<line x1="440" y1="110" x2="440" y2="680" stroke="#888" stroke-width="2" stroke-dasharray="8 6"/>
+<rect x="640" y="60" width="200" height="50" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="740" y="85" font-family="SimSun, Songti SC, serif" font-size="20" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">AuthService</text>
+<line x1="740" y1="110" x2="740" y2="680" stroke="#888" stroke-width="2" stroke-dasharray="8 6"/>
+<rect x="900" y="60" width="200" height="50" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="1000" y="85" font-family="SimSun, Songti SC, serif" font-size="20" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">User表</text>
+<line x1="1000" y1="110" x2="1000" y2="680" stroke="#888" stroke-width="2" stroke-dasharray="8 6"/>
+<rect x="1160" y="60" width="200" height="50" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="1260" y="85" font-family="SimSun, Songti SC, serif" font-size="20" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">JwtService</text>
+<line x1="1260" y1="110" x2="1260" y2="680" stroke="#888" stroke-width="2" stroke-dasharray="8 6"/>
+<rect x="430" y="170" width="24" height="80" fill="#fff" stroke="#202020" stroke-width="2.4"/>
+<rect x="730" y="250" width="24" height="180" fill="#fff" stroke="#202020" stroke-width="2.4"/>
+<rect x="990" y="300" width="24" height="60" fill="#fff" stroke="#202020" stroke-width="2.4"/>
+<rect x="1250" y="450" width="24" height="60" fill="#fff" stroke="#202020" stroke-width="2.4"/>
+<path d="M 140 180 L 430 180" fill="none" stroke="#202020" stroke-width="2.2" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<text x="284" y="164" font-family="SimSun, Songti SC, serif" font-size="18" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">1: POST /api/auth/login</text>
+<path d="M 450 260 L 730 260" fill="none" stroke="#202020" stroke-width="2.2" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<text x="590" y="244" font-family="SimSun, Songti SC, serif" font-size="18" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">2: login(username, pwd)</text>
+<path d="M 750 310 L 990 310" fill="none" stroke="#202020" stroke-width="2.2" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<text x="870" y="294" font-family="SimSun, Songti SC, serif" font-size="18" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">3: 查询用户记录</text>
+<path d="M 990 360 L 750 360" fill="none" stroke="#555" stroke-width="2.2" stroke-linecap="square" stroke-linejoin="miter" stroke-dasharray="8 6" marker-end="url(#dashArrow)"/>
+<text x="870" y="344" font-family="SimSun, Songti SC, serif" font-size="18" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">4: 返回User对象</text>
+<path d="M 740 410 L 740 410" fill="none" stroke="#202020" stroke-width="2.2" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<text x="740" y="394" font-family="SimSun, Songti SC, serif" font-size="18" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">5: bcrypt比对密码</text>
+<text x="890" y="410" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">5: bcrypt比对密码</text>
+<path d="M 750 460 L 1250 460" fill="none" stroke="#202020" stroke-width="2.2" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<text x="1000" y="444" font-family="SimSun, Songti SC, serif" font-size="18" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">6: 签发Token对</text>
+<path d="M 1250 520 L 750 520" fill="none" stroke="#555" stroke-width="2.2" stroke-linecap="square" stroke-linejoin="miter" stroke-dasharray="8 6" marker-end="url(#dashArrow)"/>
+<text x="1000" y="504" font-family="SimSun, Songti SC, serif" font-size="18" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">7: accessToken + refreshToken</text>
+<path d="M 730 580 L 450 580" fill="none" stroke="#555" stroke-width="2.2" stroke-linecap="square" stroke-linejoin="miter" stroke-dasharray="8 6" marker-end="url(#dashArrow)"/>
+<text x="590" y="564" font-family="SimSun, Songti SC, serif" font-size="18" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">8: 返回令牌对</text>
+<path d="M 430 640 L 140 640" fill="none" stroke="#555" stroke-width="2.2" stroke-linecap="square" stroke-linejoin="miter" stroke-dasharray="8 6" marker-end="url(#dashArrow)"/>
+<text x="284" y="624" font-family="SimSun, Songti SC, serif" font-size="18" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">9: 存储令牌到本地</text>
+</svg>

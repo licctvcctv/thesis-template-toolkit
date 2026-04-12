@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="680" viewBox="0 0 1400 680" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#202020" />
+    </marker>
+    <marker id="dashArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#555" />
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="1400" height="680" fill="#ffffff"/>
+  <rect x="700" y="30" width="200" height="200" fill="#fff" stroke="#202020" stroke-width="2.5"/>
+<text x="800" y="52" font-family="SimHei, PingFang SC, sans-serif" font-size="20" font-weight="700" fill="#202020" text-anchor="middle" dominant-baseline="middle">User</text>
+<line x1="700" y1="70" x2="900" y2="70" stroke="#202020" stroke-width="1.5"/>
+<text x="712" y="84" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">+id: INT</text>
+<text x="712" y="106" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">+username: VARCHAR</text>
+<text x="712" y="128" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">+role: VARCHAR</text>
+<text x="712" y="150" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">+status: TINYINT</text>
+<line x1="700" y1="170" x2="900" y2="170" stroke="#202020" stroke-width="1.5"/>
+<text x="712" y="186" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">+login()</text>
+<text x="712" y="208" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">+register()</text>
+<rect x="200" y="30" width="200" height="200" fill="#fff" stroke="#202020" stroke-width="2.5"/>
+<text x="300" y="52" font-family="SimHei, PingFang SC, sans-serif" font-size="20" font-weight="700" fill="#202020" text-anchor="middle" dominant-baseline="middle">Course</text>
+<line x1="200" y1="70" x2="400" y2="70" stroke="#202020" stroke-width="1.5"/>
+<text x="212" y="84" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">+id: INT</text>
+<text x="212" y="106" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">+title: VARCHAR</text>
+<text x="212" y="128" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">+category: VARCHAR</text>
+<text x="212" y="150" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">+status: TINYINT</text>
+<line x1="200" y1="170" x2="400" y2="170" stroke="#202020" stroke-width="1.5"/>
+<text x="212" y="186" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">+search()</text>
+<text x="212" y="208" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">+getDetail()</text>
+<rect x="10" y="300" width="180" height="180" fill="#fff" stroke="#202020" stroke-width="2.5"/>
+<text x="100" y="322" font-family="SimHei, PingFang SC, sans-serif" font-size="20" font-weight="700" fill="#202020" text-anchor="middle" dominant-baseline="middle">Lesson</text>
+<line x1="10" y1="340" x2="190" y2="340" stroke="#202020" stroke-width="1.5"/>
+<text x="22" y="354" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">+id: INT</text>
+<text x="22" y="376" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">+courseId: INT</text>
+<text x="22" y="398" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">+videoUrl: VARCHAR</text>
+<text x="22" y="420" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">+duration: INT</text>
+<line x1="10" y1="440" x2="190" y2="440" stroke="#202020" stroke-width="1.5"/>
+<rect x="230" y="300" width="200" height="180" fill="#fff" stroke="#202020" stroke-width="2.5"/>
+<text x="330" y="322" font-family="SimHei, PingFang SC, sans-serif" font-size="20" font-weight="700" fill="#202020" text-anchor="middle" dominant-baseline="middle">Progress</text>
+<line x1="230" y1="340" x2="430" y2="340" stroke="#202020" stroke-width="1.5"/>
+<text x="242" y="354" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">+userId: INT</text>
+<text x="242" y="376" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">+lessonId: INT</text>
+<text x="242" y="398" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">+watchedSeconds: INT</text>
+<text x="242" y="420" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">+completed: BOOL</text>
+<line x1="230" y1="440" x2="430" y2="440" stroke="#202020" stroke-width="1.5"/>
+<text x="242" y="456" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">+update()</text>
+<rect x="480" y="300" width="180" height="160" fill="#fff" stroke="#202020" stroke-width="2.5"/>
+<text x="570" y="322" font-family="SimHei, PingFang SC, sans-serif" font-size="20" font-weight="700" fill="#202020" text-anchor="middle" dominant-baseline="middle">Enrollment</text>
+<line x1="480" y1="340" x2="660" y2="340" stroke="#202020" stroke-width="1.5"/>
+<text x="492" y="354" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">+userId: INT</text>
+<text x="492" y="376" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">+courseId: INT</text>
+<text x="492" y="398" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">+enrolledAt: DATE</text>
+<line x1="480" y1="420" x2="660" y2="420" stroke="#202020" stroke-width="1.5"/>
+<rect x="1150" y="30" width="180" height="180" fill="#fff" stroke="#202020" stroke-width="2.5"/>
+<text x="1240" y="52" font-family="SimHei, PingFang SC, sans-serif" font-size="20" font-weight="700" fill="#202020" text-anchor="middle" dominant-baseline="middle">Post</text>
+<line x1="1150" y1="70" x2="1330" y2="70" stroke="#202020" stroke-width="1.5"/>
+<text x="1162" y="84" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">+id: INT</text>
+<text x="1162" y="106" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">+userId: INT</text>
+<text x="1162" y="128" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">+content: TEXT</text>
+<text x="1162" y="150" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">+likes: INT</text>
+<line x1="1150" y1="170" x2="1330" y2="170" stroke="#202020" stroke-width="1.5"/>
+<text x="1162" y="186" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">+toggleLike()</text>
+<rect x="1150" y="260" width="180" height="160" fill="#fff" stroke="#202020" stroke-width="2.5"/>
+<text x="1240" y="282" font-family="SimHei, PingFang SC, sans-serif" font-size="20" font-weight="700" fill="#202020" text-anchor="middle" dominant-baseline="middle">Comment</text>
+<line x1="1150" y1="300" x2="1330" y2="300" stroke="#202020" stroke-width="1.5"/>
+<text x="1162" y="314" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">+targetType: VARCHAR</text>
+<text x="1162" y="336" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">+targetId: INT</text>
+<text x="1162" y="358" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">+content: TEXT</text>
+<line x1="1150" y1="380" x2="1330" y2="380" stroke="#202020" stroke-width="1.5"/>
+<rect x="700" y="300" width="180" height="160" fill="#fff" stroke="#202020" stroke-width="2.5"/>
+<text x="790" y="322" font-family="SimHei, PingFang SC, sans-serif" font-size="20" font-weight="700" fill="#202020" text-anchor="middle" dominant-baseline="middle">Question</text>
+<line x1="700" y1="340" x2="880" y2="340" stroke="#202020" stroke-width="1.5"/>
+<text x="712" y="354" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">+courseId: INT</text>
+<text x="712" y="376" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">+title: VARCHAR</text>
+<text x="712" y="398" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">+solved: BOOL</text>
+<line x1="700" y1="420" x2="880" y2="420" stroke="#202020" stroke-width="1.5"/>
+<rect x="920" y="300" width="180" height="160" fill="#fff" stroke="#202020" stroke-width="2.5"/>
+<text x="1010" y="322" font-family="SimHei, PingFang SC, sans-serif" font-size="20" font-weight="700" fill="#202020" text-anchor="middle" dominant-baseline="middle">Answer</text>
+<line x1="920" y1="340" x2="1100" y2="340" stroke="#202020" stroke-width="1.5"/>
+<text x="932" y="354" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">+questionId: INT</text>
+<text x="932" y="376" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">+accepted: BOOL</text>
+<text x="932" y="398" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">+content: TEXT</text>
+<line x1="920" y1="420" x2="1100" y2="420" stroke="#202020" stroke-width="1.5"/>
+<text x="932" y="432" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">+accept()</text>
+<rect x="700" y="520" width="180" height="130" fill="#fff" stroke="#202020" stroke-width="2.5"/>
+<text x="790" y="542" font-family="SimHei, PingFang SC, sans-serif" font-size="20" font-weight="700" fill="#202020" text-anchor="middle" dominant-baseline="middle">Class</text>
+<line x1="700" y1="560" x2="880" y2="560" stroke="#202020" stroke-width="1.5"/>
+<text x="712" y="574" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">+name: VARCHAR</text>
+<text x="712" y="596" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">+inviteCode: VARCHAR</text>
+<line x1="700" y1="610" x2="880" y2="610" stroke="#202020" stroke-width="1.5"/>
+<rect x="950" y="520" width="180" height="160" fill="#fff" stroke="#202020" stroke-width="2.5"/>
+<text x="1040" y="542" font-family="SimHei, PingFang SC, sans-serif" font-size="20" font-weight="700" fill="#202020" text-anchor="middle" dominant-baseline="middle">ClassMember</text>
+<line x1="950" y1="560" x2="1130" y2="560" stroke="#202020" stroke-width="1.5"/>
+<text x="962" y="574" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">+classId: INT</text>
+<text x="962" y="596" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">+userId: INT</text>
+<text x="962" y="618" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">+joinedAt: DATE</text>
+<line x1="950" y1="640" x2="1130" y2="640" stroke="#202020" stroke-width="1.5"/>
+<path d="M 700 230 L 660 300" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<text x="680" y="255" font-family="SimSun, Songti SC, serif" font-size="14" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">1..*</text>
+<path d="M 650 230 L 330 300" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<text x="490" y="255" font-family="SimSun, Songti SC, serif" font-size="14" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">1..*</text>
+<path d="M 900 130 L 1150 120" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<text x="1025" y="114" font-family="SimSun, Songti SC, serif" font-size="14" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">1..*</text>
+<path d="M 800 230 L 790 300" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<text x="795" y="255" font-family="SimSun, Songti SC, serif" font-size="14" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">1..*</text>
+<path d="M 200 230 L 100 300" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<text x="150" y="255" font-family="SimSun, Songti SC, serif" font-size="14" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">1..*</text>
+<path d="M 300 230 L 480 300" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<text x="390" y="255" font-family="SimSun, Songti SC, serif" font-size="14" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">1..*</text>
+<path d="M 400 230 L 700 300" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<text x="550" y="255" font-family="SimSun, Songti SC, serif" font-size="14" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">1..*</text>
+<path d="M 190 390 L 230 390" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<text x="210" y="378" font-family="SimSun, Songti SC, serif" font-size="14" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">1..*</text>
+<path d="M 880 380 L 920 380" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<text x="900" y="366" font-family="SimSun, Songti SC, serif" font-size="14" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">1..*</text>
+<path d="M 1240 210 L 1240 260" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<text x="1240" y="223" font-family="SimSun, Songti SC, serif" font-size="14" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">1..*</text>
+<path d="M 830 230 L 1040 520" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<text x="935" y="365" font-family="SimSun, Songti SC, serif" font-size="14" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">1..*</text>
+<path d="M 880 590 L 950 600" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<text x="915" y="580" font-family="SimSun, Songti SC, serif" font-size="14" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">1..*</text>
+</svg>

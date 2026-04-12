@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1520" viewBox="0 0 1000 1520" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#202020" />
+    </marker>
+    <marker id="dashArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#555" />
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="1000" height="1520" fill="#ffffff"/>
+  <rect x="400" y="40" width="200" height="60" rx="16" ry="16" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="500" y="70" font-family="SimSun, Songti SC, serif" font-size="24" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">用户登录</text>
+<path d="M 500 100 L 500 140" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<rect x="360" y="140" width="280" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="500" y="170" font-family="SimSun, Songti SC, serif" font-size="24" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">浏览课程列表</text>
+<path d="M 500 200 L 500 250" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<path d="M 500 260 L 640 310 L 500 370 L 360 310 Z" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="500" y="310" font-family="SimSun, Songti SC, serif" font-size="20" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">是否已报名?</text>
+<path d="M 640 310 L 820 310" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<text x="700" y="294" font-family="SimSun, Songti SC, serif" font-size="20" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">否</text>
+<rect x="740" y="280" width="200" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="840" y="310" font-family="SimSun, Songti SC, serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">点击报名</text>
+<path d="M 840 340 L 840 420 L 640 420" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<path d="M 500 370 L 500 400" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<text x="520" y="388" font-family="SimSun, Songti SC, serif" font-size="20" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">是</text>
+<rect x="360" y="400" width="280" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="500" y="430" font-family="SimSun, Songti SC, serif" font-size="24" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">进入课程详情</text>
+<path d="M 500 460 L 500 510" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<rect x="380" y="510" width="240" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="500" y="540" font-family="SimSun, Songti SC, serif" font-size="24" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">选择课时</text>
+<path d="M 500 570 L 500 620" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<path d="M 500 630 L 650 680 L 500 740 L 350 680 Z" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="500" y="680" font-family="SimSun, Songti SC, serif" font-size="20" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">有历史进度?</text>
+<path d="M 350 680 L 160 680" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<text x="240" y="664" font-family="SimSun, Songti SC, serif" font-size="20" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">是</text>
+<rect x="60" y="650" width="200" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="160" y="680" font-family="SimSun, Songti SC, serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">断点续播</text>
+<path d="M 160 710 L 160 790 L 360 790" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<path d="M 650 680 L 820 680" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<text x="700" y="664" font-family="SimSun, Songti SC, serif" font-size="20" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">否</text>
+<rect x="740" y="650" width="200" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="840" y="680" font-family="SimSun, Songti SC, serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">从头播放</text>
+<path d="M 840 710 L 840 790 L 640 790" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<path d="M 500 740 L 500 770" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<rect x="360" y="770" width="280" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="500" y="800" font-family="SimSun, Songti SC, serif" font-size="24" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">播放视频</text>
+<path d="M 500 830 L 500 870" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<rect x="360" y="870" width="280" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="500" y="900" font-family="SimSun, Songti SC, serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">每30秒上报进度</text>
+<path d="M 500 930 L 500 980" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<path d="M 500 990 L 630 1040 L 500 1090 L 370 1040 Z" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="500" y="1040" font-family="SimSun, Songti SC, serif" font-size="20" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">用户退出?</text>
+<path d="M 370 1040 L 60 1040" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"/>
+<text x="120" y="1024" font-family="SimSun, Songti SC, serif" font-size="20" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">否</text>
+<path d="M 60 1040 L 60 790 L 360 790" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<path d="M 500 1090 L 500 1130" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<text x="520" y="1116" font-family="SimSun, Songti SC, serif" font-size="20" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">是</text>
+<rect x="350" y="1130" width="300" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="500" y="1160" font-family="SimSun, Songti SC, serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">保存当前播放位置</text>
+<path d="M 500 1190 L 500 1240" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<path d="M 500 1250 L 650 1300 L 500 1360 L 350 1300 Z" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="500" y="1300" font-family="SimSun, Songti SC, serif" font-size="20" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">全部课时完成?</text>
+<path d="M 350 1300 L 60 1300" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"/>
+<text x="120" y="1284" font-family="SimSun, Songti SC, serif" font-size="20" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">否</text>
+<path d="M 60 1300 L 60 540 L 380 540" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<path d="M 500 1360 L 500 1400" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<text x="520" y="1388" font-family="SimSun, Songti SC, serif" font-size="20" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">是</text>
+<rect x="370" y="1400" width="260" height="60" rx="16" ry="16" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="500" y="1430" font-family="SimSun, Songti SC, serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">课程标记已完成</text>
+</svg>
