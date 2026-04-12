@@ -1,0 +1,15 @@
+sequenceDiagram
+    participant F as Flutter客户端
+    participant G as NestJS后端
+    participant DB as SQLite数据库
+    participant JWT as JwtService
+
+    F->>G: POST /api/auth/login (username, password)
+    G->>DB: 查询User表
+    DB-->>G: 返回用户记录
+    G->>G: bcrypt比对密码哈希
+    G->>JWT: 签发Access Token(30min)
+    G->>JWT: 签发Refresh Token(7天)
+    JWT-->>G: 返回令牌对
+    G-->>F: 返回{accessToken, refreshToken}
+    F->>F: 存储令牌到本地安全存储

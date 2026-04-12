@@ -1,0 +1,69 @@
+classDiagram
+    class User {
+        +int id
+        +String username
+        +String password
+        +String role
+        +String phone
+        +int status
+        +login()
+        +register()
+    }
+    class Course {
+        +int id
+        +String title
+        +String description
+        +String category
+        +int status
+        +getDetails()
+        +search()
+    }
+    class Lesson {
+        +int id
+        +int courseId
+        +String title
+        +String videoUrl
+        +int duration
+    }
+    class Progress {
+        +int id
+        +int userId
+        +int lessonId
+        +int watchedSeconds
+        +boolean completed
+        +updateProgress()
+    }
+    class Enrollment {
+        +int id
+        +int userId
+        +int courseId
+        +Date enrolledAt
+    }
+    class Post {
+        +int id
+        +int userId
+        +String content
+        +int likes
+        +toggleLike()
+    }
+    class Question {
+        +int id
+        +int courseId
+        +String title
+        +boolean solved
+    }
+    class Answer {
+        +int id
+        +int questionId
+        +boolean accepted
+        +accept()
+    }
+    User "1" -- "*" Enrollment
+    User "1" -- "*" Progress
+    User "1" -- "*" Post
+    User "1" -- "*" Question
+    Course "1" -- "*" Lesson
+    Course "1" -- "*" Enrollment
+    Lesson "1" -- "*" Progress
+    Question "1" -- "*" Answer
+    Course "1" -- "*" Question

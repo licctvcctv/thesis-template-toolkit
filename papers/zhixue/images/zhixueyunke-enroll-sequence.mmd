@@ -1,0 +1,17 @@
+sequenceDiagram
+    participant F as Flutter客户端
+    participant G as JwtGuard
+    participant C as CourseController
+    participant S as CourseService
+    participant DB as SQLite数据库
+
+    F->>G: POST /api/enrollments (Bearer Token)
+    G->>G: 验证JWT令牌
+    G->>C: 注入用户信息
+    C->>S: createEnrollment(userId, courseId)
+    S->>DB: 查询是否已报名
+    DB-->>S: 无重复记录
+    S->>DB: 插入Enrollment记录
+    DB-->>S: 写入成功
+    S-->>C: 返回报名结果
+    C-->>F: 200 {enrollment}

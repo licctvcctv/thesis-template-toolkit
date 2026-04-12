@@ -12,12 +12,60 @@
                     "path": "fig4-1_系统架构图.png",
                     "width": 130
                 },
-                "图4-1 系统总体架构图"
+                "图4-1 系统总体架构图",
+                "系统采用表现层、业务逻辑层、数据持久层三层架构。Flutter端与Vue端通过RESTful API与NestJS后端通信，业务逻辑层内部按Module隔离各功能域，数据持久层由TypeORM统一管理数据库连接和事务。"
             ],
             "subsections": []
         },
         {
-            "title": "4.2 数据库设计",
+            "title": "4.2 功能模块设计",
+            "content": [
+                "NestJS把代码按业务边界拆成独立Module。每个Module里有Controller、Service、Entity和DTO文件，Module之间通过依赖注入通信，不直接引用对方的内部实现。改一个Module的代码，只要接口签名不变，其他Module不受影响。",
+                {
+                    "type": "image",
+                    "path": "fig4-2_功能结构图.png",
+                    "width": 130
+                },
+                "图4-2 系统功能结构图"
+            ],
+            "subsections": [
+                {
+                    "title": "4.2.1 认证模块设计",
+                    "content": [
+                        "AuthModule处理注册和登录。注册接口收用户名、密码和手机号，密码经bcrypt哈希后写入User表。登录接口校验凭据，通过后用@nestjs/jwt签发令牌，载荷里放用户ID和角色。",
+                        "JwtStrategy挂在需要鉴权的路由上，从Header里解析Bearer Token，把用户信息塞进Request对象。角色校验用自定义的RolesGuard，管理员接口要求role值是admin。"
+                    ]
+                },
+                {
+                    "title": "4.2.2 课程模块设计",
+                    "content": [
+                        "CourseModule管Course和Lesson两张表。列表接口支持分页、分类筛选和关键词搜索，TypeORM QueryBuilder动态拼查询条件。详情接口返回课程基本信息加课时列表，课时按sort_order升序排。",
+                        "课时播放接口返回视频地址。进度上报接口把watched_seconds和completed状态写入Progress表。课程完成度的算法是：已完成课时数除以总课时数，前端拿这个数字渲染进度条。"
+                    ]
+                },
+                {
+                    "title": "4.2.3 班级模块设计",
+                    "content": [
+                        "ClassModule围绕Class和ClassMember两张表。创建班级时后端生成六位随机邀请码写进invite_code字段。加入班级接口收邀请码，先查班级存不存在、用户有没有加过，都过了就写ClassMember记录。成员列表按joined_at升序返回。"
+                    ]
+                },
+                {
+                    "title": "4.2.4 社区与问答模块设计",
+                    "content": [
+                        "PostModule处理帖子的发布、浏览、点赞和评论。发帖时支持多张图片上传，图片路径以JSON数组写进images字段。点赞接口是切换逻辑，点一次加1，再点一次减1。",
+                        "QaModule绑在课程上。用户在课程详情页发起提问，Question记录带course_id。其他用户浏览同一门课的问题列表并提交回答，Answer记录带question_id。提问者采纳一条回答后，Answer的accepted和Question的solved都置为true。"
+                    ]
+                },
+                {
+                    "title": "4.2.5 管理模块设计",
+                    "content": [
+                        "AdminModule的所有接口都挂RolesGuard，只有admin角色能访问。仪表盘接口聚合User、Course和Enrollment三张表的数据，返回用户总数、课程总数、今日新增报名数和近七天趋势数组。用户管理接口查列表和切换状态，课程管理接口做审核、编辑和上下架，帖子管理接口删违规内容。"
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "4.3 数据库设计",
             "content": [
                 "数据库一共11张表。User表是核心，几乎所有业务表都有user_id外键指向它。",
                 "Course和Lesson是一对多，一门课挂多个课时。Enrollment是User和Course之间的多对多中间表。Progress表记录用户在每个课时上看到了哪里，粒度是课时级别。",
@@ -29,6 +77,7 @@
                     "width": 130
                 },
                 "图4-3 系统E-R图",
+                "上述表结构遵循第三范式（3NF）。每张表的非主键字段都直接依赖于主键，不存在传递依赖。Course表中teacher_name在当前系统里不作为独立实体管理，不需要拆Teacher表。Comment表通过target_type和target_id实现多态关联，避免为帖子评论和课程评论各建一张表。后续如果讲师需要独立管理，可将teacher_name提取为Teacher实体并通过外键关联。",
                 "表4-1 User表字段设计",
                 {
                     "type": "table",
@@ -187,53 +236,6 @@
             "subsections": []
         },
         {
-            "title": "4.3 功能模块设计",
-            "content": [
-                "NestJS把代码按业务边界拆成独立Module。每个Module里有Controller、Service、Entity和DTO文件，Module之间通过依赖注入通信，不直接引用对方的内部实现。改一个Module的代码，只要接口签名不变，其他Module不受影响。",
-                {
-                    "type": "image",
-                    "path": "fig4-2_功能结构图.png",
-                    "width": 130
-                },
-                "图4-2 系统功能结构图"
-            ],
-            "subsections": [
-                {
-                    "title": "4.3.1 认证模块设计",
-                    "content": [
-                        "AuthModule处理注册和登录。注册接口收用户名、密码和手机号，密码经bcrypt哈希后写入User表。登录接口校验凭据，通过后用@nestjs/jwt签发令牌，载荷里放用户ID和角色。",
-                        "JwtStrategy挂在需要鉴权的路由上，从Header里解析Bearer Token，把用户信息塞进Request对象。角色校验用自定义的RolesGuard，管理员接口要求role值是admin。"
-                    ]
-                },
-                {
-                    "title": "4.3.2 课程模块设计",
-                    "content": [
-                        "CourseModule管Course和Lesson两张表。列表接口支持分页、分类筛选和关键词搜索，TypeORM QueryBuilder动态拼查询条件。详情接口返回课程基本信息加课时列表，课时按sort_order升序排。",
-                        "课时播放接口返回视频地址。进度上报接口把watched_seconds和completed状态写入Progress表。课程完成度的算法是：已完成课时数除以总课时数，前端拿这个数字渲染进度条。"
-                    ]
-                },
-                {
-                    "title": "4.3.3 班级模块设计",
-                    "content": [
-                        "ClassModule围绕Class和ClassMember两张表。创建班级时后端生成六位随机邀请码写进invite_code字段。加入班级接口收邀请码，先查班级存不存在、用户有没有加过，都过了就写ClassMember记录。成员列表按joined_at升序返回。"
-                    ]
-                },
-                {
-                    "title": "4.3.4 社区与问答模块设计",
-                    "content": [
-                        "PostModule处理帖子的发布、浏览、点赞和评论。发帖时支持多张图片上传，图片路径以JSON数组写进images字段。点赞接口是切换逻辑，点一次加1，再点一次减1。",
-                        "QaModule绑在课程上。用户在课程详情页发起提问，Question记录带course_id。其他用户浏览同一门课的问题列表并提交回答，Answer记录带question_id。提问者采纳一条回答后，Answer的accepted和Question的solved都置为true。"
-                    ]
-                },
-                {
-                    "title": "4.3.5 管理模块设计",
-                    "content": [
-                        "AdminModule的所有接口都挂RolesGuard，只有admin角色能访问。仪表盘接口聚合User、Course和Enrollment三张表的数据，返回用户总数、课程总数、今日新增报名数和近七天趋势数组。用户管理接口查列表和切换状态，课程管理接口做审核、编辑和上下架，帖子管理接口删违规内容。"
-                    ]
-                }
-            ]
-        },
-        {
             "title": "4.4 接口设计",
             "content": [
                 "所有接口走RESTful风格，URL路径用资源名词，HTTP方法表达操作：GET查、POST创建、PUT更新、DELETE删除。请求和响应都是JSON格式。认证接口不用带令牌，其他接口在Header里带Bearer Token。管理员接口路径以/api/admin开头，Guard统一拦截。",
@@ -283,24 +285,19 @@
                     "title": "4.4.1 核心接口时序分析",
                     "content": [
                         "拿登录接口举例说明请求的流转路径。Flutter客户端通过Dio库向后端发POST /api/auth/login请求，请求体里有用户名和密码。AuthController接到后调AuthService的login方法。AuthService从User表查出用户记录，用bcrypt比对密码哈希。比对通过后调JwtService签发Access Token（30分钟有效期）和Refresh Token（7天有效期），AuthController把这对令牌返回给客户端。Flutter端拿到令牌后存到本地安全存储里，后续请求都在Header里带着Access Token。",
+                        {
+                            "type": "image",
+                            "path": "zhixueyunke-login-sequence.png",
+                            "width": 130
+                        },
+                        "图4-5 用户登录接口时序图",
                         "课程列表接口的路径类似但多一步鉴权。Flutter发GET /api/courses请求，Header里带Bearer Token。JwtGuard先验Token有效性，通过后把用户信息注入Request。CourseController调CourseService的findAll方法，TypeORM Repository查Course表，支持分页和分类筛选参数。查询结果封装成统一格式后返回。",
                         {
-                            "headers": ["方法", "接口路径", "说明"],
-                            "rows": [
-                                ["POST", "/api/auth/register", "用户注册"],
-                                ["POST", "/api/auth/login", "用户登录，返回JWT"],
-                                ["GET", "/api/courses", "分页查询课程列表"],
-                                ["GET", "/api/courses/:id", "获取课程详情"],
-                                ["POST", "/api/enrollments", "用户报名课程"],
-                                ["PUT", "/api/progress/:lessonId", "上报学习进度"],
-                                ["GET", "/api/posts", "查询社区帖子"],
-                                ["POST", "/api/posts", "发布帖子"],
-                                ["POST", "/api/questions", "发起课程提问"],
-                                ["GET", "/api/admin/dashboard", "管理员统计数据"]
-                            ],
-                            "caption": "表4-12 主要API接口设计",
-                            "type": "table"
-                        }
+                            "type": "image",
+                            "path": "zhixueyunke-enroll-sequence.png",
+                            "width": 130
+                        },
+                        "图4-6 课程报名接口时序图"
                     ]
                 },
                 {
@@ -328,7 +325,7 @@
         {
             "title": "4.5 本章小结",
             "content": [
-                "本章从架构、数据库、功能模块和接口四个方面写了系统设计。架构分三层，NestJS统一跑业务逻辑。数据库11张表，通过外键把业务数据关联起来。功能模块按NestJS的Module机制拆分，各管各的事。接口走RESTful规范，配合JWT刷新流程和两级缓存策略保障可用性和性能。"
+                "本章从架构、功能模块、数据库和接口四个方面写了系统设计。架构分三层，NestJS统一跑业务逻辑。功能模块按NestJS的Module机制拆分，各管各的事。数据库11张表，通过外键把业务数据关联起来。接口走RESTful规范，配合JWT刷新流程和两级缓存策略保障可用性和性能。"
             ],
             "subsections": []
         }

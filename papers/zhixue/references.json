@@ -15,6 +15,8 @@
         "赵天书. 基于Vue.js的单页面应用性能优化研究[J]. 计算机科学,2024,51(3):234-241.",
         "Brown K, Davis J. RESTful API Design Patterns for Educational Platforms[J]. IEEE Access,2023,11:45678-45690.",
         "林浩,赵强. 基于Redis缓存的高并发系统性能优化策略[J]. 计算机工程与设计,2024,45(1):67-74.",
-        "杨明. 在线教育平台的系统测试与质量保障方法研究[J]. 软件测试与验证,2023,5(4):123-130."
+        "杨明. 在线教育平台的系统测试与质量保障方法研究[J]. 软件测试与验证,2023,5(4):123-130.",
+        "[17] Kamil Mysliwiec. NestJS: A Progressive Node.js Framework[EB/OL]. https://docs.nestjs.com, 2024.",
+        "[18] Remi Rousselet. Riverpod: A Reactive Caching and Data-binding Framework for Flutter[EB/OL]. https://riverpod.dev, 2024."
     ]
 }
