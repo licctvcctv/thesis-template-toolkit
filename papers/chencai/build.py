@@ -256,7 +256,7 @@ def _insert_table(doc, after_para, tbl_data):
     # 直接构建表格 XML
     tbl = OxmlElement('w:tbl')
 
-    # 表格属性：居中 + 边框
+    # 表格属性：居中 + 自动列宽 + 边框
     tblPr = OxmlElement('w:tblPr')
     # 居中
     jc = OxmlElement('w:jc')
@@ -267,6 +267,10 @@ def _insert_table(doc, after_para, tbl_data):
     tblW.set(qn('w:w'), '5000')
     tblW.set(qn('w:type'), 'pct')
     tblPr.append(tblW)
+    # 自动列宽（让 Word 根据内容调整）
+    tblLayout = OxmlElement('w:tblLayout')
+    tblLayout.set(qn('w:type'), 'autofit')
+    tblPr.append(tblLayout)
     # 边框（全边框）
     borders = OxmlElement('w:tblBorders')
     for edge in ['top', 'left', 'bottom', 'right', 'insideH', 'insideV']:
@@ -317,19 +321,28 @@ def _insert_table(doc, after_para, tbl_data):
         tr = OxmlElement('w:tr')
         for ci in range(ncols):
             tc = OxmlElement('w:tc')
-            # 设置单元格宽度
+            # 单元格属性：宽度 + 垂直居中
             tcPr = OxmlElement('w:tcPr')
             tcW = OxmlElement('w:tcW')
             tcW.set(qn('w:w'), str(col_widths[ci] if ci < len(col_widths) else 1800))
             tcW.set(qn('w:type'), 'dxa')
             tcPr.append(tcW)
+            vAlign = OxmlElement('w:vAlign')
+            vAlign.set(qn('w:val'), 'center')
+            tcPr.append(vAlign)
             tc.append(tcPr)
             p = OxmlElement('w:p')
-            # 居中对齐
+            # 段落属性：水平居中 + 段前段后间距为0 + 单倍行距
             pPr = OxmlElement('w:pPr')
             pJc = OxmlElement('w:jc')
             pJc.set(qn('w:val'), 'center')
             pPr.append(pJc)
+            pSpacing = OxmlElement('w:spacing')
+            pSpacing.set(qn('w:before'), '0')
+            pSpacing.set(qn('w:after'), '0')
+            pSpacing.set(qn('w:line'), '240')
+            pSpacing.set(qn('w:lineRule'), 'auto')
+            pPr.append(pSpacing)
             p.append(pPr)
             # 文本 — 字体：宋体(中文) + Times New Roman(英文)，五号(10.5pt)
             r = OxmlElement('w:r')
