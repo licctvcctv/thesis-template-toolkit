@@ -204,6 +204,23 @@ def _setup_ndnu_body(doc_path):
         for r in p.runs:
             r.text = ""
 
+    # 删除目录和正文之间多余的分节符（保留一个即可）
+    _wns2 = 'http://schemas.openxmlformats.org/wordprocessingml/2006/main'
+    sect_count = 0
+    for i in range(len(paras)):
+        p = paras[i]
+        text = (p.text or "").strip()
+        if "{%p for ch" in text:
+            # 往前找，删掉多余的 sectPr 段落
+            for j in range(i - 1, max(i - 10, 0), -1):
+                pj = paras[j]
+                sects = pj._p.findall(f'{{{_wns2}}}pPr/{{{_wns2}}}sectPr')
+                if sects:
+                    sect_count += 1
+                    if sect_count > 1:
+                        pj._p.getparent().remove(pj._p)
+            break
+
     doc.save(doc_path)
     print(f"  正文循环已设置: {doc_path}")
 
