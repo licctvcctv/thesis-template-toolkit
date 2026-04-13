@@ -275,10 +275,21 @@ def make(src_path, out_path):
         p28.runs[0].text = "关键词："
         if len(p28.runs) > 1:
             p28.runs[1].text = "{{ keywords_zh }}"
+            # 关键词值用宋体小四号，不是黑体
+            from docx.shared import Pt as _Pt
+            p28.runs[1].font.name = "宋体"
+            p28.runs[1].font.size = _Pt(12)  # 小四号
             for r in p28.runs[2:]:
                 r.text = ""
         else:
             p28.runs[0].text = "关键词：{{ keywords_zh }}"
+
+    # 清掉摘要标题的空 runs 和格式说明括号
+    p26 = doc.paragraphs[26]
+    for r in p26.runs:
+        if r.text.strip() in ("（", "）", "（）", ""):
+            if not r.text.strip():
+                r._r.getparent().remove(r._r)
 
     # 清掉格式说明 p[30]
     for r in doc.paragraphs[30].runs:
@@ -293,18 +304,36 @@ def make(src_path, out_path):
     p32 = doc.paragraphs[32]
     if p32.runs:
         p32.runs[0].text = "{{ abstract_en }}"
+        # 英文摘要正文用 Times New Roman 小四号
+        from docx.shared import Pt as _Pt2
+        p32.runs[0].font.name = "Times New Roman"
+        p32.runs[0].font.size = _Pt2(12)
         for r in p32.runs[1:]:
             r.text = ""
 
     p33 = doc.paragraphs[33]
     if p33.runs:
         p33.runs[0].text = "Key words: "
+        # Key words 标签用 Times New Roman 四号加粗
+        p33.runs[0].font.name = "Times New Roman"
+        p33.runs[0].font.size = _Pt2(14)
+        p33.runs[0].font.bold = True
         if len(p33.runs) > 1:
             p33.runs[1].text = "{{ keywords_en }}"
+            # 关键词值用 Times New Roman 小四号，不加粗
+            p33.runs[1].font.name = "Times New Roman"
+            p33.runs[1].font.size = _Pt2(12)
+            p33.runs[1].font.bold = False
             for r in p33.runs[2:]:
                 r.text = ""
         else:
             p33.runs[0].text = "Key words: {{ keywords_en }}"
+
+    # 清掉英文摘要标题的空 runs
+    p31 = doc.paragraphs[31]
+    for r in p31.runs:
+        if not r.text.strip():
+            r._r.getparent().remove(r._r)
 
     # 清掉格式说明 p[34]
     for r in doc.paragraphs[34].runs:
