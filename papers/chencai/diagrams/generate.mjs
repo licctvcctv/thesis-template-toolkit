@@ -39,7 +39,7 @@ function buildArchitecture() {
   };
 
   // 外框
-  body.push(`<rect x="${frameX}" y="${frameY}" width="${W - 80}" height="760" fill="#fff" stroke="${STROKE}" stroke-width="3"/>`);
+  body.push(`<rect x="${frameX}" y="${frameY}" width="${W - 80}" height="820" fill="#fff" stroke="${STROKE}" stroke-width="3"/>`);
   // 标题栏
   body.push(`<rect x="${frameX}" y="90" width="${W - 80}" height="80" fill="#fff" stroke="${STROKE}" stroke-width="2.6"/>`);
   body.push(text(W / 2, 130, '房屋租赁与销售平台架构图', { size: 30, family: BOLD, weight: '700' }));
@@ -63,7 +63,7 @@ function buildArchitecture() {
   placeCenteredRow(['AdminMapper', 'MemberMapper', 'FwMapper', 'DdMapper'], 620, 50, { width: 170, padding: 50, size: 16 });
   body.push(cylinder(bandX + bandW / 2 - 80, 745, 160, 60, 'MySQL 5.7', { size: 22, family: BOLD }));
 
-  writeDiagram('chencai-architecture', W, 860, body);
+  writeDiagram('chencai-architecture', W, 900, body);
 }
 
 // ========== 2. ER图 — 参照 er-diagram.mjs 标准画法 ==========
