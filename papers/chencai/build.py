@@ -279,11 +279,27 @@ def _insert_table(doc, after_para, tbl_data):
     tblPr.append(borders)
     tbl.append(tblPr)
 
-    # 表格网格
+    # 表格网格 — 按内容长度智能分配列宽
+    total_width = 9000
+    # 计算每列最大文本长度
+    col_max_len = [0] * ncols
+    for row_data in all_rows:
+        for ci in range(ncols):
+            cell_text = row_data[ci] if ci < len(row_data) else ""
+            col_max_len[ci] = max(col_max_len[ci], len(str(cell_text)))
+    # 最小列宽800 twips，按文本长度比例分配
+    min_w = 800
+    total_len = sum(max(l, 2) for l in col_max_len) or 1
+    col_widths = [max(min_w, int(total_width * max(l, 2) / total_len))
+                  for l in col_max_len]
+    # 修正总宽度
+    diff = total_width - sum(col_widths)
+    col_widths[0] += diff
+
     tblGrid = OxmlElement('w:tblGrid')
-    for _ in range(ncols):
+    for w in col_widths:
         gridCol = OxmlElement('w:gridCol')
-        gridCol.set(qn('w:w'), str(9000 // ncols))
+        gridCol.set(qn('w:w'), str(w))
         tblGrid.append(gridCol)
     tbl.append(tblGrid)
 
@@ -292,6 +308,13 @@ def _insert_table(doc, after_para, tbl_data):
         tr = OxmlElement('w:tr')
         for ci in range(ncols):
             tc = OxmlElement('w:tc')
+            # 设置单元格宽度
+            tcPr = OxmlElement('w:tcPr')
+            tcW = OxmlElement('w:tcW')
+            tcW.set(qn('w:w'), str(col_widths[ci] if ci < len(col_widths) else 1800))
+            tcW.set(qn('w:type'), 'dxa')
+            tcPr.append(tcW)
+            tc.append(tcPr)
             p = OxmlElement('w:p')
             # 居中对齐
             pPr = OxmlElement('w:pPr')
