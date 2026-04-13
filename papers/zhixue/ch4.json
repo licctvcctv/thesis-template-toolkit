@@ -62,21 +62,20 @@
                     "content": [
                         "AdminModule的所有接口都挂RolesGuard，只有admin角色能访问。仪表盘接口聚合User、Course和Enrollment三张表的数据，返回用户总数、课程总数、今日新增报名数和近七天趋势数组。用户管理接口查列表和切换状态，课程管理接口做审核、编辑和上下架，帖子管理接口删违规内容。"
                     ]
+                },
+                {
+                    "title": "4.2.6 状态流转设计",
+                    "content": [
+                        "系统中课程和报名记录存在明显的状态流转。课程状态包括草稿（status=0）、已上架（status=1）和已下架（status=2），管理员通过后台接口切换课程状态。报名后用户的学习状态从\u201c已报名\u201d进入\u201c学习中\u201d，当全部课时的Progress记录均标记为completed时，课程进度变为\u201c已完成\u201d。这些状态的流转由NestJS Service层的业务逻辑控制，前端根据状态字段渲染不同的按钮文案和操作入口。",
+                        {
+                            "type": "image",
+                            "path": "zhixueyunke-state-diagram.png",
+                            "width": 130
+                        },
+                        "图4-3 课程与报名状态流转图"
+                    ]
                 }
             ]
-        },
-        {
-            "title": "",
-            "content": [
-                "系统中课程和报名记录存在明显的状态流转。课程状态包括草稿（status=0）、已上架（status=1）和已下架（status=2），管理员通过后台接口切换课程状态。报名后用户的学习状态从\u201c已报名\u201d进入\u201c学习中\u201d，当全部课时的Progress记录均标记为completed时，课程进度变为\u201c已完成\u201d。这些状态的流转由NestJS Service层的业务逻辑控制，前端根据状态字段渲染不同的按钮文案和操作入口。",
-                {
-                    "type": "image",
-                    "path": "zhixueyunke-state-diagram.png",
-                    "width": 130
-                },
-                "图4-7 课程与报名状态流转图"
-            ],
-            "subsections": []
         },
         {
             "title": "4.3 数据库设计",
@@ -90,7 +89,7 @@
                     "path": "fig4-3_ER图.png",
                     "width": 130
                 },
-                "图4-3 系统E-R图",
+                "图4-4 系统E-R图",
                 "上述表结构在设计时遵循第三范式（3NF）要求。每张表的非主键字段都直接依赖于主键，不存在传递依赖。例如Course表中teacher_name虽然描述讲师信息，但在当前系统中讲师不作为独立实体管理，因此不需要拆分为单独的Teacher表。Comment表通过target_type和target_id两个字段实现多态关联，避免了为帖子评论和课程评论各建一张表导致的冗余。如果后续讲师需要独立管理（如个人主页、多课程关联），可将teacher_name提取为Teacher实体并通过外键关联。",
                 "表4-1 User表字段设计",
                 {
@@ -287,13 +286,13 @@
                         ["DELETE", "/api/admin/posts/:id", "删除违规帖子"]
                     ]
                 },
-                "图4-4展示了课程报名的完整业务流程。用户在课程详情页点击报名后，系统通过POST /api/enrollments接口创建Enrollment记录，该接口的设计详见4.4节接口设计部分。",
+                "图4-5展示了课程报名的完整业务流程。用户在课程详情页点击报名按钮后，客户端向后端发送POST /api/enrollments请求（详见表4-12），系统创建Enrollment记录并将课程加入用户的已报名列表。",
                 {
                     "type": "image",
                     "path": "fig4-4_业务流程图.png",
                     "width": 100
                 },
-                "图4-4 课程报名业务流程图"
+                "图4-5 课程报名业务流程图"
             ],
             "subsections": [
                 {
@@ -305,14 +304,14 @@
                             "path": "zhixueyunke-login-sequence.png",
                             "width": 130
                         },
-                        "图4-5 用户登录接口时序图",
+                        "图4-6 用户登录接口时序图",
                         "课程列表接口的路径类似但多一步鉴权。Flutter发GET /api/courses请求，Header里带Bearer Token。JwtGuard先验Token有效性，通过后把用户信息注入Request。CourseController调CourseService的findAll方法，TypeORM Repository查Course表，支持分页和分类筛选参数。查询结果封装成统一格式后返回。",
                         {
                             "type": "image",
                             "path": "zhixueyunke-enroll-sequence.png",
                             "width": 130
                         },
-                        "图4-6 课程报名接口时序图"
+                        "图4-7 课程报名接口时序图"
                     ]
                 },
                 {

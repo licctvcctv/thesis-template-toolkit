@@ -128,6 +128,7 @@ def main():
 
     # 后处理：修正图片居中和图标注格式
     _post_process(output)
+    _enable_update_fields(output)
     # 校验
     errors = _verify(output)
     if errors:
@@ -236,8 +237,46 @@ def _post_process(docx_path):
                 for r in p.runs:
                     r.text = ""
 
+    # 模板末尾残留的静态附录页不参与本论文正文，直接清除。
+    paragraphs = list(doc.paragraphs)
+    for idx, p in enumerate(paragraphs):
+        if (p.text or "").strip() != "附录A 系统程序":
+            continue
+        tail = paragraphs[idx:]
+        if all((q.text or "").strip() in {"", "附录A 系统程序"} for q in tail):
+            for q in tail:
+                q._element.getparent().remove(q._element)
+            break
+
     doc.save(docx_path)
     print(f"  后处理: 图片居中+{len(_pending_tables)}个表格")
+
+
+def _enable_update_fields(docx_path):
+    """让 Word 打开文档时自动刷新域值。"""
+    import os
+    import zipfile
+    from xml.etree import ElementTree as ET
+
+    ns = "http://schemas.openxmlformats.org/wordprocessingml/2006/main"
+    ET.register_namespace("w", ns)
+
+    tmp_path = f"{docx_path}.tmp"
+    with zipfile.ZipFile(docx_path, "r") as zin, \
+            zipfile.ZipFile(tmp_path, "w", zipfile.ZIP_DEFLATED) as zout:
+        for item in zin.infolist():
+            data = zin.read(item.filename)
+            if item.filename == "word/settings.xml":
+                root = ET.fromstring(data)
+                update_fields = root.find(f"{{{ns}}}updateFields")
+                if update_fields is None:
+                    update_fields = ET.SubElement(root, f"{{{ns}}}updateFields")
+                update_fields.set(f"{{{ns}}}val", "true")
+                data = ET.tostring(root, encoding="utf-8",
+                                   xml_declaration=True)
+            zout.writestr(item, data)
+
+    os.replace(tmp_path, docx_path)
 
 
 def _insert_table(doc, after_para, tbl_data):

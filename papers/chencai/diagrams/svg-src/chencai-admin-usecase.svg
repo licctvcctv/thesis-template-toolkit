@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="980" viewBox="0 0 1600 980" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#202020" />
+    </marker>
+    <marker id="dashArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#555" />
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="1600" height="980" fill="#ffffff"/>
+  <rect x="430" y="70" width="1080" height="780" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="970" y="104" font-family="SimHei, PingFang SC, sans-serif" font-size="28" font-weight="700" fill="#202020" text-anchor="middle" dominant-baseline="middle">房屋租赁与销售平台</text>
+<circle cx="210" cy="290" r="18" fill="#fff" stroke="#202020" stroke-width="3"/>
+<line x1="210" y1="310" x2="210" y2="380" stroke="#202020" stroke-width="3"/>
+<line x1="170" y1="330" x2="250" y2="330" stroke="#202020" stroke-width="3"/>
+<line x1="210" y1="380" x2="180" y2="430" stroke="#202020" stroke-width="3"/>
+<line x1="210" y1="380" x2="240" y2="430" stroke="#202020" stroke-width="3"/>
+<text x="210" y="476" font-family="SimSun, Songti SC, serif" font-size="28" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">管理员</text>
+<ellipse cx="790" cy="240" rx="180" ry="60" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="790" y="240" font-family="SimSun, Songti SC, serif" font-size="24" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">用户管理</text>
+<path d="M 250 250 L 360 250 L 360 240 L 620 240" fill="none" stroke="#202020" stroke-width="2.6" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="790" cy="430" rx="180" ry="60" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="790" y="430" font-family="SimSun, Songti SC, serif" font-size="24" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">房屋出售管理</text>
+<path d="M 250 280 L 360 280 L 360 430 L 620 430" fill="none" stroke="#202020" stroke-width="2.6" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="790" cy="620" rx="180" ry="60" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="790" y="620" font-family="SimSun, Songti SC, serif" font-size="24" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">房屋出租管理</text>
+<path d="M 250 310 L 360 310 L 360 620 L 620 620" fill="none" stroke="#202020" stroke-width="2.6" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="1180" cy="240" rx="180" ry="60" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="1180" y="240" font-family="SimSun, Songti SC, serif" font-size="24" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">订单管理</text>
+<path d="M 250 350 L 360 350 L 360 240 L 1010 240" fill="none" stroke="#202020" stroke-width="2.6" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="1180" cy="430" rx="180" ry="60" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="1180" y="430" font-family="SimSun, Songti SC, serif" font-size="24" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">公告管理</text>
+<path d="M 250 380 L 360 380 L 360 430 L 1010 430" fill="none" stroke="#202020" stroke-width="2.6" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="1180" cy="620" rx="180" ry="60" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="1180" y="620" font-family="SimSun, Songti SC, serif" font-size="24" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">轮播图管理</text>
+<path d="M 250 410 L 360 410 L 360 620 L 1010 620" fill="none" stroke="#202020" stroke-width="2.6" stroke-linecap="square" stroke-linejoin="miter"/>
+</svg>

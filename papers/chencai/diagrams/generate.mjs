@@ -1,31 +1,30 @@
 /**
- * 陈才论文（房屋租赁与销售平台）图表生成器 v2
- * 参照 thesis-studio 项目的标准画法
+ * 陈才论文（房屋租赁与销售平台）图表生成器 v3
  */
 import { createRuntime } from '../../../diagrams/runtime.mjs';
-import { buildFlowChartTemplate } from '../../../diagrams/flow-chart-template.mjs';
 
 const runtime = createRuntime(new Map([
   ['--out-dir', '/Users/a136/vs/45425/thesis_project/papers/chencai/images'],
   ['--src-dir', '/Users/a136/vs/45425/thesis_project/papers/chencai/diagrams/svg-src'],
 ]));
 
-const { rect, diamond, ellipse, cylinder, pill, brace, pathLine, vLine, hLine, text,
-        multiline, card, snap, createLayout, writeDiagram, STROKE, FONT, BOLD } = runtime;
+const { rect, diamond, ellipse, cylinder, brace, pathLine, vLine, hLine, text,
+        card, snap, createLayout, writeDiagram, STROKE, BOLD, actor } = runtime;
 
-// ========== 1. 系统架构图 — 参照 system-architecture.mjs 风格 ==========
+// ========== 1. 系统架构图 ==========
 function buildArchitecture() {
   const body = [];
-  const W = 1600, frameX = 40, frameY = 40;
-  const bandX = 260, bandW = 1200, labelX = 170;
+  const W = 1600, H = 820, frameX = 40, frameY = 40;
+  const bandX = 280, bandW = 1240, labelX = 185;
+  const bandH = 94;
 
   const band = (y, h) =>
     `<rect x="${bandX}" y="${snap(y)}" width="${bandW}" height="${snap(h)}" fill="#fff" stroke="${STROKE}" stroke-width="2.6"/>`;
   const braceBand = (label, y, h) => {
-    body.push(brace(labelX, y + 12, y + h - 12, label, { size: 22, lineHeight: 25, family: BOLD }));
+    body.push(brace(labelX, y + 12, y + h - 12, label, { size: 24, lineHeight: 27, family: BOLD }));
   };
   const roundedBox = (x, y, w, h, label, opts = {}) =>
-    rect(x, y, w, h, label, { rounded: true, size: opts.size || 20, minSize: 12, family: BOLD, strokeWidth: 2.4 });
+    rect(x, y, w, h, label, { rounded: true, size: opts.size || 22, minSize: 14, family: BOLD, strokeWidth: 2.4 });
   const placeCenteredRow = (items, y, h, opts = {}) => {
     const pad = opts.padding || 32;
     const w = opts.width || 150;
@@ -39,31 +38,62 @@ function buildArchitecture() {
   };
 
   // 外框
-  body.push(`<rect x="${frameX}" y="${frameY}" width="${W - 80}" height="820" fill="#fff" stroke="${STROKE}" stroke-width="3"/>`);
-  // 标题栏
-  body.push(`<rect x="${frameX}" y="90" width="${W - 80}" height="80" fill="#fff" stroke="${STROKE}" stroke-width="2.6"/>`);
-  body.push(text(W / 2, 130, '房屋租赁与销售平台架构图', { size: 30, family: BOLD, weight: '700' }));
+  body.push(`<rect x="${frameX}" y="${frameY}" width="${W - 80}" height="${H - 80}" fill="#fff" stroke="${STROKE}" stroke-width="3"/>`);
 
   // 五层
-  body.push(band(210, 90));
-  body.push(band(340, 90));
-  body.push(band(470, 90));
-  body.push(band(600, 90));
-  body.push(band(730, 90));
+  body.push(band(90, bandH));
+  body.push(band(220, bandH));
+  body.push(band(350, bandH));
+  body.push(band(480, bandH));
+  body.push(band(610, bandH));
 
-  braceBand('表现层', 210, 90);
-  braceBand('控制层', 340, 90);
-  braceBand('业务层', 470, 90);
-  braceBand('持久层', 600, 90);
-  braceBand('数据层', 730, 90);
+  braceBand('表现层', 90, bandH);
+  braceBand('控制层', 220, bandH);
+  braceBand('业务层', 350, bandH);
+  braceBand('持久层', 480, bandH);
+  braceBand('数据层', 610, bandH);
 
-  placeCenteredRow(['JSP页面', 'HTML/CSS', 'JavaScript', '浏览器'], 230, 50, { width: 160, padding: 60, size: 18 });
-  placeCenteredRow(['DispatcherServlet', 'Controller', '请求分发', '视图解析'], 360, 50, { width: 170, padding: 50, size: 16 });
-  placeCenteredRow(['用户服务', '房屋服务', '订单服务', '公告服务'], 490, 50, { width: 160, padding: 60, size: 18 });
-  placeCenteredRow(['AdminMapper', 'MemberMapper', 'FwMapper', 'DdMapper'], 620, 50, { width: 170, padding: 50, size: 16 });
-  body.push(cylinder(bandX + bandW / 2 - 80, 745, 160, 60, 'MySQL 5.7', { size: 22, family: BOLD }));
+  placeCenteredRow(['JSP页面', 'HTML/CSS', 'JavaScript', '浏览器'], 112, 58, { width: 180, padding: 60, size: 20 });
+  placeCenteredRow(['DispatcherServlet', 'Controller', '请求分发', '视图解析'], 242, 58, { width: 190, padding: 50, size: 18 });
+  placeCenteredRow(['用户服务', '房屋服务', '订单服务', '公告服务'], 372, 58, { width: 180, padding: 60, size: 20 });
+  placeCenteredRow(['AdminMapper', 'MemberMapper', 'FwMapper', 'DdMapper'], 502, 58, { width: 190, padding: 50, size: 18 });
+  body.push(cylinder(bandX + bandW / 2 - 100, 630, 200, 74, 'MySQL 5.7', { size: 24, family: BOLD }));
 
-  writeDiagram('chencai-architecture', W, 900, body);
+  writeDiagram('chencai-architecture', W, H, body);
+}
+
+// ========== 1b. 用例图 ==========
+function buildUseCaseDiagram(name, actorLabel, useCases) {
+  const body = [];
+  const W = 1600, H = 980;
+  const actorX = 210, actorY = 290;
+  const system = { x: 430, y: 70, w: 1080, h: 780 };
+  const cols = [790, 1180];
+  const rows = [240, 430, 620];
+
+  body.push(`<rect x="${system.x}" y="${system.y}" width="${system.w}" height="${system.h}" fill="#fff" stroke="${STROKE}" stroke-width="3"/>`);
+  body.push(text(system.x + system.w / 2, system.y + 34, '房屋租赁与销售平台', { size: 28, family: BOLD, weight: '700' }));
+  body.push(actor(actorX, actorY, actorLabel));
+
+  useCases.forEach((label, idx) => {
+    const cx = idx < 3 ? cols[0] : cols[1];
+    const cy = rows[idx % 3];
+    const linkY = 250 + idx * 32;
+    body.push(ellipse(cx, cy, 175, 56, label, { size: 24, minSize: 18, maxLines: 2 }));
+    body.push(
+      pathLine(
+        [
+          [actorX + 40, linkY],
+          [360, linkY],
+          [360, cy],
+          [cx - 175, cy],
+        ],
+        { width: 2.6 },
+      ),
+    );
+  });
+
+  writeDiagram(name, W, H, body);
 }
 
 // ========== 2. ER图 — 手动布局（避免交叉线） ==========
@@ -288,9 +318,143 @@ function buildAdminClassDiagram() {
   writeDiagram('chencai-admin-class', 940, 530, body);
 }
 
-// ========== 流程图（沿用 flow-chart-template） ==========
+// ========== 3b. 用户核心类图 ==========
+function buildMemberClassDiagram() {
+  const body = [];
+
+  function classBox(x, y, w, name, stereotypes, attrs, methods) {
+    const lineH = 20;
+    const stereoH = stereotypes ? 18 : 0;
+    const nameH = 32 + stereoH;
+    const attrH = Math.max(attrs.length * lineH, lineH) + 8;
+    const methH = Math.max(methods.length * lineH, lineH) + 8;
+    const h = nameH + attrH + methH;
+
+    body.push(`<rect x="${snap(x)}" y="${snap(y)}" width="${snap(w)}" height="${snap(h)}" fill="#fff" stroke="${STROKE}" stroke-width="2.4"/>`);
+    if (stereotypes) {
+      body.push(text(x + w / 2, y + 14, stereotypes, { size: 13, fill: '#555' }));
+    }
+    body.push(text(x + w / 2, y + (stereoH ? 32 : nameH / 2), name, { size: 17, weight: '700', family: BOLD }));
+
+    const y1 = y + nameH;
+    body.push(`<line x1="${snap(x)}" y1="${snap(y1)}" x2="${snap(x + w)}" y2="${snap(y1)}" stroke="${STROKE}" stroke-width="1.2"/>`);
+    attrs.forEach((a, i) => {
+      body.push(text(x + 10, y1 + 12 + i * lineH, a, { size: 13, anchor: 'start' }));
+    });
+
+    const y2 = y1 + attrH;
+    body.push(`<line x1="${snap(x)}" y1="${snap(y2)}" x2="${snap(x + w)}" y2="${snap(y2)}" stroke="${STROKE}" stroke-width="1.2"/>`);
+    methods.forEach((m, i) => {
+      body.push(text(x + 10, y2 + 12 + i * lineH, m, { size: 13, anchor: 'start' }));
+    });
+
+    return { cx: x + w / 2, cy: y + h / 2, top: y, bottom: y + h, left: x, right: x + w };
+  }
+
+  const ctrl = classBox(20, 30, 250, 'MemberController', null,
+    ['+login(): ModelAndView', '+register(): String', '+editInfo(): String'],
+    ['-memberService: MemberService']);
+  const svcI = classBox(350, 30, 250, 'MemberService', '<<interface>>',
+    ['+checkLogin(): Member', '+register(): int', '+getById(): Member', '+updateInfo(): void'],
+    []);
+  const svcImpl = classBox(350, 280, 250, 'MemberServiceImpl', null,
+    ['-memberMapper: MemberMapper'],
+    ['+checkLogin(): Member', '+register(): int', '+getById(): Member']);
+  const mapper = classBox(700, 30, 240, 'MemberMapper', '<<interface>>',
+    ['+selectByNamePwd(): Member', '+insert(): int', '+selectById(): Member', '+updateById(): int'],
+    []);
+  const entity = classBox(700, 280, 240, 'Member', null,
+    ['-id: int', '-username: String', '-password: String', '-realname: String', '-sjh: String', '-ifuse: String'],
+    ['+getter/setter()']);
+
+  body.push(pathLine([[ctrl.right, ctrl.cy], [svcI.left, svcI.cy]], { arrow: true, dashed: true, width: 2 }));
+  body.push(text((ctrl.right + svcI.left) / 2, ctrl.cy - 14, '依赖', { size: 13 }));
+  body.push(pathLine([[svcImpl.cx, svcImpl.top], [svcI.cx, svcI.bottom]], { arrow: true, dashed: true, width: 2 }));
+  body.push(text(svcImpl.cx + 30, (svcImpl.top + svcI.bottom) / 2, '实现', { size: 13 }));
+  body.push(pathLine([[svcImpl.right, svcImpl.cy], [mapper.left, mapper.bottom - 30]], { arrow: true, dashed: true, width: 2 }));
+  body.push(text((svcImpl.right + mapper.left) / 2, svcImpl.cy - 14, '依赖', { size: 13 }));
+  body.push(pathLine([[svcI.right, svcI.bottom - 20], [entity.left, entity.top + 20]], { arrow: true, width: 2 }));
+  body.push(text((svcI.right + entity.left) / 2 + 10, (svcI.bottom + entity.top) / 2 - 10, '使用', { size: 13 }));
+
+  writeDiagram('chencai-member-class', 980, 560, body);
+}
+
+// ========== 4. 流程图 ==========
+function buildLargeFlowChart(name, config) {
+  const body = [];
+  const W = 1600, H = 1360;
+  const centerX = 820;
+  const topW = 280;
+  const stepW = 440;
+  const wideStepW = 560;
+  const successBox = {
+    x: centerX - 200,
+    y: 880,
+    width: 400,
+    height: 92,
+  };
+
+  body.push(rect(centerX - topW / 2, 90, topW, 88, config.startLabel || '开始', { rounded: true, size: 34 }));
+  body.push(rect(centerX - stepW / 2, 260, stepW, 92, config.page, { size: 32 }));
+  body.push(
+    rect(centerX - wideStepW / 2, 450, wideStepW, 120, config.input, {
+      size: 30,
+      preserveLines: true,
+      maxLines: 2,
+    }),
+  );
+  body.push(diamond(centerX, 720, 460, 190, config.check, { size: 26, maxLines: 2 }));
+  body.push(rect(1150, 655, 320, 110, config.reject, { size: 28, preserveLines: true, maxLines: 2 }));
+  body.push(cylinder(110, 650, 180, 140, config.database, { size: 26 }));
+  body.push(rect(successBox.x, successBox.y, successBox.width, successBox.height, config.success, { size: 29, preserveLines: true, maxLines: 2 }));
+  body.push(rect(centerX - 210, 1060, 420, 92, config.result, { size: 30, preserveLines: true, maxLines: 2 }));
+  body.push(rect(centerX - 160, 1210, 320, 88, config.endLabel || '流程结束', { rounded: true, size: 34 }));
+
+  body.push(vLine(centerX, 178, 260, { arrow: true }));
+  body.push(vLine(centerX, 352, 450, { arrow: true }));
+  body.push(vLine(centerX, 570, 625, { arrow: true }));
+  body.push(vLine(centerX, 815, 880, { arrow: true }));
+  body.push(vLine(centerX, 972, 1060, { arrow: true }));
+  body.push(vLine(centerX, 1152, 1210, { arrow: true }));
+
+  body.push(hLine(1050, 1150, 720, { arrow: true }));
+  body.push(text(1100, 684, config.noLabel || '否', { size: 26 }));
+  body.push(
+    pathLine(
+      [
+        [1310, 655],
+        [1310, 306],
+        [1040, 306],
+      ],
+      { arrow: true },
+    ),
+  );
+  body.push(
+    pathLine(
+      [
+        [590, 720],
+        [290, 720],
+      ],
+      { arrow: true },
+    ),
+  );
+  body.push(
+    pathLine(
+      [
+        [200, 790],
+        [200, successBox.y + successBox.height / 2],
+        [successBox.x, successBox.y + successBox.height / 2],
+      ],
+      { arrow: true },
+    ),
+  );
+  body.push(text(860, 842, config.yesLabel || '是', { size: 26, anchor: 'start' }));
+
+  writeDiagram(name, W, H, body);
+}
+
 function buildLoginFlow() {
-  buildFlowChartTemplate(runtime, 'chencai-login-flow', {
+  buildLargeFlowChart('chencai-login-flow', {
     page: '系统登录页面',
     input: '输入账号和密码\n点击登录按钮',
     check: '账号密码\n是否正确',
@@ -302,7 +466,7 @@ function buildLoginFlow() {
 }
 
 function buildBrowseFlow() {
-  buildFlowChartTemplate(runtime, 'chencai-browse-flow', {
+  buildLargeFlowChart('chencai-browse-flow', {
     page: '房屋信息列表页面',
     input: '选择出售或出租类型\n浏览房屋列表',
     check: '是否选择\n具体房屋',
@@ -314,7 +478,7 @@ function buildBrowseFlow() {
 }
 
 function buildRentalFlow() {
-  buildFlowChartTemplate(runtime, 'chencai-rental-flow', {
+  buildLargeFlowChart('chencai-rental-flow', {
     page: '房屋详情页面',
     input: '确认房屋信息\n提交租赁或购买请求',
     check: '房屋状态\n是否可用',
@@ -326,7 +490,7 @@ function buildRentalFlow() {
 }
 
 function buildAdminFlow() {
-  buildFlowChartTemplate(runtime, 'chencai-admin-flow', {
+  buildLargeFlowChart('chencai-admin-flow', {
     page: '管理员后台首页',
     input: '选择管理功能模块\n执行管理操作',
     check: '操作数据\n是否合法',
@@ -368,6 +532,22 @@ function buildTestFlow() {
 
 // 执行
 buildArchitecture();
+buildUseCaseDiagram('chencai-admin-usecase', '管理员', [
+  '用户管理',
+  '房屋出售管理',
+  '房屋出租管理',
+  '订单管理',
+  '公告管理',
+  '轮播图管理',
+]);
+buildUseCaseDiagram('chencai-user-usecase', '普通用户', [
+  '首页浏览',
+  '个人中心',
+  '房屋出售查询',
+  '房屋出租查询',
+  '订单提交',
+  '公告查看',
+]);
 buildOverallERDiagram();
 // 7 个单实体 ER 图
 buildSingleEntityER('chencai-er-admin', '管理员信息',
@@ -384,9 +564,10 @@ buildSingleEntityER('chencai-er-message', '留言信息',
 buildSingleEntityER('chencai-er-notice', '公告信息',
   ['编号', '名称', '内容', '时间']);
 buildAdminClassDiagram();
+buildMemberClassDiagram();
 buildLoginFlow();
 buildBrowseFlow();
 buildRentalFlow();
 buildAdminFlow();
 buildTestFlow();
-console.log('Done: 15 diagrams generated');
+console.log('Done: diagrams generated');
