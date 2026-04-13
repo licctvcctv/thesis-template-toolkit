@@ -12,6 +12,9 @@
 """
 import os
 import sys
+import re
+import zipfile
+import shutil
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "../.."))
 from body_maker import setup_body_template
@@ -461,6 +464,23 @@ def make(src_path, out_path):
                     break
     doc3.save(out_path)
     print("  Step 8: 参考文献循环")
+
+    # ========== Step 9: 删除文本框注释 ==========
+    tmp = out_path + ".tmp"
+    with zipfile.ZipFile(out_path, 'r') as zin:
+        with zipfile.ZipFile(tmp, 'w') as zout:
+            for item in zin.infolist():
+                data = zin.read(item.filename)
+                if item.filename == 'word/document.xml':
+                    xml = data.decode('utf-8')
+                    n = xml.count('<mc:AlternateContent')
+                    xml = re.sub(
+                        r'<mc:AlternateContent>.*?</mc:AlternateContent>',
+                        '', xml, flags=re.DOTALL)
+                    print(f"  Step 9: 删除 {n} 个文本框注释")
+                    data = xml.encode('utf-8')
+                zout.writestr(item, data)
+    shutil.move(tmp, out_path)
 
 
 if __name__ == "__main__":
