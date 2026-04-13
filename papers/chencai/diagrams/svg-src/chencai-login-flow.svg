@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1220" viewBox="0 0 1400 1220" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#202020" />
+    </marker>
+    <marker id="dashArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#555" />
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="1400" height="1220" fill="#ffffff"/>
+  <rect x="690" y="110" width="220" height="70" rx="16" ry="16" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="800" y="145" font-family="SimSun, Songti SC, serif" font-size="28" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">开始</text>
+<rect x="640" y="250" width="320" height="70" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="800" y="285" font-family="SimSun, Songti SC, serif" font-size="26" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">系统登录页面</text>
+<rect x="590" y="420" width="420" height="90" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="800" y="465" font-family="SimSun, Songti SC, serif" font-size="26" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">输入账号和密码
+点击登录按钮</text>
+<path d="M 800 570 L 990 640 L 800 710 L 610 640 Z" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="800" y="640" font-family="SimSun, Songti SC, serif" font-size="21" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">账号密码
+是否正确</text>
+<rect x="1080" y="590" width="250" height="90" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="1205" y="635" font-family="SimSun, Songti SC, serif" font-size="18" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">提示错误信息
+返回登录页面</text>
+<ellipse cx="190" cy="610" rx="70" ry="18" fill="#fff" stroke="#202020" stroke-width="3"/>
+<path d="M 120 610 L 120 680 A 70 18 0 0 0 250 680 L 250 610" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="185" y="645" font-family="SimSun, Songti SC, serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">用户信息表</text>
+<rect x="650" y="790" width="300" height="70" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="800" y="825" font-family="SimSun, Songti SC, serif" font-size="25" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">登录成功
+加载用户功能</text>
+<rect x="640" y="950" width="320" height="70" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="800" y="985" font-family="SimSun, Songti SC, serif" font-size="25" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">进入系统首页</text>
+<rect x="660" y="1090" width="280" height="70" rx="16" ry="16" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="800" y="1125" font-family="SimSun, Songti SC, serif" font-size="28" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">流程结束</text>
+<path d="M 800 180 L 800 250" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<path d="M 800 320 L 800 420" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<path d="M 800 510 L 800 570" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<path d="M 800 710 L 800 790" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<path d="M 800 860 L 800 950" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<path d="M 800 1020 L 800 1090" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<path d="M 990 640 L 1080 640" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<text x="1035" y="606" font-family="SimSun, Songti SC, serif" font-size="24" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">否</text>
+<path d="M 1210 590 L 1210 270 L 960 270" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<path d="M 610 640 L 250 640" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<path d="M 190 700 L 190 830 L 650 830" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<text x="835" y="748" font-family="SimSun, Songti SC, serif" font-size="24" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">是</text>
+</svg>

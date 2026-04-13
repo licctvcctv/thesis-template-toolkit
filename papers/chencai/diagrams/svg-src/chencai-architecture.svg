@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="860" viewBox="0 0 1600 860" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#202020" />
+    </marker>
+    <marker id="dashArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#555" />
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="1600" height="860" fill="#ffffff"/>
+  <rect x="40" y="40" width="1520" height="760" fill="#fff" stroke="#202020" stroke-width="3"/>
+<rect x="40" y="90" width="1520" height="80" fill="#fff" stroke="#202020" stroke-width="2.6"/>
+<text x="800" y="130" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="700" fill="#202020" text-anchor="middle" dominant-baseline="middle">房屋租赁与销售平台架构图</text>
+<rect x="260" y="210" width="1200" height="90" fill="#fff" stroke="#202020" stroke-width="2.6"/>
+<rect x="260" y="340" width="1200" height="90" fill="#fff" stroke="#202020" stroke-width="2.6"/>
+<rect x="260" y="470" width="1200" height="90" fill="#fff" stroke="#202020" stroke-width="2.6"/>
+<rect x="260" y="600" width="1200" height="90" fill="#fff" stroke="#202020" stroke-width="2.6"/>
+<rect x="260" y="730" width="1200" height="90" fill="#fff" stroke="#202020" stroke-width="2.6"/>
+<path d="M 210 220 C 190 220, 190 220, 190 250 L 190 230 C 190 250, 170 250, 170 260 C 170 260, 190 260, 190 290 L 190 260 C 190 290, 190 290, 210 290" fill="none" stroke="#202020" stroke-width="3"/>
+<text x="152" y="230" font-family="SimHei, PingFang SC, sans-serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">表</text>
+<text x="152" y="255" font-family="SimHei, PingFang SC, sans-serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">现</text>
+<text x="152" y="280" font-family="SimHei, PingFang SC, sans-serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">层</text>
+<path d="M 210 350 C 190 350, 190 350, 190 380 L 190 360 C 190 380, 170 380, 170 390 C 170 390, 190 390, 190 420 L 190 390 C 190 420, 190 420, 210 420" fill="none" stroke="#202020" stroke-width="3"/>
+<text x="152" y="360" font-family="SimHei, PingFang SC, sans-serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">控</text>
+<text x="152" y="385" font-family="SimHei, PingFang SC, sans-serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">制</text>
+<text x="152" y="410" font-family="SimHei, PingFang SC, sans-serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">层</text>
+<path d="M 210 480 C 190 480, 190 480, 190 510 L 190 490 C 190 510, 170 510, 170 520 C 170 520, 190 520, 190 550 L 190 520 C 190 550, 190 550, 210 550" fill="none" stroke="#202020" stroke-width="3"/>
+<text x="152" y="490" font-family="SimHei, PingFang SC, sans-serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">业</text>
+<text x="152" y="515" font-family="SimHei, PingFang SC, sans-serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">务</text>
+<text x="152" y="540" font-family="SimHei, PingFang SC, sans-serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">层</text>
+<path d="M 210 610 C 190 610, 190 610, 190 640 L 190 620 C 190 640, 170 640, 170 650 C 170 650, 190 650, 190 680 L 190 650 C 190 680, 190 680, 210 680" fill="none" stroke="#202020" stroke-width="3"/>
+<text x="152" y="620" font-family="SimHei, PingFang SC, sans-serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">持</text>
+<text x="152" y="645" font-family="SimHei, PingFang SC, sans-serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">久</text>
+<text x="152" y="670" font-family="SimHei, PingFang SC, sans-serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">层</text>
+<path d="M 210 740 C 190 740, 190 740, 190 770 L 190 750 C 190 770, 170 770, 170 780 C 170 780, 190 780, 190 810 L 190 780 C 190 810, 190 810, 210 810" fill="none" stroke="#202020" stroke-width="3"/>
+<text x="152" y="750" font-family="SimHei, PingFang SC, sans-serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">数</text>
+<text x="152" y="775" font-family="SimHei, PingFang SC, sans-serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">据</text>
+<text x="152" y="800" font-family="SimHei, PingFang SC, sans-serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">层</text>
+<rect x="320" y="230" width="160" height="50" rx="16" ry="16" fill="#fff" stroke="#202020" stroke-width="2.4"/>
+<text x="400" y="255" font-family="SimHei, PingFang SC, sans-serif" font-size="18" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">JSP页面</text>
+<rect x="630" y="230" width="160" height="50" rx="16" ry="16" fill="#fff" stroke="#202020" stroke-width="2.4"/>
+<text x="710" y="255" font-family="SimHei, PingFang SC, sans-serif" font-size="18" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">HTML/CSS</text>
+<rect x="930" y="230" width="160" height="50" rx="16" ry="16" fill="#fff" stroke="#202020" stroke-width="2.4"/>
+<text x="1010" y="255" font-family="SimHei, PingFang SC, sans-serif" font-size="18" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">JavaScript</text>
+<rect x="1240" y="230" width="160" height="50" rx="16" ry="16" fill="#fff" stroke="#202020" stroke-width="2.4"/>
+<text x="1320" y="255" font-family="SimHei, PingFang SC, sans-serif" font-size="18" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">浏览器</text>
+<rect x="310" y="360" width="170" height="50" rx="16" ry="16" fill="#fff" stroke="#202020" stroke-width="2.4"/>
+<text x="395" y="385" font-family="SimHei, PingFang SC, sans-serif" font-size="16" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">DispatcherServlet</text>
+<rect x="620" y="360" width="170" height="50" rx="16" ry="16" fill="#fff" stroke="#202020" stroke-width="2.4"/>
+<text x="705" y="385" font-family="SimHei, PingFang SC, sans-serif" font-size="16" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">Controller</text>
+<rect x="930" y="360" width="170" height="50" rx="16" ry="16" fill="#fff" stroke="#202020" stroke-width="2.4"/>
+<text x="1015" y="385" font-family="SimHei, PingFang SC, sans-serif" font-size="16" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">请求分发</text>
+<rect x="1240" y="360" width="170" height="50" rx="16" ry="16" fill="#fff" stroke="#202020" stroke-width="2.4"/>
+<text x="1325" y="385" font-family="SimHei, PingFang SC, sans-serif" font-size="16" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">视图解析</text>
+<rect x="320" y="490" width="160" height="50" rx="16" ry="16" fill="#fff" stroke="#202020" stroke-width="2.4"/>
+<text x="400" y="515" font-family="SimHei, PingFang SC, sans-serif" font-size="18" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">用户服务</text>
+<rect x="630" y="490" width="160" height="50" rx="16" ry="16" fill="#fff" stroke="#202020" stroke-width="2.4"/>
+<text x="710" y="515" font-family="SimHei, PingFang SC, sans-serif" font-size="18" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">房屋服务</text>
+<rect x="930" y="490" width="160" height="50" rx="16" ry="16" fill="#fff" stroke="#202020" stroke-width="2.4"/>
+<text x="1010" y="515" font-family="SimHei, PingFang SC, sans-serif" font-size="18" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">订单服务</text>
+<rect x="1240" y="490" width="160" height="50" rx="16" ry="16" fill="#fff" stroke="#202020" stroke-width="2.4"/>
+<text x="1320" y="515" font-family="SimHei, PingFang SC, sans-serif" font-size="18" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">公告服务</text>
+<rect x="310" y="620" width="170" height="50" rx="16" ry="16" fill="#fff" stroke="#202020" stroke-width="2.4"/>
+<text x="395" y="645" font-family="SimHei, PingFang SC, sans-serif" font-size="16" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">AdminMapper</text>
+<rect x="620" y="620" width="170" height="50" rx="16" ry="16" fill="#fff" stroke="#202020" stroke-width="2.4"/>
+<text x="705" y="645" font-family="SimHei, PingFang SC, sans-serif" font-size="16" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">MemberMapper</text>
+<rect x="930" y="620" width="170" height="50" rx="16" ry="16" fill="#fff" stroke="#202020" stroke-width="2.4"/>
+<text x="1015" y="645" font-family="SimHei, PingFang SC, sans-serif" font-size="16" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">FwMapper</text>
+<rect x="1240" y="620" width="170" height="50" rx="16" ry="16" fill="#fff" stroke="#202020" stroke-width="2.4"/>
+<text x="1325" y="645" font-family="SimHei, PingFang SC, sans-serif" font-size="16" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">DdMapper</text>
+<ellipse cx="860" cy="760" rx="80" ry="18" fill="#fff" stroke="#202020" stroke-width="3"/>
+<path d="M 780 760 L 780 790 A 80 18 0 0 0 940 790 L 940 760" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="860" y="780" font-family="SimSun, Songti SC, serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">MySQL 5.7</text>
+</svg>

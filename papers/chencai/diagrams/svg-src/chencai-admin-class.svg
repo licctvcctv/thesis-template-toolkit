@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="530" viewBox="0 0 940 530" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#202020" />
+    </marker>
+    <marker id="dashArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#555" />
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="940" height="530" fill="#ffffff"/>
+  <rect x="20" y="30" width="240" height="130" fill="#fff" stroke="#202020" stroke-width="2.4"/>
+<text x="140" y="46" font-family="SimHei, PingFang SC, sans-serif" font-size="17" font-weight="700" fill="#202020" text-anchor="middle" dominant-baseline="middle">AdminController</text>
+<line x1="20" y1="60" x2="260" y2="60" stroke="#202020" stroke-width="1.2"/>
+<text x="30" y="74" font-family="SimSun, Songti SC, serif" font-size="13" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">+login(): ModelAndView</text>
+<text x="30" y="94" font-family="SimSun, Songti SC, serif" font-size="13" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">+editInfo(): String</text>
+<text x="30" y="114" font-family="SimSun, Songti SC, serif" font-size="13" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">+updatePwd(): String</text>
+<line x1="20" y1="130" x2="260" y2="130" stroke="#202020" stroke-width="1.2"/>
+<text x="30" y="142" font-family="SimSun, Songti SC, serif" font-size="13" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">-adminService: AdminService</text>
+<rect x="340" y="30" width="240" height="170" fill="#fff" stroke="#202020" stroke-width="2.4"/>
+<text x="460" y="44" font-family="SimSun, Songti SC, serif" font-size="13" font-weight="400" fill="#555" text-anchor="middle" dominant-baseline="middle">&lt;&lt;interface&gt;&gt;</text>
+<text x="460" y="62" font-family="SimHei, PingFang SC, sans-serif" font-size="17" font-weight="700" fill="#202020" text-anchor="middle" dominant-baseline="middle">AdminService</text>
+<line x1="340" y1="80" x2="580" y2="80" stroke="#202020" stroke-width="1.2"/>
+<text x="350" y="92" font-family="SimSun, Songti SC, serif" font-size="13" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">+checkLogin(): Admin</text>
+<text x="350" y="112" font-family="SimSun, Songti SC, serif" font-size="13" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">+getById(): Admin</text>
+<text x="350" y="132" font-family="SimSun, Songti SC, serif" font-size="13" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">+updateInfo(): void</text>
+<text x="350" y="152" font-family="SimSun, Songti SC, serif" font-size="13" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">+updatePwd(): boolean</text>
+<line x1="340" y1="170" x2="580" y2="170" stroke="#202020" stroke-width="1.2"/>
+<rect x="340" y="280" width="240" height="130" fill="#fff" stroke="#202020" stroke-width="2.4"/>
+<text x="460" y="296" font-family="SimHei, PingFang SC, sans-serif" font-size="17" font-weight="700" fill="#202020" text-anchor="middle" dominant-baseline="middle">AdminServiceImpl</text>
+<line x1="340" y1="310" x2="580" y2="310" stroke="#202020" stroke-width="1.2"/>
+<text x="350" y="324" font-family="SimSun, Songti SC, serif" font-size="13" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">-adminMapper: AdminMapper</text>
+<line x1="340" y1="340" x2="580" y2="340" stroke="#202020" stroke-width="1.2"/>
+<text x="350" y="352" font-family="SimSun, Songti SC, serif" font-size="13" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">+checkLogin(): Admin</text>
+<text x="350" y="372" font-family="SimSun, Songti SC, serif" font-size="13" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">+getById(): Admin</text>
+<text x="350" y="392" font-family="SimSun, Songti SC, serif" font-size="13" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">+updateInfo(): void</text>
+<rect x="680" y="30" width="230" height="150" fill="#fff" stroke="#202020" stroke-width="2.4"/>
+<text x="795" y="44" font-family="SimSun, Songti SC, serif" font-size="13" font-weight="400" fill="#555" text-anchor="middle" dominant-baseline="middle">&lt;&lt;interface&gt;&gt;</text>
+<text x="795" y="62" font-family="SimHei, PingFang SC, sans-serif" font-size="17" font-weight="700" fill="#202020" text-anchor="middle" dominant-baseline="middle">AdminMapper</text>
+<line x1="680" y1="80" x2="910" y2="80" stroke="#202020" stroke-width="1.2"/>
+<text x="690" y="92" font-family="SimSun, Songti SC, serif" font-size="13" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">+selectByNamePwd(): Admin</text>
+<text x="690" y="112" font-family="SimSun, Songti SC, serif" font-size="13" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">+selectById(): Admin</text>
+<text x="690" y="132" font-family="SimSun, Songti SC, serif" font-size="13" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">+updateById(): int</text>
+<line x1="680" y1="150" x2="910" y2="150" stroke="#202020" stroke-width="1.2"/>
+<rect x="680" y="280" width="230" height="190" fill="#fff" stroke="#202020" stroke-width="2.4"/>
+<text x="795" y="296" font-family="SimHei, PingFang SC, sans-serif" font-size="17" font-weight="700" fill="#202020" text-anchor="middle" dominant-baseline="middle">Admin</text>
+<line x1="680" y1="310" x2="910" y2="310" stroke="#202020" stroke-width="1.2"/>
+<text x="690" y="324" font-family="SimSun, Songti SC, serif" font-size="13" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">-id: int</text>
+<text x="690" y="344" font-family="SimSun, Songti SC, serif" font-size="13" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">-name: String</text>
+<text x="690" y="364" font-family="SimSun, Songti SC, serif" font-size="13" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">-password: String</text>
+<text x="690" y="384" font-family="SimSun, Songti SC, serif" font-size="13" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">-realname: String</text>
+<text x="690" y="404" font-family="SimSun, Songti SC, serif" font-size="13" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">-sex: String</text>
+<text x="690" y="424" font-family="SimSun, Songti SC, serif" font-size="13" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">-tel: String</text>
+<line x1="680" y1="440" x2="910" y2="440" stroke="#202020" stroke-width="1.2"/>
+<text x="690" y="452" font-family="SimSun, Songti SC, serif" font-size="13" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">+getter/setter()</text>
+<path d="M 260 90 L 340 110" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" stroke-dasharray="8 6" marker-end="url(#dashArrow)"/>
+<text x="300" y="80" font-family="SimSun, Songti SC, serif" font-size="13" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">依赖</text>
+<path d="M 460 280 L 460 200" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" stroke-dasharray="8 6" marker-end="url(#dashArrow)"/>
+<text x="490" y="238" font-family="SimSun, Songti SC, serif" font-size="13" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">实现</text>
+<path d="M 580 340 L 680 150" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" stroke-dasharray="8 6" marker-end="url(#dashArrow)"/>
+<text x="630" y="330" font-family="SimSun, Songti SC, serif" font-size="13" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">依赖</text>
+<path d="M 580 180 L 680 300" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<text x="640" y="228" font-family="SimSun, Songti SC, serif" font-size="13" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">使用</text>
+</svg>

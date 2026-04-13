@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="870" viewBox="0 0 1400 870" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#202020" />
+    </marker>
+    <marker id="dashArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#555" />
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="1400" height="870" fill="#ffffff"/>
+  <rect x="600" y="40" width="200" height="60" rx="16" ry="16" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="700" y="70" font-family="SimSun, Songti SC, serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">开始测试</text>
+<path d="M 700 100 L 700 140" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<rect x="560" y="140" width="280" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="700" y="170" font-family="SimSun, Songti SC, serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">编写测试用例</text>
+<path d="M 700 200 L 700 250" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<rect x="560" y="250" width="280" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="700" y="280" font-family="SimSun, Songti SC, serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">搭建测试环境</text>
+<path d="M 700 310 L 700 360" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<rect x="560" y="360" width="280" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="700" y="390" font-family="SimSun, Songti SC, serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">执行功能测试</text>
+<path d="M 700 420 L 700 480" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<path d="M 700 490 L 840 540 L 700 600 L 560 540 Z" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="700" y="540" font-family="SimSun, Songti SC, serif" font-size="20" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">测试是否通过</text>
+<path d="M 840 540 L 1080 540" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<text x="940" y="524" font-family="SimSun, Songti SC, serif" font-size="20" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">否</text>
+<rect x="1000" y="510" width="200" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="1100" y="540" font-family="SimSun, Songti SC, serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">修复缺陷</text>
+<path d="M 1100 510 L 1100 390 L 840 390" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<path d="M 700 600 L 700 650" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<text x="720" y="630" font-family="SimSun, Songti SC, serif" font-size="20" font-weight="400" fill="#202020" text-anchor="start" dominant-baseline="middle">是</text>
+<rect x="560" y="650" width="280" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="700" y="680" font-family="SimSun, Songti SC, serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">记录测试结果</text>
+<path d="M 700 710 L 700 760" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<rect x="600" y="760" width="200" height="60" rx="16" ry="16" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="700" y="790" font-family="SimSun, Songti SC, serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">测试完成</text>
+</svg>
