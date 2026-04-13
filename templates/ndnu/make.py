@@ -63,20 +63,11 @@ def _setup_ndnu_body(doc_path):
     keep = {h1_idx, h2_idx, h3_idx, body_idx} - {None}
 
     # 清空非样本段落
-    _keep_kw = ['参考文献', '致谢', '致 谢', '致  谢', '致    谢',
-                '附录', '参 考', '结论', '结    论']
     for i in range(h1_idx, body_end):
         if i in keep:
             continue
         p = paras[i]
-        style = p.style.name if p.style else ""
-        # 保留所有 Heading 样式段落（章标题、节标题等）
-        if style.startswith("Heading"):
-            continue
         if p._p.find('.//w:sectPr', _NS) is not None:
-            continue
-        text = (p.text or "").strip()
-        if any(kw in text for kw in _keep_kw):
             continue
         for r in p.runs:
             r.text = ""
@@ -178,6 +169,23 @@ def _setup_ndnu_body(doc_path):
         cursor = _insert_after(cursor, _mk_ctrl("{%p endfor %}"))
 
     cursor = _insert_after(cursor, _mk_ctrl("{%p endfor %}"))  # chapters
+
+    # 清掉结论正文、附录内容等残留（body_end 之后到文档末尾）
+    for i in range(body_end, len(paras)):
+        p = paras[i]
+        style = p.style.name if p.style else ""
+        text = (p.text or "").strip()
+        # 保留 Heading 1 标题（结论、致谢、参考文献、附录）
+        if style == "Heading 1":
+            continue
+        # 保留致谢变量
+        if "acknowledgement" in text:
+            continue
+        # 保留参考文献内容（Step 8 会处理）
+        if "{{ ref" in text or "{%p for ref" in text or "{%p endfor" in text:
+            continue
+        for r in p.runs:
+            r.text = ""
 
     doc.save(doc_path)
     print(f"  正文循环已设置: {doc_path}")
@@ -301,6 +309,19 @@ def make(src_path, out_path):
             continue
         # 清掉括号里的格式说明
         if text.startswith("（") and text.endswith("）"):
+            for r in p.runs:
+                r.text = ""
+
+    # 清掉正文标题页残留（"某某安全方案分析与设计"等）
+    for i in range(50, 60):
+        if i >= len(doc.paragraphs):
+            break
+        p = doc.paragraphs[i]
+        style = p.style.name if p.style else ""
+        if style.startswith("Heading"):
+            continue
+        text = (p.text or "").strip()
+        if text and "某某" in text or ("方案" in text and "设计" in text):
             for r in p.runs:
                 r.text = ""
 
