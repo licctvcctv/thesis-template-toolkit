@@ -283,11 +283,9 @@ def make(src_path, out_path):
                 rr.text = ""
             break
 
-    # 清掉格式说明 p[30]，但保留为空段落（用于撑页面间距）
+    # 清掉格式说明 p[30]
     for r in doc.paragraphs[30].runs:
         r.text = ""
-    # 在关键词段落后设置分页，确保英文摘要另起一页
-    doc.paragraphs[30].paragraph_format.page_break_before = True
 
     print("  Step 2: 中文摘要")
 
@@ -295,10 +293,17 @@ def make(src_path, out_path):
     # p[31]: "Abstract"
     # p[32]: 英文摘要正文
     # p[33]: Key words
-    # 英文摘要正文：保留原始 run 的字体，只替换文本
+    # 英文摘要另起一页
+    doc.paragraphs[31].paragraph_format.page_break_before = True
+
+    # 英文摘要正文：修正字体为 Times New Roman 小四号（原始是 Arial Black）
     p32 = doc.paragraphs[32]
     if p32.runs:
         p32.runs[0].text = "{{ abstract_en }}"
+        p32.runs[0].font.name = "Times New Roman"
+        from docx.shared import Pt as _Pt3
+        p32.runs[0].font.size = _Pt3(12)
+        p32.runs[0].font.bold = False
         for r in p32.runs[1:]:
             r.text = ""
 
