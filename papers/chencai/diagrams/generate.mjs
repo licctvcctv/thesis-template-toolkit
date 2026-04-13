@@ -11,7 +11,7 @@ const runtime = createRuntime(new Map([
 ]));
 
 const { rect, diamond, ellipse, cylinder, pill, brace, pathLine, vLine, hLine, text,
-        multiline, card, snap, writeDiagram, STROKE, FONT, BOLD } = runtime;
+        multiline, card, snap, createLayout, writeDiagram, STROKE, FONT, BOLD } = runtime;
 
 // ========== 1. 系统架构图 — 参照 system-architecture.mjs 风格 ==========
 function buildArchitecture() {
@@ -70,11 +70,12 @@ function buildArchitecture() {
 function buildERDiagram() {
   const body = [];
   const W = 1800, H = 1200;
-  const RX = 72, RY = 26; // 属性椭圆大小
+  const layout = createLayout(W, H);
 
   const entity = (x, y, label, w = 180, h = 56) => {
     const node = { x, y, w, h, cx: x + w / 2, cy: y + h / 2 };
     body.push(rect(x, y, w, h, label, { size: 22, family: BOLD, strokeWidth: 2.8 }));
+    layout.registerBox(node);
     return node;
   };
   const relation = (cx, cy, label, w = 100, h = 56) => {
@@ -82,136 +83,36 @@ function buildERDiagram() {
     body.push(diamond(cx, cy, w, h, label, { size: 18, maxLines: 1 }));
     return node;
   };
-  const rectAnchor = (node, tx, ty) => {
-    const dx = tx - node.cx, dy = ty - node.cy;
-    if (Math.abs(dx) * (node.h / 2) > Math.abs(dy) * (node.w / 2))
-      return [dx >= 0 ? node.x + node.w : node.x, node.cy];
-    return [node.cx, dy >= 0 ? node.y + node.h : node.y];
-  };
-  const diamondAnchor = (node, tx, ty) => {
-    const dx = tx - node.cx, dy = ty - node.cy;
-    if (Math.abs(dx) / (node.w / 2) > Math.abs(dy) / (node.h / 2))
-      return [node.cx + (Math.sign(dx || 1) * node.w) / 2, node.cy];
-    return [node.cx, node.cy + (Math.sign(dy || 1) * node.h) / 2];
-  };
-  const ovalAnchor = (cx, cy, rx, ry, tx, ty) => {
-    const dx = tx - cx, dy = ty - cy;
-    const s = Math.sqrt((dx * dx) / (rx * rx) + (dy * dy) / (ry * ry)) || 1;
-    return [cx + dx / s, cy + dy / s];
-  };
   const connectER = (e, r) => {
-    const [x1, y1] = rectAnchor(e, r.cx, r.cy);
-    const [x2, y2] = diamondAnchor(r, e.cx, e.cy);
-    body.push(pathLine([[x1, y1], [x2, y2]], { width: 2.5 }));
+    const ra = (node, tx, ty) => { const dx=tx-node.cx,dy=ty-node.cy; return Math.abs(dx)*(node.h/2)>Math.abs(dy)*(node.w/2)?[dx>=0?node.x+node.w:node.x,node.cy]:[node.cx,dy>=0?node.y+node.h:node.y]; };
+    const da = (node, tx, ty) => { const dx=tx-node.cx,dy=ty-node.cy; return Math.abs(dx)/(node.w/2)>Math.abs(dy)/(node.h/2)?[node.cx+(Math.sign(dx||1)*node.w)/2,node.cy]:[node.cx,node.cy+(Math.sign(dy||1)*node.h)/2]; };
+    const [x1,y1]=ra(e,r.cx,r.cy); const [x2,y2]=da(r,e.cx,e.cy);
+    body.push(pathLine([[x1,y1],[x2,y2]],{width:2.5}));
   };
   const connectRE = (r, e) => {
-    const [x1, y1] = diamondAnchor(r, e.cx, e.cy);
-    const [x2, y2] = rectAnchor(e, r.cx, r.cy);
-    body.push(pathLine([[x1, y1], [x2, y2]], { width: 2.5 }));
+    const da = (node, tx, ty) => { const dx=tx-node.cx,dy=ty-node.cy; return Math.abs(dx)/(node.w/2)>Math.abs(dy)/(node.h/2)?[node.cx+(Math.sign(dx||1)*node.w)/2,node.cy]:[node.cx,node.cy+(Math.sign(dy||1)*node.h)/2]; };
+    const ra = (node, tx, ty) => { const dx=tx-node.cx,dy=ty-node.cy; return Math.abs(dx)*(node.h/2)>Math.abs(dy)*(node.w/2)?[dx>=0?node.x+node.w:node.x,node.cy]:[node.cx,dy>=0?node.y+node.h:node.y]; };
+    const [x1,y1]=da(r,e.cx,e.cy); const [x2,y2]=ra(e,r.cx,r.cy);
+    body.push(pathLine([[x1,y1],[x2,y2]],{width:2.5}));
   };
 
-  // 环形属性布局 + AABB推离算法消除重叠
-  const allBoxes = []; // 收集所有已放置的矩形用于碰撞检测
+  // 实体布局
+  const admin  = entity(150,  280, '管理员');
+  const user   = entity(700,  280, '用户');
+  const order  = entity(1300, 280, '订单');
+  const house  = entity(700,  680, '房屋信息', 200);
+  const msg    = entity(150,  680, '留言');
+  const notice = entity(1300, 680, '公告');
+  const category = entity(450, 1000, '分类');
 
-  // 注册实体为碰撞体
-  const registerEntity = (e) => {
-    allBoxes.push({ x: e.x - 5, y: e.y - 5, w: e.w + 10, h: e.h + 10 });
-  };
-
-  // AABB重叠检测
-  const overlaps = (a, b) => {
-    return a.x < b.x + b.w && a.x + a.w > b.x &&
-           a.y < b.y + b.h && a.y + a.h > b.y;
-  };
-
-  // 推离：沿最短轴移动
-  const pushApart = (movable, fixed) => {
-    const overlapX = Math.min(movable.x + movable.w - fixed.x, fixed.x + fixed.w - movable.x);
-    const overlapY = Math.min(movable.y + movable.h - fixed.y, fixed.y + fixed.h - movable.y);
-    if (overlapX < overlapY) {
-      if (movable.x + movable.w / 2 < fixed.x + fixed.w / 2) {
-        movable.x -= overlapX / 2 + 5;
-      } else {
-        movable.x += overlapX / 2 + 5;
-      }
-    } else {
-      if (movable.y + movable.h / 2 < fixed.y + fixed.h / 2) {
-        movable.y -= overlapY / 2 + 5;
-      } else {
-        movable.y += overlapY / 2 + 5;
-      }
-    }
-  };
-
-  const autoAttrs = (e, labels, startAngle = -Math.PI/2, span = Math.PI * 1.2, radius = 140) => {
-    const n = labels.length;
-    const attrBoxes = [];
-
-    // 第一轮：环形放置
-    labels.forEach((label, i) => {
-      const angle = startAngle + (span / Math.max(n - 1, 1)) * i;
-      let cx = e.cx + radius * Math.cos(angle);
-      let cy = e.cy + radius * Math.sin(angle);
-      cx = Math.max(RX + 10, Math.min(W - RX - 10, cx));
-      cy = Math.max(RY + 10, Math.min(H - RY - 10, cy));
-      attrBoxes.push({ cx, cy, x: cx - RX, y: cy - RY, w: RX * 2, h: RY * 2, label });
-    });
-
-    // 第二轮：AABB推离迭代（最多10轮）
-    for (let iter = 0; iter < 10; iter++) {
-      let moved = false;
-      for (let i = 0; i < attrBoxes.length; i++) {
-        // 与其他属性碰撞
-        for (let j = i + 1; j < attrBoxes.length; j++) {
-          if (overlaps(attrBoxes[i], attrBoxes[j])) {
-            pushApart(attrBoxes[i], attrBoxes[j]);
-            pushApart(attrBoxes[j], attrBoxes[i]);
-            moved = true;
-          }
-        }
-        // 与所有已注册的实体/属性碰撞
-        for (const box of allBoxes) {
-          if (overlaps(attrBoxes[i], box)) {
-            pushApart(attrBoxes[i], box);
-            moved = true;
-          }
-        }
-        // 边界约束
-        attrBoxes[i].x = Math.max(5, Math.min(W - attrBoxes[i].w - 5, attrBoxes[i].x));
-        attrBoxes[i].y = Math.max(5, Math.min(H - attrBoxes[i].h - 5, attrBoxes[i].y));
-        attrBoxes[i].cx = attrBoxes[i].x + RX;
-        attrBoxes[i].cy = attrBoxes[i].y + RY;
-      }
-      if (!moved) break;
-    }
-
-    // 第三轮：渲染
-    attrBoxes.forEach((ab) => {
-      const [x1, y1] = rectAnchor(e, ab.cx, ab.cy);
-      const [x2, y2] = ovalAnchor(ab.cx, ab.cy, RX, RY, e.cx, e.cy);
-      body.push(pathLine([[x1, y1], [x2, y2]], { width: 2 }));
-      body.push(ellipse(ab.cx, ab.cy, RX, RY, ab.label, { size: 15, minSize: 11, maxLines: 1 }));
-      allBoxes.push({ x: ab.x, y: ab.y, w: ab.w, h: ab.h });
-    });
-  };
-
-  // 实体布局：三行分布，留足属性空间
-  const admin  = entity(150,  280, '管理员');       registerEntity(admin);
-  const user   = entity(700,  280, '用户');          registerEntity(user);
-  const order  = entity(1300, 280, '订单');          registerEntity(order);
-  const house  = entity(700,  680, '房屋信息', 200); registerEntity(house);
-  const msg    = entity(150,  680, '留言');          registerEntity(msg);
-  const notice = entity(1300, 680, '公告');          registerEntity(notice);
-  const category = entity(450, 1000, '分类');        registerEntity(category);
-
-  // 属性环形分布
-  autoAttrs(admin, ['编号', '账号', '密码', '姓名', '电话'], -Math.PI*0.8, Math.PI*1.1, 150);
-  autoAttrs(user, ['编号', '账号', '密码', '姓名', '手机号'], -Math.PI*0.8, Math.PI*0.9, 150);
-  autoAttrs(order, ['编号', '房屋名称', '用户姓名', '总价', '时间'], -Math.PI*0.3, Math.PI*1.1, 150);
-  autoAttrs(house, ['编号', '名称', '户型', '面积', '价格', '状态'], Math.PI*0.2, Math.PI*1.2, 160);
-  autoAttrs(msg, ['编号', '内容', '用户', '时间'], Math.PI*0.2, Math.PI*1.0, 140);
-  autoAttrs(notice, ['编号', '名称', '内容', '时间'], Math.PI*0.2, Math.PI*1.0, 140);
-  autoAttrs(category, ['编号', '名称'], Math.PI*0.6, Math.PI*0.8, 130);
+  // 属性：使用 runtime 的 autoAttrs（自动碰撞检测）
+  layout.autoAttrs(body, admin, ['编号', '账号', '密码', '姓名', '电话'], { startAngle: -Math.PI*0.8, span: Math.PI*1.1, radius: 150 });
+  layout.autoAttrs(body, user, ['编号', '账号', '密码', '姓名', '手机号'], { startAngle: -Math.PI*0.8, span: Math.PI*0.9, radius: 150 });
+  layout.autoAttrs(body, order, ['编号', '房屋名称', '用户姓名', '总价', '时间'], { startAngle: -Math.PI*0.3, span: Math.PI*1.1, radius: 150 });
+  layout.autoAttrs(body, house, ['编号', '名称', '户型', '面积', '价格', '状态'], { startAngle: Math.PI*0.2, span: Math.PI*1.2, radius: 160 });
+  layout.autoAttrs(body, msg, ['编号', '内容', '用户', '时间'], { startAngle: Math.PI*0.2, span: Math.PI*1.0, radius: 140 });
+  layout.autoAttrs(body, notice, ['编号', '名称', '内容', '时间'], { startAngle: Math.PI*0.2, span: Math.PI*1.0, radius: 140 });
+  layout.autoAttrs(body, category, ['编号', '名称'], { startAngle: Math.PI*0.6, span: Math.PI*0.8, radius: 130 });
 
   // 关系
   const r1 = relation(420, 480, '管理');
