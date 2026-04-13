@@ -5,13 +5,7 @@
   "keywords_zh": "房屋租赁与销售；Java语言；B/S架构；SSM框架；JSP技术",
   "abstract_en": "Traditional house rental and sales management depends on handwritten logs and paper files. Errors are common — a wrong price, a duplicated listing, a rental status nobody updated. Once a mid-sized agency handles more than a hundred properties, spreadsheets stop working.\nThis project builds a browser-based management platform to deal with these problems. The back end runs on the SSM framework with Java, the front end uses JSP for page rendering, and MySQL handles data storage. The whole thing follows a B/S architecture.\nTwo roles use the system. Administrators maintain property listings, review orders, manage user accounts, and post announcements. Regular users browse houses, submit rental or purchase requests, and track their own orders. Sale and rental are separate modules, each with its own list and detail pages.\nBlack-box testing covered 32 functional test cases. Login, property publishing, order placement, and checkout all passed without issues. The system runs on Tomcat and was developed in IntelliJ IDEA on a standard laptop.\nSecurity includes registration and login verification with role-based menu visibility. No load testing was performed, so high-concurrency scenarios remain unverified.",
   "keywords_en": "House rental and sales; Java language; B/S architecture; SSM framework; JSP technology",
-  "acknowledgement": [
-    "做这个毕业设计前后花了几个月，从选题到写完论文，中间踩了不少坑，也学到了不少东西。系统从零搭起来，调通SSM框架配置就花了好几天，数据库表改了三四版才定下来。整个过程虽然累，但确实把课堂上学的东西串起来了。",
-    "感谢宁德师范学院提供的学习条件，机房和图书馆的资源在开发期间帮了大忙。",
-    "感谢刘天哲老师的指导。选题方向是刘老师帮忙定的，需求分析那一章改了两轮才过关，论文框架也是老师一节一节帮着理的。没有老师的耐心指点，这个系统大概率做不完。",
-    "感谢几位同学在开发过程中的帮助，MyBatis映射文件报错那次是室友帮忙排查出来的，省了不少时间。",
-    "感谢家人这几年的支持，让我能安心把学业完成。"
-  ],
+  "acknowledgement": "做这个毕业设计前后花了几个月，从选题到写完论文，中间踩了不少坑，也学到了不少东西。系统从零搭起来，调通SSM框架的配置就花了好几天，数据库表改了三四版才定下来，MyBatis的映射文件反复报错，室友帮忙排查才找到原因。整个过程虽然累，但确实把课堂上学的知识串起来了，对Java Web开发有了更深的理解。\n首先要感谢我的指导教师刘天哲老师。选题方向是刘老师帮忙确定的，需求分析那一章改了两轮才过关，系统设计的框架也是老师一节一节帮着理清的。论文写作过程中，刘老师多次审阅初稿并给出详细的修改建议，从章节结构到文字表述都逐一指正。没有老师的耐心指导，这个系统大概率做不完，论文也写不到现在这个程度。\n感谢宁德师范学院信息工程学院提供的学习条件。学院机房的开发环境在调试阶段帮了大忙，图书馆的数据库资源让我在写研究现状时能查到不少有价值的文献。四年的专业课程为这次毕业设计打下了基础，操作系统、数据库原理、软件工程这几门课的知识在开发过程中都用到了。\n感谢一起做毕设的几位同学。前后端联调的时候互相帮忙排查接口问题，讨论数据库表结构时大家各抒己见，这些交流让我受益不少。特别是帮我测试系统功能的两位室友，他们模拟了管理员发布房源、用户浏览下单等完整流程，帮我发现了好几个边界情况的bug。\n最后感谢我的家人。四年来一直在背后支持我，让我能安心完成学业。毕业设计期间经常熬夜调试代码，家人的关心和理解是我坚持下来的动力。",
   "name": "陈才",
   "student_id": "20220506146",
   "major": "电子信息工程（闽台合作项目）",
