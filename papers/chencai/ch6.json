@@ -11,9 +11,9 @@
                 {
                     "type": "image",
                     "path": "image35.png",
-                    "width": 130,
-                    "caption": "图6-1 测试流程图"
-                }
+                    "width": 130
+                },
+                "图6-1 测试流程图"
             ]
         },
         {
@@ -144,21 +144,21 @@
                         {
                             "type": "image",
                             "path": "image36.png",
-                            "width": 130,
-                            "caption": "图6-2 管理员登录界面"
+                            "width": 130
                         },
+                        "图6-2 管理员登录界面",
                         {
                             "type": "image",
                             "path": "image37.png",
-                            "width": 130,
-                            "caption": "图6-3 管理员登录成功界面"
+                            "width": 130
                         },
+                        "图6-3 管理员登录成功界面",
                         {
                             "type": "image",
                             "path": "image38.png",
-                            "width": 130,
-                            "caption": "图6-4 管理员登录成功后界面"
-                        }
+                            "width": 130
+                        },
+                        "图6-4 管理员登录成功后界面"
                     ]
                 },
                 {
@@ -206,21 +206,21 @@
                         {
                             "type": "image",
                             "path": "image39.png",
-                            "width": 130,
-                            "caption": "图6-5 房屋出售订单管理界面"
+                            "width": 130
                         },
+                        "图6-5 房屋出售订单管理界面",
                         {
                             "type": "image",
                             "path": "image40.png",
-                            "width": 130,
-                            "caption": "图6-6 房屋出售订单删除界面"
+                            "width": 130
                         },
+                        "图6-6 房屋出售订单删除界面",
                         {
                             "type": "image",
                             "path": "image41.png",
-                            "width": 130,
-                            "caption": "图6-7 房屋出售订单删除后界面"
-                        }
+                            "width": 130
+                        },
+                        "图6-7 房屋出售订单删除后界面"
                     ]
                 },
                 {
@@ -268,21 +268,21 @@
                         {
                             "type": "image",
                             "path": "image42.png",
-                            "width": 130,
-                            "caption": "图6-8 房屋出租订单管理界面"
+                            "width": 130
                         },
+                        "图6-8 房屋出租订单管理界面",
                         {
                             "type": "image",
                             "path": "image43.png",
-                            "width": 130,
-                            "caption": "图6-9 房屋出租退房界面"
+                            "width": 130
                         },
+                        "图6-9 房屋出租退房界面",
                         {
                             "type": "image",
                             "path": "image44.png",
-                            "width": 130,
-                            "caption": "图6-10 房屋出租退房成功界面"
-                        }
+                            "width": 130
+                        },
+                        "图6-10 房屋出租退房成功界面"
                     ]
                 }
             ]

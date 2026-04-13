@@ -21,9 +21,9 @@
                         {
                             "type": "image",
                             "path": "image13.png",
-                            "width": 130,
-                            "caption": "图5-1 管理员模块核心类UML图"
-                        }
+                            "width": 130
+                        },
+                        "图5-1 管理员模块核心类UML图"
                     ]
                 },
                 {
@@ -34,9 +34,9 @@
                         {
                             "type": "image",
                             "path": "image14.png",
-                            "width": 130,
-                            "caption": "图5-2 管理员登录界面"
-                        }
+                            "width": 130
+                        },
+                        "图5-2 管理员登录界面"
                     ]
                 },
                 {
@@ -47,15 +47,15 @@
                         {
                             "type": "image",
                             "path": "image15.png",
-                            "width": 130,
-                            "caption": "图5-3 修改密码界面"
+                            "width": 130
                         },
+                        "图5-3 修改密码界面",
                         {
                             "type": "image",
                             "path": "image16.png",
-                            "width": 130,
-                            "caption": "图5-4 编辑个人信息界面"
-                        }
+                            "width": 130
+                        },
+                        "图5-4 编辑个人信息界面"
                     ]
                 },
                 {
@@ -66,27 +66,27 @@
                         {
                             "type": "image",
                             "path": "image17.png",
-                            "width": 130,
-                            "caption": "图5-5 房东管理界面"
+                            "width": 130
                         },
+                        "图5-5 房东管理界面",
                         {
                             "type": "image",
                             "path": "image18.png",
-                            "width": 130,
-                            "caption": "图5-6 用户管理界面"
+                            "width": 130
                         },
+                        "图5-6 用户管理界面",
                         {
                             "type": "image",
                             "path": "image19.png",
-                            "width": 130,
-                            "caption": "图5-7 房屋出售管理界面"
+                            "width": 130
                         },
+                        "图5-7 房屋出售管理界面",
                         {
                             "type": "image",
                             "path": "image20.png",
-                            "width": 130,
-                            "caption": "图5-8 房屋出售订单管理界面"
-                        }
+                            "width": 130
+                        },
+                        "图5-8 房屋出售订单管理界面"
                     ]
                 },
                 {
@@ -97,27 +97,27 @@
                         {
                             "type": "image",
                             "path": "image21.png",
-                            "width": 130,
-                            "caption": "图5-9 房屋出租管理界面"
+                            "width": 130
                         },
+                        "图5-9 房屋出租管理界面",
                         {
                             "type": "image",
                             "path": "image22.png",
-                            "width": 130,
-                            "caption": "图5-10 房屋出租订单管理界面"
+                            "width": 130
                         },
+                        "图5-10 房屋出租订单管理界面",
                         {
                             "type": "image",
                             "path": "image23.png",
-                            "width": 130,
-                            "caption": "图5-11 轮播图管理界面"
+                            "width": 130
                         },
+                        "图5-11 轮播图管理界面",
                         {
                             "type": "image",
                             "path": "image24.png",
-                            "width": 130,
-                            "caption": "图5-12 公告管理界面"
-                        }
+                            "width": 130
+                        },
+                        "图5-12 公告管理界面"
                     ]
                 }
             ]
@@ -137,15 +137,15 @@
                         {
                             "type": "image",
                             "path": "image25.png",
-                            "width": 130,
-                            "caption": "图5-13 用户模块核心类UML图"
+                            "width": 130
                         },
+                        "图5-13 用户模块核心类UML图",
                         {
                             "type": "image",
                             "path": "image26.png",
-                            "width": 130,
-                            "caption": "图5-14 系统首页界面"
-                        }
+                            "width": 130
+                        },
+                        "图5-14 系统首页界面"
                     ]
                 },
                 {
@@ -156,15 +156,15 @@
                         {
                             "type": "image",
                             "path": "image27.png",
-                            "width": 130,
-                            "caption": "图5-15 修改密码界面"
+                            "width": 130
                         },
+                        "图5-15 修改密码界面",
                         {
                             "type": "image",
                             "path": "image28.png",
-                            "width": 130,
-                            "caption": "图5-16 个人信息界面"
-                        }
+                            "width": 130
+                        },
+                        "图5-16 个人信息界面"
                     ]
                 },
                 {
@@ -175,15 +175,15 @@
                         {
                             "type": "image",
                             "path": "image29.png",
-                            "width": 130,
-                            "caption": "图5-17 房屋出售管理界面"
+                            "width": 130
                         },
+                        "图5-17 房屋出售管理界面",
                         {
                             "type": "image",
                             "path": "image30.png",
-                            "width": 130,
-                            "caption": "图5-18 房屋出售订单管理界面"
-                        }
+                            "width": 130
+                        },
+                        "图5-18 房屋出售订单管理界面"
                     ]
                 },
                 {
@@ -194,27 +194,27 @@
                         {
                             "type": "image",
                             "path": "image31.png",
-                            "width": 130,
-                            "caption": "图5-19 房屋出租管理界面"
+                            "width": 130
                         },
+                        "图5-19 房屋出租管理界面",
                         {
                             "type": "image",
                             "path": "image32.png",
-                            "width": 130,
-                            "caption": "图5-20 房屋出租留言管理界面"
+                            "width": 130
                         },
+                        "图5-20 房屋出租留言管理界面",
                         {
                             "type": "image",
                             "path": "image33.png",
-                            "width": 130,
-                            "caption": "图5-21 房屋出租订单管理界面"
+                            "width": 130
                         },
+                        "图5-21 房屋出租订单管理界面",
                         {
                             "type": "image",
                             "path": "image34.png",
-                            "width": 130,
-                            "caption": "图5-22 公告管理界面"
-                        }
+                            "width": 130
+                        },
+                        "图5-22 公告管理界面"
                     ]
                 }
             ]
