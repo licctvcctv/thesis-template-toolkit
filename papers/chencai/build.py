@@ -331,11 +331,18 @@ def _insert_table(doc, after_para, tbl_data):
             pJc.set(qn('w:val'), 'center')
             pPr.append(pJc)
             p.append(pPr)
-            # 文本
+            # 文本 — 字体：宋体(中文) + Times New Roman(英文)，五号(10.5pt)
             r = OxmlElement('w:r')
             rPr = OxmlElement('w:rPr')
+            # 字体
+            rFonts = OxmlElement('w:rFonts')
+            rFonts.set(qn('w:eastAsia'), '宋体')
+            rFonts.set(qn('w:ascii'), 'Times New Roman')
+            rFonts.set(qn('w:hAnsi'), 'Times New Roman')
+            rPr.append(rFonts)
+            # 字号 五号=10.5pt=21半磅
             sz = OxmlElement('w:sz')
-            sz.set(qn('w:val'), '21')  # 五号=10.5pt=21半磅
+            sz.set(qn('w:val'), '21')
             rPr.append(sz)
             szCs = OxmlElement('w:szCs')
             szCs.set(qn('w:val'), '21')
