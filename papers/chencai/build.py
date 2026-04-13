@@ -215,11 +215,16 @@ def _post_process(docx_path):
             from docx.enum.text import WD_LINE_SPACING
             p.paragraph_format.line_spacing_rule = WD_LINE_SPACING.SINGLE
 
-        # 图/表标注 → 居中 + 五号（短文本）
+        # 图/表标注 → 居中 + 五号黑体（短文本）
         if (fig_pat.match(t) or tbl_cap_pat.match(t)) and len(t) < 50:
             p.alignment = WD_ALIGN_PARAGRAPH.CENTER
             for r in p.runs:
                 r.font.size = Pt(10.5)
+                r.font.name = "黑体"
+                # 设置东亚字体
+                r._r.rPr.rFonts.set(
+                    '{http://schemas.openxmlformats.org/wordprocessingml/2006/main}eastAsia',
+                    '黑体')
 
         # 表格占位符 → 插入真实表格
         m = placeholder_pat.match(t)
