@@ -293,8 +293,20 @@ def make(src_path, out_path):
     # p[31]: "Abstract"
     # p[32]: 英文摘要正文
     # p[33]: Key words
-    # 英文摘要另起一页（删掉2个空段落后索引偏移了2）
-    doc.paragraphs[29].paragraph_format.page_break_before = True
+    # 英文摘要另起一页：原始模板用 <w:br type="page"/>，不用 page_break_before
+    # p[29] 是 Abstract 标题，它的第一个 run 里已经有分页符，保持不动即可
+    # 如果被清掉了，确保它存在
+    p29 = doc.paragraphs[29]
+    from docx.oxml.ns import qn as _qn2
+    ns_w = 'http://schemas.openxmlformats.org/wordprocessingml/2006/main'
+    has_br = bool(p29._p.findall(f'.//{{{ns_w}}}br[@{{{ns_w}}}type="page"]'))
+    if not has_br and p29.runs:
+        from docx.oxml import OxmlElement as _OE2
+        br = _OE2('w:br')
+        br.set(_qn2('w:type'), 'page')
+        p29.runs[0]._r.insert(0, br)
+    # 确保没有 page_break_before（会导致多空一页）
+    p29.paragraph_format.page_break_before = False
 
     # 英文摘要正文（原 p[32] → 现 p[30]）
     p30 = doc.paragraphs[30]
