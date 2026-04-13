@@ -66,9 +66,11 @@ function buildArchitecture() {
   writeDiagram('chencai-architecture', W, 900, body);
 }
 
-// ========== 2. ER图 — 参照 er-diagram.mjs 标准画法 ==========
+// ========== 2. ER图 — 环形属性自动布局 ==========
 function buildERDiagram() {
   const body = [];
+  const W = 1800, H = 1200;
+  const RX = 72, RY = 26; // 属性椭圆大小
 
   const entity = (x, y, label, w = 180, h = 56) => {
     const node = { x, y, w, h, cx: x + w / 2, cy: y + h / 2 };
@@ -107,55 +109,70 @@ function buildERDiagram() {
     const [x2, y2] = rectAnchor(e, r.cx, r.cy);
     body.push(pathLine([[x1, y1], [x2, y2]], { width: 2.5 }));
   };
-  const attribute = (e, cx, cy, label) => {
-    const rx = 78, ry = 28;
-    const [x1, y1] = rectAnchor(e, cx, cy);
-    const [x2, y2] = ovalAnchor(cx, cy, rx, ry, e.cx, e.cy);
-    body.push(pathLine([[x1, y1], [x2, y2]], { width: 2 }));
-    body.push(ellipse(cx, cy, rx, ry, label, { size: 16, minSize: 11, maxLines: 1 }));
+
+  // 环形属性自动布局：围绕实体均匀分布，避免超出画布
+  const autoAttrs = (e, labels, startAngle = -Math.PI/2, span = Math.PI * 1.2, radius = 140) => {
+    const n = labels.length;
+    labels.forEach((label, i) => {
+      const angle = startAngle + (span / Math.max(n - 1, 1)) * i;
+      let cx = e.cx + radius * Math.cos(angle);
+      let cy = e.cy + radius * Math.sin(angle);
+      // 边界约束
+      cx = Math.max(RX + 10, Math.min(W - RX - 10, cx));
+      cy = Math.max(RY + 10, Math.min(H - RY - 10, cy));
+      const [x1, y1] = rectAnchor(e, cx, cy);
+      const [x2, y2] = ovalAnchor(cx, cy, RX, RY, e.cx, e.cy);
+      body.push(pathLine([[x1, y1], [x2, y2]], { width: 2 }));
+      body.push(ellipse(cx, cy, RX, RY, label, { size: 15, minSize: 11, maxLines: 1 }));
+    });
   };
 
-  // 实体
-  const admin = entity(80, 120, '管理员');
-  const user = entity(680, 120, '用户');
-  const house = entity(380, 430, '房屋信息', 200);
-  const order = entity(1080, 120, '订单');
-  const msg = entity(80, 720, '留言');
-  const notice = entity(680, 720, '公告');
-  const category = entity(1080, 720, '分类');
+  // 实体布局：三行分布，留足属性空间
+  const admin  = entity(150,  280, '管理员');
+  const user   = entity(700,  280, '用户');
+  const order  = entity(1300, 280, '订单');
+  const house  = entity(700,  680, '房屋信息', 200);
+  const msg    = entity(150,  680, '留言');
+  const notice = entity(1300, 680, '公告');
+  const category = entity(450, 1000, '分类');
 
-  // 属性
-  [[30, 60, '编号'], [200, 40, '账号'], [350, 70, '密码'], [80, 240, '姓名'], [260, 230, '电话']].forEach(([x, y, l]) => attribute(admin, x, y, l));
-  [[630, 55, '编号'], [810, 40, '账号'], [980, 60, '密码'], [650, 240, '姓名'], [860, 230, '手机号']].forEach(([x, y, l]) => attribute(user, x, y, l));
-  [[250, 370, '编号'], [430, 350, '名称'], [620, 370, '户型'], [250, 560, '面积'], [430, 580, '价格'], [620, 560, '状态']].forEach(([x, y, l]) => attribute(house, x, y, l));
-  [[1030, 55, '编号'], [1210, 40, '房屋名称'], [1380, 60, '用户姓名'], [1100, 240, '总价'], [1280, 230, '时间']].forEach(([x, y, l]) => attribute(order, x, y, l));
-  [[30, 660, '编号'], [210, 650, '内容'], [30, 840, '用户'], [210, 840, '时间']].forEach(([x, y, l]) => attribute(msg, x, y, l));
-  [[630, 660, '编号'], [810, 650, '名称'], [650, 840, '内容'], [840, 840, '时间']].forEach(([x, y, l]) => attribute(notice, x, y, l));
-  [[1030, 660, '编号'], [1210, 650, '名称']].forEach(([x, y, l]) => attribute(category, x, y, l));
+  // 属性环形分布
+  autoAttrs(admin, ['编号', '账号', '密码', '姓名', '电话'], -Math.PI*0.8, Math.PI*1.1, 150);
+  autoAttrs(user, ['编号', '账号', '密码', '姓名', '手机号'], -Math.PI*0.8, Math.PI*0.9, 150);
+  autoAttrs(order, ['编号', '房屋名称', '用户姓名', '总价', '时间'], -Math.PI*0.3, Math.PI*1.1, 150);
+  autoAttrs(house, ['编号', '名称', '户型', '面积', '价格', '状态'], Math.PI*0.2, Math.PI*1.2, 160);
+  autoAttrs(msg, ['编号', '内容', '用户', '时间'], Math.PI*0.2, Math.PI*1.0, 140);
+  autoAttrs(notice, ['编号', '名称', '内容', '时间'], Math.PI*0.2, Math.PI*1.0, 140);
+  autoAttrs(category, ['编号', '名称'], Math.PI*0.6, Math.PI*0.8, 130);
 
   // 关系
-  const r1 = relation(270, 310, '管理');
+  const r1 = relation(420, 480, '管理');
   connectER(admin, r1); connectRE(r1, house);
 
-  const r2 = relation(600, 300, '浏览');
+  const r2 = relation(700, 500, '浏览');
   connectER(user, r2); connectRE(r2, house);
 
-  const r3 = relation(900, 180, '下单');
+  const r3 = relation(1020, 340, '下单');
   connectER(user, r3); connectRE(r3, order);
 
-  const r4 = relation(170, 510, '留言');
-  connectER(user, { cx: 170, cy: 510 }); // 近似连接
-  body.push(pathLine([[msg.cx, msg.y], [170, 540]], { width: 2.5 }));
+  const r4 = relation(420, 680, '留言');
+  connectER(user, r4); connectRE(r4, msg);
 
-  const r5 = relation(900, 500, '属于');
-  connectER(house, r5); connectRE(r5, category);
+  const r5 = relation(1020, 680, '发布');
+  connectER(admin, { cx: admin.cx, cy: admin.cy }); // admin→公告 间接
+  body.push(pathLine([[admin.right, admin.cy + 20], [1020, 650]], { width: 2.5 }));
+  body.push(pathLine([[1020, 710], [notice.left, notice.cy]], { width: 2.5 }));
+
+  const r6 = relation(600, 870, '属于');
+  connectER(house, r6); connectRE(r6, category);
 
   // 基数标注
-  [[180, 250, '1'], [270, 380, 'n'],
-   [700, 220, '1'], [530, 370, 'n'],
-   [800, 155, '1'], [1010, 155, 'n']].forEach(([x, y, v]) => body.push(card(x, y, v)));
+  [[300, 400, '1'], [420, 560, 'n'],
+   [750, 420, '1'], [750, 580, 'n'],
+   [880, 300, '1'], [1100, 300, 'n'],
+   [500, 630, '1'], [350, 710, 'n']].forEach(([x, y, v]) => body.push(card(x, y, v)));
 
-  writeDiagram('chencai-er-diagram', 1500, 900, body);
+  writeDiagram('chencai-er-diagram', W, H, body);
 }
 
 // ========== 3. 管理员核心类图 — 标准 UML 类图 ==========
