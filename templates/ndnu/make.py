@@ -204,22 +204,56 @@ def _setup_ndnu_body(doc_path):
         for r in p.runs:
             r.text = ""
 
-    # 删除目录和正文之间多余的分节符（保留一个即可）
+    # 删除目录和正文之间、正文和致谢之间的多余空段落
     _wns2 = 'http://schemas.openxmlformats.org/wordprocessingml/2006/main'
-    sect_count = 0
+
+    # 目录→正文：删掉 for ch 前面的空段落（保留一个 sectPr）
+    for_ch_idx = None
     for i in range(len(paras)):
-        p = paras[i]
-        text = (p.text or "").strip()
-        if "{%p for ch" in text:
-            # 往前找，删掉多余的 sectPr 段落
-            for j in range(i - 1, max(i - 10, 0), -1):
-                pj = paras[j]
-                sects = pj._p.findall(f'{{{_wns2}}}pPr/{{{_wns2}}}sectPr')
-                if sects:
-                    sect_count += 1
-                    if sect_count > 1:
-                        pj._p.getparent().remove(pj._p)
+        if "{%p for ch" in (paras[i].text or ""):
+            for_ch_idx = i
             break
+    if for_ch_idx:
+        kept_sect = False
+        to_remove = []
+        for j in range(for_ch_idx - 1, max(for_ch_idx - 10, 0), -1):
+            pj = paras[j]
+            style = pj.style.name if pj.style else ""
+            if style.startswith("toc"):
+                break
+            text = (pj.text or "").strip()
+            has_sect = bool(pj._p.findall(f'{{{_wns2}}}pPr/{{{_wns2}}}sectPr'))
+            if has_sect and not kept_sect:
+                kept_sect = True  # 保留第一个 sectPr
+                continue
+            if not text:
+                to_remove.append(pj._p)
+        for elem in to_remove:
+            elem.getparent().remove(elem)
+
+    # 正文末→致谢：删掉 endfor 后面到致谢之间的空段落
+    last_endfor = None
+    ack_idx = None
+    for i in range(len(doc.paragraphs)):
+        p = doc.paragraphs[i]
+        text = (p.text or "").strip()
+        if "{%p endfor" in text:
+            last_endfor = i
+        if "致" in text and "谢" in text:
+            style = p.style.name if p.style else ""
+            if style == "Heading 1":
+                ack_idx = i
+                break
+    if last_endfor and ack_idx:
+        to_remove2 = []
+        for j in range(last_endfor + 1, ack_idx):
+            pj = doc.paragraphs[j]
+            text = (pj.text or "").strip()
+            style = pj.style.name if pj.style else ""
+            if not text and style != "Heading 1":
+                to_remove2.append(pj._p)
+        for elem in to_remove2:
+            elem.getparent().remove(elem)
 
     doc.save(doc_path)
     print(f"  正文循环已设置: {doc_path}")
