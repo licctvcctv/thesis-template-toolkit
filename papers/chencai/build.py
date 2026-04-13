@@ -343,6 +343,12 @@ def _insert_table(doc, after_para, tbl_data):
             pSpacing.set(qn('w:line'), '240')
             pSpacing.set(qn('w:lineRule'), 'auto')
             pPr.append(pSpacing)
+            # 清除缩进（防止继承 Normal 样式的首行缩进）
+            pInd = OxmlElement('w:ind')
+            pInd.set(qn('w:firstLine'), '0')
+            pInd.set(qn('w:left'), '0')
+            pInd.set(qn('w:right'), '0')
+            pPr.append(pInd)
             p.append(pPr)
             # 文本 — 字体：宋体(中文) + Times New Roman(英文)，五号(10.5pt)
             r = OxmlElement('w:r')
