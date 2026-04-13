@@ -343,9 +343,10 @@ def _insert_table(doc, after_para, tbl_data):
             pSpacing.set(qn('w:line'), '240')
             pSpacing.set(qn('w:lineRule'), 'auto')
             pPr.append(pSpacing)
-            # 清除缩进（防止继承 Normal 样式的首行缩进）
+            # 清除所有缩进（firstLine + firstLineChars 都要清）
             pInd = OxmlElement('w:ind')
             pInd.set(qn('w:firstLine'), '0')
+            pInd.set(qn('w:firstLineChars'), '0')
             pInd.set(qn('w:left'), '0')
             pInd.set(qn('w:right'), '0')
             pPr.append(pInd)
