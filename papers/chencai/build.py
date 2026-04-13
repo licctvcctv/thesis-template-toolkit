@@ -281,20 +281,29 @@ def _insert_table(doc, after_para, tbl_data):
 
     # 表格网格 — 按内容长度智能分配列宽
     total_width = 9000
-    # 计算每列最大文本长度
+    # 计算每列最大文本长度（中文字符算2）
     col_max_len = [0] * ncols
     for row_data in all_rows:
         for ci in range(ncols):
-            cell_text = row_data[ci] if ci < len(row_data) else ""
-            col_max_len[ci] = max(col_max_len[ci], len(str(cell_text)))
-    # 最小列宽800 twips，按文本长度比例分配
-    min_w = 800
-    total_len = sum(max(l, 2) for l in col_max_len) or 1
-    col_widths = [max(min_w, int(total_width * max(l, 2) / total_len))
+            cell_text = str(row_data[ci]) if ci < len(row_data) else ""
+            # 中文字符算2个宽度单位
+            w = sum(2 if ord(c) > 127 else 1 for c in cell_text)
+            col_max_len[ci] = max(col_max_len[ci], w)
+    # 最小列宽1200 twips（约2cm），确保短文本列也够宽
+    min_w = 1200
+    total_len = sum(max(l, 4) for l in col_max_len) or 1
+    col_widths = [max(min_w, int(total_width * max(l, 4) / total_len))
                   for l in col_max_len]
     # 修正总宽度
     diff = total_width - sum(col_widths)
-    col_widths[0] += diff
+    if diff > 0:
+        # 多余的宽度加到最宽的列
+        widest = col_widths.index(max(col_widths))
+        col_widths[widest] += diff
+    elif diff < 0:
+        # 超出的从最宽的列减
+        widest = col_widths.index(max(col_widths))
+        col_widths[widest] += diff
 
     tblGrid = OxmlElement('w:tblGrid')
     for w in col_widths:
