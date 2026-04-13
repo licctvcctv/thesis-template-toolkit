@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1200" viewBox="0 0 1800 1200" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1100" viewBox="0 0 1600 1100" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
       <path d="M 0 0 L 10 5 L 0 10 z" fill="#202020" />
@@ -8,145 +8,148 @@
       <path d="M 0 0 L 10 5 L 0 10 z" fill="#555" />
     </marker>
   </defs>
-  <rect x="0" y="0" width="1800" height="1200" fill="#ffffff"/>
-  <rect x="150" y="280" width="180" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="2.8"/>
-<text x="240" y="310" font-family="SimHei, PingFang SC, sans-serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">管理员</text>
-<rect x="700" y="280" width="180" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="2.8"/>
-<text x="790" y="310" font-family="SimHei, PingFang SC, sans-serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">用户</text>
-<rect x="1300" y="280" width="180" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="2.8"/>
-<text x="1390" y="310" font-family="SimHei, PingFang SC, sans-serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">订单</text>
-<rect x="700" y="680" width="200" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="2.8"/>
-<text x="800" y="710" font-family="SimHei, PingFang SC, sans-serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">房屋信息</text>
-<rect x="150" y="680" width="180" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="2.8"/>
-<text x="240" y="710" font-family="SimHei, PingFang SC, sans-serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">留言</text>
-<rect x="1300" y="680" width="180" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="2.8"/>
-<text x="1390" y="710" font-family="SimHei, PingFang SC, sans-serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">公告</text>
-<rect x="450" y="1000" width="180" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="2.8"/>
-<text x="540" y="1030" font-family="SimHei, PingFang SC, sans-serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">分类</text>
-<path d="M 240 280 L 150 240" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
-<ellipse cx="120" cy="220" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
-<text x="120" y="220" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">编号</text>
-<path d="M 240 280 L 230 180" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
-<ellipse cx="230" cy="150" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
-<text x="230" y="150" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">账号</text>
-<path d="M 240 280 L 320 230" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
-<ellipse cx="350" cy="210" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
-<text x="350" y="210" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">密码</text>
-<path d="M 330 310 L 340 310" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
-<ellipse cx="410" cy="320" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
-<text x="410" y="320" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">姓名</text>
-<path d="M 240 340 L 310 400" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
-<ellipse cx="330" cy="430" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
-<text x="330" y="430" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">电话</text>
-<path d="M 790 280 L 700 240" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
-<ellipse cx="670" cy="220" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
-<text x="670" y="220" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">编号</text>
-<path d="M 790 280 L 760 160" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
-<ellipse cx="750" cy="130" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
-<text x="750" y="130" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">账号</text>
-<path d="M 790 280 L 840 210" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
-<ellipse cx="860" cy="190" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
-<text x="860" y="190" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">密码</text>
-<path d="M 790 280 L 880 270" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
-<ellipse cx="930" cy="250" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
-<text x="930" y="250" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">姓名</text>
-<path d="M 790 340 L 890 350" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
-<ellipse cx="930" cy="370" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
-<text x="930" y="370" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">手机号</text>
-<path d="M 1390 280 L 1460 210" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
-<ellipse cx="1480" cy="190" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
-<text x="1480" y="190" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">编号</text>
-<path d="M 1480 310 L 1490 300" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
-<ellipse cx="1560" cy="300" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
-<text x="1560" y="300" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">房屋名称</text>
-<path d="M 1390 340 L 1470 380" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
-<ellipse cx="1500" cy="410" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
-<text x="1500" y="410" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">用户姓名</text>
-<path d="M 1390 340 L 1380 440" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
-<ellipse cx="1380" cy="460" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
-<text x="1380" y="460" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">总价</text>
-<path d="M 1390 340 L 1300 370" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
-<ellipse cx="1270" cy="400" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
-<text x="1270" y="400" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">时间</text>
-<path d="M 800 740 L 900 780" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
-<ellipse cx="930" cy="800" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
-<text x="930" y="800" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">编号</text>
-<path d="M 800 740 L 840 840" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
-<ellipse cx="850" cy="870" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
-<text x="850" y="870" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">名称</text>
-<path d="M 800 740 L 720 820" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
-<ellipse cx="700" cy="840" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
-<text x="700" y="840" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">户型</text>
-<path d="M 800 740 L 690 750" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
-<ellipse cx="650" cy="770" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
-<text x="650" y="770" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">面积</text>
-<path d="M 800 680 L 700 650" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
-<ellipse cx="660" cy="630" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
-<text x="660" y="630" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">价格</text>
-<path d="M 800 680 L 760 580" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
-<ellipse cx="750" cy="560" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
-<text x="750" y="560" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">状态</text>
-<path d="M 240 740 L 320 770" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
-<ellipse cx="350" cy="790" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
-<text x="350" y="790" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">编号</text>
-<path d="M 240 740 L 230 820" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
-<ellipse cx="230" cy="850" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
-<text x="230" y="850" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">内容</text>
-<path d="M 240 740 L 150 750" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
-<ellipse cx="110" cy="770" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
-<text x="110" y="770" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">用户</text>
-<path d="M 240 680 L 160 650" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
-<ellipse cx="130" cy="630" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
-<text x="130" y="630" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">时间</text>
-<path d="M 1390 740 L 1470 770" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
-<ellipse cx="1500" cy="790" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
-<text x="1500" y="790" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">编号</text>
-<path d="M 1390 740 L 1380 820" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
-<ellipse cx="1380" cy="850" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
-<text x="1380" y="850" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">名称</text>
-<path d="M 1390 740 L 1300 750" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
-<ellipse cx="1260" cy="770" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
-<text x="1260" y="770" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">内容</text>
-<path d="M 1390 680 L 1310 650" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
-<ellipse cx="1280" cy="630" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
-<text x="1280" y="630" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">时间</text>
-<path d="M 540 1060 L 510 1130" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
-<ellipse cx="500" cy="1150" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
-<text x="500" y="1150" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">编号</text>
-<path d="M 540 1000 L 510 930" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
-<ellipse cx="500" cy="900" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
-<text x="500" y="900" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">名称</text>
-<path d="M 420 450 L 470 480 L 420 510 L 370 480 Z" fill="#fff" stroke="#202020" stroke-width="3"/>
-<text x="420" y="480" font-family="SimSun, Songti SC, serif" font-size="18" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">管理</text>
-<path d="M 240 340 L 420 450" fill="none" stroke="#202020" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter"/>
-<path d="M 420 510 L 800 680" fill="none" stroke="#202020" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter"/>
-<path d="M 700 470 L 750 500 L 700 530 L 650 500 Z" fill="#fff" stroke="#202020" stroke-width="3"/>
-<text x="700" y="500" font-family="SimSun, Songti SC, serif" font-size="18" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">浏览</text>
-<path d="M 790 340 L 700 470" fill="none" stroke="#202020" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter"/>
-<path d="M 700 530 L 800 680" fill="none" stroke="#202020" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter"/>
-<path d="M 1020 310 L 1070 340 L 1020 370 L 970 340 Z" fill="#fff" stroke="#202020" stroke-width="3"/>
-<text x="1020" y="340" font-family="SimSun, Songti SC, serif" font-size="18" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">下单</text>
-<path d="M 880 310 L 970 340" fill="none" stroke="#202020" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter"/>
-<path d="M 1070 340 L 1300 310" fill="none" stroke="#202020" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter"/>
-<path d="M 420 650 L 470 680 L 420 710 L 370 680 Z" fill="#fff" stroke="#202020" stroke-width="3"/>
-<text x="420" y="680" font-family="SimSun, Songti SC, serif" font-size="18" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">留言</text>
-<path d="M 790 340 L 420 650" fill="none" stroke="#202020" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter"/>
-<path d="M 370 680 L 330 710" fill="none" stroke="#202020" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter"/>
-<path d="M 1020 650 L 1070 680 L 1020 710 L 970 680 Z" fill="#fff" stroke="#202020" stroke-width="3"/>
-<text x="1020" y="680" font-family="SimSun, Songti SC, serif" font-size="18" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">发布</text>
-<path d="M 240 340 L 240 NaN" fill="none" stroke="#202020" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter"/>
-<path d="M NaN 330 L 1020 650" fill="none" stroke="#202020" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter"/>
-<path d="M 1020 710 L NaN 710" fill="none" stroke="#202020" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter"/>
-<path d="M 600 840 L 650 870 L 600 900 L 550 870 Z" fill="#fff" stroke="#202020" stroke-width="3"/>
-<text x="600" y="870" font-family="SimSun, Songti SC, serif" font-size="18" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">属于</text>
-<path d="M 800 740 L 600 840" fill="none" stroke="#202020" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter"/>
-<path d="M 600 900 L 540 1000" fill="none" stroke="#202020" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter"/>
-<text x="300" y="400" font-family="SimSun, Songti SC, serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">1</text>
-<text x="420" y="560" font-family="SimSun, Songti SC, serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">n</text>
-<text x="750" y="420" font-family="SimSun, Songti SC, serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">1</text>
-<text x="750" y="580" font-family="SimSun, Songti SC, serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">n</text>
-<text x="880" y="300" font-family="SimSun, Songti SC, serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">1</text>
-<text x="1100" y="300" font-family="SimSun, Songti SC, serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">n</text>
-<text x="500" y="630" font-family="SimSun, Songti SC, serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">1</text>
-<text x="350" y="710" font-family="SimSun, Songti SC, serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">n</text>
+  <rect x="0" y="0" width="1600" height="1100" fill="#ffffff"/>
+  <rect x="160" y="170" width="180" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="2.8"/>
+<text x="250" y="200" font-family="SimHei, PingFang SC, sans-serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">管理员</text>
+<rect x="710" y="170" width="180" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="2.8"/>
+<text x="800" y="200" font-family="SimHei, PingFang SC, sans-serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">用户</text>
+<rect x="1260" y="170" width="180" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="2.8"/>
+<text x="1350" y="200" font-family="SimHei, PingFang SC, sans-serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">订单</text>
+<rect x="60" y="570" width="180" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="2.8"/>
+<text x="150" y="600" font-family="SimHei, PingFang SC, sans-serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">留言</text>
+<rect x="700" y="570" width="200" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="2.8"/>
+<text x="800" y="600" font-family="SimHei, PingFang SC, sans-serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">房屋信息</text>
+<rect x="1360" y="570" width="180" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="2.8"/>
+<text x="1450" y="600" font-family="SimHei, PingFang SC, sans-serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">公告</text>
+<rect x="710" y="920" width="180" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="2.8"/>
+<text x="800" y="950" font-family="SimHei, PingFang SC, sans-serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">分类</text>
+<path d="M 530 370 L 580 400 L 530 430 L 480 400 Z" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="530" y="400" font-family="SimSun, Songti SC, serif" font-size="18" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">管理</text>
+<path d="M 800 390 L 850 420 L 800 450 L 750 420 Z" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="800" y="420" font-family="SimSun, Songti SC, serif" font-size="18" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">浏览</text>
+<path d="M 1080 170 L 1130 200 L 1080 230 L 1030 200 Z" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="1080" y="200" font-family="SimSun, Songti SC, serif" font-size="18" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">下单</text>
+<path d="M 400 570 L 450 600 L 400 630 L 350 600 Z" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="400" y="600" font-family="SimSun, Songti SC, serif" font-size="18" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">留言</text>
+<path d="M 1200 370 L 1250 400 L 1200 430 L 1150 400 Z" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="1200" y="400" font-family="SimSun, Songti SC, serif" font-size="18" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">发布</text>
+<path d="M 800 750 L 850 780 L 800 810 L 750 780 Z" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="800" y="780" font-family="SimSun, Songti SC, serif" font-size="18" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">属于</text>
+<path d="M 250 230 L 530 370" fill="none" stroke="#202020" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter"/>
+<path d="M 530 430 L 800 570" fill="none" stroke="#202020" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter"/>
+<path d="M 800 230 L 800 390" fill="none" stroke="#202020" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter"/>
+<path d="M 800 450 L 800 570" fill="none" stroke="#202020" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter"/>
+<path d="M 890 200 L 1030 200" fill="none" stroke="#202020" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter"/>
+<path d="M 1130 200 L 1260 200" fill="none" stroke="#202020" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter"/>
+<path d="M 800 230 L 400 570" fill="none" stroke="#202020" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter"/>
+<path d="M 350 600 L 240 600" fill="none" stroke="#202020" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter"/>
+<path d="M 340 200 L 1150 400" fill="none" stroke="#202020" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter"/>
+<path d="M 1200 430 L 1450 570" fill="none" stroke="#202020" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter"/>
+<path d="M 800 630 L 800 750" fill="none" stroke="#202020" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter"/>
+<path d="M 800 810 L 800 920" fill="none" stroke="#202020" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter"/>
+<text x="324" y="234" font-family="SimSun, Songti SC, serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">1</text>
+<text x="745" y="540" font-family="SimSun, Songti SC, serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">n</text>
+<text x="816" y="280" font-family="SimSun, Songti SC, serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">1</text>
+<text x="816" y="520" font-family="SimSun, Songti SC, serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">n</text>
+<text x="880" y="184" font-family="SimSun, Songti SC, serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">1</text>
+<text x="1270" y="184" font-family="SimSun, Songti SC, serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">n</text>
+<text x="740" y="256" font-family="SimSun, Songti SC, serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">1</text>
+<text x="227" y="572" font-family="SimSun, Songti SC, serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">n</text>
+<text x="331" y="210" font-family="SimSun, Songti SC, serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">1</text>
+<text x="1379" y="560" font-family="SimSun, Songti SC, serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">n</text>
+<text x="816" y="680" font-family="SimSun, Songti SC, serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">1</text>
+<text x="816" y="870" font-family="SimSun, Songti SC, serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">n</text>
+<path d="M 250 170 L 170 160" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="130" cy="140" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="130" y="140" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">编号</text>
+<path d="M 250 170 L 190 110" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="180" cy="80" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="180" y="80" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">账号</text>
+<path d="M 250 170 L 250 60" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="250" cy="30" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="250" y="30" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">密码</text>
+<path d="M 250 170 L 310 110" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="320" cy="90" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="320" y="90" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">姓名</text>
+<path d="M 250 170 L 330 160" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="370" cy="140" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="370" y="140" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">电话</text>
+<path d="M 800 170 L 720 160" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="680" cy="140" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="680" y="140" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">编号</text>
+<path d="M 800 170 L 740 110" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="730" cy="80" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="730" y="80" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">账号</text>
+<path d="M 800 170 L 800 60" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="800" cy="30" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="800" y="30" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">密码</text>
+<path d="M 800 170 L 860 110" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="870" cy="90" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="870" y="90" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">姓名</text>
+<path d="M 800 170 L 880 160" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="920" cy="140" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="920" y="140" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">手机号</text>
+<path d="M 1350 170 L 1410 110" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="1430" cy="80" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="1430" y="80" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">编号</text>
+<path d="M 1350 170 L 1430 160" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="1470" cy="140" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="1470" y="140" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">房屋名称</text>
+<path d="M 1440 200 L 1450 200" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="1520" cy="200" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="1520" y="200" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">用户姓名</text>
+<path d="M 1350 230 L 1430 240" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="1470" cy="260" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="1470" y="260" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">总价</text>
+<path d="M 1350 230 L 1410 290" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="1430" cy="320" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="1430" y="320" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">时间</text>
+<path d="M 800 630 L 890 640" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="940" cy="660" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="940" y="660" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">编号</text>
+<path d="M 800 630 L 880 690" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="910" cy="720" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="910" y="720" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">名称</text>
+<path d="M 800 630 L 830 810" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="830" cy="840" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="830" y="840" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">户型</text>
+<path d="M 800 630 L 770 710" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="760" cy="730" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="760" y="730" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">面积</text>
+<path d="M 800 630 L 730 690" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="700" cy="710" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="700" y="710" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">价格</text>
+<path d="M 800 630 L 710 640" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="660" cy="660" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="660" y="660" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">状态</text>
+<path d="M 150 630 L 220 650" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="260" cy="680" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="260" y="680" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">编号</text>
+<path d="M 150 630 L 160 740" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="160" cy="770" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="160" y="770" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">内容</text>
+<path d="M 150 630 L 100 690" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="80" cy="720" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="80" y="720" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">用户</text>
+<path d="M 150 630 L 110 640" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="80" cy="660" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="80" y="660" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">时间</text>
+<path d="M 1450 570 L 1490 560" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="1520" cy="540" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="1520" y="540" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">编号</text>
+<path d="M 1450 630 L 1490 640" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="1520" cy="670" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="1520" y="670" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">名称</text>
+<path d="M 1450 630 L 1470 720" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="1480" cy="750" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="1480" y="750" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">内容</text>
+<path d="M 1450 630 L 1390 670" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="1370" cy="690" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="1370" y="690" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">时间</text>
+<path d="M 800 980 L 790 1040" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="780" cy="1070" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="780" y="1070" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">编号</text>
+<path d="M 800 980 L 720 990" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="680" cy="1010" rx="70" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="680" y="1010" font-family="SimSun, Songti SC, serif" font-size="15" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">名称</text>
 </svg>

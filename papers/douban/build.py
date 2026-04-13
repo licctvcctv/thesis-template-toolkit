@@ -206,6 +206,10 @@ def _post_process(docx_path):
     for p in list(doc.paragraphs):
         t = (p.text or "").strip()
 
+        # Heading 1 → 每章前分页
+        if p.style and p.style.name == 'Heading 1':
+            p.paragraph_format.page_break_before = True
+
         # 图片段落 → 居中
         has_drawing = bool(p._p.findall(
             './/{http://schemas.openxmlformats.org/wordprocessingml/2006/main}drawing'))

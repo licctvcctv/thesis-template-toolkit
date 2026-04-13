@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="596" height="369" viewBox="0 0 596 369" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#202020" />
+    </marker>
+    <marker id="dashArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#555" />
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="596" height="369" fill="#ffffff"/>
+  <rect x="200" y="260" width="200" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="2.8"/>
+<text x="300" y="290" font-family="SimHei, PingFang SC, sans-serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">公告信息</text>
+<ellipse cx="120" cy="190" rx="110" ry="40" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="120" y="190" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">编号</text>
+<path d="M 300 260 L 120 210" fill="none" stroke="#202020" stroke-width="1.8" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="230" cy="100" rx="110" ry="40" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="230" y="100" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">名称</text>
+<path d="M 300 260 L 230 120" fill="none" stroke="#202020" stroke-width="1.8" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="370" cy="100" rx="110" ry="40" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="370" y="100" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">内容</text>
+<path d="M 300 260 L 370 120" fill="none" stroke="#202020" stroke-width="1.8" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="480" cy="190" rx="110" ry="40" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="480" y="190" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">时间</text>
+<path d="M 300 260 L 480 210" fill="none" stroke="#202020" stroke-width="1.8" stroke-linecap="square" stroke-linejoin="miter"/>
+</svg>

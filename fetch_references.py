@@ -21,6 +21,7 @@
 输出格式: JSON 数组，每条为 GB/T 7714 标准格式字符串
 """
 import argparse
+import http.cookiejar
 import json
 import sys
 import time
@@ -32,8 +33,7 @@ HEADERS = {
     "X-Requested-With": "XMLHttpRequest",
     "Referer": "https://www.bigan.net/reference/",
     "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
-                  "AppleWebKit/537.36 Chrome/120.0.0.0 Safari/537.36",
-    "Content-Type": "application/json",
+                  "AppleWebKit/537.36 Chrome/146.0.0.0 Safari/537.36",
 }
 
 # 文献类型映射
@@ -47,16 +47,35 @@ TYPE_MAP = {
     "standard": "standard",   # 标准
 }
 
+# 全局 opener（带 cookie 管理，自动保持 JSESSIONID，跳过代理）
+_cookie_jar = http.cookiejar.CookieJar()
+_opener = urllib.request.build_opener(
+    urllib.request.HTTPCookieProcessor(_cookie_jar),
+    urllib.request.ProxyHandler({}))
+_session_ready = False
 
-def search(query, size=10, datatype="journal", page=1):
+
+def _ensure_session():
+    """首次调用时访问页面获取 JSESSIONID"""
+    global _session_ready
+    if _session_ready:
+        return
+    req = urllib.request.Request(
+        "https://www.bigan.net/reference/", headers=HEADERS)
+    _opener.open(req, timeout=10)
+    _session_ready = True
+
+
+def search(query, size=200, datatype="journal", page=1):
     """搜索文献，返回命中列表"""
+    _ensure_session()
     params = urllib.parse.urlencode({
         "query": query, "size": size,
         "datatype": datatype, "page": page,
     })
     url = f"{API_BASE}/search?{params}"
     req = urllib.request.Request(url, headers=HEADERS)
-    with urllib.request.urlopen(req, timeout=15) as resp:
+    with _opener.open(req, timeout=15) as resp:
         data = json.loads(resp.read())
     if data.get("code") != 0:
         print(f"  搜索失败: {data.get('msg')}", file=sys.stderr)
@@ -68,12 +87,14 @@ def format_gb(doc_ids):
     """将文献 docId 列表格式化为 GB/T 7714 引用格式"""
     if not doc_ids:
         return []
+    _ensure_session()
     url = f"{API_BASE}/format/list?clienttime={time.time()}"
     body = json.dumps({
         "source": [{"type": "our", "docId": did} for did in doc_ids]
     }).encode("utf-8")
-    req = urllib.request.Request(url, data=body, headers=HEADERS, method="POST")
-    with urllib.request.urlopen(req, timeout=20) as resp:
+    fmt_headers = {**HEADERS, "Content-Type": "application/json"}
+    req = urllib.request.Request(url, data=body, headers=fmt_headers, method="POST")
+    with _opener.open(req, timeout=20) as resp:
         data = json.loads(resp.read())
     if data.get("code") != 0:
         print(f"  格式化失败: {data.get('msg')}", file=sys.stderr)

@@ -66,82 +66,147 @@ function buildArchitecture() {
   writeDiagram('chencai-architecture', W, 900, body);
 }
 
-// ========== 2. ER图 — 环形属性自动布局 ==========
-function buildERDiagram() {
+// ========== 2. ER图 — 手动布局（避免交叉线） ==========
+function buildOverallERDiagram() {
   const body = [];
-  const W = 1800, H = 1200;
+  const W = 1600, H = 1100;
   const layout = createLayout(W, H);
+  const EW = 180, EH = 56;
 
-  const entity = (x, y, label, w = 180, h = 56) => {
-    const node = { x, y, w, h, cx: x + w / 2, cy: y + h / 2 };
-    body.push(rect(x, y, w, h, label, { size: 22, family: BOLD, strokeWidth: 2.8 }));
+  const entity = (cx, cy, label, w = EW) => {
+    const node = { x: cx - w / 2, y: cy - EH / 2, w, h: EH, cx, cy };
+    body.push(rect(node.x, node.y, node.w, node.h, label, { size: 22, family: BOLD, strokeWidth: 2.8 }));
     layout.registerBox(node);
     return node;
   };
-  const relation = (cx, cy, label, w = 100, h = 56) => {
-    const node = { cx, cy, w, h };
-    body.push(diamond(cx, cy, w, h, label, { size: 18, maxLines: 1 }));
-    return node;
+
+  const rectAnchor = (node, tx, ty) => {
+    const dx = tx - node.cx, dy = ty - node.cy;
+    if (Math.abs(dx) * (node.h / 2) > Math.abs(dy) * (node.w / 2))
+      return [dx >= 0 ? node.x + node.w : node.x, node.cy];
+    return [node.cx, dy >= 0 ? node.y + node.h : node.y];
   };
-  const connectER = (e, r) => {
-    const ra = (node, tx, ty) => { const dx=tx-node.cx,dy=ty-node.cy; return Math.abs(dx)*(node.h/2)>Math.abs(dy)*(node.w/2)?[dx>=0?node.x+node.w:node.x,node.cy]:[node.cx,dy>=0?node.y+node.h:node.y]; };
-    const da = (node, tx, ty) => { const dx=tx-node.cx,dy=ty-node.cy; return Math.abs(dx)/(node.w/2)>Math.abs(dy)/(node.h/2)?[node.cx+(Math.sign(dx||1)*node.w)/2,node.cy]:[node.cx,node.cy+(Math.sign(dy||1)*node.h)/2]; };
-    const [x1,y1]=ra(e,r.cx,r.cy); const [x2,y2]=da(r,e.cx,e.cy);
-    body.push(pathLine([[x1,y1],[x2,y2]],{width:2.5}));
+  const diamondAnchor = (node, tx, ty) => {
+    const dx = tx - node.cx, dy = ty - node.cy;
+    if (Math.abs(dx) / (node.w / 2) > Math.abs(dy) / (node.h / 2))
+      return [node.cx + (Math.sign(dx || 1) * node.w) / 2, node.cy];
+    return [node.cx, node.cy + (Math.sign(dy || 1) * node.h) / 2];
   };
-  const connectRE = (r, e) => {
-    const da = (node, tx, ty) => { const dx=tx-node.cx,dy=ty-node.cy; return Math.abs(dx)/(node.w/2)>Math.abs(dy)/(node.h/2)?[node.cx+(Math.sign(dx||1)*node.w)/2,node.cy]:[node.cx,node.cy+(Math.sign(dy||1)*node.h)/2]; };
-    const ra = (node, tx, ty) => { const dx=tx-node.cx,dy=ty-node.cy; return Math.abs(dx)*(node.h/2)>Math.abs(dy)*(node.w/2)?[dx>=0?node.x+node.w:node.x,node.cy]:[node.cx,dy>=0?node.y+node.h:node.y]; };
-    const [x1,y1]=da(r,e.cx,e.cy); const [x2,y2]=ra(e,r.cx,r.cy);
-    body.push(pathLine([[x1,y1],[x2,y2]],{width:2.5}));
+  const link = (e1, r, e2) => {
+    const [x1, y1] = rectAnchor(e1, r.cx, r.cy);
+    const [x2, y2] = diamondAnchor(r, e1.cx, e1.cy);
+    body.push(pathLine([[x1, y1], [x2, y2]], { width: 2.5 }));
+    const [x3, y3] = diamondAnchor(r, e2.cx, e2.cy);
+    const [x4, y4] = rectAnchor(e2, r.cx, r.cy);
+    body.push(pathLine([[x3, y3], [x4, y4]], { width: 2.5 }));
+  };
+  const rel = (cx, cy, label) => {
+    const r = { cx, cy, w: 100, h: 56 };
+    body.push(diamond(cx, cy, 100, 56, label, { size: 18, maxLines: 1 }));
+    layout.registerBox({ x: cx - 50, y: cy - 28, w: 100, h: 56 }, 4);
+    return r;
   };
 
-  // 实体布局
-  const admin  = entity(150,  280, '管理员');
-  const user   = entity(700,  280, '用户');
-  const order  = entity(1300, 280, '订单');
-  const house  = entity(700,  680, '房屋信息', 200);
-  const msg    = entity(150,  680, '留言');
-  const notice = entity(1300, 680, '公告');
-  const category = entity(450, 1000, '分类');
+  // 布局：上排3个，中排（房屋信息居中），下排（分类）
+  //       管理员    用户     订单
+  //  留言      房屋信息      公告
+  //              分类
+  const admin    = entity(250,  200, '管理员');
+  const user     = entity(800,  200, '用户');
+  const order    = entity(1350, 200, '订单');
+  const msg      = entity(150,  600, '留言');
+  const house    = entity(800,  600, '房屋信息', 200);
+  const notice   = entity(1450, 600, '公告');
+  const category = entity(800,  950, '分类');
 
-  // 属性：使用 runtime 的 autoAttrs（自动碰撞检测）
-  layout.autoAttrs(body, admin, ['编号', '账号', '密码', '姓名', '电话'], { startAngle: -Math.PI*0.8, span: Math.PI*1.1, radius: 150 });
-  layout.autoAttrs(body, user, ['编号', '账号', '密码', '姓名', '手机号'], { startAngle: -Math.PI*0.8, span: Math.PI*0.9, radius: 150 });
-  layout.autoAttrs(body, order, ['编号', '房屋名称', '用户姓名', '总价', '时间'], { startAngle: -Math.PI*0.3, span: Math.PI*1.1, radius: 150 });
-  layout.autoAttrs(body, house, ['编号', '名称', '户型', '面积', '价格', '状态'], { startAngle: Math.PI*0.2, span: Math.PI*1.2, radius: 160 });
-  layout.autoAttrs(body, msg, ['编号', '内容', '用户', '时间'], { startAngle: Math.PI*0.2, span: Math.PI*1.0, radius: 140 });
-  layout.autoAttrs(body, notice, ['编号', '名称', '内容', '时间'], { startAngle: Math.PI*0.2, span: Math.PI*1.0, radius: 140 });
-  layout.autoAttrs(body, category, ['编号', '名称'], { startAngle: Math.PI*0.6, span: Math.PI*0.8, radius: 130 });
+  // 关系菱形
+  const r1 = rel(525, 400, '管理');   // admin→house
+  const r2 = rel(800, 420, '浏览');   // user→house
+  const r3 = rel(1075, 200, '下单');  // user→order
+  const r4 = rel(400, 600, '留言');   // user→msg (斜线)
+  const r5 = rel(1200, 400, '发布');  // admin→notice
+  const r6 = rel(800, 780, '属于');   // house→category
 
-  // 关系
-  const r1 = relation(420, 480, '管理');
-  connectER(admin, r1); connectRE(r1, house);
-
-  const r2 = relation(700, 500, '浏览');
-  connectER(user, r2); connectRE(r2, house);
-
-  const r3 = relation(1020, 340, '下单');
-  connectER(user, r3); connectRE(r3, order);
-
-  const r4 = relation(420, 680, '留言');
-  connectER(user, r4); connectRE(r4, msg);
-
-  const r5 = relation(1020, 680, '发布');
-  connectER(admin, { cx: admin.cx, cy: admin.cy }); // admin→公告 间接
-  body.push(pathLine([[admin.right, admin.cy + 20], [1020, 650]], { width: 2.5 }));
-  body.push(pathLine([[1020, 710], [notice.left, notice.cy]], { width: 2.5 }));
-
-  const r6 = relation(600, 870, '属于');
-  connectER(house, r6); connectRE(r6, category);
+  // 连线
+  link(admin, r1, house);
+  link(user, r2, house);
+  link(user, r3, order);
+  // user→留言：从user底部到留言菱形
+  const [ux1, uy1] = rectAnchor(user, r4.cx, r4.cy);
+  const [dx1, dy1] = diamondAnchor(r4, user.cx, user.cy);
+  body.push(pathLine([[ux1, uy1], [dx1, dy1]], { width: 2.5 }));
+  const [dx2, dy2] = diamondAnchor(r4, msg.cx, msg.cy);
+  const [mx1, my1] = rectAnchor(msg, r4.cx, r4.cy);
+  body.push(pathLine([[dx2, dy2], [mx1, my1]], { width: 2.5 }));
+  // admin→公告
+  link(admin, r5, notice);
+  link(house, r6, category);
 
   // 基数标注
-  [[300, 400, '1'], [420, 560, 'n'],
-   [750, 420, '1'], [750, 580, 'n'],
-   [880, 300, '1'], [1100, 300, 'n'],
-   [500, 630, '1'], [350, 710, 'n']].forEach(([x, y, v]) => body.push(card(x, y, v)));
+  const cardLabel = (e1, e2, r) => {
+    const dx = e2.cx - e1.cx, dy = e2.cy - e1.cy;
+    const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+    const nx = dx / dist, ny = dy / dist;
+    body.push(card(Math.round(e1.cx + nx * 80 + ny * 16), Math.round(e1.cy + ny * 80 - nx * 16), '1'));
+    body.push(card(Math.round(e2.cx - nx * 80 + ny * 16), Math.round(e2.cy - ny * 80 - nx * 16), 'n'));
+  };
+  cardLabel(admin, house, r1);
+  cardLabel(user, house, r2);
+  cardLabel(user, order, r3);
+  cardLabel(user, msg, r4);
+  cardLabel(admin, notice, r5);
+  cardLabel(house, category, r6);
+
+  // 属性
+  layout.autoAttrs(body, admin, ['编号', '账号', '密码', '姓名', '电话'],
+    { startAngle: -Math.PI * 0.85, span: Math.PI * 0.7, radius: 140 });
+  layout.autoAttrs(body, user, ['编号', '账号', '密码', '姓名', '手机号'],
+    { startAngle: -Math.PI * 0.85, span: Math.PI * 0.7, radius: 140 });
+  layout.autoAttrs(body, order, ['编号', '房屋名称', '用户姓名', '总价', '时间'],
+    { startAngle: -Math.PI * 0.3, span: Math.PI * 0.6, radius: 140 });
+  layout.autoAttrs(body, house, ['编号', '名称', '户型', '面积', '价格', '状态'],
+    { startAngle: Math.PI * 0.15, span: Math.PI * 0.7, radius: 155 });
+  layout.autoAttrs(body, msg, ['编号', '内容', '用户', '时间'],
+    { startAngle: Math.PI * 0.2, span: Math.PI * 0.8, radius: 130 });
+  layout.autoAttrs(body, notice, ['编号', '名称', '内容', '时间'],
+    { startAngle: -Math.PI * 0.1, span: Math.PI * 0.8, radius: 130 });
+  layout.autoAttrs(body, category, ['编号', '名称'],
+    { startAngle: Math.PI * 0.55, span: Math.PI * 0.4, radius: 120 });
 
   writeDiagram('chencai-er-diagram', W, H, body);
+}
+
+// ========== 2b. 单实体 ER 图 ==========
+function buildSingleEntityER(name, entityLabel, attrs) {
+  const body = [];
+  const count = attrs.length;
+  const EW = 200, EH = 56;
+  const AW = count <= 4 ? 110 : count <= 8 ? 95 : 82;
+  const AH = count <= 4 ? 38 : 32;
+  // span: 属性少时窄扇，多时宽扇
+  const spanRatio = count <= 2 ? 0.55 : count <= 5 ? 0.7 : 0.85;
+  // radius 确保相邻椭圆不重叠：r > AW * (count-1) / (span * π)
+  const minR = count > 1 ? (AW * 1.35) * (count - 1) / (spanRatio * Math.PI) : 100;
+  const radius = Math.max(150, Math.round(minR));
+  const W = Math.max(500, radius * 2 + AW + 80);
+  const H = radius + EH + 110;
+  const cx = W / 2, cy = H - 55 - EH / 2;
+
+  // 实体矩形（底部居中）
+  body.push(rect(cx - EW / 2, cy - EH / 2, EW, EH, entityLabel, { size: 22, family: BOLD, strokeWidth: 2.8 }));
+
+  // 属性向上扇出
+  const startAngle = -Math.PI * (0.5 + spanRatio / 2);
+  const span = Math.PI * spanRatio;
+  attrs.forEach((label, i) => {
+    const angle = count === 1 ? -Math.PI / 2 : startAngle + (span * i) / (count - 1);
+    const ax = cx + Math.cos(angle) * radius;
+    const ay = cy + Math.sin(angle) * radius;
+    body.push(ellipse(ax, ay, AW, AH, label, { size: 16, strokeWidth: 1.6 }));
+    body.push(pathLine([[cx, cy - EH / 2], [ax, ay + AH / 2]], { width: 1.8 }));
+  });
+
+  writeDiagram(name, W, H, body);
 }
 
 // ========== 3. 管理员核心类图 — 标准 UML 类图 ==========
@@ -303,11 +368,25 @@ function buildTestFlow() {
 
 // 执行
 buildArchitecture();
-buildERDiagram();
+buildOverallERDiagram();
+// 7 个单实体 ER 图
+buildSingleEntityER('chencai-er-admin', '管理员信息',
+  ['编号', '账号', '密码', '姓名', '性别', '年龄', '地址', '电话', '添加时间']);
+buildSingleEntityER('chencai-er-user', '用户信息',
+  ['编号', '账号', '密码', '姓名', '性别', '身份证号', '手机号', '照片', '注册时间', '状态']);
+buildSingleEntityER('chencai-er-house', '房屋信息',
+  ['编号', '名称', '发布房东', '手机号', '户型', '面积', '价格', '总价', '图片', '位置', '发布时间', '状态']);
+buildSingleEntityER('chencai-er-category', '分类信息', ['编号', '标题']);
+buildSingleEntityER('chencai-er-order', '订单信息',
+  ['编号', '房屋名称', '用户姓名', '总价', '时间']);
+buildSingleEntityER('chencai-er-message', '留言信息',
+  ['编号', '内容', '用户', '时间', '回复']);
+buildSingleEntityER('chencai-er-notice', '公告信息',
+  ['编号', '名称', '内容', '时间']);
 buildAdminClassDiagram();
 buildLoginFlow();
 buildBrowseFlow();
 buildRentalFlow();
 buildAdminFlow();
 buildTestFlow();
-console.log('Done: 8 diagrams generated');
+console.log('Done: 15 diagrams generated');

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1074" height="622" viewBox="0 0 1074 622" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#202020" />
+    </marker>
+    <marker id="dashArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#555" />
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="1074" height="622" fill="#ffffff"/>
+  <rect x="440" y="510" width="200" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="2.8"/>
+<text x="540" y="540" font-family="SimHei, PingFang SC, sans-serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">房屋信息</text>
+<ellipse cx="90" cy="430" rx="80" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="90" y="430" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">编号</text>
+<path d="M 540 510 L 90 450" fill="none" stroke="#202020" stroke-width="1.8" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="130" cy="330" rx="80" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="130" y="330" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">名称</text>
+<path d="M 540 510 L 130 350" fill="none" stroke="#202020" stroke-width="1.8" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="190" cy="240" rx="80" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="190" y="240" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">发布房东</text>
+<path d="M 540 510 L 190 250" fill="none" stroke="#202020" stroke-width="1.8" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="280" cy="160" rx="80" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="280" y="160" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">手机号</text>
+<path d="M 540 510 L 280 180" fill="none" stroke="#202020" stroke-width="1.8" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="370" cy="110" rx="80" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="370" y="110" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">户型</text>
+<path d="M 540 510 L 370 130" fill="none" stroke="#202020" stroke-width="1.8" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="480" cy="90" rx="80" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="480" y="90" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">面积</text>
+<path d="M 540 510 L 480 100" fill="none" stroke="#202020" stroke-width="1.8" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="590" cy="90" rx="80" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="590" y="90" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">价格</text>
+<path d="M 540 510 L 590 100" fill="none" stroke="#202020" stroke-width="1.8" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="700" cy="110" rx="80" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="700" y="110" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">总价</text>
+<path d="M 540 510 L 700 130" fill="none" stroke="#202020" stroke-width="1.8" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="800" cy="160" rx="80" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="800" y="160" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">图片</text>
+<path d="M 540 510 L 800 180" fill="none" stroke="#202020" stroke-width="1.8" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="880" cy="240" rx="80" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="880" y="240" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">位置</text>
+<path d="M 540 510 L 880 250" fill="none" stroke="#202020" stroke-width="1.8" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="940" cy="330" rx="80" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="940" y="330" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">发布时间</text>
+<path d="M 540 510 L 940 350" fill="none" stroke="#202020" stroke-width="1.8" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="980" cy="430" rx="80" ry="30" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="980" y="430" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">状态</text>
+<path d="M 540 510 L 980 450" fill="none" stroke="#202020" stroke-width="1.8" stroke-linecap="square" stroke-linejoin="miter"/>
+</svg>
