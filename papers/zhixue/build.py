@@ -94,7 +94,12 @@ def build_data(doc=None):
         chapters = process_chapters(chapters, doc)
 
     refs = load_json("references.json")
-    references = refs.get("references", []) if refs else []
+    if isinstance(refs, list):
+        references = refs
+    elif isinstance(refs, dict):
+        references = refs.get("references", [])
+    else:
+        references = []
 
     return {**meta, "chapters": chapters,
             "references": references}

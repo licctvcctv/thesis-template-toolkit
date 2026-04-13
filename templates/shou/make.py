@@ -49,6 +49,8 @@ def make(src_path, out_path):
     ed.clear_para(47)
     ed.replace_run(48, 0, "{{ abstract_en }}")
     ed.clear_runs(48, [1, 2, 3, 4])
+    # 修正 Key words → Keywords
+    ed.replace_run(49, 0, "Keywords")
     ed.replace_run(49, 2, "{{ keywords_en }}")
     for r in reversed(ed.doc.paragraphs[49].runs[3:]):
         r._r.getparent().remove(r._r)

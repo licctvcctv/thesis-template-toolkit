@@ -311,3 +311,46 @@ buildLoginSequence();
 buildEnrollSequence();
 buildLearningFlow();
 console.log('Done: 4 diagrams generated');
+
+// ========== 5. 状态流转图 ==========
+function buildStateDiagram() {
+  const body = [];
+  const cx = 500;
+
+  // 课程状态
+  body.push(text(250, 30, '课程状态流转', { size: 24, weight: '700', family: BOLD }));
+
+  body.push(rect(100, 60, 140, 50, '草稿(0)', { rounded: true, size: 20 }));
+  body.push(hLine(240, 360, 85, { arrow: true }));
+  body.push(text(300, 72, '审核通过', { size: 16 }));
+
+  body.push(rect(360, 60, 160, 50, '已上架(1)', { rounded: true, size: 20 }));
+  body.push(hLine(520, 640, 85, { arrow: true }));
+  body.push(text(580, 72, '下架操作', { size: 16 }));
+
+  body.push(rect(640, 60, 160, 50, '已下架(2)', { rounded: true, size: 20 }));
+  body.push(pathLine([[720, 110], [720, 140], [440, 140], [440, 110]], { arrow: true, dashed: true }));
+  body.push(text(580, 154, '重新上架', { size: 16 }));
+
+  // 报名学习状态
+  body.push(text(250, 210, '报名学习状态流转', { size: 24, weight: '700', family: BOLD }));
+
+  body.push(rect(60, 250, 140, 50, '未报名', { rounded: true, size: 20 }));
+  body.push(hLine(200, 320, 275, { arrow: true }));
+  body.push(text(260, 262, '点击报名', { size: 16 }));
+
+  body.push(rect(320, 250, 140, 50, '已报名', { rounded: true, size: 20 }));
+  body.push(hLine(460, 580, 275, { arrow: true }));
+  body.push(text(520, 262, '开始学习', { size: 16 }));
+
+  body.push(rect(580, 250, 140, 50, '学习中', { rounded: true, size: 20 }));
+  body.push(hLine(720, 860, 275, { arrow: true }));
+  body.push(text(790, 262, '全部完成', { size: 16 }));
+
+  body.push(rect(860, 250, 140, 50, '已完成', { rounded: true, size: 20 }));
+
+  writeDiagram('zhixueyunke-state-diagram', 1050, 330, body);
+}
+
+buildStateDiagram();
+console.log('State diagram generated');

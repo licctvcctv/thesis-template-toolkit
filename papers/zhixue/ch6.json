@@ -21,18 +21,8 @@
                 "后端跑在Node.js 18.17.0上，NestJS版本10.2.0，数据库SQLite 3.42.0，ORM用TypeORM 0.3.17。移动端Flutter SDK 3.16.5，Dart 3.2.3。管理端Vue.js 3.3.8，Element Plus 2.4.3。功能测试和兼容性测试手动执行，性能测试用Apache JMeter 5.6.3。",
                 "表6-2 软件测试环境",
                 {
-                    "headers": ["项目", "配置"],
-                    "rows": [
-                        ["处理器", "Intel Core i7-12700H"],
-                        ["内存", "16 GB DDR4"],
-                        ["硬盘", "512 GB SSD"],
-                        ["操作系统", "Windows 11 / macOS 14"],
-                        ["测试手机", "Redmi K50 (Android 13)"]
-                    ],
-                    "caption": "表6-1 硬件测试环境",
-                    "type": "table"
-                },
-                {
+                    "type": "table",
+                    "caption": "表6-2 软件测试环境",
                     "headers": ["项目", "版本"],
                     "rows": [
                         ["后端运行环境", "Node.js 18.18"],
@@ -41,9 +31,7 @@
                         ["管理端框架", "Vue 3.4 + Element Plus"],
                         ["数据库", "MySQL 8.0"],
                         ["接口测试", "Postman 11"]
-                    ],
-                    "caption": "表6-2 软件测试环境",
-                    "type": "table"
+                    ]
                 }
             ],
             "subsections": []
@@ -159,7 +147,7 @@
                 {
                     "title": "6.3.1 测试接口选取",
                     "content": [
-                        "按实际使用频率选了五个接口做测试对象：用户登录（POST /api/auth/login）、课程列表（GET /api/courses）、课程详情（GET /api/courses/:id）、社区帖子列表（GET /api/posts）和问答列表（GET /api/questions）。这五个接口覆盖了认证和查询两种最高频的操作。"
+                        "根据系统实际使用频率和业务重要性，选取以下五个核心API接口作为性能测试对象：用户登录接口（POST /api/auth/login）、课程列表查询接口（GET /api/courses）、课程详情查询接口（GET /api/courses/:id）、进度上报接口（PUT /api/progress/:lessonId）以及帖子发布接口（POST /api/posts）。上述接口覆盖了用户认证、数据查询和内容写入三类操作场景。"
                     ]
                 },
                 {
