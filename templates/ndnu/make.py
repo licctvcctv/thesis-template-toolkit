@@ -270,30 +270,24 @@ def make(src_path, out_path):
         for r in p27.runs[1:]:
             r.text = ""
 
+    # 关键词：保留原始 run 结构（run[0]=空黑体, run[1]="关键词：", run[2]=宋体值）
     p28 = doc.paragraphs[28]
-    if p28.runs:
-        p28.runs[0].text = "关键词："
-        if len(p28.runs) > 1:
-            p28.runs[1].text = "{{ keywords_zh }}"
-            # 关键词值用宋体小四号，不是黑体
-            from docx.shared import Pt as _Pt
-            p28.runs[1].font.name = "宋体"
-            p28.runs[1].font.size = _Pt(12)  # 小四号
-            for r in p28.runs[2:]:
-                r.text = ""
-        else:
-            p28.runs[0].text = "关键词：{{ keywords_zh }}"
+    label_found = False
+    for j, r in enumerate(p28.runs):
+        if "关键词：" in r.text or "关键词:" in r.text:
+            label_found = True
+            continue
+        if label_found and r.text.strip():
+            r.text = "{{ keywords_zh }}"
+            for rr in p28.runs[j + 1:]:
+                rr.text = ""
+            break
 
-    # 清掉摘要标题的空 runs 和格式说明括号
-    p26 = doc.paragraphs[26]
-    for r in p26.runs:
-        if r.text.strip() in ("（", "）", "（）", ""):
-            if not r.text.strip():
-                r._r.getparent().remove(r._r)
-
-    # 清掉格式说明 p[30]
+    # 清掉格式说明 p[30]，但保留为空段落（用于撑页面间距）
     for r in doc.paragraphs[30].runs:
         r.text = ""
+    # 在关键词段落后设置分页，确保英文摘要另起一页
+    doc.paragraphs[30].paragraph_format.page_break_before = True
 
     print("  Step 2: 中文摘要")
 
@@ -301,39 +295,24 @@ def make(src_path, out_path):
     # p[31]: "Abstract"
     # p[32]: 英文摘要正文
     # p[33]: Key words
+    # 英文摘要正文：保留原始 run 的字体，只替换文本
     p32 = doc.paragraphs[32]
     if p32.runs:
         p32.runs[0].text = "{{ abstract_en }}"
-        # 英文摘要正文用 Times New Roman 小四号
-        from docx.shared import Pt as _Pt2
-        p32.runs[0].font.name = "Times New Roman"
-        p32.runs[0].font.size = _Pt2(12)
         for r in p32.runs[1:]:
             r.text = ""
 
+    # 英文关键词：保留原始 run 结构（run[0]="Key words", run[2+]=值）
     p33 = doc.paragraphs[33]
-    if p33.runs:
-        p33.runs[0].text = "Key words: "
-        # Key words 标签用 Times New Roman 四号加粗
-        p33.runs[0].font.name = "Times New Roman"
-        p33.runs[0].font.size = _Pt2(14)
-        p33.runs[0].font.bold = True
-        if len(p33.runs) > 1:
-            p33.runs[1].text = "{{ keywords_en }}"
-            # 关键词值用 Times New Roman 小四号，不加粗
-            p33.runs[1].font.name = "Times New Roman"
-            p33.runs[1].font.size = _Pt2(12)
-            p33.runs[1].font.bold = False
-            for r in p33.runs[2:]:
-                r.text = ""
-        else:
-            p33.runs[0].text = "Key words: {{ keywords_en }}"
-
-    # 清掉英文摘要标题的空 runs
-    p31 = doc.paragraphs[31]
-    for r in p31.runs:
-        if not r.text.strip():
-            r._r.getparent().remove(r._r)
+    for j, r in enumerate(p33.runs):
+        if "Key" in r.text:
+            pass  # 保留标签 run 的字体
+        elif j >= 2 and r.text.strip():
+            # 第一个有文本的值 run，写入模板变量
+            r.text = "{{ keywords_en }}"
+            for rr in p33.runs[j + 1:]:
+                rr.text = ""
+            break
 
     # 清掉格式说明 p[34]
     for r in doc.paragraphs[34].runs:
