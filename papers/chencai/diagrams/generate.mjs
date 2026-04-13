@@ -110,31 +110,99 @@ function buildERDiagram() {
     body.push(pathLine([[x1, y1], [x2, y2]], { width: 2.5 }));
   };
 
-  // 环形属性自动布局：围绕实体均匀分布，避免超出画布
+  // 环形属性布局 + AABB推离算法消除重叠
+  const allBoxes = []; // 收集所有已放置的矩形用于碰撞检测
+
+  // 注册实体为碰撞体
+  const registerEntity = (e) => {
+    allBoxes.push({ x: e.x - 5, y: e.y - 5, w: e.w + 10, h: e.h + 10 });
+  };
+
+  // AABB重叠检测
+  const overlaps = (a, b) => {
+    return a.x < b.x + b.w && a.x + a.w > b.x &&
+           a.y < b.y + b.h && a.y + a.h > b.y;
+  };
+
+  // 推离：沿最短轴移动
+  const pushApart = (movable, fixed) => {
+    const overlapX = Math.min(movable.x + movable.w - fixed.x, fixed.x + fixed.w - movable.x);
+    const overlapY = Math.min(movable.y + movable.h - fixed.y, fixed.y + fixed.h - movable.y);
+    if (overlapX < overlapY) {
+      if (movable.x + movable.w / 2 < fixed.x + fixed.w / 2) {
+        movable.x -= overlapX / 2 + 5;
+      } else {
+        movable.x += overlapX / 2 + 5;
+      }
+    } else {
+      if (movable.y + movable.h / 2 < fixed.y + fixed.h / 2) {
+        movable.y -= overlapY / 2 + 5;
+      } else {
+        movable.y += overlapY / 2 + 5;
+      }
+    }
+  };
+
   const autoAttrs = (e, labels, startAngle = -Math.PI/2, span = Math.PI * 1.2, radius = 140) => {
     const n = labels.length;
+    const attrBoxes = [];
+
+    // 第一轮：环形放置
     labels.forEach((label, i) => {
       const angle = startAngle + (span / Math.max(n - 1, 1)) * i;
       let cx = e.cx + radius * Math.cos(angle);
       let cy = e.cy + radius * Math.sin(angle);
-      // 边界约束
       cx = Math.max(RX + 10, Math.min(W - RX - 10, cx));
       cy = Math.max(RY + 10, Math.min(H - RY - 10, cy));
-      const [x1, y1] = rectAnchor(e, cx, cy);
-      const [x2, y2] = ovalAnchor(cx, cy, RX, RY, e.cx, e.cy);
+      attrBoxes.push({ cx, cy, x: cx - RX, y: cy - RY, w: RX * 2, h: RY * 2, label });
+    });
+
+    // 第二轮：AABB推离迭代（最多10轮）
+    for (let iter = 0; iter < 10; iter++) {
+      let moved = false;
+      for (let i = 0; i < attrBoxes.length; i++) {
+        // 与其他属性碰撞
+        for (let j = i + 1; j < attrBoxes.length; j++) {
+          if (overlaps(attrBoxes[i], attrBoxes[j])) {
+            pushApart(attrBoxes[i], attrBoxes[j]);
+            pushApart(attrBoxes[j], attrBoxes[i]);
+            moved = true;
+          }
+        }
+        // 与所有已注册的实体/属性碰撞
+        for (const box of allBoxes) {
+          if (overlaps(attrBoxes[i], box)) {
+            pushApart(attrBoxes[i], box);
+            moved = true;
+          }
+        }
+        // 边界约束
+        attrBoxes[i].x = Math.max(5, Math.min(W - attrBoxes[i].w - 5, attrBoxes[i].x));
+        attrBoxes[i].y = Math.max(5, Math.min(H - attrBoxes[i].h - 5, attrBoxes[i].y));
+        attrBoxes[i].cx = attrBoxes[i].x + RX;
+        attrBoxes[i].cy = attrBoxes[i].y + RY;
+      }
+      if (!moved) break;
+    }
+
+    // 第三轮：渲染
+    attrBoxes.forEach((ab) => {
+      const [x1, y1] = rectAnchor(e, ab.cx, ab.cy);
+      const [x2, y2] = ovalAnchor(ab.cx, ab.cy, RX, RY, e.cx, e.cy);
       body.push(pathLine([[x1, y1], [x2, y2]], { width: 2 }));
-      body.push(ellipse(cx, cy, RX, RY, label, { size: 15, minSize: 11, maxLines: 1 }));
+      body.push(ellipse(ab.cx, ab.cy, RX, RY, ab.label, { size: 15, minSize: 11, maxLines: 1 }));
+      allBoxes.push({ x: ab.x, y: ab.y, w: ab.w, h: ab.h });
     });
   };
 
   // 实体布局：三行分布，留足属性空间
-  const admin  = entity(150,  280, '管理员');
-  const user   = entity(700,  280, '用户');
-  const order  = entity(1300, 280, '订单');
-  const house  = entity(700,  680, '房屋信息', 200);
-  const msg    = entity(150,  680, '留言');
-  const notice = entity(1300, 680, '公告');
-  const category = entity(450, 1000, '分类');
+  const admin  = entity(150,  280, '管理员');       registerEntity(admin);
+  const user   = entity(700,  280, '用户');          registerEntity(user);
+  const order  = entity(1300, 280, '订单');          registerEntity(order);
+  const house  = entity(700,  680, '房屋信息', 200); registerEntity(house);
+  const msg    = entity(150,  680, '留言');          registerEntity(msg);
+  const notice = entity(1300, 680, '公告');          registerEntity(notice);
+  const category = entity(450, 1000, '分类');        registerEntity(category);
 
   // 属性环形分布
   autoAttrs(admin, ['编号', '账号', '密码', '姓名', '电话'], -Math.PI*0.8, Math.PI*1.1, 150);
