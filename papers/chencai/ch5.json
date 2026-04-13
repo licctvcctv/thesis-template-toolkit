@@ -20,7 +20,7 @@
                         "从类之间的关系来看，AdminController依赖AdminService接口完成业务调用，AdminServiceImpl实现AdminService中定义的方法，并进一步依赖AdminMapper完成数据持久化操作，而AdminMapper则面向数据库表执行查询与更新。整体上，管理员模块形成了层次清晰、职责明确的实现结构，为后续各项后台管理功能的实现提供了良好的基础。管理员模块核心类UML图如图5-1所示。",
                         {
                             "type": "image",
-                            "path": "image13.png",
+                            "path": "chencai-admin-class.png",
                             "width": 130
                         },
                         "图5-1 管理员模块核心类UML图"
