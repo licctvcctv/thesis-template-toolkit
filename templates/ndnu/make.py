@@ -74,6 +74,10 @@ def _setup_ndnu_body(doc_path):
             continue
         for r in p.runs:
             r.text = ""
+        # 空 Heading 段落会显示自动编号数字，降级为 Normal 消除
+        style = p.style.name if p.style else ""
+        if style.startswith("Heading"):
+            p.style = doc.styles['Normal']
 
     # 删除正文区域示例表格
     body_elem = doc.element.body
@@ -174,19 +178,22 @@ def _setup_ndnu_body(doc_path):
     cursor = _insert_after(cursor, _mk_ctrl("{%p endfor %}"))  # chapters
 
     # 清掉结论正文、附录内容等残留（body_end 之后到文档末尾）
+    # 跳过参考文献区域（Step 6 已处理，保留原始 run 结构给 refs_maker 用）
+    in_refs_zone = False
     for i in range(body_end, len(paras)):
         p = paras[i]
         style = p.style.name if p.style else ""
         text = (p.text or "").strip()
-        # 保留 Heading 1 标题（结论、致谢、参考文献、附录）
         if style == "Heading 1":
+            if "参考" in text or "参 考" in text:
+                in_refs_zone = True
+            else:
+                in_refs_zone = False
             continue
-        # 保留致谢变量
         if "acknowledgement" in text:
             continue
-        # 保留参考文献内容（Step 8 会处理）
-        if "{{ ref" in text or "{%p for ref" in text or "{%p endfor" in text:
-            continue
+        if in_refs_zone:
+            continue  # 参考文献区域完全跳过
         for r in p.runs:
             r.text = ""
 
@@ -361,7 +368,7 @@ def make(src_path, out_path):
     # ========== Step 6: 参考文献 ==========
     for i, p in enumerate(doc.paragraphs):
         text = (p.text or "").strip()
-        if "参考文献" in text and p.style and p.style.name == "Heading 1":
+        if ("参考文献" in text or "参 考 文 献" in text) and p.style and p.style.name == "Heading 1":
             # 找后面第一个有内容的 Normal 段落作为样本
             for j in range(i + 1, min(i + 10, len(doc.paragraphs))):
                 pj = doc.paragraphs[j]
@@ -396,14 +403,20 @@ def make(src_path, out_path):
                     end_r.append(end_t)
                     end_p.append(end_r)
                     ed_p.addnext(end_p)
-                    # 清掉剩余示例
-                    for k in range(j + 1, min(j + 20, len(doc.paragraphs))):
+                    # 清掉 endfor 之后到下一个 Heading 之间的剩余示例
+                    cleaning = False
+                    for k in range(j + 1, min(j + 25, len(doc.paragraphs))):
                         pk = doc.paragraphs[k]
                         pk_style = pk.style.name if pk.style else ""
                         if "Heading" in pk_style:
                             break
-                        for r in pk.runs:
-                            r.text = ""
+                        pk_text = (pk.text or "").strip()
+                        if "{%p endfor" in pk_text:
+                            cleaning = True
+                            continue
+                        if cleaning:
+                            for r in pk.runs:
+                                r.text = ""
                     break
             break
 
@@ -416,56 +429,7 @@ def make(src_path, out_path):
     _setup_ndnu_body(out_path)
     print("  Step 7: 正文循环")
 
-    # ========== Step 8: 再次处理参考文献（Step 7 可能影响了索引） ==========
-    doc3 = Document(out_path)
-    refs_done = False
-    for i, p in enumerate(doc3.paragraphs):
-        text = (p.text or "").strip()
-        style = p.style.name if p.style else ""
-        if ("参考文献" in text or "参 考 文 献" in text or "参考" in text) \
-                and style == "Heading 1" and not refs_done:
-            for j in range(i + 1, min(i + 10, len(doc3.paragraphs))):
-                pj = doc3.paragraphs[j]
-                sj = pj.style.name if pj.style else ""
-                if "Heading" in sj:
-                    break
-                if pj.runs and (pj.text or "").strip():
-                    from docx.oxml import OxmlElement
-                    from docx.oxml.ns import qn as _q
-                    ed_p = pj._p
-                    for_p = OxmlElement('w:p')
-                    for_r = OxmlElement('w:r')
-                    for_t = OxmlElement('w:t')
-                    for_t.set(_q('xml:space'), 'preserve')
-                    for_t.text = "{%p for ref in references %}"
-                    for_r.append(for_t)
-                    for_p.append(for_r)
-                    ed_p.addprevious(for_p)
-                    pj.runs[0].text = "{{ ref }}"
-                    for r in pj.runs[1:]:
-                        r.text = ""
-                    end_p = OxmlElement('w:p')
-                    end_r = OxmlElement('w:r')
-                    end_t = OxmlElement('w:t')
-                    end_t.set(_q('xml:space'), 'preserve')
-                    end_t.text = "{%p endfor %}"
-                    end_r.append(end_t)
-                    end_p.append(end_r)
-                    ed_p.addnext(end_p)
-                    # 清掉剩余示例
-                    for k in range(j + 1, min(j + 20, len(doc3.paragraphs))):
-                        pk = doc3.paragraphs[k]
-                        pk_s = pk.style.name if pk.style else ""
-                        if "Heading" in pk_s:
-                            break
-                        for r in pk.runs:
-                            r.text = ""
-                    refs_done = True
-                    break
-    doc3.save(out_path)
-    print("  Step 8: 参考文献循环")
-
-    # ========== Step 9: 删除文本框注释 ==========
+    # ========== Step 8: 删除文本框注释 ==========
     tmp = out_path + ".tmp"
     with zipfile.ZipFile(out_path, 'r') as zin:
         with zipfile.ZipFile(tmp, 'w') as zout:
