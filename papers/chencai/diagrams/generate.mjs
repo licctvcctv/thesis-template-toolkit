@@ -2,8 +2,8 @@
  * 陈才论文（房屋租赁与销售平台）图表生成器 v2
  * 参照 thesis-studio 项目的标准画法
  */
-import { createRuntime } from '/Users/a136/Downloads/undergrad-thesis-studio-codex-thesis-pack-manifest-content-model/scripts/thesis-diagrams/runtime.mjs';
-import { buildFlowChartTemplate } from '/Users/a136/Downloads/undergrad-thesis-studio-codex-thesis-pack-manifest-content-model/scripts/thesis-diagrams/flow-chart-template.mjs';
+import { createRuntime } from '../../../diagrams/runtime.mjs';
+import { buildFlowChartTemplate } from '../../../diagrams/flow-chart-template.mjs';
 
 const runtime = createRuntime(new Map([
   ['--out-dir', '/Users/a136/vs/45425/thesis_project/papers/chencai/images'],

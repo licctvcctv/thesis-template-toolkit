@@ -4,7 +4,7 @@
  *
  * 用法: node generate.mjs
  */
-import { createRuntime } from '/Users/a136/Downloads/undergrad-thesis-studio-codex-thesis-pack-manifest-content-model/scripts/thesis-diagrams/runtime.mjs';
+import { createRuntime } from '../../../diagrams/runtime.mjs';
 
 const runtime = createRuntime(new Map([
   ['--out-dir', '/Users/a136/vs/45425/thesis_project/papers/zhixue/images'],
