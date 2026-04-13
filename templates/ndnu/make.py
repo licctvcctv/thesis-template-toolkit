@@ -193,7 +193,14 @@ def _setup_ndnu_body(doc_path):
         if "acknowledgement" in text:
             continue
         if in_refs_zone:
-            continue  # 参考文献区域完全跳过
+            # 保留 for/ref/endfor 循环段落
+            if "{{ ref" in text or "{%p" in text:
+                continue
+            # 其余空段落：删掉 numPr 防止显示残留编号 [2][3][4]
+            _wns = 'http://schemas.openxmlformats.org/wordprocessingml/2006/main'
+            for numPr in p._p.findall(f'.//{{{_wns}}}numPr'):
+                numPr.getparent().remove(numPr)
+            continue
         for r in p.runs:
             r.text = ""
 
