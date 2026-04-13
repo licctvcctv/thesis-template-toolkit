@@ -354,6 +354,87 @@ export function createRuntime(args = new Map()) {
       },
 
       /**
+       * Force-directed layout for entity nodes.
+       * Spreads entities evenly across canvas using:
+       * - Coulomb repulsion between all entity pairs
+       * - Hooke spring attraction between connected pairs
+       * - Gravity pulling toward canvas center
+       * - Canvas boundary constraints
+       *
+       * @param {Object[]} nodes - array of {cx,cy,w,h} entity nodes (mutated in place)
+       * @param {Array[]} edges - array of [nodeIdx1, nodeIdx2] connections
+       * @param {Object} opts - { iterations, repulsion, attraction, gravity, damping, margin }
+       */
+      spreadEntities(nodes, edges = [], opts = {}) {
+        const iterations = opts.iterations || 200;
+        const repulsion = opts.repulsion || 50000;
+        const attraction = opts.attraction || 0.005;
+        const gravity = opts.gravity || 0.02;
+        const damping = opts.damping || 0.9;
+        const margin = opts.margin || 120; // keep away from edges
+        const centerX = canvasW / 2;
+        const centerY = canvasH / 2;
+
+        // Initialize velocities
+        const vx = nodes.map(() => 0);
+        const vy = nodes.map(() => 0);
+
+        for (let iter = 0; iter < iterations; iter++) {
+          // Reset forces
+          const fx = nodes.map(() => 0);
+          const fy = nodes.map(() => 0);
+
+          // Coulomb repulsion between all pairs
+          for (let i = 0; i < nodes.length; i++) {
+            for (let j = i + 1; j < nodes.length; j++) {
+              let dx = nodes[i].cx - nodes[j].cx;
+              let dy = nodes[i].cy - nodes[j].cy;
+              const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+              const force = repulsion / (dist * dist);
+              const fdx = (dx / dist) * force;
+              const fdy = (dy / dist) * force;
+              fx[i] += fdx; fy[i] += fdy;
+              fx[j] -= fdx; fy[j] -= fdy;
+            }
+          }
+
+          // Hooke spring attraction for connected pairs
+          for (const [i, j] of edges) {
+            const dx = nodes[j].cx - nodes[i].cx;
+            const dy = nodes[j].cy - nodes[i].cy;
+            const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+            const force = attraction * dist;
+            fx[i] += (dx / dist) * force;
+            fy[i] += (dy / dist) * force;
+            fx[j] -= (dx / dist) * force;
+            fy[j] -= (dy / dist) * force;
+          }
+
+          // Gravity toward center
+          for (let i = 0; i < nodes.length; i++) {
+            fx[i] += (centerX - nodes[i].cx) * gravity;
+            fy[i] += (centerY - nodes[i].cy) * gravity;
+          }
+
+          // Apply forces with damping
+          for (let i = 0; i < nodes.length; i++) {
+            vx[i] = (vx[i] + fx[i]) * damping;
+            vy[i] = (vy[i] + fy[i]) * damping;
+            nodes[i].cx += vx[i];
+            nodes[i].cy += vy[i];
+            nodes[i].x = nodes[i].cx - nodes[i].w / 2;
+            nodes[i].y = nodes[i].cy - nodes[i].h / 2;
+
+            // Boundary constraint
+            nodes[i].cx = Math.max(margin + nodes[i].w / 2, Math.min(canvasW - margin - nodes[i].w / 2, nodes[i].cx));
+            nodes[i].cy = Math.max(margin + nodes[i].h / 2, Math.min(canvasH - margin - nodes[i].h / 2, nodes[i].cy));
+            nodes[i].x = nodes[i].cx - nodes[i].w / 2;
+            nodes[i].y = nodes[i].cy - nodes[i].h / 2;
+          }
+        }
+      },
+
+      /**
        * Place attribute ellipses around an entity with automatic overlap removal.
        * @param {Object} body - SVG body array to push elements into
        * @param {Object} entityNode - the entity {x,y,w,h,cx,cy}
@@ -431,6 +512,137 @@ export function createRuntime(args = new Map()) {
     };
   }
 
+  /**
+   * Universal ER diagram builder.
+   * Pass entities with attributes and relations, get a complete ER diagram.
+   *
+   * Usage:
+   *   buildERDiagram('my-er', {
+   *     entities: [
+   *       { label: '用户', attrs: ['编号', '姓名', '手机号'] },
+   *       { label: '订单', attrs: ['编号', '金额', '时间'] },
+   *     ],
+   *     relations: [
+   *       { from: 0, to: 1, label: '下单' },
+   *     ],
+   *     width: 1800,   // optional, auto-calculated if omitted
+   *     height: 1400,  // optional
+   *   });
+   */
+  function buildERDiagram(name, config) {
+    const entities = config.entities || [];
+    const relations = config.relations || [];
+    const n = entities.length;
+
+    // Auto-size canvas based on entity count
+    const cols = Math.min(n, Math.ceil(Math.sqrt(n * 1.5)));
+    const rows = Math.ceil(n / cols);
+    const EW = 220, EH = 62;
+    const cellPadding = 200; // space for attributes around each entity
+    const attrRadius = 165;
+    const marginX = attrRadius + 100;
+    const marginY = attrRadius + 80;
+    const W = config.width || Math.max(800, cols * (EW + cellPadding * 2) + marginX * 2);
+    const H = config.height || Math.max(600, rows * (EH + cellPadding * 2) + marginY * 2);
+    const cellW = cols > 1 ? (W - marginX * 2) / (cols - 1) : 0;
+    const cellH = rows > 1 ? (H - marginY * 2) / (rows - 1) : 0;
+
+    const layout = createLayout(W, H);
+    const body = [];
+
+    // --- Compute optimal grid positions using topology ---
+    // Find the entity with most connections as center
+    const degree = entities.map(() => 0);
+    relations.forEach(({ from, to }) => { degree[from]++; degree[to]++; });
+
+    // Sort by degree (most connected first) and assign grid positions
+    const sortedIndices = entities.map((_, i) => i).sort((a, b) => degree[b] - degree[a]);
+    const gridPositions = [];
+    const used = new Set();
+    // Generate grid cells in spiral order from center
+    const centerCol = Math.floor(cols / 2), centerRow = Math.floor(rows / 2);
+    const spiralCells = [];
+    for (let r = 0; r < rows; r++)
+      for (let c = 0; c < cols; c++)
+        spiralCells.push([c, r]);
+    spiralCells.sort((a, b) => {
+      const da = Math.abs(a[0] - centerCol) + Math.abs(a[1] - centerRow);
+      const db = Math.abs(b[0] - centerCol) + Math.abs(b[1] - centerRow);
+      return da - db;
+    });
+
+    const entityPositions = new Array(n);
+    sortedIndices.forEach((entityIdx, assignOrder) => {
+      const [col, row] = spiralCells[assignOrder] || [assignOrder % cols, Math.floor(assignOrder / cols)];
+      entityPositions[entityIdx] = {
+        cx: cols > 1 ? marginX + col * cellW : W / 2,
+        cy: rows > 1 ? marginY + row * cellH : H / 2,
+      };
+    });
+
+    // --- Render entities ---
+    const entityNodes = entities.map((e, i) => {
+      const pos = entityPositions[i];
+      const node = {
+        x: Math.round(pos.cx - EW / 2), y: Math.round(pos.cy - EH / 2),
+        w: EW, h: EH, cx: Math.round(pos.cx), cy: Math.round(pos.cy),
+      };
+      body.push(rect(node.x, node.y, node.w, node.h, e.label, { size: 24, family: BOLD, strokeWidth: 2.8 }));
+      layout.registerBox(node);
+      return node;
+    });
+
+    // --- Render relations (before attributes so they register as obstacles) ---
+    const rectAnchorER = (node, tx, ty) => {
+      const dx = tx - node.cx, dy = ty - node.cy;
+      if (Math.abs(dx) * (node.h / 2) > Math.abs(dy) * (node.w / 2))
+        return [dx >= 0 ? node.x + node.w : node.x, node.cy];
+      return [node.cx, dy >= 0 ? node.y + node.h : node.y];
+    };
+    const diamondAnchorER = (node, tx, ty) => {
+      const dx = tx - node.cx, dy = ty - node.cy;
+      if (Math.abs(dx) / (node.w / 2) > Math.abs(dy) / (node.h / 2))
+        return [node.cx + (Math.sign(dx || 1) * node.w) / 2, node.cy];
+      return [node.cx, node.cy + (Math.sign(dy || 1) * node.h) / 2];
+    };
+
+    relations.forEach(({ from, to, label }) => {
+      const e1 = entityNodes[from], e2 = entityNodes[to];
+      const r = { cx: (e1.cx + e2.cx) / 2, cy: (e1.cy + e2.cy) / 2, w: 104, h: 64 };
+      body.push(diamond(r.cx, r.cy, r.w, r.h, label || '', { size: 20, maxLines: 1 }));
+      layout.registerBox({ x: r.cx - r.w / 2, y: r.cy - r.h / 2, w: r.w, h: r.h }, 4);
+      // Connect entity→relation→entity
+      const [x1, y1] = rectAnchorER(e1, r.cx, r.cy);
+      const [x2, y2] = diamondAnchorER(r, e1.cx, e1.cy);
+      body.push(pathLine([[x1, y1], [x2, y2]], { width: 2.5 }));
+      const [x3, y3] = diamondAnchorER(r, e2.cx, e2.cy);
+      const [x4, y4] = rectAnchorER(e2, r.cx, r.cy);
+      body.push(pathLine([[x3, y3], [x4, y4]], { width: 2.5 }));
+      // Cardinality labels
+      const dx = e2.cx - e1.cx, dy = e2.cy - e1.cy;
+      const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+      const nx = dx / dist, ny = dy / dist;
+      body.push(card(Math.round(e1.cx + nx * 90 + ny * 18), Math.round(e1.cy + ny * 90 - nx * 18), '1'));
+      body.push(card(Math.round(e2.cx - nx * 90 + ny * 18), Math.round(e2.cy - ny * 90 - nx * 18), 'n'));
+    });
+
+    // --- Render attributes with auto fan-out direction ---
+    entityNodes.forEach((node, i) => {
+      const attrs = entities[i].attrs || [];
+      if (!attrs.length) return;
+      // Determine fan-out direction: away from canvas center
+      const angleToCenter = Math.atan2(H / 2 - node.cy, W / 2 - node.cx);
+      const awayAngle = angleToCenter + Math.PI; // opposite direction
+      layout.autoAttrs(body, node, attrs, {
+        startAngle: awayAngle - Math.PI * 0.35,
+        span: Math.PI * 0.7,
+        radius: attrRadius,
+      });
+    });
+
+    writeDiagram(name, W, H, body);
+  }
+
   function writeDiagram(name, width, height, body) {
     const svg = svgDoc(width, height, body.join('\n'));
     const svgPath = path.join(srcDir, `${name}.svg`);
@@ -479,6 +691,7 @@ export function createRuntime(args = new Map()) {
     card,
     title,
     createLayout,
+    buildERDiagram,
     writeDiagram,
   };
 }
