@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1100" viewBox="0 0 1200 1100" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#202020" />
+    </marker>
+    <marker id="dashArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#555" />
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="1200" height="1100" fill="#ffffff"/>
+  <rect x="480" y="60" width="240" height="70" rx="16" ry="16" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="600" y="95" font-family="SimSun, Songti SC, serif" font-size="28" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">开始</text>
+<path d="M 600 130 L 600 180" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<rect x="420" y="180" width="360" height="70" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="600" y="203" font-family="SimSun, Songti SC, serif" font-size="20" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">加载多模态特征数据
+(10被试 × 3条</text>
+<text x="600" y="227" font-family="SimSun, Songti SC, serif" font-size="20" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">件 × 20块)</text>
+<path d="M 600 250 L 600 300" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<rect x="420" y="300" width="360" height="70" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="600" y="323" font-family="SimSun, Songti SC, serif" font-size="20" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">构建四种特征集
+(</text>
+<text x="600" y="347" font-family="SimSun, Songti SC, serif" font-size="20" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">Handcrafted/EEG/BOLD/Fusion)</text>
+<path d="M 600 370 L 600 420" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<rect x="400" y="420" width="400" height="80" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="600" y="448" font-family="SimSun, Songti SC, serif" font-size="19" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">嵌套GroupKFold交叉验证
+外层5折(按被试</text>
+<text x="600" y="472" font-family="SimSun, Songti SC, serif" font-size="19" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">分组)
+内层网格搜索调参</text>
+<path d="M 600 500 L 600 550" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<rect x="250" y="550" width="200" height="70" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="350" y="574" font-family="SimSun, Songti SC, serif" font-size="18" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">SVM
+(RBF核, C/γ调</text>
+<text x="350" y="596" font-family="SimSun, Songti SC, serif" font-size="18" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">优)</text>
+<rect x="500" y="550" width="200" height="70" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="600" y="585" font-family="SimSun, Songti SC, serif" font-size="18" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">kNN
+(k=3,5,7,9)</text>
+<rect x="750" y="550" width="200" height="70" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="850" y="574" font-family="SimSun, Songti SC, serif" font-size="18" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">Random Forest
+(树</text>
+<text x="850" y="596" font-family="SimSun, Songti SC, serif" font-size="18" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">数/深度调优)</text>
+<path d="M 600 500 L 350 550" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<path d="M 600 500 L 600 550" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<path d="M 600 500 L 850 550" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<path d="M 350 620 L 350 680 L 600 700" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"/>
+<path d="M 600 620 L 600 700" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"/>
+<path d="M 850 620 L 850 680 L 600 700" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"/>
+<path d="M 600 700 L 600 730" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<rect x="420" y="730" width="360" height="70" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="600" y="753" font-family="SimSun, Songti SC, serif" font-size="20" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">计算性能指标
+(准确率/精确率/召回率</text>
+<text x="600" y="777" font-family="SimSun, Songti SC, serif" font-size="20" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">/F1)</text>
+<path d="M 600 800 L 600 850" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<path d="M 600 850 L 780 910 L 600 970 L 420 910 Z" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="600" y="910" font-family="SimSun, Songti SC, serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">融合优于
+单模态?</text>
+<path d="M 780 910 L 950 910" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<text x="860" y="882" font-family="SimSun, Songti SC, serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">是</text>
+<rect x="950" y="880" width="200" height="70" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="1050" y="904" font-family="SimSun, Songti SC, serif" font-size="18" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">输出最优模型
+(</text>
+<text x="1050" y="926" font-family="SimSun, Songti SC, serif" font-size="18" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">Fusion+SVM)</text>
+<path d="M 600 970 L 600 1020" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<text x="630" y="998" font-family="SimSun, Songti SC, serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">否</text>
+<rect x="480" y="1020" width="240" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="600" y="1050" font-family="SimSun, Songti SC, serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">分析原因</text>
+</svg>

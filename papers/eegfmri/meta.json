@@ -1,0 +1,17 @@
+{
+  "title_zh": "基于多模态脑信号的脑功能网络分析与状态分类研究",
+  "title_en": "Research on Brain Functional Network Analysis and State Classification Based on Multimodal Brain Signals",
+  "year": "",
+  "college": "",
+  "major": "",
+  "class_name": "",
+  "student_id": "",
+  "name": "",
+  "advisor": "",
+  "finish_date": "",
+  "abstract_zh": "本文围绕XP1公开数据集展开工作。该数据集包含10名被试在3T磁共振环境中同步采集的EEG和fMRI数据，涉及三种神经反馈条件（eegNF、fmriNF、eegfmriNF），每种条件包含10个block（20秒静息+20秒任务）。EEG原始采样率5000Hz，数据集同时提供200Hz的预处理导出结果。预处理核验中，代表性通道信号标准差从426.27μV降到13.31μV，伪迹抑制量约30dB。\n特征提取按20秒block切分。EEG端提取了51维手工特征和7维NF衍生特征，BOLD端使用数据集提供的ROI级导出结果构造8维衍生特征。将EEG衍生特征与BOLD衍生特征拼接后得到15维的Fusion_Derived特征集。脑功能网络基于9个运动区EEG通道的相关矩阵构建，计算了聚类系数、节点强度和全局效率三项图论指标。\n分类任务为Rest与Task-NF的二分类。采用SVM、kNN和随机森林三种模型，验证方式为按被试分组的嵌套GroupKFold（外层5折）。Fusion_Derived+SVM取得85.5%准确率（F1=0.847），EEG单模态最高78.5%，BOLD单模态最高75.8%。网络指标方面，Task聚类系数的条件间Friedman检验p=0.061，eegfmriNF与eegNF的Wilcoxon配对p=0.004。5秒滑动窗全局效率显示eegfmriNF条件在多数时间段保持较高水平。上述数据表明，15维融合特征在10名被试的分类实验中优于单模态方案，但网络层面的条件差异受限于样本量尚需进一步验证。",
+  "keywords_zh": "脑功能网络；EEG-fMRI；多模态特征融合；运动想象；神经反馈；机器学习",
+  "abstract_en": "This thesis uses the XP1 simultaneous EEG-fMRI motor-imagery neurofeedback dataset (10 subjects, 3 NF conditions: eegNF, fmriNF, eegfmriNF) for brain functional network analysis and brain-state classification. Preprocessing validation showed that the standard deviation of a representative EEG channel dropped from 426.27 μV to 13.31 μV, yielding 30.11 dB artifact suppression. Features were extracted at the 20-second block level: 51-dimensional EEG handcrafted features (time-domain, frequency-domain, and network statistics), 7-dimensional EEG-derived features, and 8-dimensional BOLD-derived features. An EEG functional network was built from the absolute-value Pearson correlation matrix of nine motor-area channels; clustering coefficient, node strength, and global efficiency were computed. Classification used SVM, random forest, and kNN evaluated via subject-grouped nested GroupKFold (5 outer, 4 inner folds). The 15-dimensional Fusion_Derived feature set with SVM achieved 85.5% accuracy and 0.847 F1, compared with 78.5% for the best EEG-only and 75.8% for the best BOLD-only configuration. For network analysis, the Friedman test on task-state clustering coefficient gave p=0.0608 (not significant); the pairwise Wilcoxon test between eegfmriNF and eegNF yielded p=0.0039, though with only 10 subjects and no multiple-comparison correction. Sliding-window analysis showed temporal fluctuations of global efficiency, with eegfmriNF maintaining higher levels in most segments. These results suggest that multimodal fusion improves motor-imagery state classification at the current data scale, while network-level condition differences require larger samples to confirm.",
+  "keywords_en": "Brain functional network; EEG-fMRI; Multimodal feature fusion; Motor imagery; Neurofeedback; Machine learning",
+  "acknowledgement": "感谢李老师在选题阶段帮我理清了EEG-fMRI数据集的分析边界，避免了在全脑体素级建模上浪费时间。预处理核验的思路、嵌套交叉验证的分组方式，都是在与老师反复讨论后确定的。感谢实验室的张同学协助排查了滑动窗网络分析中的数组维度错误，以及王同学在功率谱计算中提供的Welch参数调试经验。感谢自动化学院四年来各位任课教师打下的信号处理和机器学习基础。感谢父母在毕业设计期间对我作息不规律的包容，以及在我对实验结果产生怀疑时给予的支持。"
+}
