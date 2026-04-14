@@ -1,0 +1,216 @@
+{
+  "title": "第4章 系统实现",
+  "sections": [
+    {
+      "title": "4.1 登录与权限模块",
+      "content": [
+        "这一章按模块写每个功能的编码过程，贴关键代码段并说明实现中碰到的问题和处理方式。",
+        "注册接口比较直接：前端提交用户名、密码、邮箱和验证码，后端先从Redis里取验证码比对， 通过后用BCrypt对密码做哈希存入users表。这里有个细节是BCrypt每次生成的哈希值不同 （因为内含随机盐），所以登录时不能用等号比对哈希值，要用BCryptPasswordEncoder的 matches方法。",
+        "登录成功后后端调JwtUtil.generateToken生成Token[19]，payload里放userId和role， 过期时间设了24小时。前端拿到Token存localStorage，Axios请求拦截器在每次请求头里 加上Authorization: Bearer xxx。",
+        "代码清单4-1 登录接口实现（AuthController.java）",
+        "@PostMapping(\"/login\")",
+        "public ResponseEntity＜LoginResponse＞ login(",
+        "        @Valid @RequestBody LoginRequest request) {",
+        "    return ResponseEntity.ok(userService.login(request));",
+        "}",
+        "// --- UserServiceImpl.login ---",
+        "public LoginResponse login(LoginRequest request) {",
+        "    validateCaptcha(request.captchaToken(), request.captchaAnswer());",
+        "    User user = findByUsername(request.username())",
+        "            .orElseThrow(() -> new BadCredentialsException(\"用户不存在\"));",
+        "    if (!passwordEncoder.matches(request.password(),",
+        "                                 user.getPassword())) {",
+        "        throw new BadCredentialsException(\"密码错误\");",
+        "    }",
+        "    return new LoginResponse(issueToken(user), user);",
+        "}",
+        "权限控制分前端和后端两层。前端Vue Router的beforeEach守卫根据Token里解析出的 role决定能进哪些页面，学生访问/admin/*会被重定向到首页。后端写了一个@RequireRole 自定义注解配合AOP切面，在方法执行前检查当前用户角色是否匹配，不匹配就返回403。 实际调试时发现一个问题：AOP切面的执行顺序默认在Spring Security过滤器之后，如果 Token过期了，AOP切面拿不到userId会抛空指针。后来在过滤器里加了判断——Token无效 直接返回401，不再走后面的切面逻辑。",
+        {
+          "type": "image",
+          "path": "fig10.png",
+          "width": 130
+        },
+        "图4-1 用户登录页面运行界面",
+        "图4-1展示了系统的登录入口。页面把用户名、密码、验证码和登录操作集中在一处，学生、 咨询师和管理员共用同一套认证逻辑，登录成功后再依据JWT中的角色信息跳转到对应工作台， 这和本节前面对认证流程与权限分流的实现说明是一致的。"
+      ]
+    },
+    {
+      "title": "4.2 学生端首页模块",
+      "content": [
+        "首页布局用el-row和el-col做的响应式网格，六个功能入口用卡片组件展示，每张卡片 里有图标、标题和一句话描述。右侧栏展示三条快捷信息：上次测评的分数概要、最近一条 待进行的预约、未读消息数。这三条数据分别调三个GET接口拿，页面加载时并行发出请求。",
+        "底部放了三条热门帖子，按like_count降序取。一开始我把首页的数据请求全放在onMounted 里，后来发现用户在其他页面切回首页时onMounted不会重新执行（因为Vue Router的 keep-alive），改成用onActivated钩子之后数据就能实时刷新了。",
+        {
+          "type": "image",
+          "path": "fig11.png",
+          "width": 130
+        },
+        "图4-2 学生端首页运行界面",
+        "图4-2展示了学生登录后的首页界面。页面把预约进度、情绪趋势、资源推荐和咨询师推荐 集中在同一屏内，和前文描述的并行接口加载方式一致，也体现了首页作为学生端功能入口 的实现效果。"
+      ]
+    },
+    {
+      "title": "4.3 心理测评模块",
+      "content": [
+        "量表选择页面展示三张卡片，分别是SCL-90（90题，约15分钟）、SDS（20题，约5分钟）、 SAS（20题，约5分钟）。点\"开始测评\"进入作答界面，每页显示一道题。题目文本和选项 用el-radio-group渲染，底部有进度条和翻页按钮。",
+        "答题数据存在一个ref数组里，下标是题号减1，值是选项分值。翻页时不发请求，只有 做完最后一题点提交才把整个数组POST到后端。有一个容易出错的地方：SCL-90的选项是 1-5分，但SDS和SAS的部分反向计分题选项需要倒转（选1算5、选2算4），这个逻辑放在 后端calculateLevel方法里处理，前端不做转换，保持用户看到的选项顺序不变。",
+        "代码清单4-2 测评提交与评分逻辑（AssessmentService.java）",
+        "@Transactional",
+        "public AssessmentResultDto submit(AssessmentSubmissionRequest request) {",
+        "    AssessmentCatalog.ScaleDefinition scale = findScale(request.scaleType());",
+        "    validateAnswers(scale, request.answers());",
+        "    ResultComputation computation = switch (scale.type()) {",
+        "        case \"SCL90\" -> computeScl(scale, request.answers());",
+        "        case \"SDS\"   -> computeSds(scale, request.answers());",
+        "        case \"SAS\"   -> computeSas(scale, request.answers());",
+        "        default -> throw new ApiException(\"不支持的量表类型\");",
+        "    };",
+        "    AssessmentRecord record = new AssessmentRecord();",
+        "    record.setUserId(request.userId());",
+        "    record.setScaleType(AssessmentRecord.ScaleType.valueOf(scale.type()));",
+        "    record.setTotalScore(computation.totalScore());",
+        "    record.setStandardScore(computation.standardScore());",
+        "    record.setSeverity(computation.severity());",
+        "    record.setSummary(computation.summary());",
+        "    record.setFactorScoresJson(writeValue(computation.factorScores()));",
+        "    record.setAnswersJson(writeValue(request.answers()));",
+        "    save(record);",
+        "    return toDto(record, computation.factorScores(),",
+        "                 computation.suggestions());",
+        "}",
+        "报告页面用ECharts画图。SCL-90有10个因子，用雷达图展示各因子分分布，再加一个 柱状图显示每个因子和全国常模的对比。SDS和SAS用仪表盘组件显示标准分指数，旁边 放一条折线图展示该学生历次测评的分数变化。报告页面右上角有个\"导出PDF\"按钮， 用html2canvas把页面截成图片再用jsPDF生成PDF文件。这个方案有个缺点：导出的PDF 里文字不可选中，因为本质上是图片。"
+      ]
+    },
+    {
+      "title": "4.4 咨询师预约模块",
+      "content": [
+        "咨询师端的排班管理是这个模块实现起来最麻烦的部分。el-calendar组件本身只支持 单日选择和简单的日期标记，我需要在每个日期格子里显示该天有哪些时段（比如9:00、 10:00、14:00）是可用的。最后用了el-calendar的date-cell插槽，在里面渲染 一组小标签，每个标签代表一个小时时段，点击切换可用/不可用状态。批量设置（比如 连续两周的每周一上午都可用）通过一个弹窗表单实现。排班数据存在counselor_schedules 表里，每条记录是counselor_id + date + time_slot的组合。",
+        "学生端进入预约页面后先看到咨询师列表，每张卡片上有头像、姓名、擅长领域和评分。 点进去之后展示咨询师简介和可预约日历——只有counselor_schedules里有记录且没被 预约占用的时段才可以点。选好时段提交预约后，后端在Service层先执行一次SELECT FOR UPDATE锁行，确认没有并发冲突后再INSERT。预约成功后通过WebSocket给咨询师 推一条通知消息。一开始没加锁，测试时让两个浏览器同时点同一个时段，结果都预约成功了， 加了悲观锁之后问题解决。",
+        {
+          "type": "image",
+          "path": "fig12.png",
+          "width": 130
+        },
+        "图4-3 预约咨询页面运行界面",
+        "图4-3给出了学生端预约咨询页面。界面中同时展示咨询师列表、筛选条件和预约入口，学生 可以在同一页完成咨询师浏览、时段查看和预约发起，这与上文所述的列表查询和并发校验 流程相对应。",
+        {
+          "type": "image",
+          "path": "fig13.png",
+          "width": 130
+        },
+        "图4-4 咨询师工作台运行界面",
+        "图4-4展示了咨询师登录后的工作台页面。页面集中呈现待处理预约、咨询数据概览和工作 入口，方便咨询师快速查看近期安排并进入排班与咨询处理流程，也说明了系统对咨询师端 功能的独立支持。"
+      ]
+    },
+    {
+      "title": "4.5 人工咨询模块",
+      "content": [
+        "人工咨询的核心是WebSocket通信[18]。后端继承TextWebSocketHandler，在 afterConnectionEstablished里把userId和WebSocketSession的映射存到一个 ConcurrentHashMap里，收到消息时先落库（调messageService.saveMessage）， 然后查接收者的session是否在线，在线就直接推过去。",
+        "代码清单4-3 WebSocket消息处理器（ChatWebSocketHandler.java）",
+        "@Controller",
+        "public class ChatWebSocketController {",
+        "    private final ChatService chatService;",
+        "    private final SimpMessagingTemplate messagingTemplate;",
+        "    @MessageMapping(\"/chat/send\")",
+        "    public void handleMessage(@Payload ChatMessageRequest request) {",
+        "        ChatMessage saved = chatService.recordMessage(request);",
+        "        messagingTemplate.convertAndSend(",
+        "                \"/topic/chat/\" + saved.getRoomId(), saved);",
+        "    }",
+        "}",
+        "// --- ChatController REST 补充接口 ---",
+        "@PostMapping",
+        "public ResponseEntity＜ChatMessage＞ send(",
+        "        @Valid @RequestBody ChatMessageRequest request) {",
+        "    ChatMessage saved = chatService.recordMessage(request);",
+        "    messagingTemplate.convertAndSend(",
+        "            \"/topic/chat/\" + saved.getRoomId(), saved);",
+        "    return ResponseEntity.ok(saved);",
+        "}",
+        "前端聊天界面左边是会话列表，右边是消息区域。消息气泡用flex布局左右排列区分发送方 和接收方。有两个细节处理：新消息到达时用scrollIntoView自动滚到底部，输入框支持 Enter发送（Shift+Enter换行）。离线消息的处理方式是用户上线后调一次GET接口拉取 未读消息列表，拉完标记为已读。",
+        "测试的时候发现一个bug：用户关闭浏览器标签页时WebSocket的onclose事件有时不触发 （特别是在移动端浏览器上），导致sessionMap里残留无效session。后来加了一个心跳 机制——客户端每30秒发一次ping，服务端60秒没收到心跳就主动关闭连接并清理session。",
+        {
+          "type": "image",
+          "path": "fig14.png",
+          "width": 130
+        },
+        "图4-5 人工咨询页面运行界面",
+        "图4-5为学生端人工咨询页面截图。左侧是会话对象或咨询入口，右侧是消息记录与输入区， 页面布局能够直接体现本节提到的消息气泡、历史记录拉取和实时通信效果，是人工咨询模块 实现结果的直观展示。"
+      ]
+    },
+    {
+      "title": "4.6 AI咨询模块",
+      "content": [
+        "AI咨询的后端实现在AiChatService里[6]。收到用户消息后，先从chat_messages表捞最近 10轮对话（按created_at降序取20条，因为一轮包含用户和AI各一条），拼上System Prompt，组装成大模型API要求的messages数组格式，通过HttpClient发POST请求。",
+        "代码清单4-4 AI咨询接口实现（CozeController.java）",
+        "@PostMapping(\"/knowledge/chat\")",
+        "public ResponseEntity＜ChatResponse＞ knowledgeChat(",
+        "        @RequestBody ChatRequest request,",
+        "        Authentication authentication) {",
+        "    String userId = authentication.getName();",
+        "    CozeResponse cozeResponse = cozeService.sendToKnowledgeBot(",
+        "            userId,",
+        "            request.getMessage(),",
+        "            request.getConversationId());",
+        "    String reply = cozeService.extractBotReply(cozeResponse);",
+        "    ChatResponse response = new ChatResponse();",
+        "    response.setReply(reply);",
+        "    response.setConversationId(",
+        "            cozeResponse.getConversationId());",
+        "    response.setBotId(CozeService.KNOWLEDGE_BOT_ID);",
+        "    return ResponseEntity.ok(response);",
+        "}",
+        "情绪识别用的是关键词匹配方案：后端维护了大概五十多个负面关键词（包括\"不想活\"\"自伤\" \"割腕\"等），每命中一个关键词给负面得分加0.3，得分上限为1.0。超过0.8就触发预警。 这个方案比较粗糙，会有漏检和误检的情况。比如用户说\"我今天不想活动了\"也会命中 \"不想活\"。后来加了一些排除规则（\"不想活动\"\"不想活跃\"不计分），但覆盖率有限。 如果以后要提高精度，需要换成真正的NLP情感分析模型。",
+        "前端AI对话界面的消息气泡和人工咨询类似，但AI回复用了打字机效果——后端返回完整回复 后，前端用setInterval逐字追加到DOM里，间隔50ms。一开始用的是WebSocket流式输出， 但调试发现大模型API有时候返回的chunk拆分位置不在字符边界上，导致中文乱码，后来 改成后端等模型完整回复后一次性返回，前端自己做假流式显示。",
+        {
+          "type": "image",
+          "path": "fig15.png",
+          "width": 130
+        },
+        "图4-6 AI咨询页面运行界面",
+        "图4-6展示了AI咨询模块的实际运行效果。页面保留了连续对话区域和输入框，并将AI回复 以逐字展开的方式呈现，能够直观反映出上下文拼接、风险词识别和响应生成这一整套后端 调用链路已经在前端界面中落地。"
+      ]
+    },
+    {
+      "title": "4.7 社区讨论模块",
+      "content": [
+        "帖子列表页用瀑布流布局，每张卡片显示标题、正文前100个字、分类标签、发帖时间和 点赞评论数。排序有三种：最新发布（按created_at降序）、最多点赞（按like_count 降序）、按分类筛选。分页用el-pagination组件，每页15条，后端用LIMIT和OFFSET查询。",
+        "帖子详情页展示完整正文和评论列表。点赞按钮做了前端防抖，300ms内重复点击只发一次 请求。后端通过user_id和post_id的联合唯一约束保证同一个人不能对同一条帖子重复 点赞，如果插入时触发唯一约束异常就改为执行取消点赞（DELETE操作），实现了点赞/取消 的切换效果。敏感词过滤在帖子和评论的创建接口里都加了，命中的内容status设为0， 等管理员审核。",
+        {
+          "type": "image",
+          "path": "fig16.png",
+          "width": 130
+        },
+        "图4-7 心理社区页面运行界面",
+        "图4-7为心理社区页面截图。页面使用卡片式内容流展示帖子摘要、分类标签与互动数据， 用户可以继续进入详情页查看评论或参与讨论，这与本节对列表分页、点赞切换和敏感词审核 机制的实现描述相互印证。"
+      ]
+    },
+    {
+      "title": "4.8 管理后台模块",
+      "content": [
+        "管理后台只有admin角色能进，前端路由守卫和后端@RequireRole双重拦截。界面是左侧 菜单加右侧内容区的标准后台布局，菜单项有四个：数据概览、用户管理、内容审核、 系统配置。",
+        "数据概览页面用ECharts画了四张图：注册用户增长趋势折线图、各量表测评次数饼图、 每周预约数量柱状图、AI咨询日均对话轮次折线图。数据从后端四个统计接口分别拿， 接口里直接写的SQL聚合查询，没做定时任务预计算——目前数据量小（几百条级别）， 实时查询延迟在50ms以内，以后量大了再考虑加定时任务写统计快照表。",
+        "用户管理页面是一个el-table，支持按角色和状态筛选，可以改角色、禁用/启用账号。 内容审核页面展示status=0的帖子和评论，管理员点\"通过\"改成1、点\"隐藏\"改成2。 系统配置页面可以调AI模型的temperature和max_tokens参数，还能管理敏感词库—— 直接在一个文本框里编辑，逗号分隔，保存后写入数据库的config表。",
+        {
+          "type": "image",
+          "path": "fig17.png",
+          "width": 130
+        },
+        "图4-8 管理后台数据概览界面",
+        "图4-8是管理员登录后的数据概览页截图。页面中可以直观看到用户、咨询师、帖子和预约 的汇总统计，以及用户增长趋势、咨询师分布等可视化组件，和本节对后台模块实现的描述 保持一致。",
+        {
+          "type": "image",
+          "path": "fig18.png",
+          "width": 130
+        },
+        "图4-9 管理后台系统配置界面",
+        "图4-9展示了管理后台的系统配置页面。管理员可以在该页面维护系统基础参数、模型配置项 和平台运行设置，对应了前文中提到的AI参数与敏感词库等后台可维护能力，也让管理端 不只是数据查看，还具备实际的配置管理功能。"
+      ]
+    },
+    {
+      "title": "4.9 本章小结",
+      "content": [
+        "这一章把八个模块的实现过程写了一遍。几个值得记录的坑：BCrypt不能用等号比对、 el-calendar做排班需要自定义插槽、预约并发需要加锁、WebSocket断连后sessionMap 要清理、AI流式输出的中文乱码问题、情绪关键词匹配的误检情况。这些问题都在开发过程中 逐个解决了，但有些解决方案（比如关键词匹配做情绪识别）本身精度有限，后面还有改进空间。"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1300" viewBox="0 0 1200 1300" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#202020" />
+    </marker>
+    <marker id="dashArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#555" />
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="1200" height="1300" fill="#ffffff"/>
+  <rect x="390" y="40" width="220" height="60" rx="16" ry="16" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="500" y="70" font-family="SimSun, Songti SC, serif" font-size="26" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">开始</text>
+<path d="M 500 100 L 500 140" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<rect x="360" y="140" width="280" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="500" y="170" font-family="SimSun, Songti SC, serif" font-size="20" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">学生浏览咨询师列表</text>
+<path d="M 500 200 L 500 240" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<rect x="360" y="240" width="280" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="500" y="270" font-family="SimSun, Songti SC, serif" font-size="20" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">选择可预约时段</text>
+<path d="M 500 300 L 500 340" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<rect x="360" y="340" width="280" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="500" y="370" font-family="SimSun, Songti SC, serif" font-size="20" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">提交预约请求</text>
+<path d="M 500 400 L 500 450" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<path d="M 500 450 L 650 500 L 500 560 L 350 500 Z" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="500" y="500" font-family="SimSun, Songti SC, serif" font-size="20" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">时段是否冲突？</text>
+<text x="520" y="570" font-family="SimSun, Songti SC, serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">否</text>
+<path d="M 650 500 L 850 500" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<text x="720" y="475" font-family="SimSun, Songti SC, serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">是</text>
+<rect x="850" y="470" width="220" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="960" y="500" font-family="SimSun, Songti SC, serif" font-size="19" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">建议选择
+其他时段</text>
+<path d="M 960 470 L 960 270 L 640 270" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<path d="M 500 560 L 500 610" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<rect x="360" y="610" width="280" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="500" y="640" font-family="SimSun, Songti SC, serif" font-size="20" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">预约创建成功</text>
+<path d="M 500 670 L 500 710" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<rect x="360" y="710" width="280" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="500" y="740" font-family="SimSun, Songti SC, serif" font-size="20" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">咨询师确认/拒绝</text>
+<path d="M 500 770 L 500 820" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<path d="M 500 820 L 650 870 L 500 930 L 350 870 Z" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="500" y="870" font-family="SimSun, Songti SC, serif" font-size="19" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">咨询师是否确认？</text>
+<path d="M 650 870 L 850 870" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<text x="720" y="845" font-family="SimSun, Songti SC, serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">否</text>
+<rect x="850" y="840" width="220" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="960" y="859" font-family="SimSun, Songti SC, serif" font-size="18" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">预约被拒绝
+建议重新预</text>
+<text x="960" y="881" font-family="SimSun, Songti SC, serif" font-size="18" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">约</text>
+<text x="520" y="940" font-family="SimSun, Songti SC, serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">是</text>
+<path d="M 500 930 L 500 980" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<rect x="360" y="980" width="280" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="500" y="1010" font-family="SimSun, Songti SC, serif" font-size="20" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">预约生效，推送通知</text>
+<path d="M 500 1040 L 500 1070" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<rect x="360" y="1070" width="280" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="500" y="1100" font-family="SimSun, Songti SC, serif" font-size="20" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">按时咨询 → 填写评价</text>
+<path d="M 500 1130 L 500 1170" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<rect x="390" y="1170" width="220" height="60" rx="16" ry="16" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="500" y="1200" font-family="SimSun, Songti SC, serif" font-size="26" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">结束</text>
+</svg>

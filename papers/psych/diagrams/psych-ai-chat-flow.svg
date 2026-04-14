@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1100" viewBox="0 0 1200 1100" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#202020" />
+    </marker>
+    <marker id="dashArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#555" />
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="1200" height="1100" fill="#ffffff"/>
+  <rect x="390" y="40" width="220" height="60" rx="16" ry="16" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="500" y="70" font-family="SimSun, Songti SC, serif" font-size="26" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">开始</text>
+<path d="M 500 100 L 500 140" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<rect x="360" y="140" width="280" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="500" y="170" font-family="SimSun, Songti SC, serif" font-size="20" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">学生输入对话内容</text>
+<path d="M 500 200 L 500 240" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<rect x="360" y="240" width="280" height="70" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="500" y="263" font-family="SimSun, Songti SC, serif" font-size="19" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">后端加载最近10轮
+对话历史</text>
+<text x="500" y="287" font-family="SimSun, Songti SC, serif" font-size="19" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">作为上下文</text>
+<path d="M 500 310 L 500 350" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<rect x="360" y="350" width="280" height="70" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="500" y="373" font-family="SimSun, Songti SC, serif" font-size="19" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">拼接System Prompt
++ 历史 +</text>
+<text x="500" y="397" font-family="SimSun, Songti SC, serif" font-size="19" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">用户输入</text>
+<path d="M 500 420 L 500 460" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<rect x="360" y="460" width="280" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="500" y="490" font-family="SimSun, Songti SC, serif" font-size="20" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">调用AI大模型API</text>
+<path d="M 500 520 L 500 570" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<path d="M 500 570 L 660 620 L 500 680 L 340 620 Z" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="500" y="608" font-family="SimSun, Songti SC, serif" font-size="19" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">情绪风险词
+检测是否</text>
+<text x="500" y="632" font-family="SimSun, Songti SC, serif" font-size="19" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">触发？</text>
+<path d="M 660 620 L 850 620" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<text x="720" y="595" font-family="SimSun, Songti SC, serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">是</text>
+<rect x="850" y="590" width="240" height="70" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="970" y="614" font-family="SimSun, Songti SC, serif" font-size="18" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">触发预警通知
+建议联系真</text>
+<text x="970" y="636" font-family="SimSun, Songti SC, serif" font-size="18" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">人咨询师</text>
+<text x="520" y="690" font-family="SimSun, Songti SC, serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">否</text>
+<path d="M 500 680 L 500 730" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<rect x="360" y="730" width="280" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="500" y="760" font-family="SimSun, Songti SC, serif" font-size="20" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">AI回复返回前端显示</text>
+<path d="M 500 790 L 500 830" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<ellipse cx="170" cy="740" rx="70" ry="18" fill="#fff" stroke="#202020" stroke-width="3"/>
+<path d="M 100 740 L 100 790 A 70 18 0 0 0 230 790 L 230 740" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="165" y="755" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">chat_messages</text>
+<text x="165" y="775" font-family="SimSun, Songti SC, serif" font-size="16" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">对话记录落库</text>
+<path d="M 360 760 L 230 760" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"/>
+<path d="M 170 720 L 170 760 L 360 760" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<rect x="360" y="830" width="280" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="500" y="860" font-family="SimSun, Songti SC, serif" font-size="20" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">学生继续对话或关闭</text>
+<path d="M 500 890 L 500 940" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<rect x="390" y="940" width="220" height="60" rx="16" ry="16" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="500" y="970" font-family="SimSun, Songti SC, serif" font-size="26" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">流程结束</text>
+</svg>

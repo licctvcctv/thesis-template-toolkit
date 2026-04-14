@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1100" viewBox="0 0 1200 1100" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#202020" />
+    </marker>
+    <marker id="dashArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#555" />
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="1200" height="1100" fill="#ffffff"/>
+  <rect x="390" y="50" width="220" height="60" rx="16" ry="16" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="500" y="80" font-family="SimSun, Songti SC, serif" font-size="26" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">开始</text>
+<path d="M 500 110 L 500 160" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<rect x="360" y="160" width="280" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="500" y="179" font-family="SimSun, Songti SC, serif" font-size="18" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">用户输入登录信息
+（用户名+密</text>
+<text x="500" y="201" font-family="SimSun, Songti SC, serif" font-size="18" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">码+验证码）</text>
+<path d="M 500 220 L 500 280" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<rect x="360" y="280" width="280" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="500" y="299" font-family="SimSun, Songti SC, serif" font-size="18" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">系统验证身份信息
+校验JWT令牌</text>
+<text x="500" y="321" font-family="SimSun, Songti SC, serif" font-size="18" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">有效性</text>
+<path d="M 500 340 L 500 400" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<path d="M 500 390 L 660 450 L 500 510 L 340 450 Z" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="500" y="438" font-family="SimSun, Songti SC, serif" font-size="19" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">验证通过？
+角色权限匹</text>
+<text x="500" y="462" font-family="SimSun, Songti SC, serif" font-size="19" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">配？</text>
+<path d="M 660 450 L 850 450" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<text x="720" y="425" font-family="SimSun, Songti SC, serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">否</text>
+<rect x="850" y="420" width="240" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="970" y="439" font-family="SimSun, Songti SC, serif" font-size="18" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">返回错误提示
+要求重新登</text>
+<text x="970" y="461" font-family="SimSun, Songti SC, serif" font-size="18" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">录</text>
+<path d="M 970 420 L 970 120 L 640 190" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<text x="520" y="525" font-family="SimSun, Songti SC, serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">是</text>
+<path d="M 500 510 L 500 570" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<ellipse cx="170" cy="410" rx="70" ry="18" fill="#fff" stroke="#202020" stroke-width="3"/>
+<path d="M 100 410 L 100 470 A 70 18 0 0 0 230 470 L 230 410" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="165" y="430" font-family="SimSun, Songti SC, serif" font-size="17" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">用户表
+Redis</text>
+<text x="165" y="450" font-family="SimSun, Songti SC, serif" font-size="17" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">会话</text>
+<path d="M 340 450 L 230 450" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"/>
+<path d="M 170 490 L 170 620 L 360 620" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<rect x="360" y="570" width="280" height="70" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="500" y="593" font-family="SimSun, Songti SC, serif" font-size="19" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">生成JWT令牌
+缓存会话到</text>
+<text x="500" y="617" font-family="SimSun, Songti SC, serif" font-size="19" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">Redis</text>
+<path d="M 500 640 L 500 710" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<rect x="360" y="710" width="280" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="500" y="740" font-family="SimSun, Songti SC, serif" font-size="20" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">跳转到对应角色首页</text>
+<path d="M 500 770 L 500 840" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<rect x="390" y="840" width="220" height="60" rx="16" ry="16" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="500" y="870" font-family="SimSun, Songti SC, serif" font-size="26" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">流程结束</text>
+</svg>

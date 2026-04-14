@@ -1,0 +1,674 @@
+{
+  "title": "第3章 系统设计",
+  "sections": [
+    {
+      "title": "3.1 开发环境与技术选型",
+      "content": []
+    },
+    {
+      "title": "3.1.1 硬件环境",
+      "content": [
+        "开发阶段用的是自己的笔记本，联调和部署用了一台阿里云ECS。客户端就是普通浏览器， 没有特殊硬件要求。具体配置见表3-1。",
+        "表3-1 硬件环境配置",
+        {
+          "type": "table",
+          "headers": [
+            "设备",
+            "配置参数",
+            "用途"
+          ],
+          "rows": [
+            [
+              "开发主机",
+              "Intel Core i7-12700H / 16 GB DDR5 / 512 GB SSD",
+              "后端服务与前端开发"
+            ],
+            [
+              "测试服务器",
+              "阿里云 ECS 2核4G / CentOS 8",
+              "部署与性能测试"
+            ],
+            [
+              "客户端",
+              "普通PC或笔记本电脑，支持Chrome/Edge浏览器",
+              "系统访问与功能验证"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "title": "3.1.2 软件环境",
+      "content": [
+        "开发工具和运行环境的版本列在表3-2里。IDE方面后端用IntelliJ IDEA，前端用VS Code， 数据库管理用Navicat。",
+        "表3-2 软件环境配置",
+        {
+          "type": "table",
+          "headers": [
+            "软件",
+            "版本",
+            "用途"
+          ],
+          "rows": [
+            [
+              "操作系统",
+              "Windows 11 / CentOS 8",
+              "开发与部署"
+            ],
+            [
+              "JDK",
+              "OpenJDK 17",
+              "Spring Boot 3 运行环境"
+            ],
+            [
+              "Node.js",
+              "v18.x LTS",
+              "Vue3 前端构建"
+            ],
+            [
+              "IDE",
+              "IntelliJ IDEA 2024 / VS Code",
+              "后端与前端开发"
+            ],
+            [
+              "数据库",
+              "MySQL 8.0",
+              "关系数据存储"
+            ],
+            [
+              "缓存",
+              "Redis 7.x",
+              "会话与热点数据缓存"
+            ],
+            [
+              "版本控制",
+              "Git + Gitee",
+              "代码管理"
+            ],
+            [
+              "接口测试",
+              "Postman / Apifox",
+              "API 调试与文档"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "title": "3.1.3 主要技术",
+      "content": [
+        "Vue3 + Vite",
+        "前端选Vue3[7][13]有两个原因：一个是之前课程项目用的就是Vue，上手快；另一个是Vue3的组合式 API（Composition API）在逻辑复用上比Vue2的选项式API方便不少，同一个功能的状态和 方法可以写在一起，不用在data、methods、computed之间来回跳。构建工具用Vite而不是 Webpack，因为Vite基于ES Module做热更新，改一行代码浏览器几乎立刻刷新，Webpack 在项目大了之后每次热更新要等好几秒。TypeScript加上之后，接口返回的数据结构有类型 定义，写代码时IDE能给出字段提示，减少拼写错误。",
+        "Spring Boot 3",
+        "后端选Spring Boot 3[8][14]，主要因为团队（其实就是我一个人）之前做课程设计时用过Spring 生态的项目，对注解驱动开发和依赖注入比较熟悉。Spring Boot 3基于Java 17，内嵌 Tomcat，启动一个可运行的jar包就能跑，不用单独装应用服务器。自动配置机制省了大量 XML配置——引入spring-boot-starter-websocket之后WebSocket端点就自动注册了， 不需要额外写配置类。Actuator提供了/health端点，部署后可以方便地做存活探测。",
+        "MyBatis-Plus",
+        "数据库访问层用了MyBatis-Plus[15]。它在MyBatis基础上封装了BaseMapper，单表的增删改查 不用写XML映射文件，一行代码搞定。条件查询用LambdaQueryWrapper，写法类似 .eq(User::getRole, \"student\").orderByDesc(User::getCreatedAt)，比拼字符串 安全，改了字段名编译期就能报错。代码生成器我只在建表初期用了一次，后面表结构调整 多了就手动改Entity了。",
+        "MySQL 8.0",
+        "选MySQL 8.0[9][16]是因为学校课程教的就是MySQL，熟悉度最高。8.0版本新增的JSON类型正好 用来存测评答题数据——一个JSON数组，每个元素是一道题的选项值，这样不用单独建一张 答题明细表。另外测评报告里需要按因子分分组统计，JSON_EXTRACT函数能直接在SQL里 取JSON字段的值，不需要把数据捞出来在Java里处理。",
+        "Redis",
+        "Redis[10][17]在项目里干了三件事。缓存咨询师列表和量表配置数据，这两个数据改动频率很低但 查询频率高，放Redis之后数据库压力小很多。存邮箱验证码，设5分钟过期，比自己在Java 里搞定时器方便。存JWT黑名单——用户主动登出时把Token写进Redis并设过期时间，后续 请求带着这个Token过来就拒绝。一开始还想用Redis的发布订阅做WebSocket消息的跨实例 分发，但当前只部署了一台服务器，这个功能实际上没用到。",
+        "Element Plus",
+        "UI组件库用Element Plus[11]，Vue3生态里组件最全的一个。项目里用到比较多的是 el-form做表单校验、el-table做列表展示、el-calendar做排班日历、el-drawer做 聊天侧边栏。日历组件做排班的时候踩了一个坑：el-calendar默认只能选单日，我需要在 日期格子里显示该天有哪些时段可用，最后是用插槽（slot）自己画了时段标签上去的。",
+        "WebSocket",
+        "实时聊天用的WebSocket协议[12][18]。相比HTTP轮询，WebSocket建立连接后服务器可以主动推 消息给客户端，延迟低很多。项目里有两个WebSocket端点：/ws/chat用于学生和咨询师 之间的人工咨询，/ws/ai-chat用于AI对话的流式输出。连接建立时通过查询参数传JWT Token做身份验证，验证不通过就拒绝连接。实际做下来发现一个问题：如果用户网络断了 再重连，之前的WebSocketSession对象还留在服务端内存里，需要在afterConnectionClosed 里及时清理，不然sessionMap会越来越大。",
+        "AI Agent",
+        "AI对话模块接的是大模型API，没有做本地部署。调用时把System Prompt（给AI设定心理 咨询师角色、限定语气和回答边界）、最近10轮对话历史和当前用户输入拼成一个请求体 发出去。情绪识别是一个比较简单的实现：后端维护了一个关键词表，匹配到\"不想活\"\"自伤\" 之类的词就给负面得分加权。这个方案精度不高，但胜在简单可控，不需要额外部署NLP模型。 一开始我打算用情感分析API来做，后来发现第三方API的调用延迟加上去会让整个对话响应 变得很慢，就改成了本地关键词匹配。"
+      ]
+    },
+    {
+      "title": "3.2 系统架构设计",
+      "content": [
+        "整体是前后端分离的B/S架构[20]。前端Vue3构建的SPA通过Nginx托管静态文件，API请求由 Nginx反向代理转发到Spring Boot后端。后端内部分三层：Controller层接收请求做参数 校验，Service层处理业务逻辑，Mapper层通过MyBatis-Plus和MySQL交互。",
+        {
+          "type": "image",
+          "path": "fig8.png",
+          "width": 130
+        },
+        "图3-1 系统架构图",
+        "认证用JWT[19]实现无状态登录，Spring Security的过滤器链在每次请求时解析Token、校验 角色权限。全局异常处理器统一捕获异常，所有接口返回格式固定为code + message + data 三个字段的JSON对象，前端Axios响应拦截器根据code判断是否需要弹错误提示。",
+        "部署上，Nginx同时做静态文件托管和反向代理。WebSocket连接需要在Nginx配置里加 proxy_set_header Upgrade和Connection头，否则ws握手会被Nginx当成普通HTTP请求 拒掉——这个坑我调了半天才找到原因。Redis部署在同一台ECS上，通过127.0.0.1连接， 没走公网。目前单机部署，如果以后用户量上来需要横向扩展，前端和后端可以分别加机器， 后端多实例的话WebSocket会话需要用Redis发布订阅做跨实例同步，但当前版本还没做这个。"
+      ]
+    },
+    {
+      "title": "3.3 数据库设计",
+      "content": [
+        "核心表有六张：users、counselors、appointments、assessments、chat_messages、 community_posts。下面先放E-R图看各表之间的关系，然后逐张说明字段设计。",
+        {
+          "type": "image",
+          "path": "fig9.png",
+          "width": 145
+        },
+        "图3-2 数据库E-R图",
+        "表3-3 users 用户表结构",
+        {
+          "type": "table",
+          "headers": [
+            "字段名",
+            "数据类型",
+            "约束",
+            "说明"
+          ],
+          "rows": [
+            [
+              "id",
+              "BIGINT",
+              "PRIMARY KEY",
+              "用户唯一标识"
+            ],
+            [
+              "username",
+              "VARCHAR(50)",
+              "UNIQUE NOT NULL",
+              "用户名"
+            ],
+            [
+              "password",
+              "VARCHAR(255)",
+              "NOT NULL",
+              "加密后的密码"
+            ],
+            [
+              "real_name",
+              "VARCHAR(50)",
+              "",
+              "真实姓名"
+            ],
+            [
+              "role",
+              "ENUM",
+              "NOT NULL",
+              "角色：student/counselor/admin"
+            ],
+            [
+              "phone",
+              "VARCHAR(20)",
+              "",
+              "手机号"
+            ],
+            [
+              "email",
+              "VARCHAR(100)",
+              "",
+              "电子邮箱"
+            ],
+            [
+              "avatar",
+              "VARCHAR(255)",
+              "",
+              "头像URL"
+            ],
+            [
+              "status",
+              "TINYINT",
+              "DEFAULT 1",
+              "状态：0禁用 1正常"
+            ],
+            [
+              "created_at",
+              "DATETIME",
+              "DEFAULT NOW()",
+              "创建时间"
+            ],
+            [
+              "updated_at",
+              "DATETIME",
+              "ON UPDATE NOW()",
+              "更新时间"
+            ]
+          ]
+        },
+        "users表存所有注册用户。role字段是ENUM类型，取值student、counselor、admin三选一。 password存的是BCrypt哈希，不存明文。status字段0表示正常、1表示禁用，管理员可以 在后台切换。一开始我把咨询师信息也放在users表里，后来发现咨询师有很多专属字段 （擅长领域、评分、咨询次数），单独拆出了counselors表。",
+        "表3-4 counselors 咨询师表结构",
+        {
+          "type": "table",
+          "headers": [
+            "字段名",
+            "数据类型",
+            "约束",
+            "说明"
+          ],
+          "rows": [
+            [
+              "id",
+              "BIGINT",
+              "PRIMARY KEY",
+              "咨询师唯一标识"
+            ],
+            [
+              "user_id",
+              "BIGINT",
+              "FOREIGN KEY",
+              "关联用户表"
+            ],
+            [
+              "title",
+              "VARCHAR(50)",
+              "",
+              "职称"
+            ],
+            [
+              "specialty",
+              "VARCHAR(200)",
+              "",
+              "擅长领域"
+            ],
+            [
+              "introduction",
+              "TEXT",
+              "",
+              "个人简介"
+            ],
+            [
+              "rating",
+              "DECIMAL(3,2)",
+              "DEFAULT 5.00",
+              "评分"
+            ],
+            [
+              "consultation_count",
+              "INT",
+              "DEFAULT 0",
+              "咨询次数"
+            ]
+          ]
+        },
+        "counselors表通过user_id外键关联users表。rating字段初始值是5.0，每次学生提交 评价后重新算平均分。consultation_count在每次咨询完成后加1，这个字段主要用来在 咨询师列表页排序——\"经验最丰富\"的排前面。",
+        "表3-5 appointments 预约表结构",
+        {
+          "type": "table",
+          "headers": [
+            "字段名",
+            "数据类型",
+            "约束",
+            "说明"
+          ],
+          "rows": [
+            [
+              "id",
+              "BIGINT",
+              "PRIMARY KEY",
+              "预约唯一标识"
+            ],
+            [
+              "student_id",
+              "BIGINT",
+              "FOREIGN KEY",
+              "学生ID"
+            ],
+            [
+              "counselor_id",
+              "BIGINT",
+              "FOREIGN KEY",
+              "咨询师ID"
+            ],
+            [
+              "schedule_date",
+              "DATE",
+              "NOT NULL",
+              "预约日期"
+            ],
+            [
+              "time_slot",
+              "VARCHAR(20)",
+              "NOT NULL",
+              "时间段，如09:00-10:00"
+            ],
+            [
+              "status",
+              "ENUM",
+              "DEFAULT pending",
+              "状态：pending/confirmed/rejected/completed"
+            ],
+            [
+              "remark",
+              "TEXT",
+              "",
+              "预约备注"
+            ],
+            [
+              "created_at",
+              "DATETIME",
+              "DEFAULT NOW()",
+              "创建时间"
+            ]
+          ]
+        },
+        "appointments表的状态流转是pending → confirmed/rejected → completed。 为了防止两个学生同时约同一个时段，我在counselor_id + schedule_date + time_slot 上加了唯一索引。实际开发时碰到一个问题：如果咨询师拒绝了一个预约，那条记录的status 变成rejected，但唯一索引还在，别的学生就约不了这个时段了。最后的处理方式是唯一索引 只约束status不等于rejected的记录，MySQL 8.0不支持条件唯一索引，所以改成了在 Service层用乐观锁检查。",
+        "表3-6 assessments 测评记录表结构",
+        {
+          "type": "table",
+          "headers": [
+            "字段名",
+            "数据类型",
+            "约束",
+            "说明"
+          ],
+          "rows": [
+            [
+              "id",
+              "BIGINT",
+              "PRIMARY KEY",
+              "测评记录唯一标识"
+            ],
+            [
+              "user_id",
+              "BIGINT",
+              "FOREIGN KEY",
+              "用户ID"
+            ],
+            [
+              "scale_type",
+              "VARCHAR(20)",
+              "NOT NULL",
+              "量表类型：SCL90/SDS/SAS"
+            ],
+            [
+              "answers",
+              "JSON",
+              "NOT NULL",
+              "答题数据JSON"
+            ],
+            [
+              "total_score",
+              "INT",
+              "",
+              "总分"
+            ],
+            [
+              "result_level",
+              "VARCHAR(20)",
+              "",
+              "结果等级：正常/轻度/中度/重度"
+            ],
+            [
+              "report",
+              "TEXT",
+              "",
+              "生成的报告文本"
+            ],
+            [
+              "created_at",
+              "DATETIME",
+              "DEFAULT NOW()",
+              "测评时间"
+            ]
+          ]
+        },
+        "assessments表的answers字段用JSON类型，存的是一个整数数组，每个元素对应一道题的 选项值。这样做的好处是不需要单独建答题明细表，查询时用JSON_EXTRACT就能取到某道题 的答案。result_level由后端评分逻辑自动填入。",
+        "表3-7 chat_messages 聊天消息表结构",
+        {
+          "type": "table",
+          "headers": [
+            "字段名",
+            "数据类型",
+            "约束",
+            "说明"
+          ],
+          "rows": [
+            [
+              "id",
+              "BIGINT",
+              "PRIMARY KEY",
+              "消息唯一标识"
+            ],
+            [
+              "session_id",
+              "VARCHAR(64)",
+              "INDEX",
+              "会话ID"
+            ],
+            [
+              "sender_id",
+              "BIGINT",
+              "NOT NULL",
+              "发送者ID"
+            ],
+            [
+              "receiver_id",
+              "BIGINT",
+              "NOT NULL",
+              "接收者ID"
+            ],
+            [
+              "content",
+              "TEXT",
+              "NOT NULL",
+              "消息内容"
+            ],
+            [
+              "msg_type",
+              "ENUM",
+              "DEFAULT text",
+              "消息类型：text/image/ai"
+            ],
+            [
+              "is_read",
+              "TINYINT",
+              "DEFAULT 0",
+              "是否已读"
+            ],
+            [
+              "created_at",
+              "DATETIME",
+              "DEFAULT NOW()",
+              "发送时间"
+            ]
+          ]
+        },
+        "chat_messages表同时存人工咨询和AI咨询的消息。session_id标识一次完整会话， msg_type区分文字、图片和AI生成三种消息类型。session_id上建了索引，因为拉取 历史消息时按session_id查询是最频繁的操作。消息量大了之后这张表会是最先需要 做分表的候选。",
+        "表3-8 community_posts 社区帖子表结构",
+        {
+          "type": "table",
+          "headers": [
+            "字段名",
+            "数据类型",
+            "约束",
+            "说明"
+          ],
+          "rows": [
+            [
+              "id",
+              "BIGINT",
+              "PRIMARY KEY",
+              "帖子唯一标识"
+            ],
+            [
+              "user_id",
+              "BIGINT",
+              "FOREIGN KEY",
+              "发帖用户ID"
+            ],
+            [
+              "title",
+              "VARCHAR(200)",
+              "NOT NULL",
+              "帖子标题"
+            ],
+            [
+              "content",
+              "TEXT",
+              "NOT NULL",
+              "帖子内容"
+            ],
+            [
+              "category",
+              "VARCHAR(50)",
+              "",
+              "分类：情感/学业/人际/其他"
+            ],
+            [
+              "like_count",
+              "INT",
+              "DEFAULT 0",
+              "点赞数"
+            ],
+            [
+              "comment_count",
+              "INT",
+              "DEFAULT 0",
+              "评论数"
+            ],
+            [
+              "status",
+              "TINYINT",
+              "DEFAULT 1",
+              "状态：0待审核 1正常 2隐藏"
+            ],
+            [
+              "created_at",
+              "DATETIME",
+              "DEFAULT NOW()",
+              "创建时间"
+            ]
+          ]
+        },
+        "community_posts表的status有三个值：0待审核、1正常、2管理员隐藏。like_count 和comment_count在应用层维护，没用数据库触发器——因为触发器在高并发下容易出死锁， 而且调试不方便。热门帖子列表按like_count降序排，分页用LIMIT + OFFSET，目前 数据量不大所以性能没问题，数据量上来后可能需要改成游标分页。"
+      ]
+    },
+    {
+      "title": "3.4 接口设计",
+      "content": [
+        "后端接口走RESTful风格：GET查询、POST创建、PUT更新、DELETE删除。请求和响应都是 JSON格式，响应体固定三个字段：code（200成功，401未认证，403无权限，500服务端错误）、 message和data。需要登录的接口在请求头Authorization字段带Bearer Token，后端 过滤器解析Token拿到userId和role。主要接口汇总在表3-9。",
+        "表3-9 系统主要API接口设计",
+        {
+          "type": "table",
+          "headers": [
+            "方法",
+            "路径",
+            "功能说明",
+            "认证要求"
+          ],
+          "rows": [
+            [
+              "POST",
+              "/api/auth/register",
+              "用户注册",
+              "无"
+            ],
+            [
+              "POST",
+              "/api/auth/login",
+              "用户登录",
+              "无"
+            ],
+            [
+              "GET",
+              "/api/user/profile",
+              "获取个人信息",
+              "Token"
+            ],
+            [
+              "PUT",
+              "/api/user/profile",
+              "修改个人信息",
+              "Token"
+            ],
+            [
+              "GET",
+              "/api/counselors",
+              "获取咨询师列表",
+              "Token"
+            ],
+            [
+              "GET",
+              "/api/counselors/{id}/schedule",
+              "获取咨询师排班",
+              "Token"
+            ],
+            [
+              "POST",
+              "/api/appointments",
+              "创建预约",
+              "Token(学生)"
+            ],
+            [
+              "PUT",
+              "/api/appointments/{id}/confirm",
+              "确认预约",
+              "Token(咨询师)"
+            ],
+            [
+              "PUT",
+              "/api/appointments/{id}/reject",
+              "拒绝预约",
+              "Token(咨询师)"
+            ],
+            [
+              "GET",
+              "/api/assessments/scales",
+              "获取量表列表",
+              "Token"
+            ],
+            [
+              "POST",
+              "/api/assessments/submit",
+              "提交测评",
+              "Token"
+            ],
+            [
+              "GET",
+              "/api/assessments/{id}/report",
+              "获取测评报告",
+              "Token"
+            ],
+            [
+              "POST",
+              "/api/ai/chat",
+              "AI咨询对话",
+              "Token"
+            ],
+            [
+              "GET",
+              "/api/community/posts",
+              "获取帖子列表",
+              "Token"
+            ],
+            [
+              "POST",
+              "/api/community/posts",
+              "发布帖子",
+              "Token"
+            ],
+            [
+              "POST",
+              "/api/community/posts/{id}/comment",
+              "发表评论",
+              "Token"
+            ],
+            [
+              "POST",
+              "/api/community/posts/{id}/like",
+              "点赞帖子",
+              "Token"
+            ],
+            [
+              "GET",
+              "/api/admin/users",
+              "管理员获取用户列表",
+              "Token(管理员)"
+            ],
+            [
+              "PUT",
+              "/api/admin/posts/{id}/status",
+              "管理员审核帖子",
+              "Token(管理员)"
+            ],
+            [
+              "GET",
+              "/api/admin/statistics",
+              "管理员获取数据统计",
+              "Token(管理员)"
+            ]
+          ]
+        },
+        "除了REST接口还有两个WebSocket端点：/ws/chat和/ws/ai-chat。连接时通过URL查询 参数带Token做身份验证。一开始我想用STOMP子协议做消息路由，后来发现项目里的消息 场景比较简单——就是点对点发送和AI流式输出——用原生WebSocket就够了，引入STOMP反而 增加了客户端的依赖体积。"
+      ]
+    },
+    {
+      "title": "3.5 本章小结",
+      "content": [
+        "这一章把技术选型的理由说清楚了，也把架构、数据库和接口的设计做完了。几个设计过程中 碰到的具体问题——比如预约表的唯一约束、el-calendar的排班插槽、STOMP协议的取舍—— 也记录在了对应段落里。下一章按模块写具体的编码实现。"
+      ]
+    }
+  ]
+}
