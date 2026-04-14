@@ -7,7 +7,6 @@
 import os
 import sys
 import json
-import glob
 
 ROOT = os.path.join(os.path.dirname(__file__), "../..")
 sys.path.insert(0, ROOT)
@@ -98,13 +97,12 @@ def build_data(doc=None):
         raise FileNotFoundError("meta.json not found")
 
     chapters = []
-    for ch_file in sorted(glob.glob(
-            os.path.join(HERE, "ch*.json"))):
-        ch = load_json(os.path.basename(ch_file))
+    for idx in range(1, 6):
+        filename = f"ch{idx}.json"
+        ch = load_json(filename)
         if ch:
             chapters.append(ch)
-            print(f"  {os.path.basename(ch_file)}"
-                  f" -> {ch['title']}")
+            print(f"  {filename} -> {ch['title']}")
 
     if doc:
         chapters = process_chapters(chapters, doc)
@@ -286,6 +284,52 @@ def _post_process(docx_path):
                 # 清空占位文本
                 for r in p.runs:
                     r.text = ""
+
+    meta = load_json("meta.json") or {}
+    conclusion = (meta.get("conclusion") or "").strip()
+    paras = list(doc.paragraphs)
+    ack_heading = next((p for p in paras if (p.text or "").strip() == "致谢"), None)
+    ref_heading = next((p for p in paras if (p.text or "").strip() == "参考文献"), None)
+    has_conclusion = any((p.text or "").strip() == "结论" for p in paras)
+
+    if conclusion and ack_heading and not has_conclusion:
+        body_style = None
+        ack_seen = False
+        for p in paras:
+            if p is ack_heading:
+                ack_seen = True
+                continue
+            if ack_seen and (p.text or "").strip():
+                body_style = p.style
+                break
+        if body_style is None:
+            body_style = ack_heading.style
+
+        heading = ack_heading.insert_paragraph_before("结论", style=ack_heading.style)
+        heading.paragraph_format.page_break_before = True
+        for line in [x.strip() for x in conclusion.splitlines() if x.strip()]:
+            ack_heading.insert_paragraph_before(line, style=body_style)
+
+    # 参考参考稿结构：结论后接参考文献，再接致谢
+    paras = list(doc.paragraphs)
+    ack_heading = next((p for p in paras if (p.text or "").strip() == "致谢"), None)
+    ref_heading = next((p for p in paras if (p.text or "").strip() == "参考文献"), None)
+    if ack_heading is not None and ref_heading is not None:
+        body = doc.element.body
+        children = list(body)
+        ack_idx = children.index(ack_heading._p)
+        ref_idx = children.index(ref_heading._p)
+        if ack_idx < ref_idx:
+            moving = []
+            for el in children[ref_idx:]:
+                if el.tag.endswith('}sectPr'):
+                    continue
+                moving.append(el)
+            for el in moving:
+                body.remove(el)
+            ack_idx = list(body).index(ack_heading._p)
+            for offset, el in enumerate(moving):
+                body.insert(ack_idx + offset, el)
 
     doc.save(docx_path)
     print(f"  后处理: 图片居中+{len(_pending_tables)}个表格")
