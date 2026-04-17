@@ -1,0 +1,80 @@
+{
+  "title": "第4章　系统设计",
+  "chapter_number": 4,
+  "sections": [
+    {
+      "title": "4.1　系统功能设计",
+      "number": "4.1",
+      "content": [
+        "按前文需求分析结果，系统功能可以划分为用户服务端、上机管理端和后台管理端三个模块。用户服务端面向网吧消费者，提供注册登录、身份认证、机器浏览、在线预约、自助上机和充值消费等功能。上机管理端贯穿用户使用全过程，负责会话管理、时长监控、分段计费、续费提醒和余额结算。后台管理端面向网吧管理员，提供机器管理、用户管理、费率配置、数据统计和公告管理等功能。",
+        "系统功能结构图如图4-1所示。",
+        {"type": "image", "path": "wangkong-function-structure.png", "width": 148, "caption": "图4-1　系统功能结构图"}
+      ],
+      "subsections": []
+    },
+    {
+      "title": "4.2　系统架构设计",
+      "number": "4.2",
+      "content": [
+        "系统采用B/S三层架构进行设计，整体分为表现层、业务逻辑层和数据层三个部分。表现层有两个前端项目：用户移动端页面用Vue3 + Vant搭建，管理员后台页面用Vue3 + Element Plus搭建。",
+        "业务逻辑层基于Spring Boot 2.7.14框架搭建，集成MyBatis Plus作为ORM持久层框架，使用JJWT实现Token认证。后端按照Controller-Service-Mapper的三层结构组织代码。",
+        "数据层为MySQL 8.0，全部业务数据存放在其中。前后端之间走RESTful API，数据一律用JSON格式。",
+        "接口认证采用JWT令牌，服务端不维护会话状态。登录成功后后端签发Token，里面包含用户ID和角色信息，前端在后续请求的Authorization头中带上这个Token。受保护接口由拦截器做Token校验，管理员接口和用户接口各自使用独立的Token前缀加以区分。系统总体架构图如图4-2所示。",
+        {"type": "image", "path": "wangkong-system-arch.png", "width": 148, "caption": "图4-2　系统总体架构图"}
+      ],
+      "subsections": []
+    },
+    {
+      "title": "4.3　数据库设计",
+      "number": "4.3",
+      "content": [
+        "数据库是系统数据持久化的核心，本节从概念结构设计和逻辑结构设计两个层面对数据库进行详细设计。"
+      ],
+      "subsections": [
+        {
+          "title": "4.3.1　概念结构设计",
+          "number": "4.3.1",
+          "content": [
+            "概念模型采用E-R方法建立，把业务中的对象和关系整理为实体、属性和联系三类元素。系统涉及七个核心实体：用户、机器、预约记录、上机记录、交易记录、费率配置、公告。",
+            "用户实体的属性有用户编号、用户名、密码、真实姓名、手机号、身份证号、头像、账户余额、用户状态和用户类型。余额直接记录在用户表的balance字段中，充值和消费都是对这个字段做更新。",
+            "机器实体对应网吧中的每台计算机。属性包括机器编号、机器名称、机器类型（普通、高端、电竞）、所属区域、行列号、运行状态和硬件配置信息。",
+            "预约记录实体存储每次预约的信息：预约编号、关联用户、关联机器、开始时间、结束时间、预约状态。上机记录实体存储实际使用数据：记录编号、关联用户、关联机器、关联预约、起止时间、使用时长（分钟）、消费金额、会话状态。",
+            "交易记录实体记录用户的充值和消费流水，包括交易编号、关联用户、交易类型、交易金额、交易后余额和备注等属性。费率配置实体定义不同时段和机器类型的收费标准。公告实体管理员用来发布系统公告，包括公告编号、标题、内容、类型和发布状态等属性。",
+            "实体间关系：用户与预约、上机记录都是一对多。一台机器可以被多个用户在不同时段预约和使用，机器与预约、上机记录也是一对多。交易记录按user_id关联到用户，一个用户对应多条交易。E-R图如图4-3所示。",
+            {"type": "image", "path": "er-diagram.png", "width": 148, "caption": "图4-3　系统核心E-R图"}
+          ]
+        },
+        {
+          "title": "4.3.2　逻辑结构设计",
+          "number": "4.3.2",
+          "content": [
+            "在完成概念模型设计之后，将E-R模型转换为关系表结构。系统共设计了以下核心数据表。",
+            "表4-1 用户表（sys_user）",
+            {"type": "table", "headers": ["字段名", "类型", "说明"], "rows": [["id", "bigint", "主键，自增编号"], ["username", "varchar(50)", "登录用户名"], ["password", "varchar(100)", "密码（MD5加密）"], ["real_name", "varchar(50)", "真实姓名"], ["phone", "varchar(20)", "手机号"], ["id_card", "varchar(20)", "身份证号"], ["avatar", "varchar(200)", "头像路径"], ["balance", "decimal(10,2)", "账户余额"], ["status", "tinyint", "状态，0禁用1正常"], ["user_type", "tinyint", "0普通用户1管理员"]]},
+            "表4-2 机器表（machine）",
+            {"type": "table", "headers": ["字段名", "类型", "说明"], "rows": [["id", "bigint", "主键，自增编号"], ["machine_no", "varchar(20)", "机器编号"], ["machine_name", "varchar(50)", "机器名称"], ["machine_type", "tinyint", "类型，0普通1高端2电竞"], ["area", "varchar(10)", "所属区域"], ["row_num", "int", "行号"], ["col_num", "int", "列号"], ["status", "tinyint", "0空闲1使用中2已预约3故障"], ["config", "varchar(200)", "硬件配置"]]},
+            "表4-3 预约表（reservation）",
+            {"type": "table", "headers": ["字段名", "类型", "说明"], "rows": [["id", "bigint", "主键，自增编号"], ["user_id", "bigint", "用户编号"], ["machine_id", "bigint", "机器编号"], ["start_time", "datetime", "预约开始时间"], ["end_time", "datetime", "预约结束时间"], ["status", "tinyint", "0待使用1已使用2已取消3已过期"]]},
+            "表4-4 上机记录表（user_session）",
+            {"type": "table", "headers": ["字段名", "类型", "说明"], "rows": [["id", "bigint", "主键，自增编号"], ["user_id", "bigint", "用户编号"], ["machine_id", "bigint", "机器编号"], ["reservation_id", "bigint", "关联预约编号"], ["start_time", "datetime", "上机开始时间"], ["end_time", "datetime", "下机时间"], ["duration", "int", "使用时长（分钟）"], ["amount", "decimal(10,2)", "消费金额"], ["status", "tinyint", "0使用中1已结束"]]},
+            "表4-5 交易记录表（transaction）",
+            {"type": "table", "headers": ["字段名", "类型", "说明"], "rows": [["id", "bigint", "主键，自增编号"], ["user_id", "bigint", "用户编号"], ["type", "tinyint", "1充值2消费"], ["amount", "decimal(10,2)", "交易金额"], ["balance_after", "decimal(10,2)", "交易后余额"], ["remark", "varchar(200)", "备注"], ["related_id", "bigint", "关联业务编号"]]},
+            "表4-6 费率配置表（price_config）",
+            {"type": "table", "headers": ["字段名", "类型", "说明"], "rows": [["id", "bigint", "主键，自增编号"], ["name", "varchar(50)", "费率名称"], ["start_time", "time", "起始时间"], ["end_time", "time", "结束时间"], ["price", "decimal(10,2)", "每小时单价"], ["machine_type", "tinyint", "适用机器类型"], ["priority", "int", "优先级"]]},
+            "表4-7 公告表（notice）",
+            {"type": "table", "headers": ["字段名", "类型", "说明"], "rows": [["id", "bigint", "主键，自增编号"], ["title", "varchar(100)", "公告标题"], ["content", "text", "公告内容"], ["type", "tinyint", "1系统公告2活动公告3维护通知"], ["status", "tinyint", "0草稿1已发布"], ["publisher", "varchar(50)", "发布人"]]},
+            "七张数据表构成了整个系统的存储结构。用户表和预约表、上机记录表、交易记录表之间按user_id关联，机器表和预约表、上机记录表之间按machine_id关联，保证了数据的引用完整性。"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "4.4　本章小结",
+      "number": "4.4",
+      "content": [
+        "系统整体设计在本章完成。功能结构图展示了三大功能模块和子功能划分。B/S三层架构设计方案随后给出。数据库设计方面，E-R方法梳理出用户、机器、预约、上机、交易、费率、公告七个实体和它们之间的关联，概念模型最终转化为七张关系表。后续的系统实现以此为基础展开。"
+      ],
+      "subsections": []
+    }
+  ]
+}

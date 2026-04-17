@@ -186,6 +186,7 @@ def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(description="扫描 PaperPass AIGC 报告 zip，提取高风险句和关键词链")
     p.add_argument("source", help="PaperPass 报告 zip 或已解压目录")
     p.add_argument("--min-score", type=float, default=60.0, help="只输出不低于该分数的句子")
+    p.add_argument("--rewrite-threshold", type=float, help="把该分数视为必改阈值；高于或等于该分数的句子都应改写")
     p.add_argument("--top", type=int, default=30, help="最多输出多少句")
     p.add_argument("--json", action="store_true", help="输出 JSON")
     p.add_argument("--out", help="把结果写入文件")
@@ -199,19 +200,26 @@ def main() -> int:
         print(f"路径不存在: {source}", file=sys.stderr)
         return 2
 
+    threshold = args.rewrite_threshold if args.rewrite_threshold is not None else args.min_score
     summary = load_js_object(source, "reduceaigcpagedata.js")
     data = load_js_object(source, "simplesentenceresult_ai.js")
-    hits = collect_hits(data, args.min_score)
+    hits = collect_hits(data, threshold)
 
     if args.json:
         payload = {
             "source": str(source),
+            "rewriteThreshold": threshold,
             "summary": summary,
             "hits": [asdict(x) for x in hits[: args.top]],
         }
         out = json.dumps(payload, ensure_ascii=False, indent=2)
     else:
         out = build_markdown(source, summary, hits, args.top)
+        out = out.replace(
+            f"- AIGC 分数: `{summary.get('score')}`",
+            f"- AIGC 分数: `{summary.get('score')}`\n- 重写阈值: `{threshold}`\n- 必改句子数(>=阈值): `{len(hits)}`",
+            1,
+        )
 
     if args.out:
         Path(args.out).write_text(out, encoding="utf-8")

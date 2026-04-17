@@ -1,0 +1,23 @@
+{
+  "title_zh": "基于OCR的智能财务报销系统设计与实现",
+  "title_en_line1": "Design and Implementation of Intelligent Financial",
+  "title_en_line2": "Reimbursement System Based on OCR",
+  "year": 2026,
+  "name": "孙瑞晨",
+  "student_id": "20221120088",
+  "college": "信息科学与工程学院",
+  "class_name": "软件工程2202班",
+  "advisor": "苏真真 讲师",
+  "finish_date": "2026年5月",
+  "abstract_zh": "费用报销涉及票据采集、字段录入、审批流转和资料留存，是企业财务处理中较为频繁的一类业务。对仍以人工登记为主的中小企业而言，发票代码、号码、日期和金额等字段需要重复录入，业务量集中时还容易出现差错。针对这一场景，本文完成了基于OCR的智能财务报销系统设计与实现，系统采用Spring Boot、Vue和MySQL构建前后端分离架构。\n系统把票据识别直接接入报销提交流程。员工上传图片后，服务端先调用vatInvoice接口获取标准增值税发票字段；若返回内容不完整，再转入basicAccurateGeneral接口读取文本结果，并结合规则抽取关键数据。识别字段会回写到报销表单，提交前继续执行重复发票校验。权限划分上保留管理员、财务人员和员工三类角色，分别承担基础维护、审批处理和报销发起任务。\n测试阶段完成了功能、识别、兼容性和性能检查。以20张样本票据为例，清晰增值税发票的关键字段识别准确率超过95%。在当前实现范围内，系统能够支撑中小企业常见的报销录入与审批需求。",
+  "keywords_zh": "财务报销系统；OCR识别；双通道策略；Spring Boot；Vue",
+  "abstract_en": "In enterprise operations, financial reimbursement is a frequent and tedious task. The traditional process relies on manual invoice data entry, which is inefficient and error-prone. This thesis designs and implements an intelligent financial reimbursement system based on OCR technology. The system adopts a B/S architecture with Spring Boot, Vue, and MySQL, and integrates the Baidu OCR API with a dual-channel recognition strategy: the VAT invoice interface (vatInvoice) handles standard invoices, while the general text recognition interface (basicAccurateGeneral) serves as a fallback for non-standard receipts. Recognition results are automatically populated into reimbursement forms, and a duplicate invoice detection mechanism prevents repeated claims. The system defines three user roles: administrator, financial staff, and employee. Testing shows that field recognition accuracy exceeds 95 percent on clear invoice images, and all modules operate correctly, meeting the practical needs of SME financial reimbursement scenarios.",
+  "keywords_en": "Financial Reimbursement System; OCR Recognition; Dual-channel Strategy; Spring Boot; Vue",
+  "acknowledgement": "历时数月的毕业设计即将画上句号，在此对给予我帮助和支持的各位致以衷心的感谢。首先感谢指导教师苏真真老师，从课题方向的确定到系统功能的划分，再到论文结构的反复修改，苏老师始终给予了悉心的指导和耐心的帮助，使本文得以顺利完成。其次感谢在毕业设计过程中共同探讨、互相协助的各位同学，大家在开发调试过程中的交流与合作对本课题的推进起到了积极的作用。最后感谢家人多年来在学业上的关心与支持。本次毕业设计是对大学四年所学知识的一次综合运用，虽然系统仍存在诸多需要改进之处，但这段经历使我在软件工程实践方面获得了宝贵的锻炼。",
+  "conclusion_list": [
+    "本文完成了一套面向企业报销场景的OCR财务报销系统设计。系统以Spring Boot和Vue构建B/S架构，业务接口、页面交互和MySQL数据存储形成了完整的运行链路。",
+    "本次实现把报销填报、票据解析、发票查重和审批处理放入同一流程。识别阶段先调用vatInvoice获取标准发票字段，异常样本再转入basicAccurateGeneral补充文本结果。专项测试中，清晰票据样本的关键字段识别准确率超过95%。",
+    "当前版本的局限主要出现在样本质量和流程复杂度两个方面。票据模糊或拍摄角度偏差时，识别稳定性会下降；审批环节目前按单级处理组织，尚未覆盖多级会签场景。",
+    "后续工作可沿着三个方向继续展开：在识别前增加图像预处理，先对倾斜和模糊样本做校正；补充可替换的OCR策略，降低对单一第三方接口的依赖；扩展审批规则配置和移动端入口，使提交与审核流程更贴近实际使用场景。"
+  ]
+}

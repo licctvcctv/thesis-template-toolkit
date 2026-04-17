@@ -1,0 +1,20 @@
+{
+  "title_zh": "网控精灵管理系统",
+  "college": "国际教育学院",
+  "major": "计算机科学与技术",
+  "name": "赵恩",
+  "student_id": "202262310501",
+  "advisor": "曾文献",
+  "finish_date": "二〇二五  年  四  月",
+  "abstract_zh": "不少中小型网吧在上机登记、座位分配和费用结算方面仍以人工操作为主，效率偏低，计费透明度不足。完成了一套网吧自助管理系统的设计与开发，系统名称为网控精灵，覆盖机器预约、上机使用、费用结算和后台管理四个环节。\n后端使用Spring Boot 2.7，前端分为两个独立项目：用户端基于Vue3和Vant搭建移动页面，管理端基于Vue3和Element Plus搭建后台界面，数据库为MySQL 8.0。注册时用户需填入身份证号码，后端通过校验码算法检查格式。上机管理部分加入了时长限制逻辑，后端持续跟踪会话的已用时间，到期后向前端发送提醒标记，前端弹窗提示续费或下机。计费按时段区间和机器类型分别配置单价，结算时按实际使用时段分段累加。\n用户和管理员从不同入口登录。用户端展示各区域机器的实时占用情况，可以预约、上机、查看消费记录。管理员端负责机器记录维护、费率规则调整、预约与上机历史查看，仪表盘页面展示当日收入和机器使用率。功能测试和性能测试均已完成，各接口响应时间在预设范围内。",
+  "keywords_zh": "网吧管理；Spring Boot；Vue3；自助上机；计费系统",
+  "abstract_en": "Many small internet cafes still handle check-in, seat assignment, and billing manually. This thesis presents WangKong Spirit, a self-service management system covering machine reservation, session control, fee settlement, and back-office administration.\nThe backend runs on Spring Boot 2.7 with MySQL 8.0. Two separate Vue3 frontends are provided: a Vant-based mobile site for customers and an Element Plus dashboard for administrators. Users must enter an ID card number during registration, which the backend validates through a checksum algorithm. A session time-limit module on the backend tracks elapsed usage and sends an alert flag when the preset duration is reached. Billing splits the actual usage period into configured rate intervals and sums the segment costs.\nFunctional tests and performance tests have been executed. API response times fall within preset thresholds.",
+  "keywords_en": "Internet Cafe Management; Spring Boot; Vue3; Self-service Check-in; Billing System",
+  "acknowledgement": "毕业设计即将结束，在此向给予帮助的各位致以感谢。感谢指导教师曾文献老师，从选题方向到系统功能设计，再到论文撰写中的多次修改，曾老师都给出了细致的反馈，论文才得以完成。感谢毕业设计期间一起讨论的同学们，开发调试中的经验交流让我解决了不少具体问题。感谢学院各位老师四年来的教学指导，课堂上学到的专业知识在本次毕业设计中得到了实际运用。感谢家人在学业上的理解和支持。系统目前还有需要完善的地方，但这段从设计到编码再到写论文的过程，确实让我在工程实践方面有了更多体会。",
+  "conclusion_list": [
+    "针对网吧运营中人工登记效率低、计费不够透明的问题，完成了网控精灵管理系统的设计与实现。后端基于Spring Boot提供RESTful接口，用户端用Vue3 + Vant搭建移动页面，管理端用Vue3 + Element Plus搭建后台页面，数据存储在MySQL中。",
+    "功能层面，系统完成了用户注册与身份证认证、机器预约与冲突检测、自助上机与时长控制、多时段差异化计费、余额管理以及管理员后台等模块。上机时长限制功能在用户使用时间到期后自动锁定计算机，提示续费或离开，减少了超时使用的情况。计费模块按时段（白天、夜间）和机器类型（普通、高端、电竞）分别定价，可以适配不同经营策略。",
+    "系统目前仍存在一些可改进之处：一是尚未接入真实的在线支付接口，充值功能目前以模拟方式实现；二是系统暂未开发微信小程序版本，用户访问需要通过移动浏览器；三是数据分析功能较为基础，仅提供简单的收入统计和使用率展示。",
+    "后续可以从以下方面进行完善：接入微信支付或支付宝等真实支付渠道，实现线上充值闭环；开发微信小程序版本，进一步降低用户使用门槛；在管理端增加更丰富的数据分析图表，如用户行为分析、高峰时段预测等，为网吧经营决策提供数据支撑。"
+  ]
+}

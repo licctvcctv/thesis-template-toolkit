@@ -10,6 +10,14 @@ Target:
 - keep facts and numbers unchanged
 - remove template-like sentence shapes
 - add only concrete, local detail
+- keep academic written style
+
+## Hard Requirements
+
+- Rewrite **every** sentence at or above the active score threshold.
+- Do not stop after only the top-ranked sentences if other threshold-level hits remain.
+- Do not turn the thesis into conversational Chinese.
+- Verify the rendered `docx`, not only the source files.
 
 ## Unsafe Patterns
 
@@ -114,6 +122,7 @@ Bad expansion:
 - empty background filler
 - broad textbook explanation unrelated to the current experiment
 - generic “important / meaningful / valuable” wording
+- spoken filler such as `比较好 / 做下来 / 没问题 / 其实 / 基本上`
 
 ## Safe Sentence Shapes
 
@@ -172,3 +181,4 @@ For each high-risk sentence:
    - no fabricated facts
    - no generic filler
    - no repetitive summary templates
+   - no remaining threshold-level hits in the rendered document
