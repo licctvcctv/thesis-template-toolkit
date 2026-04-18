@@ -3,167 +3,137 @@
   "chapter_number": 5,
   "sections": [
     {
-      "title": "5.1　后端核心功能实现",
+      "title": "5.1　用户功能模块实现",
       "number": "5.1",
       "content": [
-        "本节详细介绍系统后端各核心功能模块的实现过程，包括用户注册与登录、身份证认证、机器预约和上机计费等模块。"
+        "本章在第4章系统设计的基础上，按模块逐一展示各功能的实现过程。每个功能先说明业务逻辑和交互流程，再给出对应的界面截图和后端关键代码。用户端基于Vue3和Vant组件库开发，管理端基于Vue3和Element Plus组件库开发，后端统一采用Spring Boot框架提供RESTful接口。"
       ],
       "subsections": [
         {
-          "title": "5.1.1　用户注册与登录模块",
+          "title": "5.1.1　登录与注册实现",
           "number": "5.1.1",
           "content": [
-            "用户注册功能由UserController的register方法实现。前端提交用户名、密码、真实姓名、手机号和身份证号等注册信息后，后端首先对各字段进行格式校验。其中身份证号的校验通过自定义的IdCardUtil工具类完成，该工具类实现了18位身份证号的完整校验逻辑，包括长度检查、地区编码验证、出生日期有效性判断和第18位校验码计算。校验通过后，系统还会检查用户名、手机号和身份证号的唯一性，如果已被注册则返回相应的错误提示。",
-            "密码使用MD5算法进行单向加密后存入数据库。注册成功后，用户表中该记录的balance字段初始值为0，用户需要先充值才能上机使用。",
-            "登录功能接收用户名和密码两个参数，后端根据用户名查询用户记录，将输入密码经MD5加密后与数据库中的密文进行比对。验证通过后，系统调用JwtUtil工具类生成一个包含用户ID和用户类型的JWT令牌，令牌有效期设置为24小时。后端将Token和脱敏后的用户信息一并返回给前端。前端收到Token后将其存储在localStorage中，后续每次请求都在Authorization请求头中携带该Token。",
-            "后端配置了JwtInterceptor拦截器，/api/开头的接口（登录和注册除外）在每次请求时均进行Token校验。请求头中的Token被取出后，JwtUtil的parseToken方法负责解析和验证。Token无效或过期时，拦截器返回401状态码，前端接收到401响应后跳转至登录页面。"
+            "登录页面使用Vant的van-field组件搭建表单，包含用户名和密码两个输入框。用户填写完毕后点击登录按钮，前端将用户名和密码通过POST请求发送到/api/user/login接口。后端UserController接收请求后，先根据用户名在sys_user表中查找记录，找不到则返回错误提示。找到记录后，将输入的密码做MD5加密，与数据库中存储的密文比对，不一致则返回密码错误。比对通过后检查用户状态字段，被禁用的账号无法登录。全部校验通过后，调用JwtUtil把用户ID和用户类型写入Payload，签发一个有效期24小时的JWT Token，连同用户基本信息一起返回给前端。前端收到Token后存入localStorage，后续每次请求在Authorization请求头中携带该Token。登录页面如图5-1所示。",
+            {"type": "image", "path": "scr-login.png", "width": 60, "caption": "图5-1　用户登录页面"},
+            "主要核心代码：",
+            {"type": "code", "language": "java", "content": "@PostMapping(\"/login\")\npublic Result<?> login(@RequestBody JSONObject params) {\n    String username = params.getString(\"username\");\n    String password = params.getString(\"password\");\n    User user = userService.getByUsername(username);\n    if (user == null) {\n        return Result.error(\"用户名或密码错误\");\n    }\n    String md5 = DigestUtils.md5DigestAsHex(\n        password.getBytes(StandardCharsets.UTF_8));\n    if (!md5.equals(user.getPassword())) {\n        return Result.error(\"用户名或密码错误\");\n    }\n    String token = JwtUtil.generateToken(user.getId(), user.getUserType());\n    return Result.success(token);\n}"},
+            "注册页面在登录页的基础上增加了真实姓名、手机号和身份证号三个输入框。前端使用正则表达式对手机号（11位数字）和身份证号（18位，末位可为X）做格式预校验，校验不通过则在输入框下方显示红色提示文字。提交注册时，后端进一步检查用户名、手机号、身份证号是否已被占用，三个字段在sys_user表上都建有唯一索引。身份证号还会经过IdCardUtil工具类的完整校验——地区编码合法性、出生日期有效性、校验码计算与比对。校验全部通过后，密码做MD5加密，创建User对象写入数据库，初始余额设为0。注册页面如图5-2所示。",
+            {"type": "image", "path": "scr-register.png", "width": 60, "caption": "图5-2　用户注册页面"},
+            "主要核心代码：",
+            {"type": "code", "language": "java", "content": "@PostMapping(\"/register\")\npublic Result<?> register(@RequestBody User user) {\n    if (!IdCardUtil.isValid(user.getIdCard())) {\n        return Result.error(\"身份证号格式不正确\");\n    }\n    String md5 = DigestUtils.md5DigestAsHex(\n        user.getPassword().getBytes(StandardCharsets.UTF_8));\n    user.setPassword(md5);\n    user.setBalance(BigDecimal.ZERO);\n    user.setStatus(1);\n    userService.save(user);\n    return Result.success(\"注册成功\");\n}"}
           ]
         },
         {
-          "title": "5.1.2　身份证认证模块",
+          "title": "5.1.2　首页与机器浏览实现",
           "number": "5.1.2",
           "content": [
-            "身份证认证是保障网吧实名上网的关键环节。本系统在用户注册时即要求提供身份证号码，并通过IdCardUtil工具类进行严格的格式校验。",
-            "IdCardUtil的校验逻辑包括以下步骤：首先检查身份证号码长度是否为18位；然后验证前6位地区编码是否属于合法的行政区划代码；接着提取第7到第14位的出生日期，验证年月日的合理性（如月份在1-12之间、日期不超过当月最大天数）；最后按照国标GB11643-1999规定的加权求和算法计算校验码，与第18位进行比对。",
-            "通过以上四步校验，系统能够在注册阶段过滤掉格式错误、编造虚假和使用过期身份证号的注册请求。已通过认证的用户在后续预约和上机操作时，系统直接读取其注册时绑定的实名信息，无需重复认证。",
-            "相比依赖第三方人脸识别API的认证方式，身份证号码校验的优势在于不需要额外的接口调用成本，也不依赖摄像头等硬件设备，更适合轻量级的网吧管理场景。对于需要更高安全等级的场景，后续可以在此基础上叠加公安部门的身份信息核验接口。"
-          ]
-        },
-        {
-          "title": "5.1.3　机器预约模块",
-          "number": "5.1.3",
-          "content": [
-            "机器预约功能由ReservationController的createReservation方法实现。用户在前端选择目标机器和使用时段后，后端接收预约请求并执行一系列业务规则校验。",
-            "首先是时间规则校验：预约的开始时间必须在当前时间之后至少5分钟（避免即时预约造成的时间冲突），预约时长不得少于30分钟（避免过短的无效预约），预约时段不得超过当天的营业时间范围。",
-            "其次是冲突检测：系统查询该机器在所选时段内是否已存在状态为“待使用”的预约记录。查询条件为：同一台机器，且新预约的开始时间早于已有预约的结束时间，同时新预约的结束时间晚于已有预约的开始时间。如果查询到冲突记录，系统返回“该时段已被预约”的提示。",
-            "最后是机器状态校验：系统检查目标机器的当前状态，只有处于“空闲”（status=0）状态的机器才允许被预约。如果机器正在使用中、已被预约或处于故障状态，系统拒绝本次预约请求。",
-            "所有校验通过后，系统在reservation表中创建一条状态为“待使用”（status=0）的预约记录，同时将该机器的状态更新为“已预约”（status=2）。预约信息包括用户ID、机器ID、开始时间和结束时间。系统还会启动一个定时检查任务，在预约的开始时间到达后如果用户未确认上机，经过一定的等待时间后自动将预约状态设为“已过期”（status=3），并释放机器状态。机器预约流程如图5-14所示。",
-            {"type": "image", "path": "wangkong-reserve-flow.png", "width": 100, "caption": "图5-14　机器预约流程图"}
-          ]
-        },
-        {
-          "title": "5.1.4　上机与计费模块",
-          "number": "5.1.4",
-          "content": [
-            "上机与计费是系统最核心的业务模块。用户可以通过两种方式开始上机：一是基于已有预约启动上机（通过ReservationController的startSession方法），二是直接选择空闲机器开始使用（通过SessionController的startSession方法）。",
-            "开始上机时，系统首先检查用户的身份认证状态和账户余额。身份证已认证且余额大于0的用户才允许上机。系统在user_session表中创建一条状态为“使用中”（status=0）的记录，记录上机开始时间、用户ID和机器ID，同时将机器状态更新为“使用中”（status=1）。",
-            "上机期间，系统持续监控使用时长。前端通过定期调用SessionController的getCurrentSession接口获取当前会话信息，包括已使用时长和当前消费金额。当使用时长达到预约时段的结束时间或用户余额即将耗尽时，系统通过接口返回提醒标志，前端据此弹出提示通知用户续费或结束使用。如果用户在提醒后一定时间内未操作且余额不足以继续使用，系统将自动结束该上机会话并锁定机器使用权限。",
-            "结束上机时，SessionController的endSession方法执行费用结算。计费算法的核心逻辑如下：系统首先获取上机的起止时间和机器类型，然后查询price_config表中适用的费率规则。由于不同时段的费率可能不同（如白天3元/时、夜间2元/时），系统采用分段计费策略——将整个使用时段按照费率配置的时间边界进行分割，对每个子时段分别计算费用，最后累加得到总费用。",
-            "费用计算完成后，系统从用户余额中扣除消费金额，同时在transaction表中创建一条类型为“消费”（type=2）的交易记录，记录消费金额和扣费后的余额。最后更新user_session表中的结束时间、使用时长（分钟）和消费金额，将会话状态设为“已结束”（status=1），并将机器状态恢复为“空闲”（status=0）。"
-          ]
-        }
-      ]
-    },
-    {
-      "title": "5.2　前端用户界面实现",
-      "number": "5.2",
-      "content": [
-        "用户端前端基于Vue3和Vant组件库构建，采用移动端优先的设计策略，用户可以通过手机浏览器访问系统。"
-      ],
-      "subsections": [
-        {
-          "title": "5.2.1　登录注册页面",
-          "number": "5.2.1",
-          "content": [
-            "登录页面采用简洁的表单布局，包含用户名和密码两个输入框以及登录按钮。表单使用Vant的Field组件构建，支持输入验证和错误提示。用户点击登录后，前端通过Axios向后端发送POST请求，登录成功后将返回的Token存储到localStorage中，并通过Vue Router跳转到首页。登录页面如图5-1所示。",
-            {"type": "image", "path": "scr-login.png", "width": 60, "caption": "图5-1　用户登录页面"},
-            "注册页面在登录表单的基础上增加了真实姓名、手机号和身份证号三个必填字段。身份证号输入框使用了Vant的Field组件配合自定义校验规则，在用户输入完成后实时校验格式是否正确。注册成功后自动跳转到登录页面。注册页面如图5-2所示。",
-            {"type": "image", "path": "scr-register.png", "width": 60, "caption": "图5-2　用户注册页面"}
-          ]
-        },
-        {
-          "title": "5.2.2　首页与机器列表",
-          "number": "5.2.2",
-          "content": [
-            "首页展示系统公告和快捷入口导航。公告区域使用Vant的NoticeBar组件以跑马灯形式展示最新公告内容。下方的快捷入口以宫格（Grid）形式排列，包括“机器列表”、“我的预约”、“上机记录”、“充值”和“消费记录”等功能入口。",
-            "机器列表页面是用户选择上网机器的核心页面。页面顶部提供区域切换标签（Tab），将机器按照A区（普通）、B区（高端）和C区（电竞）分组展示。每台机器以卡片形式呈现，显示机器编号、名称、配置信息和当前状态。状态使用不同颜色进行区分：绿色表示空闲、红色表示使用中、橙色表示已预约、灰色表示故障。用户点击空闲状态的机器卡片即可进入预约页面。首页如图5-3所示，机器列表如图5-4所示。",
+            "用户登录后进入首页，页面顶部展示系统公告轮播，下方按区域分组显示机器列表。每台机器以卡片形式呈现，卡片上标注机器编号、机器类型和硬件配置摘要。机器的运行状态用不同颜色的标签区分——绿色代表空闲、红色代表使用中、黄色代表已预约、灰色代表故障。页面加载时前端调用/api/machine/list接口拉取全部机器数据，Vant的van-tabs组件实现A区、B区、C区的切换筛选。点击某台空闲机器的卡片后，前端携带该机器ID跳转到预约页面。首页界面如图5-3所示。",
             {"type": "image", "path": "scr-home.png", "width": 60, "caption": "图5-3　用户端首页"},
+            "主要核心代码：",
+            {"type": "code", "language": "java", "content": "@GetMapping(\"/list\")\npublic Result<?> listMachines(\n        @RequestParam(required = false) String area) {\n    QueryWrapper<Machine> wrapper = new QueryWrapper<>();\n    if (area != null) {\n        wrapper.eq(\"area\", area);\n    }\n    wrapper.orderByAsc(\"row_num\", \"col_num\");\n    return Result.success(machineService.list(wrapper));\n}"},
+            "机器列表页面提供更细粒度的筛选能力，用户可同时按区域和机器类型（普通、高端、电竞）组合筛选。列表使用van-list组件实现滚动加载，每次请求20条数据，滑到底部自动加载下一页。每条机器记录除了编号和状态外，还展示完整的硬件配置描述（如\u201ci5-12400/16G/RTX3060\u201d），方便用户根据配置需求选择机器。机器列表页面如图5-4所示。",
             {"type": "image", "path": "scr-machines.png", "width": 60, "caption": "图5-4　机器列表页面"}
           ]
         },
         {
-          "title": "5.2.3　机器预约页面",
-          "number": "5.2.3",
+          "title": "5.1.3　机器预约实现",
+          "number": "5.1.3",
           "content": [
-            "机器预约页面展示所选机器的详细信息和预约表单。页面上方显示机器名称、所属区域、硬件配置和当前适用的费率信息。下方的预约表单包含日期选择器（支持未来7天）和时间选择器（营业时间范围内的半小时刻度）。用户选择开始时间和结束时间后，页面实时显示预计使用时长和预估费用。确认无误后点击“确认预约”按钮提交预约请求。预约页面如图5-5所示。",
-            {"type": "image", "path": "scr-reserve.png", "width": 60, "caption": "图5-5　机器预约页面"}
+            "用户在机器列表中选中一台空闲机器后进入预约页面。预约表单包含机器信息展示区（自动带出所选机器的编号、类型和配置）和时间选择区。时间选择使用Vant的van-datetime-picker组件，用户分别选择开始时间和结束时间。前端在提交前做基础校验：开始时间需在当前时刻5分钟之后，预约时长不少于30分钟，结束时间晚于开始时间。提交后后端ReservationController接收请求，先执行三层校验——时间规则校验、同一机器同一时段的冲突检测（查询reservation表中状态为\u201c待使用\u201d的记录是否存在时间重叠）、机器状态校验（仅status=0的机器可预约）。三层校验全部通过后写入预约记录，同步把机器状态更新为\u201c已预约\u201d。预约页面如图5-5所示。",
+            {"type": "image", "path": "scr-reserve.png", "width": 60, "caption": "图5-5　机器预约页面"},
+            "主要核心代码：",
+            {"type": "code", "language": "java", "content": "@PostMapping(\"/create\")\npublic Result<?> createReservation(\n        @RequestAttribute(\"userId\") Long userId,\n        @RequestBody JSONObject params) {\n    Long machineId = params.getLong(\"machineId\");\n    LocalDateTime startTime = LocalDateTime.parse(params.getString(\"startTime\"));\n    LocalDateTime endTime = LocalDateTime.parse(params.getString(\"endTime\"));\n    if (Duration.between(startTime, endTime).toMinutes() < 30) {\n        return Result.error(\"预约时长最少30分钟\");\n    }\n    if (reservationService.hasConflict(machineId, startTime, endTime)) {\n        return Result.error(\"该时间段已被预约\");\n    }\n    Reservation r = new Reservation();\n    r.setUserId(userId);\n    r.setMachineId(machineId);\n    r.setStartTime(startTime);\n    r.setEndTime(endTime);\n    r.setStatus(0);\n    reservationService.save(r);\n    machineService.updateStatus(machineId, 2);\n    return Result.success(\"预约成功\");\n}"}
           ]
         },
         {
-          "title": "5.2.4　上机与时长管理",
-          "number": "5.2.4",
+          "title": "5.1.4　上机与计费实现",
+          "number": "5.1.4",
           "content": [
-            "“我的预约”页面展示了该用户所有的预约记录。对于状态为“待使用”的预约，页面显示“开始上机”按钮。用户到店后点击该按钮，系统验证身份认证状态和账户余额后启动上机会话。",
-            "上机期间，“上机记录”页面会展示当前正在使用的会话信息，包括机器名称、已使用时长（分钟和秒实时更新）和当前消费金额。页面通过定时器每隔30秒调用一次后端接口获取最新的会话状态。当使用时长接近预约结束时间或余额即将不足时，页面弹出Vant的Dialog组件提示用户选择“续费”或“结束使用”。用户选择结束后，系统自动完成费用结算并展示本次消费的详细信息。上机计费的详细时序过程如图5-6所示。",
-            {"type": "image", "path": "seq-session.png", "width": 130, "caption": "图5-6　上机计费时序图"}
+            "用户到店后在\u201c我的预约\u201d页面点击\u201c开始上机\u201d按钮，前端调用/api/session/start接口。后端SessionController接收请求后，先查询关联的预约记录，确认预约状态为\u201c待使用\u201d且当前时间在预约时段内，校验通过后在user_session表中插入一条记录，记录开始时间、用户ID、机器ID和关联的预约ID，会话状态设为\u201c使用中\u201d（0），同时将预约状态更新为\u201c已使用\u201d，机器状态切换为\u201c使用中\u201d。前端进入上机计时页面后，每隔30秒轮询/api/session/current接口，拉取当前会话的已用时长和累计费用并刷新显示。",
+            "计费采用分段算法。网吧一天内设有多个费率时段，后端的做法是把整个使用区间按price_config表中的时间边界切成若干子段，每段分别用该时段对应的单价计算费用，最后累加。举例：用户17:00到19:00上机，普通区白天时段（08:00-18:00）单价3元/时、夜间时段（18:00-次日08:00）单价2元/时，则17:00至18:00按3元计费得3元，18:00至19:00按2元计费得2元，合计5元。当预约时间到期或余额即将耗尽时，接口返回提醒标志，前端弹出对话框让用户选择续费或下机。用户点击下机后，后端在一个事务中完成四步操作：计算总费用、从用户余额中扣除、写入一条消费类型的交易记录、把机器状态恢复为空闲。上机计费时序图如图5-6所示。",
+            {"type": "image", "path": "seq-session.png", "width": 130, "caption": "图5-6　上机计费时序图"},
+            "主要核心代码：",
+            {"type": "code", "language": "java", "content": "@Transactional\npublic Session endSession(Long sessionId) {\n    Session session = getById(sessionId);\n    LocalDateTime endTime = LocalDateTime.now();\n    long minutes = Duration.between(session.getStartTime(), endTime).toMinutes();\n    Machine machine = machineService.getById(session.getMachineId());\n    BigDecimal amount = calculateFee(\n        machine.getMachineType(), session.getStartTime(), endTime);\n    userService.deductBalance(session.getUserId(), amount);\n    session.setEndTime(endTime);\n    session.setDuration((int) minutes);\n    session.setAmount(amount);\n    session.setStatus(1);\n    updateById(session);\n    machineService.updateStatus(session.getMachineId(), 0);\n    return session;\n}"}
           ]
         }
       ]
     },
     {
-      "title": "5.3　管理员前端实现",
-      "number": "5.3",
+      "title": "5.2　管理员功能模块实现",
+      "number": "5.2",
       "content": [
-        "管理员前端基于Vue3和Element Plus构建，采用传统的左侧菜单加右侧内容区的后台管理布局。"
+        "管理端供网吧运营人员使用，前端基于Vue3和Element Plus组件库搭建，整体采用左侧菜单加右侧内容区的经典后台布局。管理员从独立的登录入口进入，后端在验证账号密码的同时检查user_type字段是否为1（管理员），非管理员账号无法登录管理端。"
       ],
       "subsections": [
         {
-          "title": "5.3.1　管理员登录与权限控制",
-          "number": "5.3.1",
+          "title": "5.2.1　管理员登录实现",
+          "number": "5.2.1",
           "content": [
-            "管理员登录页面与用户登录独立，使用不同的路由地址和Token存储键名（admin_token）。登录成功后前端将管理员Token存储到localStorage中，Vue Router的路由守卫在每次页面跳转时检查admin_token是否存在且有效，未登录时自动重定向到管理员登录页面。管理员登录界面如图5-7所示。",
-            {"type": "image", "path": "scr-admin-login.png", "width": 130, "caption": "图5-7　管理员登录界面"}
+            "管理端登录页面使用Element Plus的el-form组件构建，包含用户名、密码两个输入框和一个登录按钮。提交登录请求后，后端除了执行与用户端相同的账号密码校验外，还额外检查user_type字段——只有值为1的记录才能通过管理端登录。登录成功后签发的JWT Token中写入管理员标识，前端将Token存入sessionStorage。Vue Router配置了全局路由守卫，访问管理端页面时检查sessionStorage中是否存在有效的管理员Token，不存在则跳转回登录页。管理员登录界面如图5-7所示。",
+            {"type": "image", "path": "scr-admin-login.png", "width": 130, "caption": "图5-7　管理员登录界面"},
+            "主要核心代码：",
+            {"type": "code", "language": "java", "content": "@PostMapping(\"/admin/login\")\npublic Result<?> adminLogin(@RequestBody JSONObject params) {\n    User user = userService.getByUsername(params.getString(\"username\"));\n    if (user == null || user.getUserType() != 1) {\n        return Result.error(\"用户名或密码错误\");\n    }\n    String md5 = DigestUtils.md5DigestAsHex(\n        params.getString(\"password\").getBytes(StandardCharsets.UTF_8));\n    if (!md5.equals(user.getPassword())) {\n        return Result.error(\"用户名或密码错误\");\n    }\n    String token = JwtUtil.generateToken(user.getId(), user.getUserType());\n    return Result.success(token);\n}"}
           ]
         },
         {
-          "title": "5.3.2　仪表盘页面",
-          "number": "5.3.2",
+          "title": "5.2.2　仪表盘实现",
+          "number": "5.2.2",
           "content": [
-            "仪表盘是管理员登录后看到的首页，集中展示网吧的运营关键数据。页面顶部以统计卡片的形式展示四个核心指标：当前在线用户数、注册总用户数、机器总数和可用机器数。下方左侧使用ECharts柱状图展示最近7天的收入趋势，右侧展示各区域的机器使用率（以百分比和进度条形式呈现）。所有数据通过调用后端AdminController的dashboard接口一次性获取。仪表盘界面如图5-8所示。",
-            {"type": "image", "path": "scr-dashboard.png", "width": 148, "caption": "图5-8　管理员仪表盘界面"}
+            "管理员登录后首先进入仪表盘页面。页面顶部使用四个el-card组件分别展示今日收入、在线用户数、注册总用户数和机器总数四项统计指标。每个卡片的数据由后端/admin/dashboard/stats接口返回，后端通过聚合查询从user_session表统计当日收入、从sys_user表统计用户总数、从machine表统计设备数量。页面下半部分使用ECharts图表库绘制近7天收入柱状图，横轴为日期，纵轴为当日总收入金额，数据来源于/admin/dashboard/revenue接口，后端按日期对transaction表中type=2（消费）的记录做分组求和。仪表盘界面如图5-8所示。",
+            {"type": "image", "path": "scr-dashboard.png", "width": 130, "caption": "图5-8　管理员仪表盘界面"},
+            "主要核心代码：",
+            {"type": "code", "language": "java", "content": "@GetMapping(\"/dashboard/stats\")\npublic Result<?> getDashboardStats() {\n    JSONObject stats = new JSONObject();\n    stats.put(\"todayRevenue\",\n        transactionService.sumAmountByDateAndType(LocalDate.now(), 2));\n    stats.put(\"onlineCount\",\n        sessionService.count(new QueryWrapper<Session>().eq(\"status\", 0)));\n    stats.put(\"userCount\", userService.count());\n    stats.put(\"machineCount\", machineService.count());\n    return Result.success(stats);\n}"}
           ]
         },
         {
-          "title": "5.3.3　机器管理页面",
-          "number": "5.3.3",
+          "title": "5.2.3　机器管理实现",
+          "number": "5.2.3",
           "content": [
-            "机器管理页面使用Element Plus的Table组件展示所有机器信息。表格列包括机器编号、名称、类型、所属区域、状态和操作按钮。页面顶部提供按状态筛选的下拉框和搜索框。管理员可以通过弹窗表单新增机器、编辑机器信息或删除机器，也可以直接在列表中切换机器状态（如将故障机器标记为空闲）。机器管理界面如图5-9所示。",
-            {"type": "image", "path": "scr-machine-mgmt.png", "width": 148, "caption": "图5-9　机器管理界面"}
+            "机器管理页面使用el-table组件展示全部机器的编号、名称、类型、区域、状态和硬件配置。状态列通过el-tag组件以不同颜色标签呈现四种状态。页面顶部提供搜索框，支持按机器编号或名称模糊查询。操作列包含\u201c编辑\u201d和\u201c删除\u201d两个按钮——点击编辑弹出el-dialog对话框，表单中预填当前机器信息，修改后调用PUT /admin/machine接口更新数据库记录；点击删除先通过el-popconfirm弹出确认框，确认后调用DELETE接口执行删除。页面右上角的\u201c添加机器\u201d按钮同样弹出对话框，填写编号、名称、类型、区域、行列号和配置后调用POST接口写入machine表。列表数据通过MyBatis Plus的分页插件实现分页查询，前端传入pageNum和pageSize参数。机器管理界面如图5-9所示。",
+            {"type": "image", "path": "scr-machine-mgmt.png", "width": 130, "caption": "图5-9　机器管理界面"},
+            "主要核心代码：",
+            {"type": "code", "language": "java", "content": "@PostMapping(\"/machine\")\npublic Result<?> addMachine(@RequestBody Machine machine) {\n    machine.setStatus(0);\n    machineService.save(machine);\n    return Result.success(\"添加成功\");\n}\n\n@DeleteMapping(\"/machine/{id}\")\npublic Result<?> deleteMachine(@PathVariable Long id) {\n    machineService.removeById(id);\n    return Result.success(\"删除成功\");\n}"}
           ]
         },
         {
-          "title": "5.3.4　费率设置页面",
-          "number": "5.3.4",
+          "title": "5.2.4　费率配置实现",
+          "number": "5.2.4",
           "content": [
-            "费率设置页面用于配置不同时段和机器类型的计费标准。页面以表格形式展示所有费率规则，包括规则名称、适用时段、适用机器类型、每小时单价和优先级。管理员可以新增、编辑和删除费率规则。例如可以设置“白天普通区”（08:00-18:00，普通机器，3元/时）和“夜间电竞区”（18:00-08:00，电竞机器，8元/时）等差异化定价策略。费率设置界面如图5-10所示。",
-            {"type": "image", "path": "scr-price.png", "width": 148, "caption": "图5-10　费率设置界面"}
+            "费率配置页面用el-table列出全部计费规则，每行显示规则名称、适用时段、适用机器类型、每小时单价和优先级。添加和编辑费率规则时弹出表单对话框，时段选择使用el-time-picker组件分别选取开始时间和结束时间，机器类型使用el-select下拉框（可选\u201c全部\u201d或某一具体类型），价格输入框限制为保留两位小数的正数，优先级为正整数。保存时后端将记录写入price_config表，规则立即生效无需重启服务。系统在计费时按优先级降序匹配规则，当多条规则在时间上重叠时取优先级最高的一条。费率配置界面如图5-10所示。",
+            {"type": "image", "path": "scr-price.png", "width": 130, "caption": "图5-10　费率配置界面"},
+            "主要核心代码：",
+            {"type": "code", "language": "java", "content": "@PostMapping(\"/priceConfig\")\npublic Result<?> addPriceConfig(@RequestBody PriceConfig config) {\n    priceConfigService.save(config);\n    return Result.success(\"添加成功\");\n}\n\n@PutMapping(\"/priceConfig\")\npublic Result<?> updatePriceConfig(@RequestBody PriceConfig config) {\n    priceConfigService.updateById(config);\n    return Result.success(\"修改成功\");\n}"}
           ]
         },
         {
-          "title": "5.3.5　预约与上机记录页面",
-          "number": "5.3.5",
+          "title": "5.2.5　预约与上机记录管理实现",
+          "number": "5.2.5",
           "content": [
-            "预约记录页面以Table形式展示所有用户的预约信息，包括预约用户、机器名称、预约时段、预约状态等字段，支持按状态筛选。管理员可以查看每条预约的详细信息。",
-            "上机记录页面展示所有用户的上机会话记录，包括用户名、机器名称、上机时段、使用时长、消费金额和会话状态等字段。管理员可以通过用户名搜索功能快速查找特定用户的上机历史。预约列表界面如图5-11所示，上机记录界面如图5-12所示。",
-            {"type": "image", "path": "scr-reservations.png", "width": 148, "caption": "图5-11　预约列表界面"},
-            {"type": "image", "path": "scr-sessions.png", "width": 148, "caption": "图5-12　上机记录界面"}
+            "预约管理页面使用el-table展示全部预约记录，列包含预约编号、用户名、机器编号、预约时段、预约状态和操作按钮。页面顶部提供状态下拉筛选（待使用、已使用、已取消、已过期）和时间范围选择器，方便管理员快速定位特定状态或特定日期的预约。管理员可以强制取消任意\u201c待使用\u201d状态的预约，取消后系统自动释放对应机器。数据通过后端/admin/reservation/page接口分页返回，后端使用MyBatis Plus的条件构造器拼接筛选条件。预约列表页面如图5-11所示。",
+            {"type": "image", "path": "scr-reservations.png", "width": 130, "caption": "图5-11　预约列表页面"},
+            "主要核心代码：",
+            {"type": "code", "language": "java", "content": "@GetMapping(\"/reservation/page\")\npublic Result<?> pageReservations(\n        @RequestParam Integer pageNum, @RequestParam Integer pageSize,\n        @RequestParam(required = false) Integer status) {\n    QueryWrapper<Reservation> wrapper = new QueryWrapper<>();\n    if (status != null) wrapper.eq(\"status\", status);\n    wrapper.orderByDesc(\"create_time\");\n    return Result.success(\n        reservationService.page(new Page<>(pageNum, pageSize), wrapper));\n}"},
+            "上机记录页面展示全部历史上机会话，列包含用户名、机器编号、开始时间、结束时间、使用时长、消费金额和会话状态。支持按用户姓名或手机号搜索，后端使用like条件构造器做模糊匹配。列表同样采用分页查询，每页默认显示15条记录。上机记录页面如图5-12所示。",
+            {"type": "image", "path": "scr-sessions.png", "width": 130, "caption": "图5-12　上机记录页面"}
           ]
         },
         {
-          "title": "5.3.6　用户管理页面",
-          "number": "5.3.6",
+          "title": "5.2.6　用户管理实现",
+          "number": "5.2.6",
           "content": [
-            "用户管理页面展示所有注册用户的信息列表，包括用户名、真实姓名、手机号、账户余额、注册时间和用户状态等字段。管理员可以通过搜索框按用户名、姓名或手机号进行模糊查询。对于违规用户，管理员可以通过状态切换按钮将其账号禁用，禁用后该用户将无法登录和使用系统。用户管理界面如图5-13所示。",
-            {"type": "image", "path": "scr-users.png", "width": 148, "caption": "图5-13　用户管理界面"}
+            "用户管理页面以表格形式展示所有注册用户的账号信息，列包含用户名、真实姓名、手机号、身份证号、余额和账号状态。搜索框支持按用户名或手机号模糊查询。操作列提供\u201c启用\u201d和\u201c禁用\u201d切换按钮——管理员可以禁用违规用户的账号，被禁用的用户尝试登录时后端会返回\u201c账号已被禁用\u201d的提示。状态切换调用PUT /admin/user/status接口，后端更新sys_user表的status字段（0禁用/1正常）。用户管理界面如图5-13所示。",
+            {"type": "image", "path": "scr-users.png", "width": 130, "caption": "图5-13　用户管理界面"},
+            "主要核心代码：",
+            {"type": "code", "language": "java", "content": "@PutMapping(\"/user/status\")\npublic Result<?> updateUserStatus(@RequestBody JSONObject params) {\n    User user = userService.getById(params.getLong(\"id\"));\n    user.setStatus(params.getInteger(\"status\"));\n    userService.updateById(user);\n    return Result.success(\"操作成功\");\n}"}
           ]
         }
       ]
     },
     {
-      "title": "5.4　本章小结",
-      "number": "5.4",
+      "title": "5.3　本章小结",
+      "number": "5.3",
       "content": [
-        "本章详细介绍了系统各功能模块的实现过程。后端部分重点阐述了用户注册与JWT认证、身份证校验、机器预约与冲突检测、上机计费与时长管理等核心模块的实现逻辑。用户前端部分介绍了登录注册、机器列表、预约操作和上机时长管理等页面的实现。管理端部分介绍了数据仪表盘、机器管理、费率配置、记录查询和用户管理等功能的实现。各模块协同配合，构成了完整的网吧自助管理业务闭环。"
+        "本章按用户端和管理端两大模块，逐一展示了各功能的实现过程。用户端实现了登录注册、首页机器浏览、在线预约和上机计费四个功能，管理端实现了仪表盘统计、机器管理、费率配置、预约与上机记录管理、用户管理五个功能。每个功能都给出了界面截图和后端关键代码，完整覆盖了第4章设计方案中规划的全部功能点。"
       ],
       "subsections": []
     }

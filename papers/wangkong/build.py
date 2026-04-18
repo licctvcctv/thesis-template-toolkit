@@ -17,6 +17,7 @@ IMG_DIR = os.path.join(HERE, "images")
 TPL = os.path.join(ROOT, "templates/hbjm/template.docx")
 
 _pending_tables = []
+_pending_code_blocks = []
 
 
 def load_json(filename):
@@ -46,6 +47,10 @@ def process_content(content_list, doc):
                     result.append(f"[图片缺失: {item['path']}]")
                     if item.get("caption"):
                         result.append(item["caption"])
+            elif item.get("type") == "code":
+                _pending_code_blocks.append(item)
+                cid = len(_pending_code_blocks) - 1
+                result.append(f"__CODE_PLACEHOLDER_{cid}__")
             elif item.get("type") == "table":
                 _pending_tables.append(item)
                 tid = len(_pending_tables) - 1
@@ -84,6 +89,19 @@ def build_data(doc=None):
     refs = [f"[{i+1}]{ref}" if not ref.startswith("[") else ref
             for i, ref in enumerate(refs)]
 
+    # 封面字段补全角空格，让下划线右端对齐
+    # 手动指定每个字段需要补的全角空格数量
+    cover_pad = {
+        "college": 4,      # 国际教育学院（6字）+ 4
+        "major": 3,         # 计算机科学与技术（7字）+ 3
+        "name": 10,         # 赵恩（2字）+ 10，标签"姓名"较短需更多补齐
+        "student_id": 0,    # 202262310501（12位数字本身已够宽）
+        "advisor": 9,       # 曾文献（3字）+ 9，标签"指导教师"较短需更多补齐
+    }
+    for key, pad in cover_pad.items():
+        val = meta.get(key, "")
+        meta[key] = val + '\u3000' * pad
+
     # 摘要拆段
     for key, list_key in [("abstract_zh", "abstract_zh_list"),
                           ("abstract_en", "abstract_en_list")]:
@@ -108,6 +126,7 @@ def main():
     doc = DocxTemplate(TPL)
 
     _pending_tables.clear()
+    _pending_code_blocks.clear()
     print("组装论文数据...")
     data = build_data(doc)
     print(f"  {len(data['chapters'])} 章, "
@@ -146,8 +165,19 @@ def _post_process(docx_path):
     fig_cap_pat = re.compile(r'^图\d')
     placeholder_pat = re.compile(r'^__TABLE_PLACEHOLDER_(\d+)__$')
 
+    code_placeholder_pat = re.compile(r'^__CODE_PLACEHOLDER_(\d+)__$')
+
     for p in list(doc.paragraphs):
         t = (p.text or "").strip()
+
+        # 代码块占位符
+        cm = code_placeholder_pat.match(t)
+        if cm:
+            cid = int(cm.group(1))
+            if cid < len(_pending_code_blocks):
+                _insert_code_block(doc, p, _pending_code_blocks[cid])
+                for r in p.runs:
+                    r.text = ""
 
         # 图片居中
         has_drawing = bool(p._p.findall(
@@ -185,6 +215,51 @@ def _post_process(docx_path):
 
     doc.save(docx_path)
     print(f"  后处理: {len(_pending_tables)} 个表格")
+
+
+def _insert_code_block(doc, after_para, code_data):
+    """将代码块插入到指定段落之后，每行一个段落，Courier New 五号字，无首行缩进。"""
+    from docx.oxml import OxmlElement
+    from docx.oxml.ns import qn
+
+    code_text = code_data.get("content", "")
+    lines = code_text.split("\n")
+
+    # 逆序插入，因为 addnext 总是在 after_para 之后插入
+    for line in reversed(lines):
+        p = OxmlElement('w:p')
+        # 段落属性：无首行缩进，单倍行距
+        pPr = OxmlElement('w:pPr')
+        ind = OxmlElement('w:ind')
+        ind.set(qn('w:firstLine'), '0')
+        ind.set(qn('w:firstLineChars'), '0')
+        pPr.append(ind)
+        spacing = OxmlElement('w:spacing')
+        spacing.set(qn('w:line'), '240')
+        spacing.set(qn('w:lineRule'), 'auto')
+        pPr.append(spacing)
+        p.append(pPr)
+        # Run：Courier New 五号（10.5pt = 21 half-points）
+        r = OxmlElement('w:r')
+        rPr = OxmlElement('w:rPr')
+        rFonts = OxmlElement('w:rFonts')
+        rFonts.set(qn('w:ascii'), 'Courier New')
+        rFonts.set(qn('w:hAnsi'), 'Courier New')
+        rFonts.set(qn('w:cs'), 'Courier New')
+        rPr.append(rFonts)
+        sz = OxmlElement('w:sz')
+        sz.set(qn('w:val'), '21')
+        rPr.append(sz)
+        szCs = OxmlElement('w:szCs')
+        szCs.set(qn('w:val'), '21')
+        rPr.append(szCs)
+        r.append(rPr)
+        t_el = OxmlElement('w:t')
+        t_el.set(qn('xml:space'), 'preserve')
+        t_el.text = line
+        r.append(t_el)
+        p.append(r)
+        after_para._p.addnext(p)
 
 
 def _insert_table(doc, after_para, tbl_data):
@@ -233,6 +308,18 @@ def _insert_table(doc, after_para, tbl_data):
         tr = OxmlElement('w:tr')
         for cell_text in cells:
             tc = OxmlElement('w:tc')
+            # 表头行：给每个单元格加底部细线（三线表中间线）
+            if row_idx == 0:
+                tcPr = OxmlElement('w:tcPr')
+                tcBorders = OxmlElement('w:tcBorders')
+                btm = OxmlElement('w:bottom')
+                btm.set(qn('w:val'), 'single')
+                btm.set(qn('w:sz'), '6')
+                btm.set(qn('w:space'), '0')
+                btm.set(qn('w:color'), '000000')
+                tcBorders.append(btm)
+                tcPr.append(tcBorders)
+                tc.append(tcPr)
             p = OxmlElement('w:p')
             pPr = OxmlElement('w:pPr')
             pJc = OxmlElement('w:jc')
@@ -258,15 +345,6 @@ def _insert_table(doc, after_para, tbl_data):
             p.append(r)
             tc.append(p)
             tr.append(tc)
-        if row_idx == 0:
-            trPr = OxmlElement('w:trPr')
-            bdr = OxmlElement('w:tblBorders')
-            btm = OxmlElement('w:bottom')
-            btm.set(qn('w:val'), 'single')
-            btm.set(qn('w:sz'), '6')
-            btm.set(qn('w:space'), '0')
-            btm.set(qn('w:color'), '000000')
-            tr.insert(0, trPr)
         tbl.append(tr)
 
     after_para._p.addnext(tbl)
