@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1700" height="880" viewBox="0 0 1700 880" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#202020" />
+    </marker>
+    <marker id="dashArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#555" />
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="1700" height="880" fill="#ffffff"/>
+  <rect x="40" y="40" width="1600" height="800" fill="#fff" stroke="#202020" stroke-width="3"/>
+<rect x="40" y="105" width="1600" height="96" fill="#fff" stroke="#202020" stroke-width="2.6"/>
+<text x="840" y="152" font-family="SimHei, PingFang SC, sans-serif" font-size="36" font-weight="700" fill="#202020" text-anchor="middle" dominant-baseline="middle">校园导航系统架构图</text>
+<rect x="260" y="240" width="1240" height="140" fill="#fff" stroke="#202020" stroke-width="2.6"/>
+<rect x="260" y="420" width="1240" height="140" fill="#fff" stroke="#202020" stroke-width="2.6"/>
+<rect x="260" y="600" width="1240" height="140" fill="#fff" stroke="#202020" stroke-width="2.6"/>
+<path d="M 210 250 C 190 250, 190 250, 190 280 L 190 280 C 190 300, 170 300, 170 310 C 170 320, 190 320, 190 340 L 190 340 C 190 370, 190 370, 210 370" fill="none" stroke="#202020" stroke-width="3"/>
+<text x="152" y="285" font-family="SimHei, PingFang SC, sans-serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">表</text>
+<text x="152" y="310" font-family="SimHei, PingFang SC, sans-serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">现</text>
+<text x="152" y="335" font-family="SimHei, PingFang SC, sans-serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">层</text>
+<path d="M 210 430 C 190 430, 190 430, 190 460 L 190 460 C 190 480, 170 480, 170 490 C 170 500, 190 500, 190 520 L 190 520 C 190 550, 190 550, 210 550" fill="none" stroke="#202020" stroke-width="3"/>
+<text x="152" y="440" font-family="SimHei, PingFang SC, sans-serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">业</text>
+<text x="152" y="465" font-family="SimHei, PingFang SC, sans-serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">务</text>
+<text x="152" y="490" font-family="SimHei, PingFang SC, sans-serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">逻</text>
+<text x="152" y="515" font-family="SimHei, PingFang SC, sans-serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">辑</text>
+<text x="152" y="540" font-family="SimHei, PingFang SC, sans-serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">层</text>
+<path d="M 210 610 C 190 610, 190 610, 190 640 L 190 640 C 190 660, 170 660, 170 670 C 170 680, 190 680, 190 700 L 190 700 C 190 730, 190 730, 210 730" fill="none" stroke="#202020" stroke-width="3"/>
+<text x="152" y="645" font-family="SimHei, PingFang SC, sans-serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">数</text>
+<text x="152" y="670" font-family="SimHei, PingFang SC, sans-serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">据</text>
+<text x="152" y="695" font-family="SimHei, PingFang SC, sans-serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">层</text>
+<rect x="300" y="270" width="200" height="60" rx="16" ry="16" fill="#fff" stroke="#202020" stroke-width="2.6"/>
+<text x="400" y="300" font-family="SimHei, PingFang SC, sans-serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">Vue3</text>
+<rect x="610" y="270" width="240" height="60" rx="16" ry="16" fill="#fff" stroke="#202020" stroke-width="2.6"/>
+<text x="730" y="300" font-family="SimHei, PingFang SC, sans-serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">MapLibre GL</text>
+<rect x="950" y="270" width="200" height="60" rx="16" ry="16" fill="#fff" stroke="#202020" stroke-width="2.6"/>
+<text x="1050" y="300" font-family="SimHei, PingFang SC, sans-serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">Naive UI</text>
+<rect x="1260" y="270" width="200" height="60" rx="16" ry="16" fill="#fff" stroke="#202020" stroke-width="2.6"/>
+<text x="1360" y="300" font-family="SimHei, PingFang SC, sans-serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">ECharts</text>
+<rect x="300" y="460" width="200" height="60" rx="16" ry="16" fill="#fff" stroke="#202020" stroke-width="2.6"/>
+<text x="400" y="490" font-family="SimHei, PingFang SC, sans-serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">Express</text>
+<rect x="610" y="460" width="220" height="60" rx="16" ry="16" fill="#fff" stroke="#202020" stroke-width="2.6"/>
+<text x="720" y="490" font-family="SimHei, PingFang SC, sans-serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">JWT中间件</text>
+<rect x="930" y="460" width="200" height="60" rx="16" ry="16" fill="#fff" stroke="#202020" stroke-width="2.6"/>
+<text x="1030" y="490" font-family="SimHei, PingFang SC, sans-serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">路由模块</text>
+<rect x="1240" y="460" width="220" height="60" rx="16" ry="16" fill="#fff" stroke="#202020" stroke-width="2.6"/>
+<text x="1350" y="490" font-family="SimHei, PingFang SC, sans-serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">RESTful API</text>
+<rect x="420" y="640" width="240" height="60" rx="16" ry="16" fill="#fff" stroke="#202020" stroke-width="2.6"/>
+<text x="540" y="670" font-family="SimHei, PingFang SC, sans-serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">SQLite</text>
+<rect x="1060" y="640" width="280" height="60" rx="16" ry="16" fill="#fff" stroke="#202020" stroke-width="2.6"/>
+<text x="1200" y="670" font-family="SimHei, PingFang SC, sans-serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">sql.js</text>
+</svg>

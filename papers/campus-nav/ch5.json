@@ -1,0 +1,125 @@
+{
+  "title": "5 系统实现",
+  "chapter_number": 5,
+  "sections": [
+    {
+      "title": "5.1 用户功能模块实现",
+      "number": "5.1",
+      "content": [
+        "本章按用户端和管理端两大模块，逐一展示各功能的实现过程。每个功能先说明业务逻辑，再给出界面截图和关键代码。"
+      ],
+      "subsections": [
+        {
+          "title": "5.1.1 登录与注册实现",
+          "number": "5.1.1",
+          "content": [
+            "登录注册页面采用深色渐变背景和毛玻璃效果的卡片设计，视觉风格贴近现代Web应用。页面中央的卡片顶部使用Naive UI的NSegmentedControl组件实现登录和注册两个选项卡的切换。登录表单包含用户名和密码两个输入框，注册表单同样包含用户名和密码。卡片底部提供\u201c游客浏览\u201d链接，未注册用户点击后直接跳转到地图页面，可以浏览地图和搜索兴趣点，但导航日志不会记录。提交登录请求后，后端从users表中查找用户名对应的记录，用bcrypt比对密码哈希值，验证通过后签发JWT Token返回给前端。登录页面如图5-1所示。",
+            {"type": "image", "path": "scr-login.png", "width": 148, "caption": "图5-1　系统登录页面"},
+            "主要核心代码：",
+            {"type": "code", "language": "javascript", "content": "router.post('/login', async (req, res) => {\n  const { username, password } = req.body;\n  const user = db.queryOne(\n    'SELECT * FROM users WHERE username = ?', [username]);\n  if (!user) return res.status(401).json(\n    { error: '用户名或密码错误' });\n  const valid = await bcrypt.compare(password, user.password);\n  if (!valid) return res.status(401).json(\n    { error: '用户名或密码错误' });\n  const token = jwt.sign(\n    { id: user.id, username: user.username, role: user.role },\n    JWT_SECRET, { expiresIn: '7d' });\n  res.json({ token, user: { id: user.id,\n    username: user.username, role: user.role } });\n});"}
+          ]
+        },
+        {
+          "title": "5.1.2 地图浏览与视角切换",
+          "number": "5.1.2",
+          "content": [
+            "用户登录后进入地图主页面。地图占据整个浏览器视口，左侧为搜索和路径规划面板，右侧为工具栏。MapLibre GL地图实例在Vue组件挂载时初始化，底图使用Carto Voyager栅格瓦片，初始视角定位到哈尔滨商业大学北校区中心坐标。地图上的每个兴趣点用彩色标记表示，不同类别用不同颜色区分——教学楼为蓝色、食堂为橙色、宿舍为绿色、运动场为紫色等。右侧工具栏提供2D/3D切换按钮，点击后地图的俯仰角在0度和60度之间切换，三维模式下用户可以拖拽旋转查看校园的立体视角。工具栏还提供建筑物图层的显示/隐藏按钮和回到校园中心的定位按钮。地图主页面如图5-2所示，三维视角切换工具栏如图5-3所示。",
+            {"type": "image", "path": "scr-map-home.png", "width": 148, "caption": "图5-2　地图主页面"},
+            {"type": "image", "path": "scr-3d-toggle.png", "width": 148, "caption": "图5-3　三维视角切换工具栏"},
+            "主要核心代码：",
+            {"type": "code", "language": "typescript", "content": "function toggle3D() {\n  is3D.value = !is3D.value;\n  if (!map) return;\n  if (is3D.value) {\n    map.easeTo({ pitch: 60, bearing: -20,\n      duration: 800 });\n  } else {\n    map.easeTo({ pitch: 0, bearing: 0,\n      duration: 800 });\n  }\n}"}
+          ]
+        },
+        {
+          "title": "5.1.3 兴趣点搜索与标记交互",
+          "number": "5.1.3",
+          "content": [
+            "地图左上角的搜索面板包含搜索框和类别筛选下拉框。搜索框输入文字后，系统在兴趣点列表中按名称和描述做模糊匹配，匹配到的兴趣点在地图上保留显示，未匹配的标记自动隐藏。类别下拉框列出教学楼、食堂、宿舍、运动场、图书馆等所有类型，选择后只显示该类别的标记。点击地图上的兴趣点标记后，弹出信息窗口显示名称、类型标签、描述文字和经纬度坐标，窗口底部有\u201c导航到这里\u201d按钮，点击后该兴趣点自动填入路径规划面板的终点栏。兴趣点标记弹窗如图5-4所示。",
+            {"type": "image", "path": "scr-marker-popup.png", "width": 148, "caption": "图5-4　兴趣点标记弹窗"},
+            "系统还提供兴趣点列表页面，用NDataTable组件展示所有兴趣点的名称、类型、经度、纬度和描述信息，支持按名称搜索和按类型筛选。每行末尾有\u201c在地图中查看\u201d按钮，点击后跳转到地图页面并定位到该兴趣点。兴趣点列表页面如图5-5所示。",
+            {"type": "image", "path": "scr-poi-list.png", "width": 148, "caption": "图5-5　兴趣点列表页面"}
+          ]
+        },
+        {
+          "title": "5.1.4 路径规划实现",
+          "number": "5.1.4",
+          "content": [
+            "路径规划面板位于地图左侧，包含起点下拉框、终点下拉框、起终点交换按钮和\u201c开始导航\u201d按钮。下拉框列出所有兴趣点供用户选择，也可以通过弹窗中的\u201c导航到这里\u201d按钮自动填入终点。路径规划选择界面如图5-6所示。",
+            {"type": "image", "path": "scr-route-form.png", "width": 148, "caption": "图5-6　路径规划选择界面"},
+            "用户选择起终点后点击按钮，前端执行路径计算。useVisibilityGraph composable从real_buildings.json加载建筑物多边形数据，对多边形做6-7米的外扩缓冲生成避障区域，然后调用visibility-graph.js库构建可视图，用ngraph.path库搜索最短路径。路径坐标序列通过GeoJSON Line图层渲染为地图上的蓝色实线，起点用绿色标记（标注\u201c起\u201d），终点用红色标记（标注\u201c终\u201d）。面板中同时显示路径总距离和按80米/分钟估算的步行时间。已登录用户的导航结果会通过/api/nav-logs接口记录到数据库。路径规划结果如图5-7所示。",
+            {"type": "image", "path": "scr-route-result.png", "width": 148, "caption": "图5-7　路径规划结果展示"},
+            "主要核心代码：",
+            {"type": "code", "language": "typescript", "content": "async function planRoute(start: LngLat, end: LngLat) {\n  const buildings = await loadBuildings();\n  const vg = new VisibilityGraph(buildings);\n  const path = vg.findPath(start, end);\n  if (!path || path.length === 0) {\n    return dijkstraFallback(start, end);\n  }\n  const dist = calcTotalDistance(path);\n  const time = Math.ceil(dist / 80);\n  return { path, distance: dist, duration: time };\n}"}
+          ]
+        },
+        {
+          "title": "5.1.5 统计图表页面",
+          "number": "5.1.5",
+          "content": [
+            "统计页面使用ECharts库绘制三种图表。左上方的饼图展示各类别兴趣点的数量占比，右上方的柱状图按类别显示具体数量，下方的散点图以经度为X轴、纬度为Y轴把所有兴趣点的地理位置画在坐标系中，不同类别用不同颜色区分，可以直观看出兴趣点在校园中的空间分布。页面顶部的统计卡片显示兴趣点总数和类别总数。用户端统计页面如图5-8所示。",
+            {"type": "image", "path": "scr-stats.png", "width": 148, "caption": "图5-8　用户端统计页面"}
+          ]
+        },
+        {
+          "title": "5.1.6 游客浏览模式",
+          "number": "5.1.6",
+          "content": [
+            "未注册用户可以通过登录页底部的\u201c游客浏览\u201d链接进入系统。游客模式下地图浏览、兴趣点搜索和路径规划功能均可正常使用，但导航结果不会记录到数据库中（因为没有用户ID）。页面左侧的菜单显示\u201c游客\u201d身份标识，管理端菜单项不可见。游客浏览模式如图5-9所示。",
+            {"type": "image", "path": "scr-guest.png", "width": 148, "caption": "图5-9　游客浏览模式"}
+          ]
+        }
+      ]
+    },
+    {
+      "title": "5.2 管理员功能模块实现",
+      "number": "5.2",
+      "content": [
+        "管理端通过Vue Router的路由守卫做权限控制，只有role为admin的用户才能访问/admin/路径下的页面。管理端的左侧菜单包含统计面板、用户管理、兴趣点管理和公告管理四个入口。"
+      ],
+      "subsections": [
+        {
+          "title": "5.2.1 管理员统计仪表盘",
+          "number": "5.2.1",
+          "content": [
+            "管理员登录后进入统计仪表盘页面。页面顶部使用四个NStatistic卡片分别显示注册用户总数、兴趣点总数、导航总次数和今日导航次数，数据通过/api/admin/stats接口从后端获取。页面中部用ECharts绘制近7天导航趋势折线图和热门路线柱状图。页面底部用NDataTable展示最近20条导航日志，列包含用户名、起点、终点、距离和时间。",
+            "主要核心代码：",
+            {"type": "code", "language": "javascript", "content": "router.get('/stats', adminMiddleware, (req, res) => {\n  const totalUsers = db.queryOne(\n    'SELECT COUNT(*) as c FROM users').c;\n  const totalPOIs = db.queryOne(\n    'SELECT COUNT(*) as c FROM pois').c;\n  const totalNav = db.queryOne(\n    'SELECT COUNT(*) as c FROM nav_logs').c;\n  const navTrend = db.queryAll(\n    'SELECT DATE(created_at) as date, COUNT(*) as count ' +\n    'FROM nav_logs WHERE created_at >= ' +\n    'DATE(\"now\", \"-7 days\") GROUP BY date ORDER BY date');\n  res.json({ totalUsers, totalPOIs, totalNav, navTrend });\n});"}
+          ]
+        },
+        {
+          "title": "5.2.2 用户管理实现",
+          "number": "5.2.2",
+          "content": [
+            "用户管理页面用NDataTable展示所有注册用户的信息。表格列包含ID、用户名、角色和注册时间。角色列使用NSelect下拉框，管理员可以在表格中直接修改用户角色（admin或user）。操作列提供删除按钮，删除前弹出NPopconfirm确认框。后端做了两项保护措施：管理员不能删除自己的账号（返回403\u201c不能删除自己\u201d），也不能把自己降级为普通用户（返回403\u201c不能修改自己的角色\u201d），防止系统中没有管理员。页面顶部的三个统计卡片分别显示总用户数、管理员数和普通用户数。用户管理页面如图5-10所示。",
+            {"type": "image", "path": "scr-admin-users.png", "width": 148, "caption": "图5-10　用户管理页面"}
+          ]
+        },
+        {
+          "title": "5.2.3 兴趣点管理实现",
+          "number": "5.2.3",
+          "content": [
+            "兴趣点管理页面用NDataTable展示所有兴趣点的详细信息，列包含ID、名称、类型、经度、纬度、描述和创建时间。类型列用彩色NTag标签显示，与地图上标记的颜色一致。页面右上角的\u201c添加兴趣点\u201d按钮打开NModal对话框，表单包含名称输入框、类型下拉选择框、经度和纬度数值输入框以及描述文本框。编辑已有兴趣点时对话框预填当前数据。提交后调用POST或PUT接口写入pois表，列表自动刷新。兴趣点管理页面如图5-11所示，添加兴趣点对话框如图5-12所示。",
+            {"type": "image", "path": "scr-admin-pois.png", "width": 148, "caption": "图5-11　兴趣点管理页面"},
+            {"type": "image", "path": "scr-admin-poi-add.png", "width": 148, "caption": "图5-12　添加兴趣点对话框"}
+          ]
+        },
+        {
+          "title": "5.2.4 公告管理实现",
+          "number": "5.2.4",
+          "content": [
+            "公告管理页面展示所有公告记录，列包含ID、标题、类型、状态和创建时间。状态列使用NSwitch开关组件，管理员可以直接切换公告的激活/停用状态。类型列用不同颜色的NTag标签区分info（蓝色）、warning（橙色）、success（绿色）和error（红色）四种类型。添加和编辑公告时弹出对话框，表单包含标题、正文和类型下拉框。激活状态的公告会在用户端Layout页面顶部以NAlert组件形式展示，用户可以手动关闭。公告管理页面如图5-13所示。",
+            {"type": "image", "path": "scr-admin-announce.png", "width": 148, "caption": "图5-13　公告管理页面"}
+          ]
+        }
+      ]
+    },
+    {
+      "title": "5.3 本章小结",
+      "number": "5.3",
+      "content": [
+        "本章按用户端和管理端两个模块，说明了各功能的实现过程并给出了界面截图和关键代码。用户端实现了登录注册、地图浏览与视角切换、兴趣点搜索与标记交互、路径规划、统计图表、游客浏览六个功能。管理端实现了统计仪表盘、用户管理、兴趣点管理、公告管理四个功能。截图覆盖了系统的全部主要页面，代码展示了登录认证、视角切换、路径规划和统计查询等核心逻辑。"
+      ],
+      "subsections": []
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "title_zh": "基于Vue3和MapLibre的校园导航系统设计与实现",
+  "title_en": "Design and Implementation of Campus Navigation System Based on Vue3 and MapLibre",
+  "college": "计算机与信息工程学院",
+  "college_en": "School of Computer and Information Engineering",
+  "major_class": "软件工程2201班",
+  "major_class_en": "Software Engineering Class 2201",
+  "name": "待填写",
+  "name_en": "To Be Filled",
+  "student_id": "待填写",
+  "advisor": "待填写",
+  "advisor_en": "To Be Filled",
+  "finish_date": "二〇二五年六月",
+  "finish_date_en": "2025-06",
+  "abstract_zh": "针对高校校园面积较大、建筑分布分散、新生和访客找路不便的问题，设计并实现了一套基于Web的校园导航系统。系统前端采用Vue3框架和TypeScript语言开发，地图渲染使用开源的MapLibre GL库，支持二维平面和三维透视两种视角切换。后端采用Express框架搭建RESTful接口，数据存储使用SQLite轻量级数据库。\n路径规划模块实现了两种算法：基于可视图（Visibility Graph）的避障路径规划和基于Dijkstra的最短路径规划。可视图算法将校园建筑轮廓作为障碍物多边形，在多边形顶点之间建立可视连接，规划出绕开建筑物的步行路径。系统预置了29个兴趣点，覆盖教学区、生活区、运动场和校门等区域。\n系统包含用户端和管理端两个入口。用户端提供地图浏览、兴趣点搜索与筛选、路径规划、步行时间估算等功能。管理端提供用户管理、兴趣点维护、公告发布和导航数据统计等功能。功能测试和性能测试的结果表明系统运行稳定，路径规划结果合理，页面响应速度满足使用要求。",
+  "keywords_zh": "校园导航；Vue3；MapLibre GL；可视图算法；路径规划",
+  "abstract_en": "Aiming at the problems of large campus area, scattered building distribution, and difficulty for freshmen and visitors to find their way, a web-based campus navigation system was designed and implemented. The frontend was developed using the Vue3 framework with TypeScript, and the map rendering uses the open-source MapLibre GL library, supporting both 2D and 3D perspective switching. The backend was built with the Express framework providing RESTful APIs, and data is stored in the lightweight SQLite database.\nThe route planning module implements two algorithms: obstacle-avoidance path planning based on Visibility Graph and shortest path planning based on Dijkstra's algorithm. The Visibility Graph algorithm treats campus building outlines as obstacle polygons, establishes visible connections between polygon vertices, and plans walking paths that avoid buildings. The system includes 29 preset points of interest covering teaching areas, living areas, sports facilities, and campus gates.\nThe system has both user and admin interfaces. The user interface provides map browsing, POI search and filtering, route planning, and walking time estimation. The admin interface provides user management, POI maintenance, announcement publishing, and navigation statistics. Functional and performance test results show that the system runs stably with reasonable route planning results and responsive page loading.",
+  "keywords_en": "Campus Navigation; Vue3; MapLibre GL; Visibility Graph Algorithm; Route Planning",
+  "acknowledgement": "毕业设计即将完成，在此向给予帮助和支持的各位致以真诚的感谢。感谢指导教师在选题方向、系统设计和论文撰写过程中的悉心指导，每次讨论都让我对问题有了更清晰的认识。感谢同学们在开发调试过程中的交流和建议，帮助我解决了不少具体的技术问题。感谢学院各位老师四年来的教学与指导，课堂上学到的专业知识在本次毕业设计中得到了实际运用。感谢家人在整个大学期间的理解和支持。系统目前还有需要完善的地方，但从需求分析到编码实现再到论文撰写的整个过程，确实让我在工程实践能力方面有了明显的提升。",
+  "conclusion_list": [
+    "针对高校校园面积大、建筑物分布分散、新生和访客找路不便的实际问题，完成了一套基于Web的校园导航系统的设计与实现。前端采用Vue3 + TypeScript + MapLibre GL构建交互式地图界面，后端采用Express + SQLite提供数据接口，整体采用前后端分离的B/S架构。",
+    "功能层面，系统实现了地图浏览与二三维视角切换、兴趣点搜索与分类筛选、基于可视图算法的避障路径规划、基于Dijkstra算法的最短路径规划、步行时间估算、导航日志记录等用户端功能，以及用户管理、兴趣点维护、公告发布、导航数据统计分析等管理端功能。其中路径规划模块将校园建筑轮廓作为障碍物处理，规划结果能够自动绕开建筑物，比直线距离更贴合实际步行路线。",
+    "系统目前还存在一些可改进之处：一是地图数据依赖静态GeoJSON文件，建筑物和道路数据的更新需要手动修改源文件；二是尚未实现室内导航功能，用户进入建筑物后无法继续提供楼层级别的路线指引；三是移动端适配尚不够完善，部分交互操作在小屏幕设备上体验不够理想。",
+    "后续可以在以下方面做改进：接入校园实景地图或卫星影像底图，提升地图的直观性；引入室内地图数据，扩展室内导航能力；开发微信小程序版本，降低用户使用门槛；在管理端增加热力图功能，可视化展示校园内的人流分布情况。"
+  ]
+}

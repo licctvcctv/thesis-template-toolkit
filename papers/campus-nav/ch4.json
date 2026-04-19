@@ -1,0 +1,89 @@
+{
+  "title": "4 系统设计",
+  "chapter_number": 4,
+  "sections": [
+    {
+      "title": "4.1 系统功能设计",
+      "number": "4.1",
+      "content": [
+        "系统功能划分为用户端和管理端两大模块。用户端面向校园内的学生、教职工和访客，提供地图浏览、兴趣点搜索、路径规划等导航功能。管理端面向系统管理员，提供用户管理、兴趣点维护、公告发布和数据统计等管理功能。系统功能结构图如图4-1所示。",
+        {"type": "image", "path": "function-structure.png", "width": 148, "caption": "图4-1　系统功能结构图"}
+      ],
+      "subsections": []
+    },
+    {
+      "title": "4.2 系统架构设计",
+      "number": "4.2",
+      "content": [
+        "系统整体采用B/S三层架构，分为表现层、业务逻辑层和数据层。",
+        "表现层由Vue3前端工程承担。用户端和管理端集成在同一个前端工程中，通过Vue Router的路由配置区分页面。地图渲染模块基于MapLibre GL实现，路径规划算法（可视图和Dijkstra）在前端浏览器中执行，不需要后端参与计算。UI组件使用Naive UI库，图表使用ECharts库。前端构建工具为Vite，开发阶段支持热更新。",
+        "业务逻辑层由Express框架承担。服务器监听3456端口，接收前端的HTTP请求。路由模块按功能划分为auth、pois、users、announcements和navLogs五组。中间件模块负责JWT认证和管理员权限校验。所有接口返回JSON格式数据，遵循RESTful风格。",
+        "数据层为SQLite数据库，存储在服务端的campus.db文件中。通过sql.js库在内存中运行SQLite引擎，数据变更后同步持久化到磁盘。数据库启动时自动建表和插入种子数据。系统总体架构图如图4-2所示。",
+        {"type": "image", "path": "system-arch.png", "width": 148, "caption": "图4-2　系统总体架构图"}
+      ],
+      "subsections": []
+    },
+    {
+      "title": "4.3 数据库设计",
+      "number": "4.3",
+      "content": [
+        "数据库设计分概念结构和逻辑结构两个步骤。概念结构用E-R图表达实体和关系，逻辑结构把E-R模型转化为具体的表和字段。"
+      ],
+      "subsections": [
+        {
+          "title": "4.3.1 概念结构设计",
+          "number": "4.3.1",
+          "content": [
+            "概念模型采用E-R方法建立。系统涉及七个实体：用户、兴趣点、兴趣点分类、建筑物、公告、导航日志和收藏记录。下面依次给出各实体的E-R图。",
+            "（1）用户实体。用户是系统中最基本的数据对象，属性包括用户编号（主键）、用户名、密码（bcrypt哈希）、角色（admin或user）和注册时间。系统中第一个注册的用户自动成为管理员。用户实体E-R图如图4-3所示。",
+            {"type": "image", "path": "er-user.png", "width": 100, "caption": "图4-3　用户实体E-R图"},
+            "（2）兴趣点实体。兴趣点对应校园内的每一个标注位置，属性包括编号（主键）、名称、类型、经度、纬度、描述、创建者ID和创建时间。系统预置了29个兴趣点，覆盖教学区、生活区、运动场和校门等区域。兴趣点实体E-R图如图4-4所示。",
+            {"type": "image", "path": "er-poi.png", "width": 110, "caption": "图4-4　兴趣点实体E-R图"},
+            "（3）兴趣点分类实体。兴趣点分类定义各类别的显示属性，属性包括分类编号（主键）、分类名称、图标标识、显示颜色和排序号。不同分类在地图上用不同颜色和图标区分。兴趣点分类实体E-R图如图4-5所示。",
+            {"type": "image", "path": "er-category.png", "width": 100, "caption": "图4-5　兴趣点分类实体E-R图"},
+            "（4）建筑物实体。建筑物存储校园内各建筑的轮廓数据，属性包括建筑编号（主键）、建筑名称、轮廓坐标（GeoJSON多边形）、层数和用途。路径规划模块将建筑物轮廓作为障碍物处理。建筑物实体E-R图如图4-6所示。",
+            {"type": "image", "path": "er-building.png", "width": 100, "caption": "图4-6　建筑物实体E-R图"},
+            "（5）公告实体。公告存储管理员发布的系统通知，属性包括公告编号（主键）、标题、正文内容、公告类型（info/warning/success/error）、激活状态、发布者ID和创建时间。公告实体E-R图如图4-7所示。",
+            {"type": "image", "path": "er-announcement.png", "width": 110, "caption": "图4-7　公告实体E-R图"},
+            "（6）导航日志实体。导航日志记录每次路径规划的使用数据，属性包括日志编号（主键）、用户ID、起点名称、终点名称、距离、时长和创建时间。导航日志实体E-R图如图4-8所示。",
+            {"type": "image", "path": "er-navlog.png", "width": 100, "caption": "图4-8　导航日志实体E-R图"},
+            "（7）收藏记录实体。收藏记录存储用户对兴趣点的收藏行为，属性包括收藏编号（主键）、用户ID、兴趣点ID和收藏时间。收藏记录实体E-R图如图4-9所示。",
+            {"type": "image", "path": "er-favorite.png", "width": 100, "caption": "图4-9　收藏记录实体E-R图"},
+            "实体间关系：用户与兴趣点一对多（一个用户可以创建多个兴趣点），用户与公告一对多，用户与导航日志一对多，用户与收藏记录一对多。兴趣点与兴趣点分类多对一（多个兴趣点属于同一个分类）。建筑物与导航日志之间存在避障关系——路径规划时导航日志记录的路线会绕开建筑物。系统总体E-R图如图4-10所示。",
+            {"type": "image", "path": "er-summary.png", "width": 130, "caption": "图4-10　系统总体E-R图"}
+          ]
+        },
+        {
+          "title": "4.3.2 逻辑结构设计",
+          "number": "4.3.2",
+          "content": [
+            "将上述E-R模型转换为关系表。每个实体对应一张表，实体间的一对多关系在\u201c多\u201d方表中用外键字段实现。系统共设计了以下七张数据表。",
+            "表4-1 用户表（users）",
+            {"type": "table", "headers": ["字段名", "类型", "说明"], "rows": [["id", "INTEGER", "主键，自增"], ["username", "TEXT", "用户名，唯一，非空"], ["password", "TEXT", "密码（bcrypt哈希）"], ["role", "TEXT", "角色（admin/user），默认user"], ["created_at", "DATETIME", "注册时间"]]},
+            "表4-2 兴趣点表（pois）",
+            {"type": "table", "headers": ["字段名", "类型", "说明"], "rows": [["id", "INTEGER", "主键，自增"], ["name", "TEXT", "兴趣点名称，非空"], ["type", "TEXT", "类型（关联分类名称）"], ["lng", "REAL", "经度（WGS84）"], ["lat", "REAL", "纬度（WGS84）"], ["description", "TEXT", "描述信息"], ["created_by", "INTEGER", "创建者用户ID"], ["created_at", "DATETIME", "创建时间"], ["updated_at", "DATETIME", "更新时间"]]},
+            "表4-3 兴趣点分类表（poi_categories）",
+            {"type": "table", "headers": ["字段名", "类型", "说明"], "rows": [["id", "INTEGER", "主键，自增"], ["name", "TEXT", "分类名称（教学楼/食堂等）"], ["icon", "TEXT", "图标标识"], ["color", "TEXT", "显示颜色（十六进制）"], ["sort_order", "INTEGER", "排序号"]]},
+            "表4-4 建筑物表（buildings）",
+            {"type": "table", "headers": ["字段名", "类型", "说明"], "rows": [["id", "INTEGER", "主键，自增"], ["name", "TEXT", "建筑名称"], ["geometry", "TEXT", "轮廓坐标（GeoJSON）"], ["floors", "INTEGER", "层数"], ["usage", "TEXT", "用途描述"]]},
+            "表4-5 公告表（announcements）",
+            {"type": "table", "headers": ["字段名", "类型", "说明"], "rows": [["id", "INTEGER", "主键，自增"], ["title", "TEXT", "公告标题，非空"], ["content", "TEXT", "公告正文，非空"], ["type", "TEXT", "类型（info/warning/success/error）"], ["active", "INTEGER", "是否激活（0/1），默认1"], ["created_by", "INTEGER", "发布者用户ID"], ["created_at", "DATETIME", "创建时间"]]},
+            "表4-6 导航日志表（nav_logs）",
+            {"type": "table", "headers": ["字段名", "类型", "说明"], "rows": [["id", "INTEGER", "主键，自增"], ["user_id", "INTEGER", "用户ID"], ["start_poi", "TEXT", "起点名称"], ["end_poi", "TEXT", "终点名称"], ["distance", "INTEGER", "距离（米）"], ["duration", "INTEGER", "时长（秒）"], ["created_at", "DATETIME", "创建时间"]]},
+            "表4-7 收藏记录表（favorites）",
+            {"type": "table", "headers": ["字段名", "类型", "说明"], "rows": [["id", "INTEGER", "主键，自增"], ["user_id", "INTEGER", "用户ID"], ["poi_id", "INTEGER", "兴趣点ID"], ["created_at", "DATETIME", "收藏时间"]]},
+            "七张表均使用SQLite默认的行级锁机制。用户表的username字段设置了唯一约束，防止重复注册。兴趣点表和导航日志表的created_by和user_id字段与用户表的id字段关联。收藏记录表的user_id和poi_id组合建立了联合唯一索引，防止同一用户重复收藏同一兴趣点。"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "4.4 本章小结",
+      "number": "4.4",
+      "content": [
+        "本章完成了系统的整体设计。功能结构图展示了用户端和管理端的功能模块划分。架构设计说明了B/S三层结构中表现层、业务逻辑层和数据层的职责分工。数据库设计从E-R图出发，给出了七个实体的属性图和实体间关系的总体E-R图，把七个业务实体转化为七张数据表，每张表的字段类型和约束条件都做了说明。"
+      ],
+      "subsections": []
+    }
+  ]
+}

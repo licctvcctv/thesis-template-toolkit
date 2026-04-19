@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1060" height="1180" viewBox="0 0 1060 1180" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#202020" />
+    </marker>
+    <marker id="dashArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#555" />
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="1060" height="1180" fill="#ffffff"/>
+  <rect x="390" y="40" width="220" height="60" rx="16" ry="16" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="500" y="70" font-family="SimSun, Songti SC, serif" font-size="24" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">打开系统</text>
+<path d="M 500 100 L 500 160" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<path d="M 500 170 L 640 220 L 500 280 L 360 220 Z" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="500" y="220" font-family="SimSun, Songti SC, serif" font-size="20" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">是否登录</text>
+<path d="M 640 220 L 800 220" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<text x="720" y="190" font-family="SimSun, Songti SC, serif" font-size="20" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">否</text>
+<rect x="800" y="190" width="180" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="890" y="220" font-family="SimSun, Songti SC, serif" font-size="18" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">游客模式浏览</text>
+<path d="M 500 280 L 500 340" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<text x="525" y="310" font-family="SimSun, Songti SC, serif" font-size="20" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">是</text>
+<rect x="360" y="340" width="280" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="500" y="370" font-family="SimSun, Songti SC, serif" font-size="24" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">用户登录</text>
+<path d="M 500 400 L 500 460" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<rect x="360" y="460" width="280" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="500" y="490" font-family="SimSun, Songti SC, serif" font-size="24" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">浏览地图</text>
+<path d="M 500 520 L 500 580" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<rect x="360" y="580" width="280" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="500" y="610" font-family="SimSun, Songti SC, serif" font-size="24" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">搜索兴趣点</text>
+<path d="M 500 640 L 500 700" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<rect x="360" y="700" width="280" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="500" y="730" font-family="SimSun, Songti SC, serif" font-size="24" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">选择起终点</text>
+<path d="M 500 760 L 500 820" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<rect x="360" y="820" width="280" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="500" y="850" font-family="SimSun, Songti SC, serif" font-size="24" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">路径规划</text>
+<path d="M 500 880 L 500 940" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<rect x="360" y="940" width="280" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="500" y="970" font-family="SimSun, Songti SC, serif" font-size="22" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">显示路线及步行时间</text>
+<path d="M 500 1000 L 500 1060" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+<rect x="390" y="1060" width="220" height="60" rx="16" ry="16" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="500" y="1090" font-family="SimSun, Songti SC, serif" font-size="26" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">结束</text>
+<path d="M 890 250 L 890 490 L 640 490" fill="none" stroke="#202020" stroke-width="2.4" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+</svg>
