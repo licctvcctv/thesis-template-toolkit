@@ -4,13 +4,13 @@
     {
       "title": "4.1 前台功能模块实现",
       "content": [
-        "前台功能模块由main蓝图承载，面向所有访客提供首页浏览、栏目导航、文章阅读、站内搜索和联系留言等功能。所有前台页面继承自base.html基础模板，共享统一的导航栏和页脚结构，并通过Bootstrap 5栅格系统实现响应式布局。"
+        "前台功能模块由main蓝图承载，面向所有访客提供首页浏览、栏目导航、文章阅读、站内搜索和联系留言等功能。所有前台页面继承自base.html基础模板，导航栏和页脚结构是统一的，页面布局用Bootstrap 5的栅格系统做响应式适配。"
       ],
       "subsections": [
         {
           "title": "4.1.1 首页展示实现",
           "content": [
-            "首页通过main蓝图的home路由渲染，页面包含英雄横幅区域、置顶文章区域、最新文章列表和栏目导航四个板块。置顶文章通过查询is_top标志为真的已发布文章获取，最新文章按发布时间倒序查询前六条记录，栏目列表按排序字段升序加载。首页运行效果如图4-1所示。",
+            "首页由main蓝图的home路由渲染，页面包含英雄横幅区域、置顶文章区域、最新文章列表和栏目导航四个板块。置顶文章是查询is_top标志为真的已发布文章得到的，最新文章按发布时间倒序查询前六条记录，栏目列表按排序字段升序加载。首页运行效果如图4-1所示。",
             {"type": "image", "path": "runtime_home.png", "width": 148, "caption": "图4-1 系统首页运行效果"},
             "首页路由的关键实现代码如下。",
             {"type": "code", "language": "python", "content": "@bp.route('/')\ndef home():\n    top_articles = (\n        Article.query.filter_by(status='published', is_top=True)\n        .order_by(Article.published_at.desc().nullslast())\n        .limit(3).all()\n    )\n    latest_articles = (\n        Article.query.filter_by(status='published')\n        .order_by(Article.published_at.desc().nullslast())\n        .limit(6).all()\n    )\n    categories = Category.query.filter_by(status=True)\\\n        .order_by(Category.sort_order.asc()).all()\n    return render_template('main/home.html',\n        top_articles=top_articles,\n        latest_articles=latest_articles,\n        categories=categories)"}
@@ -19,7 +19,7 @@
         {
           "title": "4.1.2 栏目与文章浏览实现",
           "content": [
-            "栏目列表页通过category_detail路由实现，根据URL中的栏目slug查询对应栏目下的已发布文章并分页展示。文章详情页通过article_detail路由实现，根据文章slug查询文章记录，页面加载时自动将浏览量加一，并在底部展示同栏目下的相关推荐文章。栏目文章列表页面如图4-2所示，文章详情页面如图4-3所示。",
+            "栏目列表页对应category_detail路由，根据URL中的栏目slug查询对应栏目下的已发布文章并分页展示。文章详情页对应article_detail路由，根据文章slug查询文章记录，页面加载时自动将浏览量加一，并在底部展示同栏目下的相关推荐文章。栏目文章列表页面如图4-2所示，文章详情页面如图4-3所示。",
             {"type": "image", "path": "runtime_category_news.png", "width": 148, "caption": "图4-2 栏目文章列表页面"},
             {"type": "image", "path": "runtime_article.png", "width": 148, "caption": "图4-3 文章详情页面"},
             "文章详情路由的关键实现代码如下。",
@@ -29,7 +29,7 @@
         {
           "title": "4.1.3 联系留言实现",
           "content": [
-            "联系留言页面通过contact路由实现，页面提供姓名、邮箱、电话和留言内容四个输入字段，所有字段均设置了WTForms验证规则。表单内嵌CSRF令牌防护跨站请求伪造，提交成功后留言数据保存为ContactMessage模型记录。联系留言页面如图4-4所示。",
+            "联系留言页面对应contact路由，页面提供姓名、邮箱、电话和留言内容四个输入字段，所有字段均设置了WTForms验证规则。表单内嵌CSRF令牌防护跨站请求伪造，提交成功后留言数据保存为ContactMessage模型记录。联系留言页面如图4-4所示。",
             {"type": "image", "path": "runtime_contact.png", "width": 148, "caption": "图4-4 联系留言页面"},
             "联系表单提交的关键实现代码如下。",
             {"type": "code", "language": "python", "content": "@bp.route('/contact', methods=['GET', 'POST'])\ndef contact():\n    form = ContactForm()\n    if form.validate_on_submit():\n        message = ContactMessage(\n            name=form.name.data.strip(),\n            email=form.email.data.strip(),\n            phone=(form.phone.data or '').strip(),\n            message=form.message.data.strip())\n        db.session.add(message)\n        db.session.commit()\n        flash('留言已提交，我们会尽快联系您。', 'success')\n        return redirect(url_for('main.contact'))\n    return render_template('main/contact.html', form=form)"}
@@ -40,13 +40,13 @@
     {
       "title": "4.2 后台功能模块实现",
       "content": [
-        "后台功能模块由auth蓝图和admin蓝图共同承载。auth蓝图负责管理员登录与登出，admin蓝图负责仪表盘、文章管理、栏目管理、单页管理、媒体管理、留言处理、用户管理和站点设置等功能。所有后台路由均通过Flask-Login的login_required装饰器保护，关键操作通过自定义permission_required装饰器进行权限校验。"
+        "后台功能模块由auth蓝图和admin蓝图共同承载。auth蓝图负责管理员登录与登出，admin蓝图负责仪表盘、文章管理、栏目管理、单页管理、媒体管理、留言处理、用户管理和站点设置等功能。所有后台路由都加了Flask-Login的login_required装饰器，关键操作还额外加了自定义的permission_required装饰器做权限校验。"
       ],
       "subsections": [
         {
           "title": "4.2.1 管理员登录实现",
           "content": [
-            "管理员登录由auth蓝图的login路由处理，用户提交用户名和密码后，系统首先通过WTForms进行非空校验和CSRF令牌验证，然后根据用户名查询User记录并调用check_password方法比对密码哈希值。验证通过后调用Flask-Login的login_user函数创建会话，并更新last_login_at字段记录登录时间。管理员登录页面如图4-5所示。",
+            "管理员登录由auth蓝图的login路由处理，用户提交用户名和密码后，系统先用WTForms做非空校验和CSRF令牌验证，然后根据用户名查询User记录并调用check_password方法比对密码哈希值。验证没问题后调用Flask-Login的login_user函数创建会话，并更新last_login_at字段记录登录时间。管理员登录页面如图4-5所示。",
             {"type": "image", "path": "runtime_admin_login.png", "width": 148, "caption": "图4-5 管理员登录页面"},
             "登录路由的关键实现代码如下。",
             {"type": "code", "language": "python", "content": "@bp.route('/login', methods=['GET', 'POST'])\ndef login():\n    if current_user.is_authenticated:\n        return redirect(url_for('admin.dashboard'))\n    form = LoginForm()\n    if form.validate_on_submit():\n        user = User.query.filter_by(\n            username=form.username.data.strip()).first()\n        if user and user.status \\\n                and user.check_password(form.password.data):\n            login_user(user)\n            user.last_login_at = utcnow_naive()\n            db.session.commit()\n            flash('登录成功。', 'success')\n            next_url = request.args.get('next') \\\n                or url_for('admin.dashboard')\n            return redirect(next_url)\n        flash('用户名或密码错误。', 'danger')\n    return render_template('auth/login.html', form=form)"}
@@ -55,7 +55,7 @@
         {
           "title": "4.2.2 后台仪表盘实现",
           "content": [
-            "后台仪表盘通过admin蓝图的dashboard路由渲染，页面顶部展示文章总数、已发布文章数、栏目数、留言数和用户数五项统计数据，下方分别展示最近发布的五篇文章和最近收到的五条留言。仪表盘为管理员提供了系统运行状态的全局视图。后台仪表盘页面如图4-6所示。",
+            "后台仪表盘对应admin蓝图的dashboard路由，页面顶部展示文章总数、已发布文章数、栏目数、留言数和用户数五项统计数据，下方分别展示最近发布的五篇文章和最近收到的五条留言。仪表盘为管理员提供了系统运行状态的全局视图。后台仪表盘页面如图4-6所示。",
             {"type": "image", "path": "runtime_admin_dashboard.png", "width": 148, "caption": "图4-6 后台仪表盘页面"},
             "仪表盘路由的关键实现代码如下。",
             {"type": "code", "language": "python", "content": "@bp.route('/')\n@login_required\n@permission_required('dashboard.view')\ndef dashboard():\n    stats = {\n        'article_count': Article.query.count(),\n        'published_count': Article.query.filter_by(\n            status='published').count(),\n        'category_count': Category.query.count(),\n        'message_count': ContactMessage.query.count(),\n        'user_count': User.query.count(),\n    }\n    latest_articles = Article.query.order_by(\n        Article.created_at.desc()).limit(5).all()\n    latest_messages = ContactMessage.query.order_by(\n        ContactMessage.created_at.desc()).limit(5).all()\n    return render_template('admin/dashboard.html',\n        stats=stats, latest_articles=latest_articles,\n        latest_messages=latest_messages)"}
@@ -64,7 +64,7 @@
         {
           "title": "4.2.3 文章管理实现",
           "content": [
-            "文章管理包含列表展示、新建、编辑和删除四个核心操作。文章列表页支持按发布状态和关键词组合筛选，查询结果通过paginate方法分页展示。新建文章时系统根据标题自动生成URL别名slug，封面图片经扩展名白名单校验后以哈希文件名保存至uploads目录。文章状态支持草稿、已发布和已归档三种取值的流转。文章管理页面如图4-7所示。",
+            "文章管理包含列表展示、新建、编辑和删除四个核心操作。文章列表页支持按发布状态和关键词组合筛选，查询结果用paginate方法做分页。新建文章时系统根据标题自动生成URL别名slug，封面图片经扩展名白名单校验后以哈希文件名保存至uploads目录。文章状态支持草稿、已发布和已归档三种取值的流转。文章管理页面如图4-7所示。",
             {"type": "image", "path": "runtime_admin_articles.png", "width": 148, "caption": "图4-7 文章管理页面"},
             "文章列表路由支持按状态和关键词筛选，关键实现代码如下。",
             {"type": "code", "language": "python", "content": "@bp.route('/articles')\n@login_required\n@permission_required('article.view')\ndef article_list():\n    page = request.args.get('page', 1, type=int)\n    status = request.args.get('status', '', type=str)\n    keyword = request.args.get('q', '', type=str).strip()\n    query = Article.query\n    if status:\n        query = query.filter_by(status=status)\n    if keyword:\n        query = query.filter(\n            Article.title.ilike(f'%{keyword}%'))\n    pagination = query.order_by(\n        Article.is_top.desc(),\n        Article.created_at.desc()\n    ).paginate(page=page, per_page=10, error_out=False)\n    return render_template('admin/article_list.html',\n        pagination=pagination, keyword=keyword,\n        status=status)"}
@@ -73,7 +73,7 @@
         {
           "title": "4.2.4 站点设置实现",
           "content": [
-            "站点设置功能通过admin蓝图的settings路由实现，采用键值对模式管理站点全局参数。页面加载时从SiteSetting表读取所有键值对并填充到表单中，管理员修改保存后系统遍历表单字段逐一更新对应的数据库记录，若键不存在则自动创建新记录。站点设置页面如图4-8所示。",
+            "站点设置功能对应admin蓝图的settings路由，全局参数以键值对方式管理。页面加载时从SiteSetting表读取所有键值对并填充到表单中，管理员修改保存后系统遍历表单字段逐一更新对应的数据库记录，若键不存在则自动创建新记录。站点设置页面如图4-8所示。",
             {"type": "image", "path": "runtime_admin_settings.png", "width": 148, "caption": "图4-8 站点设置页面"},
             "站点设置路由的关键实现代码如下。",
             {"type": "code", "language": "python", "content": "@bp.route('/settings', methods=['GET', 'POST'])\n@login_required\n@permission_required('setting.view')\ndef settings():\n    key_map = {item.key: item\n               for item in SiteSetting.query.all()}\n    form = SiteSettingForm(data={\n        key: key_map.get(key).value\n        if key in key_map else ''\n        for key in SiteSettingForm()._fields\n        if key != 'csrf_token'})\n    if form.validate_on_submit():\n        for key, field in form._fields.items():\n            if key in {'csrf_token', 'submit'}:\n                continue\n            setting = key_map.get(key)\n            if setting is None:\n                setting = SiteSetting(\n                    key=key, label=field.label.text,\n                    group_name='general')\n                db.session.add(setting)\n            setting.value = field.data or ''\n        db.session.commit()\n        flash('站点设置已保存。', 'success')\n        return redirect(url_for('admin.settings'))\n    return render_template('admin/settings.html',\n        form=form)"}
@@ -84,7 +84,7 @@
     {
       "title": "4.3 本章小结",
       "content": [
-        "本章按前台功能模块和后台功能模块两条线，展示了系统各核心页面的运行效果和关键路由代码。前台模块涵盖首页展示、栏目文章浏览和联系留言三个功能点，后台模块涵盖管理员登录、仪表盘、文章管理和站点设置四个功能点。每个功能均以运行截图配合核心代码的方式呈现，体现了Flask蓝图机制、SQLAlchemy查询构建和Flask-Login权限控制在实际业务场景中的应用。"
+        "本章分前台和后台两部分，展示了各主要页面的运行效果和对应的路由代码。前台部分包括首页展示、栏目文章浏览和联系留言，后台部分包括管理员登录、仪表盘、文章管理和站点设置。每个功能均以运行截图配合核心代码的方式呈现，体现了Flask蓝图机制、SQLAlchemy查询构建和Flask-Login权限控制在实际业务场景中的应用。"
       ],
       "subsections": []
     }
