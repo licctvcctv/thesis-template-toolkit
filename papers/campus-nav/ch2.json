@@ -1,89 +1,110 @@
 {
-  "title": "2 相关技术介绍",
+  "title": "2 系统需求分析与关键技术",
   "chapter_number": 2,
   "sections": [
     {
-      "title": "2.1 开发工具与运行环境",
+      "title": "2.1 可行性分析",
       "number": "2.1",
-      "content": [
-        "前端开发使用Visual Studio Code编辑器，装上Volar插件后Vue3和TypeScript的语法高亮、类型检查和智能提示都能正常工作。后端开发同样在VS Code中进行，Node.js运行环境提供了JavaScript的服务端执行能力。数据库使用SQLite，数据文件直接保存在项目目录中，不需要单独安装数据库服务。",
-        "前端构建工具使用Vite，开发阶段的热更新速度很快，修改代码后浏览器几乎可以立即看到效果。打包后生成静态文件，可以部署到任意Web服务器。操作系统为Windows 11，测试浏览器为Google Chrome。整个开发环境在8GB内存的笔记本上可以同时运行前端开发服务器和后端Express服务。"
-      ],
-      "subsections": []
-    },
-    {
-      "title": "2.2 Vue3框架",
-      "number": "2.2",
-      "content": [
-        "Vue3是Vue.js框架在2020年发布的主要版本，核心思路是数据驱动视图——开发者定义数据模型，页面的DOM会跟着数据变化自动更新。组合式API（Composition API）是Vue3最重要的改进，允许把相关的业务逻辑集中到一个setup函数或composable模块中，而不是像选项式API那样分散在data、methods、computed等不同选项里。对于地图交互、路径规划这类逻辑较复杂的功能，composable的组织方式更容易维护。",
-        "本项目使用Vue3配合TypeScript语言进行开发。TypeScript在JavaScript的基础上增加了静态类型检查，编码阶段就能发现类型不匹配的错误，减少运行时bug。UI组件库选用Naive UI，它是专为Vue3设计的组件库，提供了数据表格、表单、对话框、通知、标签页等常用组件，视觉风格简洁。路由管理使用Vue Router 4，配合路由守卫实现了登录拦截和权限控制。"
-      ],
-      "subsections": []
-    },
-    {
-      "title": "2.3 Express框架",
-      "number": "2.3",
-      "content": [
-        "Express是Node.js平台上使用最广泛的Web应用框架，核心功能是处理HTTP请求和路由分发。Express的中间件机制允许在请求到达路由处理函数之前插入认证检查、日志记录、跨域处理等通用逻辑，代码组织清晰。本项目的后端按路由模块划分为认证（auth）、兴趣点（pois）、用户管理（users）、公告（announcements）和导航日志（navLogs）五个文件，每个文件负责一组相关的接口。",
-        "Express的路由定义简洁直观，GET、POST、PUT、DELETE四种HTTP方法分别对应查询、创建、更新和删除操作，遵循RESTful风格。所有接口统一返回JSON格式数据，前端通过fetch函数调用接口并解析响应。本项目使用Express 5.2版本，相比4.x版本在错误处理和路由匹配方面有所改进。"
-      ],
-      "subsections": []
-    },
-    {
-      "title": "2.4 SQLite数据库",
-      "number": "2.4",
-      "content": [
-        "SQLite是一种嵌入式关系型数据库，整个数据库存储在一个文件中，不需要独立的服务器进程。这个特点让SQLite特别适合小型Web项目和毕业设计——部署时只需要把数据库文件放在项目目录下，不需要在服务器上安装和配置MySQL或PostgreSQL。SQLite支持标准SQL语法、事务和索引，对于用户量不大的校园导航系统，读写性能完全够用。",
-        "本项目通过sql.js库在Node.js中操作SQLite。sql.js是SQLite的WebAssembly编译版本，可以在内存中运行SQLite引擎，数据定期持久化到磁盘文件。数据库中共建了四张核心表：用户表（users）、兴趣点表（pois）、公告表（announcements）和导航日志表（nav_logs）。"
-      ],
-      "subsections": []
-    },
-    {
-      "title": "2.5 MapLibre GL地图库",
-      "number": "2.5",
-      "content": [
-        "MapLibre GL是一个基于WebGL的开源地图渲染库，前身是Mapbox GL JS的开源版本。2020年Mapbox将GL JS转为闭源许可后，社区创建了MapLibre GL作为替代方案，功能上与Mapbox GL基本一致。MapLibre GL使用GPU加速渲染矢量瓦片，在浏览器中实现流畅的地图缩放、平移和旋转操作，支持二维平面视角和三维透视视角的切换。",
-        "本项目使用MapLibre GL加载Carto Voyager栅格瓦片作为底图，在底图上叠加自定义的兴趣点标记（Marker）、路线图层（GeoJSON Line）和三维建筑图层（Fill-extrusion）。地图的交互操作包括点击标记弹出信息窗口、拖拽地图平移、双指旋转调整视角、滚轮缩放等。MapLibre GL的Popup组件用于在标记上方显示兴趣点的名称、类型和描述信息。"
-      ],
-      "subsections": []
-    },
-    {
-      "title": "2.6 路径规划算法",
-      "number": "2.6",
       "content": [],
       "subsections": [
         {
-          "title": "2.6.1 可视图算法",
-          "number": "2.6.1",
+          "title": "2.1.1 技术可行性",
+          "number": "2.1.1",
           "content": [
-            "可视图（Visibility Graph）是计算几何领域的经典算法，用于在存在多边形障碍物的二维平面中求解最短路径。算法的基本思路是：将障碍物多边形的所有顶点加上起点和终点作为图的节点，如果两个节点之间的连线不穿过任何障碍物多边形的内部，就在它们之间建立一条边，边的权重为两点之间的欧氏距离。在这个可视图上运行最短路径算法（如Dijkstra或A*），得到的路径就是绕开所有障碍物的最短路径。",
-            "本项目将校园内各建筑物的轮廓坐标存储在GeoJSON文件中，每栋建筑对应一个多边形。路径规划时，先加载建筑物多边形数据，对多边形做6-7米的外扩缓冲（避免路径贴着建筑物边缘），然后用visibility-graph.js库构建可视图，最后用ngraph.path库在可视图上搜索最短路径。如果起点或终点落在建筑物内部，系统会自动将其投影到建筑物边缘最近的点。"
+            "前端选用Vue3框架配合TypeScript语言。Vue3的组合式API已经在大量中后台管理项目中验证过，Naive UI组件库文档和社区资源齐全。地图渲染选用MapLibre GL，该库是Mapbox GL的开源替代品，API接口成熟，GitHub上的Star数量超过6000。路径规划算法方面，可视图算法和Dijkstra算法都有成熟的开源JavaScript实现（visibility-graph.js和ngraph.path），可以直接在前端运行。",
+            "后端选用Express框架。Express是Node.js生态中使用最广泛的Web框架，中间件生态丰富，从零搭建RESTful接口服务的工作量很小。数据库选用SQLite，不需要独立的数据库服务进程，部署简单，对于校园导航这种用户量有限的场景读写性能足够。整体技术方案各个组件都有大量使用案例和社区支持，技术风险低。"
           ]
         },
         {
-          "title": "2.6.2 Dijkstra算法",
-          "number": "2.6.2",
+          "title": "2.1.2 经济可行性",
+          "number": "2.1.2",
           "content": [
-            "Dijkstra算法是求解加权图中单源最短路径的经典算法，由荷兰计算机科学家Edsger Dijkstra在1959年提出。算法从源节点出发，每次从未访问节点中选取距离最小的节点进行松弛操作，更新其邻居节点的最短距离，直到到达目标节点或所有可达节点都已访问。时间复杂度为O((V+E)logV)，其中V是节点数，E是边数。",
-            "本项目将Dijkstra算法作为可视图算法的备选方案。在前端的roadNetwork.ts文件中预定义了校园道路网络的节点（兴趣点位置和道路交叉点）和边（道路段），边的权重为Haversine公式计算的两点间地表距离。当可视图算法因数据问题无法返回有效路径时，系统自动切换到Dijkstra算法在道路网络上搜索路径。"
+            "项目使用的所有框架和工具都是开源免费的。Vue3遵循MIT协议，MapLibre GL遵循BSD-3-Clause协议，Express遵循MIT协议，SQLite属于公共领域软件。开发工具VS Code免费，Node.js运行环境免费，地图底图使用Carto提供的免费栅格瓦片服务。硬件方面，开发和测试在普通笔记本电脑上即可完成，部署时前端静态文件和后端服务可以放在同一台入门级云服务器上。综合来看开发和运维成本很低。"
+          ]
+        },
+        {
+          "title": "2.1.3 操作可行性",
+          "number": "2.1.3",
+          "content": [
+            "用户端是一个Web页面，用户用手机或电脑浏览器打开即可使用，不需要安装任何软件。地图操作（缩放、平移、点击标记）和搜索框的交互方式与常见的地图应用一致，学习成本很低。管理端采用左侧菜单加右侧内容区的布局，功能分类清晰，管理员不需要专业培训就能上手。系统基于B/S架构，部署和更新只需替换服务端文件。"
           ]
         }
       ]
     },
     {
-      "title": "2.7 JWT认证技术",
-      "number": "2.7",
-      "content": [
-        "JWT（JSON Web Token）是一种基于令牌的无状态认证方案。用户登录成功后，服务端用密钥对用户信息（ID、角色等）做数字签名生成Token，返回给前端保存。后续请求在HTTP头中携带Token，服务端验证签名和有效期即可识别用户身份，不需要在服务端维护Session记录。",
-        "本项目使用jsonwebtoken库签发和验证Token。用户注册或登录成功后，后端将用户ID、用户名和角色写入Token的Payload，设置7天过期时间。前端将Token存入localStorage，每次请求在Authorization头中携带。后端的authMiddleware中间件从请求头提取Token并验证，验证失败返回401状态码。管理员接口额外配置了adminMiddleware，检查用户角色是否为admin，非管理员返回403。密码使用bcrypt库做哈希存储，注册时用10轮盐值加密，登录时比对哈希值。"
-      ],
-      "subsections": []
+      "title": "2.2 关键技术介绍",
+      "number": "2.2",
+      "content": [],
+      "subsections": [
+        {
+          "title": "2.2.1 Vue3框架",
+          "number": "2.2.1",
+          "content": [
+            "选择Vue3而非React或Angular的原因有三个。第一，Vue3的组合式API允许把地图初始化、标记管理、路径规划等逻辑分别封装为独立的composable模块（useMap、useMarkers、useRoute等），每个模块只关注一个功能领域，代码组织比选项式API更清晰。第二，Vue3配合TypeScript可以在编码阶段发现地图坐标、兴趣点数据等结构的类型错误，减少运行时bug。第三，Naive UI组件库专为Vue3设计，提供了数据表格、表单、对话框、通知等后台管理常用组件，不需要额外引入其他UI库。构建工具使用Vite，开发阶段的热更新速度很快。"
+          ]
+        },
+        {
+          "title": "2.2.2 Express框架与SQLite数据库",
+          "number": "2.2.2",
+          "content": [
+            "选择Express而非Spring Boot的原因是：校园导航系统的后端逻辑相对简单（用户认证、CRUD接口、统计查询），Express的轻量级特性和JavaScript全栈开发的便利性更适合这个场景。Express的中间件机制可以方便地插入JWT认证和角色校验逻辑，路由模块按功能拆分为auth、pois、users、announcements和navLogs五个文件，结构清晰。",
+            "选择SQLite而非MySQL的原因是：校园导航系统的数据量有限（几十个兴趣点、几百条导航日志），不需要MySQL的高并发和复杂查询能力。SQLite的嵌入式特性让部署变得极其简单——整个数据库就是一个文件，不需要在服务器上安装和配置数据库服务。本项目通过sql.js库在Node.js中操作SQLite，数据定期持久化到磁盘文件。"
+          ]
+        },
+        {
+          "title": "2.2.3 MapLibre GL地图库",
+          "number": "2.2.3",
+          "content": [
+            "选择MapLibre GL而非Leaflet或百度地图API的原因有两个。第一，MapLibre GL基于WebGL渲染，支持二维平面和三维透视两种视角的流畅切换，Leaflet只支持二维展示。三维视角让用户可以直观感受校园建筑的高低错落，提升了地图浏览的体验。第二，MapLibre GL是开源免费的，不像百度地图和高德地图需要申请API Key且有调用量限制。MapLibre GL使用Carto Voyager栅格瓦片作为底图，在底图上叠加自定义的兴趣点标记、路线图层和三维建筑图层。"
+          ]
+        },
+        {
+          "title": "2.2.4 可视图算法与Dijkstra算法",
+          "number": "2.2.4",
+          "content": [
+            "路径规划模块实现了两种算法。可视图（Visibility Graph）算法将校园建筑物轮廓作为障碍物多边形，对多边形做6-7米的外扩缓冲，然后在所有多边形顶点加上起点和终点之间建立可视连接——如果两点之间的连线不穿过任何障碍物内部，就建立一条边。在这个可视图上搜索最短路径，得到的结果就是绕开建筑物的步行路线。如果起点或终点在建筑物内部，系统自动将其投影到建筑物边缘最近的点。",
+            "Dijkstra算法作为备选方案。在前端的roadNetwork.ts文件中预定义了校园道路网络的节点和边，边的权重为Haversine公式计算的两点间地表距离。当可视图算法因数据问题无法返回有效路径时，系统自动切换到Dijkstra算法。"
+          ]
+        },
+        {
+          "title": "2.2.5 JWT认证",
+          "number": "2.2.5",
+          "content": [
+            "选择JWT而非Session的原因是：前后端分离架构下，前端和后端部署在不同的端口（5173和3456），Session方案需要额外处理跨域Cookie和服务端Session存储的问题。JWT方案中Token存储在前端localStorage里，每次请求在HTTP头中携带，服务端只需验证签名即可，不需要维护Session记录。本项目使用jsonwebtoken库签发Token，设置7天过期，密码使用bcrypt库做10轮盐值哈希存储。"
+          ]
+        }
+      ]
     },
     {
-      "title": "2.8 本章小结",
-      "number": "2.8",
+      "title": "2.3 功能需求分析",
+      "number": "2.3",
       "content": [
-        "本章介绍了系统开发用到的工具、环境和核心技术。前端采用Vue3 + TypeScript + Naive UI构建界面，地图渲染使用MapLibre GL库实现二三维切换。后端采用Express框架提供RESTful接口，数据存储使用SQLite嵌入式数据库。路径规划方面，可视图算法处理建筑物避障场景，Dijkstra算法作为备选方案在道路网络上搜索路径。接口认证采用JWT令牌方案，密码使用bcrypt哈希存储。"
+        "系统划分为用户和管理员两种角色。用户角色用例图如图2-1所示，管理员角色用例图如图2-2所示。",
+        {"type": "image", "path": "usecase-user.png", "width": 130, "caption": "图2-1　用户角色用例图"},
+        {"type": "image", "path": "usecase-admin.png", "width": 130, "caption": "图2-2　管理员角色用例图"}
+      ],
+      "subsections": [
+        {
+          "title": "2.3.1 用户端功能需求",
+          "number": "2.3.1",
+          "content": [
+            "用户端面向校园内的学生、教职工和访客，需要实现以下功能：注册账号并登录系统，支持游客模式浏览地图；在地图上浏览校园全景，支持二维和三维视角切换；按名称搜索兴趣点，按类别（教学楼、食堂、宿舍、运动场等）筛选兴趣点；点击地图上的标记查看兴趣点详情（名称、类型、描述、坐标）；选择起点和终点进行路径规划，系统自动绕开建筑物给出步行路线和预计时间；查看兴趣点统计图表（类型分布、地理分布）。"
+          ]
+        },
+        {
+          "title": "2.3.2 管理端功能需求",
+          "number": "2.3.2",
+          "content": [
+            "管理端面向系统管理员，需要实现以下功能：查看统计仪表盘，包括注册用户总数、兴趣点总数、导航总次数、今日导航次数、7天导航趋势图和热门路线排行；管理所有注册用户的账号信息，可以修改角色或删除用户；维护兴趣点数据，支持新增、编辑和删除操作；发布、编辑和删除系统公告，公告显示在用户端页面顶部。"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "2.4 本章小结",
+      "number": "2.4",
+      "content": [
+        "本章从技术、经济和操作三个方面做了可行性论证，介绍了Vue3、Express、SQLite、MapLibre GL、可视图算法、Dijkstra算法和JWT认证等关键技术并说明了选型理由，分析了用户端和管理端的功能需求。"
       ],
       "subsections": []
     }
