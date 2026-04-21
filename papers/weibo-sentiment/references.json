@@ -1,0 +1,17 @@
+[
+  "Pang B, Lee L, Vaithyanathan S. Thumbs up? Sentiment classification using machine learning techniques[C]. Proceedings of the ACL-02 conference on Empirical methods in natural language processing. 2002: 79-86.",
+  "刘丽珍, 王素格, 张武. 基于深度学习的中文微博情感分析研究综述[J]. 计算机工程与应用, 2023, 59(1): 1-15.",
+  "Devlin J, Chang M W, Lee K, et al. BERT: Pre-training of deep bidirectional transformers for language understanding[C]. Proceedings of NAACL-HLT, 2019: 4171-4186.",
+  "何清, 李宁, 罗文娟. 大数据下的机器学习算法综述[J]. 模式识别与人工智能, 2014, 27(4): 327-336.",
+  "陈东, 胡建华. 基于Hadoop的大数据分析与处理平台研究[J]. 计算机科学, 2020, 47(S2): 1-7.",
+  "White T. Hadoop: The Definitive Guide[M]. 4th ed. Sebastopol: O'Reilly Media, 2015.",
+  "Apache Software Foundation. Apache Hive[EB/OL]. https://hive.apache.org/, 2024.",
+  "Apache Software Foundation. Apache Spark[EB/OL]. https://spark.apache.org/, 2024.",
+  "Pedregosa F, Varoquaux G, Gramfort A, et al. Scikit-learn: Machine learning in Python[J]. Journal of Machine Learning Research, 2011, 12: 2825-2830.",
+  "张慧, 王熙照, 赵仲秋. 文本情感分析方法研究综述[J]. 计算机科学, 2020, 47(6): 1-8.",
+  "谢冬青, 林培光, 王洪波. 基于情感词典与机器学习结合的中文微博情感分析[J]. 计算机应用, 2019, 39(11): 3307-3312.",
+  "Zaharia M, Xin R S, Wendell P, et al. Apache Spark: A unified engine for big data processing[J]. Communications of the ACM, 2016, 59(11): 56-65.",
+  "翟壮, 梅莹. 基于Spark的微博舆情分析系统设计与实现[J]. 软件导刊, 2022, 21(5): 76-81.",
+  "李方军, 吴丽华, 张英. 基于Hadoop的社交网络舆情监测系统[J]. 计算机工程与设计, 2021, 42(3): 792-799.",
+  "Kim S M, Hovy E. Determining the sentiment of opinions[C]. Proceedings of the 20th International Conference on Computational Linguistics, 2004: 1367-1373."
+]

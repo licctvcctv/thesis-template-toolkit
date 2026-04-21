@@ -1,0 +1,23 @@
+{
+  "title_zh": "基于机器学习的中药方剂推荐",
+  "title_en": "Machine Learning-Based Traditional Chinese Medicine Prescription Recommendation",
+  "college": "上海健康医学院",
+  "department": "医疗器械与食品学院",
+  "major": "数据科学与大数据技术",
+  "name": "{{ name }}",
+  "student_id": "{{ student_id }}",
+  "advisor": "{{ advisor }}",
+  "year": "2026",
+  "month": "5",
+  "abstract_zh": "在中医临床辅助决策领域，中药方剂推荐是其中一个研究方向。医生辨证论治时，要根据患者的症状组合来确定中药组方。组方结果和医生自身的学习经历与临床积累关系很大，年资不同的医生面对相同症状时，处方差异可能相当明显。图神经网络等机器学习方法一旦用于方剂推荐，就有条件从大量历史处方中发现症状与中药间的潜在关联，给临床开方提供数据层面的参考依据。\n本文在一个包含33765条处方记录的公开数据集上开展研究。数据集里有390个不同症状和805味不同中药，每张处方平均约6.7味中药。预处理时构建了三张关联图：症状-中药二部图（79870条边）、症状-症状共现图（2546条边）和中药-中药共现图（9038条边）。另外从中药知识图谱中提取了药性、归经、功效等27维属性特征，一并融入中药节点的表示学习。在此数据基础上实现了GCN、GAT、Graph Transformer和Graph Mamba四种图神经网络推荐模型。四种模型的嵌入层和症状集成层是共用的，图表示学习阶段各自用了不同的消息传递机制：均值聚合、多头注意力聚合、全局自注意力和选择性状态空间。\n实验以Precision@K、Recall@K和F1@K三个指标（K取5、10、20）对四种模型做了对比评估。结果显示GAT在所有K值上均为最优，P@5达到0.2291、R@20达到0.3700、F1@10达到0.1960。GCN模型的整体表现与GAT接近，P@5为0.2283。Graph Transformer参数量为1.22M，在当前数据规模下出现过拟合，各项指标不及参数量更小的GCN（235K）和GAT（209K）。Graph Mamba的表现介于GCN和Graph Transformer之间。上述结果与FMCHS等近期论文独立复现的KDHR基线（P@5=0.2138）数值接近，说明实验可复现，也印证了注意力机制在方剂推荐任务中的有效性。",
+  "keywords_zh": "中药方剂推荐；图神经网络；图卷积网络；图注意力网络；知识图谱",
+  "abstract_en": "Traditional Chinese Medicine (TCM) prescription recommendation is an important research direction in clinical decision support systems. Doctors select herbs based on patient symptoms during the diagnosis process, and this workflow heavily depends on individual clinical experience. Introducing graph neural network methods into TCM prescription recommendation can help uncover latent associations between symptoms and herbs from large-scale historical prescription data.\nThis thesis conducts research based on a public dataset containing 33,765 prescription records involving 390 symptoms and 805 herbs. Three association graphs are constructed during preprocessing: a symptom-herb bipartite graph (79,870 edges), a symptom co-occurrence graph (2,546 edges), and a herb co-occurrence graph (9,038 edges). Additionally, 27-dimensional attribute features including properties, channel tropism, and efficacy are extracted from a TCM knowledge graph and incorporated into herb node representations. Four graph neural network models are implemented and compared: GCN, GAT, Graph Transformer, and Graph Mamba.\nExperimental results evaluated on Precision@K, Recall@K, and F1@K (K=5, 10, 20) show that GAT achieves the best performance across all metrics, with P@5 of 0.2291, R@20 of 0.3700, and F1@10 of 0.1960. GCN performs comparably to GAT. Graph Transformer suffers from overfitting due to its large parameter count (1.22M) on the current data scale. The results are consistent with recent third-party reproductions of the KDHR baseline, validating the effectiveness of attention mechanisms in TCM prescription recommendation.",
+  "keywords_en": "TCM Prescription Recommendation; Graph Neural Network; GCN; GAT; Knowledge Graph",
+  "acknowledgement": "论文写作期间，指导教师给予了大量帮助。课题方向的确定、实验方案的设计、模型代码的调试、论文结构的调整，各个环节老师都给出了具体建议，让我在毕业设计中积累了不少课堂之外的实践经验。在此向指导老师致以衷心的谢意。\n回顾四年学业，学院各位老师的授课对我帮助很大。图数据的表示和操作是在数据结构与算法课上学到的；模型训练和评估的基本流程来自机器学习课程；图神经网络消息传递机制的理论底子来自深度学习课；实验中的数据存取则得益于数据库课上的训练。毕业设计过程中，这些课程里学到的知识全部派上了用场。\n毕业设计期间同学们也帮了不少忙。配置PyTorch和PyTorch Geometric环境的时候，同学间的讨论帮我排除了多个版本兼容性问题。调试实验代码时，同学间的交流也让一些卡了好几天的bug更快得到了修复。\n本文的数据基础和对比基线来自KDHR项目作者公开的处方数据集和代码，在此向原作者致谢。开源社区的资源分享让中药方剂推荐方面的研究工作方便了许多。\n家人四年来始终在背后支持，使我能够心无旁骛地完成学业和毕设，不必被生活琐事牵扯精力。\n论文写作和系统开发期间给予过帮助的人，在此一并致谢。毕设虽已收尾，学习和成长的步子不会因此停下来。",
+  "conclusion_list": [
+    "本文以中药方剂推荐为研究对象，基于公开处方数据集和中药知识图谱，实现并对比了GCN、GAT、Graph Transformer和Graph Mamba四种图神经网络模型。数据预处理阶段构建了症状-中药二部图、症状共现图和中药共现图三张关联图。知识图谱中的药性、归经等27维属性作为中药节点的辅助特征参与模型训练。",
+    "实验以P@K、R@K和F1@K三个指标做了对比。结果显示GAT在所有K值上表现最优，P@5达到0.2291，F1@10达到0.1960，R@20达到0.3700。GCN的整体表现与GAT接近但略低。Graph Transformer参数量最大（1.22M），在当前33765条处方的数据规模下出现了过拟合现象，各项指标低于GCN和GAT。Graph Mamba的表现介于GCN和Graph Transformer之间。上述数值与FMCHS等近期论文独立复现的KDHR指标（P@5=0.2138）吻合，说明实验结果可靠。",
+    "本文存在以下不足：数据集仅含症状ID和中药ID的映射关系，缺少患者年龄、性别、病史等个体化信息；模型只输出推荐中药列表，未涉及剂量建议；Graph Transformer和Graph Mamba均为简化实现，未充分利用图结构信息。",
+    "后续改进方向包括：引入患者个体化特征以构建更细粒度的推荐模型；借助大语言模型增强推荐结果的可解释性；尝试数据增强方法来缓解处方稀疏性问题；将推荐系统部署为Web服务，作为可交互的临床辅助工具。"
+  ]
+}
