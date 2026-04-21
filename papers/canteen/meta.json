@@ -1,0 +1,32 @@
+{
+  "title_zh": "社区老年食堂订餐系统的设计与实现",
+  "title_en": "Design and Implementation of Community Elderly Canteen Ordering System",
+  "college": "黑龙江工商学院",
+  "department": "智能制造与交通工程学院",
+  "major": "软件工程1班",
+  "grade": "2022级",
+  "name": "谢雨珊",
+  "student_id": "202212041",
+  "advisor": "宿佳宁",
+  "advisor_title": "副教授",
+  "year": "2026",
+  "month": "5",
+  "finish_date": "2026年5月",
+
+  "abstract_zh": "我国老龄化程度近年来持续加深，社区养老服务的需求量也在增长。老年食堂是社区养老服务体系的一个组成部分，主要职能是为社区老年居民提供日常餐饮保障。多数社区老年食堂目前仍用纸质登记和人工统计的办法来处理订餐业务，菜品信息更新不及时、订单数据汇总困难、用户信息分散在不同登记本上，这几个问题比较突出。如果把信息化手段引入老年食堂的日常运营，人工操作环节可以减少，订餐流程的准确性和效率也能有所提升。\n本文设计并实现了一套社区老年食堂订餐系统，后端选用Java语言和Spring Boot框架，数据持久层使用MyBatis-Plus操作MySQL数据库，前端管理界面基于Vue 2和Element UI搭建，用户端页面采用HTML、CSS和JavaScript编写。系统按管理员、员工、用户三种角色划分功能权限，管理员负责菜品维护、用户管理、订单处理、供应商管理和公告发布等后台操作，员工负责菜品上下架和订单发货，用户则在前台完成菜品浏览、在线订餐、余额充值、积分累计、订单评价和论坛交流等操作。\n系统经过功能测试和性能测试验证，各模块运行结果与预期一致，页面响应速度和数据库操作效率均在可接受范围内，能够满足社区老年食堂日常订餐业务的基本管理需求。",
+
+  "keywords_zh": "社区老年食堂；订餐系统；Spring Boot；Vue；MyBatis-Plus",
+
+  "abstract_en": "With the aging population in China continuing to grow, community elderly canteens need information systems to improve the efficiency of meal ordering and daily operations. This thesis designs and implements a community elderly canteen ordering system. The backend is developed using Java with Spring Boot framework, and MyBatis-Plus serves as the data persistence layer operating on MySQL database. The frontend management interface is built with Vue 2 and Element UI, while the user-facing pages are developed using HTML, CSS, and JavaScript. The system supports three user roles: administrators, employees, and regular users, covering functional modules including dish management, online ordering, order processing, supplier management, forum interaction, and announcement publishing.\nFunctional testing and performance testing verify that all modules operate as expected, with page response times and database operations within acceptable ranges, meeting the basic management needs of daily meal ordering in community elderly canteens.",
+
+  "keywords_en": "Community Elderly Canteen; Ordering System; Spring Boot; Vue; MyBatis-Plus",
+
+  "acknowledgement": "本论文的完成离不开各方面的帮助和支持。首先向我的指导教师表示衷心的感谢，从选题方向的确定到论文框架的搭建，再到系统开发过程中遇到的技术难题，老师都给予了耐心的指导和具体的建议，让我在毕业设计期间学到了很多课堂上没有接触过的实践经验。\n感谢信息工程学院的各位老师，四年的课程教学为我打下了软件开发的基础知识储备，数据库原理、Web开发技术、软件工程等课程的内容在本次系统开发中都有实际的应用。\n感谢我的同学们，在开发过程中遇到环境配置、接口调试等问题时，同学之间的讨论和互助让很多问题得到了更快的解决。\n感谢我的家人，在大学四年的学习生活中给予了持续的支持和鼓励，让我能够专注于学业和毕业设计工作。\n最后向所有在论文写作和系统开发过程中提供过帮助的人表示感谢。",
+
+  "conclusion_list": [
+    "本文围绕社区老年食堂订餐业务的实际需求，设计并实现了一套基于Spring Boot和Vue的订餐管理系统。系统覆盖了菜品管理、在线订餐、订单处理、用户管理、供应商管理、积分体系、论坛交流和公告发布等功能模块，按管理员、员工、用户三种角色划分操作权限，基本满足了社区老年食堂日常运营的信息化管理需求。",
+    "后端用Spring Boot框架搭了RESTful接口，数据持久层用MyBatis-Plus，数据库操作代码因此简化了不少。前端管理界面用的是Vue 2和Element UI，用户端页面则用传统HTML方式来开发。数据库按业务实体拆分为菜品、订单、用户、员工、供应商、评价、收藏、论坛、公告、字典等表，各表之间用外键关联来维护数据的一致性。Token机制解决了多角色的登录认证问题，字典表则统一管理了系统里的各种枚举数据。",
+    "系统目前存在的不足主要有以下几点：前端用户界面的交互体验还可以继续优化，菜品展示页面的加载速度在数据量较大时可能受到影响；订餐流程中暂未支持在线支付对接，余额充值仍需线下操作；系统安全方面，密码存储采用明文方式，生产部署前需要改为加密存储；移动端适配还不够完善，部分页面在小屏幕设备上的显示效果有待调整。",
+    "后续可以改进的方向有以下几个：对接微信或支付宝的第三方支付接口，让用户能够在线完成充值和支付；把密码存储方式换成BCrypt等加密算法，把账户安全性提上去；引入Redis来缓存菜品列表这类查询频率高的数据，减轻数据库的压力；开发微信小程序或者移动端页面，让老年用户在手机上也能方便地订餐；加上数据统计分析模块，给食堂的运营决策提供数据方面的参考。"
+  ]
+}

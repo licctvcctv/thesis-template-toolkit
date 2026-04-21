@@ -1,0 +1,196 @@
+{
+  "title": "3 系统设计",
+  "sections": [
+    {
+      "title": "3.1 系统功能结构设计",
+      "content": [
+        "根据第二章的需求分析结果，系统按角色划分为用户端和管理端两大模块。用户端包含首页展示、菜品浏览、在线订餐、菜品收藏、订单管理、菜品评价、论坛交流、公告浏览和个人中心等功能。管理端按管理员和员工的权限差异分别包含菜品管理、订单管理、用户管理、员工管理、供应商管理、评价管理、收藏管理、论坛管理、公告管理、字典管理、轮播图管理和系统设置等功能。系统功能结构如图3-1所示。",
+        {
+          "type": "image",
+          "path": "func-structure.png",
+          "width": 155,
+          "caption": "图3-1　系统功能结构图"
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "3.2 系统架构设计",
+      "content": [
+        "系统整体是B/S架构，分为表现层、业务逻辑层和数据访问层三个层次。表现层有两部分：用户端的HTML页面和管理端的Vue SPA应用，它们都通过HTTP请求和后端交互。业务逻辑层是一个Spring Boot应用，对外提供RESTful API。Controller层接收和响应HTTP请求，Service层处理具体业务逻辑，拦截器则负责Token认证和权限校验。数据访问层由MyBatis-Plus的Mapper接口和XML映射文件组成，连接的是MySQL数据库，负责数据的读写操作。系统架构如图3-2所示。",
+        {
+          "type": "image",
+          "path": "system-arch.png",
+          "width": 148,
+          "caption": "图3-2　系统架构图"
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "3.3 业务流程设计",
+      "content": [
+        "系统的核心业务流程是用户订餐流程。用户登录后进入菜品列表页面，选择菜品并指定数量后提交订单。系统在提交时检查菜品库存是否充足、用户余额是否足够，条件满足则创建订单、扣减库存和余额、累加积分并自动评估会员等级。订单创建后状态为已支付，管理员或员工将订单标记为已完成后用户可以确认收货，确认收货后可以提交评价。用户也可以在已支付状态下申请退款，退款时系统回退余额和库存并扣减对应积分。业务流程如图3-3所示。",
+        {
+          "type": "image",
+          "path": "business-flow.png",
+          "width": 120,
+          "caption": "图3-3　订餐业务流程图"
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "3.4 数据库设计",
+      "content": [],
+      "subsections": [
+        {
+          "title": "3.4.1 概念结构设计",
+          "content": [
+            "根据系统的功能需求，数据库的概念结构涉及用户、员工、菜品、订单、供应商、评价、收藏、论坛帖子和公告等核心实体。用户与订单之间是一对多关系，一个用户可以创建多个订单。菜品与订单之间也是一对多关系，一个菜品可以出现在多个订单中。用户与菜品之间通过收藏表和评价表建立多对多关系。论坛帖子通过parent_id字段实现帖子之间的回复关系。系统总体E-R图如图3-4所示。",
+            {
+              "type": "image",
+              "path": "er-diagram.png",
+              "width": 155,
+              "caption": "图3-4　系统总体E-R图"
+            }
+          ]
+        },
+        {
+          "title": "3.4.2 逻辑结构设计",
+          "content": [
+            "根据概念结构设计的E-R图，将各实体转换为关系型数据库中的表结构。以下列出系统主要数据表的逻辑结构设计。",
+            "表3-1 用户表（yonghu）",
+            {
+              "type": "table",
+              "headers": ["字段名", "类型", "说明"],
+              "rows": [
+                ["id", "INT", "主键，自增"],
+                ["username", "VARCHAR(200)", "账户名"],
+                ["password", "VARCHAR(200)", "密码"],
+                ["yonghu_name", "VARCHAR(200)", "用户姓名"],
+                ["yonghu_phone", "VARCHAR(200)", "手机号"],
+                ["yonghu_id_number", "VARCHAR(200)", "身份证号"],
+                ["yonghu_photo", "VARCHAR(200)", "头像路径"],
+                ["sex_types", "INT", "性别，关联字典表"],
+                ["yonghu_email", "VARCHAR(200)", "电子邮箱"],
+                ["new_money", "DOUBLE", "账户余额"],
+                ["yonghu_sum_jifen", "DOUBLE", "累计积分"],
+                ["yonghu_new_jifen", "DOUBLE", "当前积分"],
+                ["huiyuandengji_types", "INT", "会员等级"],
+                ["create_time", "DATETIME", "创建时间"]
+              ]
+            },
+            "表3-2 菜品表（caipin）",
+            {
+              "type": "table",
+              "headers": ["字段名", "类型", "说明"],
+              "rows": [
+                ["id", "INT", "主键，自增"],
+                ["caipin_uuid_number", "VARCHAR(200)", "菜品编号"],
+                ["caipin_name", "VARCHAR(200)", "菜品名称"],
+                ["caipin_photo", "VARCHAR(200)", "菜品图片"],
+                ["caipin_types", "INT", "菜品类型，关联字典表"],
+                ["caipin_price", "INT", "积分单价"],
+                ["caipin_kucun_number", "INT", "库存数量"],
+                ["caipin_old_money", "DOUBLE", "原价"],
+                ["caipin_new_money", "DOUBLE", "现价"],
+                ["caipin_clicknum", "INT", "浏览次数"],
+                ["caipin_content", "TEXT", "菜品描述"],
+                ["shangxia_types", "INT", "上架状态"],
+                ["caipin_delete", "INT", "逻辑删除标记"],
+                ["create_time", "DATETIME", "创建时间"]
+              ]
+            },
+            "表3-3 订单表（caipin_order）",
+            {
+              "type": "table",
+              "headers": ["字段名", "类型", "说明"],
+              "rows": [
+                ["id", "INT", "主键，自增"],
+                ["caipin_order_uuid_number", "VARCHAR(200)", "订单编号"],
+                ["caipin_id", "INT", "菜品ID，外键"],
+                ["yonghu_id", "INT", "用户ID，外键"],
+                ["buy_number", "INT", "购买数量"],
+                ["caipin_order_time", "DATETIME", "预定时间"],
+                ["caipin_order_true_price", "DOUBLE", "实付金额"],
+                ["caipin_order_types", "INT", "订单状态"],
+                ["caipin_order_payment_types", "INT", "支付方式"],
+                ["insert_time", "DATETIME", "下单时间"],
+                ["create_time", "DATETIME", "创建时间"]
+              ]
+            },
+            "表3-4 供应商表（gongyingshang）",
+            {
+              "type": "table",
+              "headers": ["字段名", "类型", "说明"],
+              "rows": [
+                ["id", "INT", "主键，自增"],
+                ["gongyingshang_name", "VARCHAR(200)", "供应商名称"],
+                ["gongyingshang_phone", "VARCHAR(200)", "联系电话"],
+                ["gongyingshang_email", "VARCHAR(200)", "供应物品名称"],
+                ["gongyingshang_types", "INT", "物品类型"],
+                ["gongyingshang_money", "DOUBLE", "供应价格"],
+                ["gongyingshang_content", "TEXT", "供应商描述"],
+                ["create_time", "DATETIME", "创建时间"]
+              ]
+            },
+            "表3-5 评价表（caipin_commentback）",
+            {
+              "type": "table",
+              "headers": ["字段名", "类型", "说明"],
+              "rows": [
+                ["id", "INT", "主键，自增"],
+                ["caipin_id", "INT", "菜品ID，外键"],
+                ["yonghu_id", "INT", "用户ID，外键"],
+                ["caipin_commentback_text", "TEXT", "评价内容"],
+                ["insert_time", "DATETIME", "评价时间"],
+                ["reply_text", "TEXT", "管理员回复"],
+                ["update_time", "DATETIME", "回复时间"],
+                ["create_time", "DATETIME", "创建时间"]
+              ]
+            },
+            "表3-6 论坛表（forum）",
+            {
+              "type": "table",
+              "headers": ["字段名", "类型", "说明"],
+              "rows": [
+                ["id", "INT", "主键，自增"],
+                ["forum_name", "VARCHAR(200)", "帖子标题"],
+                ["yonghu_id", "INT", "用户ID"],
+                ["yuangong_id", "INT", "员工ID"],
+                ["users_id", "INT", "管理员ID"],
+                ["forum_content", "TEXT", "帖子内容"],
+                ["super_ids", "INT", "父帖ID，0为主帖"],
+                ["forum_state_types", "INT", "帖子状态"],
+                ["insert_time", "DATETIME", "发帖时间"],
+                ["create_time", "DATETIME", "创建时间"]
+              ]
+            },
+            "表3-7 公告表（news）",
+            {
+              "type": "table",
+              "headers": ["字段名", "类型", "说明"],
+              "rows": [
+                ["id", "INT", "主键，自增"],
+                ["news_name", "VARCHAR(200)", "公告标题"],
+                ["news_types", "INT", "公告类型"],
+                ["news_photo", "VARCHAR(200)", "封面图片"],
+                ["insert_time", "DATETIME", "发布时间"],
+                ["news_content", "TEXT", "公告内容"],
+                ["create_time", "DATETIME", "创建时间"]
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "3.5 本章小结",
+      "content": [
+        "这一章完成了系统整体的设计工作。功能结构设计把系统分成了用户端和管理端两大模块，各模块包含的功能项已经明确。架构设计上选的是B/S架构的三层结构，表现层、业务逻辑层和数据访问层各负责各的工作。业务流程方面，梳理了订餐从下单到评价的整个过程，库存校验、余额扣减、积分累计和退款回退这几个关键节点都覆盖到了。数据库设计以E-R图为起点，把概念模型转成了7张核心业务表的逻辑结构，为后面编码阶段的数据操作提供了设计依据。"
+      ],
+      "subsections": []
+    }
+  ]
+}

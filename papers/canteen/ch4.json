@@ -1,0 +1,155 @@
+{
+  "title": "4 系统功能的实现",
+  "sections": [
+    {
+      "title": "4.1 用户端功能实现",
+      "content": [],
+      "subsections": [
+        {
+          "title": "4.1.1 用户登录与注册",
+          "content": [
+            "用户通过前台登录页面输入账号和密码进行身份认证。登录请求发送到后端后，系统在yonghu表中查询匹配的用户名和密码，验证通过后生成Token写入token表并返回给前端，前端将Token保存在本地存储中用于后续请求的身份标识。注册功能允许新用户填写账号、密码、姓名、手机号等基本信息创建账户，注册时系统检查用户名是否已存在，初始余额和积分设为0，会员等级设为普通会员。用户登录页面如图4-1所示。",
+            {
+              "type": "image",
+              "path": "scr-login-user.png",
+              "width": 148,
+              "caption": "图4-1　用户登录页面"
+            },
+            "用户登录的核心代码如下，Controller层接收登录请求后查询数据库验证用户身份并生成Token：",
+            {
+              "type": "code",
+              "language": "java",
+              "content": "@IgnoreAuth\n@RequestMapping(\"/login\")\npublic R login(String username, String password,\n               String captcha, HttpServletRequest request) {\n    YonghuEntity yonghu = yonghuService.selectOne(\n        new EntityWrapper<YonghuEntity>()\n            .eq(\"username\", username));\n    if (yonghu == null || !yonghu.getPassword().equals(password))\n        return R.error(\"账号或密码不正确\");\n    String token = tokenService.generateToken(\n        yonghu.getId(), username, \"yonghu\", \"用户\");\n    return R.ok().put(\"token\", token);\n}"
+            }
+          ]
+        },
+        {
+          "title": "4.1.2 菜品浏览与搜索",
+          "content": [
+            "首页展示轮播图和菜品推荐列表，用户可以按菜品类型（川菜、粤菜、鲁菜、汤类）筛选菜品，也可以在搜索框中输入菜品名称进行关键字搜索。菜品列表以卡片形式展示菜品图片、名称、价格和浏览次数，点击菜品卡片进入详情页面查看完整描述信息，每次查看详情时系统将该菜品的浏览次数加1。系统首页如图4-2所示。",
+            {
+              "type": "image",
+              "path": "scr-homepage.png",
+              "width": 148,
+              "caption": "图4-2　系统首页"
+            },
+            "菜品详情接口在返回菜品信息的同时自动更新浏览计数，核心代码如下：",
+            {
+              "type": "code",
+              "language": "java",
+              "content": "@IgnoreAuth\n@RequestMapping(\"/detail/{id}\")\npublic R detail(@PathVariable(\"id\") Long id,\n                HttpServletRequest request) {\n    CaipinEntity caipin = caipinService.selectById(id);\n    if (caipin != null) {\n        // 浏览次数加1\n        caipin.setCaipinClicknum(\n            caipin.getCaipinClicknum() + 1);\n        caipinService.updateById(caipin);\n        CaipinView view = new CaipinView();\n        BeanUtils.copyProperties(caipin, view);\n        dictionaryService.dictionaryConvert(view, request);\n        return R.ok().put(\"data\", view);\n    }\n    return R.error(511, \"查不到数据\");\n}"
+            }
+          ]
+        },
+        {
+          "title": "4.1.3 在线订餐",
+          "content": [
+            "用户在菜品详情页选择购买数量后提交订单。系统在订单创建过程中依次完成以下操作：查询菜品信息验证菜品有效性、检查库存是否满足购买数量、检查用户余额是否足够支付、计算订单总价和可获积分、扣减菜品库存和用户余额、累加用户积分、根据积分总额自动评定会员等级（普通会员、银卡会员、金卡会员），最后将订单记录写入数据库。订单创建接口的核心代码如下：",
+            {
+              "type": "code",
+              "language": "java",
+              "content": "@RequestMapping(\"/add\")\npublic R add(@RequestBody CaipinOrderEntity caipinOrder,\n             HttpServletRequest request) {\n    CaipinEntity caipin = caipinService.selectById(\n        caipinOrder.getCaipinId());\n    if (caipin == null)\n        return R.error(511, \"查不到该菜品\");\n    if (caipin.getCaipinKucunNumber() - caipinOrder.getBuyNumber() < 0)\n        return R.error(511, \"购买数量不能大于库存数量\");\n    Integer userId = (Integer) request.getSession()\n        .getAttribute(\"userId\");\n    YonghuEntity yonghu = yonghuService.selectById(userId);\n    double balance = yonghu.getNewMoney()\n        - caipin.getCaipinNewMoney() * caipinOrder.getBuyNumber();\n    if (balance < 0)\n        return R.error(511, \"余额不够支付\");\n    // 扣减库存、余额，累加积分\n    caipin.setCaipinKucunNumber(\n        caipin.getCaipinKucunNumber() - caipinOrder.getBuyNumber());\n    caipinService.updateById(caipin);\n    yonghu.setNewMoney(balance);\n    Double buyJifen = new BigDecimal(caipin.getCaipinPrice())\n        .multiply(new BigDecimal(caipinOrder.getBuyNumber()))\n        .doubleValue();\n    yonghu.setYonghuSumJifen(\n        yonghu.getYonghuSumJifen() + buyJifen);\n    yonghu.setYonghuNewJifen(\n        yonghu.getYonghuNewJifen() + buyJifen);\n    // 会员等级自动评定\n    if (yonghu.getYonghuSumJifen() < 10000)\n        yonghu.setHuiyuandengjiTypes(1);\n    else if (yonghu.getYonghuSumJifen() < 100000)\n        yonghu.setHuiyuandengjiTypes(2);\n    else\n        yonghu.setHuiyuandengjiTypes(3);\n    yonghuService.updateById(yonghu);\n    caipinOrder.setCaipinOrderTypes(1);\n    caipinOrder.setCaipinOrderTruePrice(\n        caipin.getCaipinNewMoney() * caipinOrder.getBuyNumber());\n    caipinOrderService.insert(caipinOrder);\n    return R.ok();\n}"
+            }
+          ]
+        },
+        {
+          "title": "4.1.4 个人中心",
+          "content": [
+            "用户登录后可以进入个人中心页面，页面左侧菜单提供个人信息、菜品收藏和菜品订单三个入口。个人信息页面展示用户的账户、姓名、手机号、身份证号、头像、性别、邮箱、余额、当前积分和会员等级，用户可以修改个人信息和上传头像。余额栏右侧有充值入口，用户可以在线充值账户余额。菜品收藏页面展示用户收藏过的菜品列表。菜品订单页面展示用户的历史订单，支持按订单状态筛选。个人中心页面如图4-3所示。",
+            {
+              "type": "image",
+              "path": "scr-personal-center.png",
+              "width": 148,
+              "caption": "图4-3　个人中心页面"
+            }
+          ]
+        },
+        {
+          "title": "4.1.5 论坛交流",
+          "content": [
+            "论坛模块为用户提供交流讨论的空间。用户可以发布新帖，也可以在已有帖子下方回复。帖子列表页面显示帖子标题、发帖人、发帖时间和回复数量。帖子的层级关系通过super_ids字段实现：主帖的super_ids为0，回复帖的super_ids为被回复帖子的ID。管理员可以对违规帖子进行封禁操作，封禁后的帖子在前台不再显示。论坛页面如图4-4所示。",
+            {
+              "type": "image",
+              "path": "scr-forum.png",
+              "width": 148,
+              "caption": "图4-4　论坛交流页面"
+            }
+          ]
+        },
+        {
+          "title": "4.1.6 公告浏览",
+          "content": [
+            "公告模块用来展示管理员发布的通知公告和活动公告。公告列表页面用卡片的形式展示每条公告的封面图片、标题和发布时间，可以按标题关键字搜索。点击某条公告的标题就能进入详情页面看完整内容，内容部分支持富文本格式的显示。公告信息页面如图4-5所示。",
+            {
+              "type": "image",
+              "path": "scr-news.png",
+              "width": 148,
+              "caption": "图4-5　公告信息页面"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "4.2 管理端功能实现",
+      "content": [],
+      "subsections": [
+        {
+          "title": "4.2.1 管理员登录",
+          "content": [
+            "管理员和员工通过后台登录页面进行身份认证，系统根据输入的账号在对应的数据表中查询用户记录。登录成功后，前端Vue应用根据返回的角色信息动态加载对应权限的菜单项，管理员可以看到所有管理菜单，员工只能看到菜品管理和订单相关的菜单。管理端登录页面如图4-6所示。",
+            {
+              "type": "image",
+              "path": "scr-login-admin.png",
+              "width": 148,
+              "caption": "图4-6　管理端登录页面"
+            }
+          ]
+        },
+        {
+          "title": "4.2.2 菜品管理",
+          "content": [
+            "菜品管理模块提供菜品的新增、编辑、上下架、逻辑删除和批量导入功能。菜品列表页面以表格形式展示菜品编号、名称、图片、类型、库存、售价、原价、浏览次数和上架状态。管理员可以按菜品编号、名称和类型进行筛选查询。新建菜品时系统自动生成时间戳格式的菜品编号，初始浏览次数设为1，上架状态默认为上架，逻辑删除标记为未删除。删除操作不从数据库中物理删除记录，而是将逻辑删除标记设为已删除，列表查询时自动过滤掉已删除的菜品。菜品管理页面如图4-7所示。",
+            {
+              "type": "image",
+              "path": "scr-dish-manage.png",
+              "width": 148,
+              "caption": "图4-7　菜品管理页面"
+            },
+            "菜品新增接口在保存前检查菜品名称是否重复，核心代码如下：",
+            {
+              "type": "code",
+              "language": "java",
+              "content": "@RequestMapping(\"/save\")\npublic R save(@RequestBody CaipinEntity caipin,\n              HttpServletRequest request) {\n    Wrapper<CaipinEntity> queryWrapper =\n        new EntityWrapper<CaipinEntity>()\n            .eq(\"caipin_name\", caipin.getCaipinName())\n            .eq(\"caipin_delete\", 1);\n    CaipinEntity existing = caipinService.selectOne(queryWrapper);\n    if (existing != null)\n        return R.error(511, \"该菜品名称已存在\");\n    caipin.setCaipinClicknum(1);\n    caipin.setShangxiaTypes(1);\n    caipin.setCaipinDelete(1);\n    caipin.setCreateTime(new Date());\n    caipinService.insert(caipin);\n    return R.ok();\n}"
+            }
+          ]
+        },
+        {
+          "title": "4.2.3 订单管理",
+          "content": [
+            "订单管理模块展示所有用户的订单记录，管理员和员工可以按订单编号、菜品名称、用户姓名和订单状态进行筛选查询。订单列表以表格形式展示订单编号、菜品信息、用户信息、购买数量、实付金额、订单状态和下单时间。管理员可以对已支付状态的订单执行发货操作，将订单状态更新为已完成。用户确认收货后订单状态变为已收货，用户提交评价后状态变为已评价。退款操作会回退用户余额和菜品库存并扣减对应积分。订单退款的核心代码如下：",
+            {
+              "type": "code",
+              "language": "java",
+              "content": "@RequestMapping(\"/refund\")\npublic R refund(Integer id, HttpServletRequest request) {\n    CaipinOrderEntity order = caipinOrderService.selectById(id);\n    CaipinEntity caipin = caipinService.selectById(\n        order.getCaipinId());\n    YonghuEntity yonghu = yonghuService.selectById(\n        (Integer) request.getSession().getAttribute(\"userId\"));\n    // 查询会员折扣\n    Double zhekou = 1.0;\n    DictionaryEntity dict = dictionaryService.selectOne(\n        new EntityWrapper<DictionaryEntity>()\n            .eq(\"dic_code\", \"huiyuandengji_types\")\n            .eq(\"code_index\", yonghu.getHuiyuandengjiTypes()));\n    if (dict != null)\n        zhekou = Double.valueOf(dict.getBeizhu());\n    // 退还余额，扣减积分，恢复库存\n    Double refundMoney = caipin.getCaipinNewMoney()\n        * order.getBuyNumber() * zhekou;\n    yonghu.setNewMoney(yonghu.getNewMoney() + refundMoney);\n    Double buyJifen = new BigDecimal(caipin.getCaipinPrice())\n        .multiply(new BigDecimal(order.getBuyNumber()))\n        .doubleValue();\n    yonghu.setYonghuSumJifen(\n        yonghu.getYonghuSumJifen() - buyJifen);\n    yonghu.setYonghuNewJifen(\n        yonghu.getYonghuNewJifen() - buyJifen);\n    caipin.setCaipinKucunNumber(\n        caipin.getCaipinKucunNumber() + order.getBuyNumber());\n    order.setCaipinOrderTypes(2);\n    caipinOrderService.updateById(order);\n    yonghuService.updateById(yonghu);\n    caipinService.updateById(caipin);\n    return R.ok();\n}"
+            }
+          ]
+        },
+        {
+          "title": "4.2.4 供应商管理与公告管理",
+          "content": [
+            "供应商管理模块用来记录食堂食材供应商的信息：供应商名称、联系电话、供应物品名称、物品类型（蔬菜、肉类、海鲜、调料）以及供应价格。管理员可以对供应商记录做新增、编辑和删除操作，食堂采购时可以参考这些数据。",
+            "公告管理模块负责通知公告和活动公告的发布与维护。管理员在后台填写公告标题、选好公告类型、上传封面图片、编写正文内容，然后点击发布。公告正文用富文本编辑器来录入，文字排版和图片插入都支持。公告发布之后，用户在前台的公告信息页面可以浏览。"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "4.3 本章小结",
+      "content": [
+        "本章按用户端和管理端分别介绍了系统各功能模块的实现过程。用户端实现了登录注册、菜品浏览与搜索、在线订餐、个人中心、论坛交流和公告浏览等功能，并给出了运行截图和关键接口代码。管理端实现了管理员登录、菜品管理、订单管理、供应商管理和公告管理等功能，展示了后台管理界面的交互效果和数据处理逻辑。各模块的实现均基于第三章的设计方案，Controller层接收请求、Service层处理业务、Mapper层操作数据库的分层结构在代码中得到了体现。"
+      ],
+      "subsections": []
+    }
+  ]
+}
