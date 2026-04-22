@@ -118,7 +118,7 @@ def _format_reference(ref, index):
         return text
     # Strip existing [N] prefix if present, then re-add with correct index
     text = re.sub(r"^\[\d+\]\s*", "", text)
-    return f"[{index}]{text}"
+    return f"[{index}] {text}"
 
 
 def main():
@@ -249,8 +249,32 @@ def _post_process(docx_path):
     for p in doc.paragraphs:
         style_name = p.style.name if p.style else ''
         t = (p.text or '').strip()
-        if '一级标题' in style_name and chapter_pat.match(t):
+        if ('一级标题' in style_name or style_name == 'Heading 1') and chapter_pat.match(t):
             p.paragraph_format.page_break_before = True
+
+    # ---- 结论标题前分页 ----
+    for p in doc.paragraphs:
+        style_name = p.style.name if p.style else ''
+        t = (p.text or '').strip()
+        if ('一级标题' in style_name or style_name == 'Heading 1') and '结' in t and '论' in t and len(t) < 10:
+            p.paragraph_format.page_break_before = True
+
+    # ---- 声明页标题段后空行修复 ----
+    for p in doc.paragraphs:
+        t = (p.text or '').strip()
+        if t in ('学位论文原创性声明', '学位论文使用授权说明'):
+            pPr = p._p.pPr
+            if pPr is None:
+                pPr = OxmlElement('w:pPr')
+                p._p.insert(0, pPr)
+            spacing = pPr.find(_qn('w:spacing'))
+            if spacing is None:
+                spacing = OxmlElement('w:spacing')
+                pPr.append(spacing)
+            spacing.set(_qn('w:before'), '240')
+            spacing.set(_qn('w:beforeLines'), '100')
+            spacing.set(_qn('w:after'), '480')
+            spacing.set(_qn('w:afterLines'), '200')
 
     # Remove empty appendix heading left by the structural template.
     for p in list(doc.paragraphs):

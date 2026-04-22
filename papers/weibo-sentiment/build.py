@@ -84,8 +84,6 @@ def build_data(doc=None):
         chapters = process_chapters(chapters, doc)
 
     refs = load_json("references.json") or []
-    refs = [f"[{i+1}]{ref}" if not ref.startswith("[") else ref
-            for i, ref in enumerate(refs)]
 
     # 摘要处理（sjxy模板使用单段摘要，不拆段）
     # 结论和致谢保持列表格式
@@ -174,6 +172,72 @@ def _post_process(docx_path):
                 _insert_table(doc, p, _pending_tables[tid])
                 for r in p.runs:
                     r.text = ""
+
+    _NS = {'w': 'http://schemas.openxmlformats.org/wordprocessingml/2006/main'}
+
+    # ---- 1. 删除第一页空白：找到标题前的sectPr，改为continuous避免产生空白页 ----
+    paras = doc.paragraphs
+    for i in range(min(3, len(paras))):
+        p = paras[i]
+        pPr = p._p.pPr
+        if pPr is None:
+            continue
+        sect = pPr.find(_qn('w:sectPr'))
+        if sect is not None:
+            # 把sectPr type改为continuous（不分页）
+            sect_type = sect.find(_qn('w:type'))
+            if sect_type is None:
+                sect_type = OxmlElement('w:type')
+                sect.insert(0, sect_type)
+            sect_type.set(_qn('w:val'), 'continuous')
+            print(f"  修复: P{i} sectPr改为continuous（消除空白首页）")
+            # 如果是空段，直接删除
+            if not (p.text or '').strip():
+                p._p.getparent().remove(p._p)
+                print(f"  修复: 删除P{i}空段")
+            break
+
+    # ---- 2. English Keywords后加分页（摘要和目录分页）----
+    paras = doc.paragraphs
+    for i, p in enumerate(paras):
+        t = (p.text or '').strip()
+        if t.startswith('Keywords'):
+            br_run = p.add_run()
+            br_elem = OxmlElement('w:br')
+            br_elem.set(_qn('w:type'), 'page')
+            br_run._r.append(br_elem)
+            print("  修复: Keywords后加分页（摘要与目录分页）")
+            break
+
+    # ---- 3. 参考文献、致谢前分页 ----
+    for p in doc.paragraphs:
+        style_name = p.style.name if p.style else ''
+        t = (p.text or '').strip()
+        if style_name == '一级标题' and t in ('参考文献', '致谢'):
+            p.paragraph_format.page_break_before = True
+
+    # ---- 4. 清理目录区到第一个章标题之间的多余空段 ----
+    paras = doc.paragraphs
+    first_h1 = None
+    for i, p in enumerate(paras):
+        if p.style and p.style.name == '一级标题' and (p.text or '').strip():
+            first_h1 = i
+            break
+    if first_h1:
+        to_remove = []
+        for i in range(max(0, first_h1 - 5), first_h1):
+            p = paras[i]
+            t = (p.text or '').strip()
+            has_sect = p._p.find('.//w:sectPr', _NS) is not None if p._p.pPr is not None else False
+            if not t and not has_sect:
+                has_drawing = bool(p._p.findall('.//' + _qn('w:drawing')))
+                if not has_drawing:
+                    to_remove.append(p._p)
+        for elem in to_remove:
+            if elem.getparent() is not None:
+                elem.getparent().remove(elem)
+        if to_remove:
+            print(f"  修复: 清理目录→绪论间 {len(to_remove)} 个空段")
 
     doc.save(docx_path)
     print(f"  后处理: {len(_pending_tables)} 个表格")
