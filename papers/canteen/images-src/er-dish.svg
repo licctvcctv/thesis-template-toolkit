@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="920" viewBox="0 0 1500 920" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#202020" />
+    </marker>
+    <marker id="dashArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#555" />
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="1500" height="920" fill="#ffffff"/>
+  <rect x="610" y="410" width="280" height="80" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3.2"/>
+<text x="750" y="450" font-family="SimHei, PingFang SC, sans-serif" font-size="38" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">菜品</text>
+<ellipse cx="300" cy="160" rx="120" ry="40" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="300" y="160" font-family="SimSun, Songti SC, serif" font-size="27" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">菜品编号</text>
+<path d="M 610 450 L 420 160" fill="none" stroke="#202020" stroke-width="2.6" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="300" cy="260" rx="120" ry="40" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="300" y="260" font-family="SimSun, Songti SC, serif" font-size="27" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">菜品名称</text>
+<path d="M 610 450 L 420 260" fill="none" stroke="#202020" stroke-width="2.6" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="300" cy="350" rx="120" ry="40" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="300" y="350" font-family="SimSun, Songti SC, serif" font-size="27" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">菜品图片</text>
+<path d="M 610 450 L 420 350" fill="none" stroke="#202020" stroke-width="2.6" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="300" cy="450" rx="120" ry="40" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="300" y="450" font-family="SimSun, Songti SC, serif" font-size="27" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">菜品类型</text>
+<path d="M 610 450 L 420 450" fill="none" stroke="#202020" stroke-width="2.6" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="300" cy="550" rx="120" ry="40" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="300" y="550" font-family="SimSun, Songti SC, serif" font-size="27" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">积分单价</text>
+<path d="M 610 450 L 420 550" fill="none" stroke="#202020" stroke-width="2.6" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="300" cy="650" rx="120" ry="40" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="300" y="650" font-family="SimSun, Songti SC, serif" font-size="27" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">库存数量</text>
+<path d="M 610 450 L 420 650" fill="none" stroke="#202020" stroke-width="2.6" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="300" cy="750" rx="120" ry="40" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="300" y="750" font-family="SimSun, Songti SC, serif" font-size="27" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">原价</text>
+<path d="M 610 450 L 420 750" fill="none" stroke="#202020" stroke-width="2.6" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="1200" cy="210" rx="120" ry="40" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="1200" y="210" font-family="SimSun, Songti SC, serif" font-size="27" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">现价</text>
+<path d="M 890 450 L 1080 210" fill="none" stroke="#202020" stroke-width="2.6" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="1200" cy="300" rx="120" ry="40" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="1200" y="300" font-family="SimSun, Songti SC, serif" font-size="27" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">浏览次数</text>
+<path d="M 890 450 L 1080 300" fill="none" stroke="#202020" stroke-width="2.6" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="1200" cy="400" rx="120" ry="40" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="1200" y="400" font-family="SimSun, Songti SC, serif" font-size="27" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">菜品描述</text>
+<path d="M 890 450 L 1080 400" fill="none" stroke="#202020" stroke-width="2.6" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="1200" cy="500" rx="120" ry="40" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="1200" y="500" font-family="SimSun, Songti SC, serif" font-size="27" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">上架状态</text>
+<path d="M 890 450 L 1080 500" fill="none" stroke="#202020" stroke-width="2.6" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="1200" cy="600" rx="120" ry="40" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="1200" y="600" font-family="SimSun, Songti SC, serif" font-size="27" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">删除标记</text>
+<path d="M 890 450 L 1080 600" fill="none" stroke="#202020" stroke-width="2.6" stroke-linecap="square" stroke-linejoin="miter"/>
+<ellipse cx="1200" cy="700" rx="120" ry="40" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="1200" y="700" font-family="SimSun, Songti SC, serif" font-size="27" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">创建时间</text>
+<path d="M 890 450 L 1080 700" fill="none" stroke="#202020" stroke-width="2.6" stroke-linecap="square" stroke-linejoin="miter"/>
+</svg>

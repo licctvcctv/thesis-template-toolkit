@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1300" height="750" viewBox="0 0 1300 750" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#202020" />
+    </marker>
+    <marker id="dashArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#555" />
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="1300" height="750" fill="#ffffff"/>
+  <rect x="560" y="200" width="180" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="2.8"/>
+<text x="650" y="230" font-family="SimHei, PingFang SC, sans-serif" font-size="29" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">用户</text>
+<rect x="110" y="60" width="180" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="2.8"/>
+<text x="200" y="90" font-family="SimHei, PingFang SC, sans-serif" font-size="29" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">员工</text>
+<rect x="1010" y="60" width="200" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="2.8"/>
+<text x="1110" y="90" font-family="SimHei, PingFang SC, sans-serif" font-size="29" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">供应商</text>
+<rect x="110" y="200" width="180" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="2.8"/>
+<text x="200" y="230" font-family="SimHei, PingFang SC, sans-serif" font-size="29" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">论坛</text>
+<rect x="1010" y="200" width="180" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="2.8"/>
+<text x="1100" y="230" font-family="SimHei, PingFang SC, sans-serif" font-size="29" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">订单</text>
+<rect x="560" y="450" width="180" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="2.8"/>
+<text x="650" y="480" font-family="SimHei, PingFang SC, sans-serif" font-size="29" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">菜品</text>
+<rect x="110" y="450" width="180" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="2.8"/>
+<text x="200" y="480" font-family="SimHei, PingFang SC, sans-serif" font-size="29" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">收藏</text>
+<rect x="1010" y="450" width="180" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="2.8"/>
+<text x="1100" y="480" font-family="SimHei, PingFang SC, sans-serif" font-size="29" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">评价</text>
+<rect x="110" y="650" width="180" height="60" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="2.8"/>
+<text x="200" y="680" font-family="SimHei, PingFang SC, sans-serif" font-size="29" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">公告</text>
+<path d="M 370 120 L 420 150 L 370 180 L 320 150 Z" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="370" y="150" font-family="SimSun, Songti SC, serif" font-size="24" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">登录</text>
+<path d="M 290 90 L 320 150" fill="none" stroke="#202020" stroke-width="2.4" stroke-linecap="square" stroke-linejoin="miter"/>
+<path d="M 420 150 L 560 230" fill="none" stroke="#202020" stroke-width="2.4" stroke-linecap="square" stroke-linejoin="miter"/>
+<path d="M 930 120 L 980 150 L 930 180 L 880 150 Z" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="930" y="150" font-family="SimSun, Songti SC, serif" font-size="24" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">管理</text>
+<path d="M 740 230 L 880 150" fill="none" stroke="#202020" stroke-width="2.4" stroke-linecap="square" stroke-linejoin="miter"/>
+<path d="M 980 150 L 1010 90" fill="none" stroke="#202020" stroke-width="2.4" stroke-linecap="square" stroke-linejoin="miter"/>
+<path d="M 370 200 L 420 230 L 370 260 L 320 230 Z" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="370" y="230" font-family="SimSun, Songti SC, serif" font-size="24" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">发帖</text>
+<path d="M 290 230 L 320 230" fill="none" stroke="#202020" stroke-width="2.4" stroke-linecap="square" stroke-linejoin="miter"/>
+<path d="M 420 230 L 560 230" fill="none" stroke="#202020" stroke-width="2.4" stroke-linecap="square" stroke-linejoin="miter"/>
+<path d="M 830 200 L 880 230 L 830 260 L 780 230 Z" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="830" y="230" font-family="SimSun, Songti SC, serif" font-size="24" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">下单</text>
+<path d="M 740 230 L 780 230" fill="none" stroke="#202020" stroke-width="2.4" stroke-linecap="square" stroke-linejoin="miter"/>
+<path d="M 880 230 L 1010 230" fill="none" stroke="#202020" stroke-width="2.4" stroke-linecap="square" stroke-linejoin="miter"/>
+<path d="M 650 310 L 700 340 L 650 370 L 600 340 Z" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="650" y="340" font-family="SimSun, Songti SC, serif" font-size="24" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">浏览</text>
+<path d="M 650 260 L 650 310" fill="none" stroke="#202020" stroke-width="2.4" stroke-linecap="square" stroke-linejoin="miter"/>
+<path d="M 650 370 L 650 450" fill="none" stroke="#202020" stroke-width="2.4" stroke-linecap="square" stroke-linejoin="miter"/>
+<path d="M 370 450 L 420 480 L 370 510 L 320 480 Z" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="370" y="480" font-family="SimSun, Songti SC, serif" font-size="24" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">关联</text>
+<path d="M 290 480 L 320 480" fill="none" stroke="#202020" stroke-width="2.4" stroke-linecap="square" stroke-linejoin="miter"/>
+<path d="M 420 480 L 560 480" fill="none" stroke="#202020" stroke-width="2.4" stroke-linecap="square" stroke-linejoin="miter"/>
+<path d="M 830 450 L 880 480 L 830 510 L 780 480 Z" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="830" y="480" font-family="SimSun, Songti SC, serif" font-size="24" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">针对</text>
+<path d="M 740 480 L 780 480" fill="none" stroke="#202020" stroke-width="2.4" stroke-linecap="square" stroke-linejoin="miter"/>
+<path d="M 880 480 L 1010 480" fill="none" stroke="#202020" stroke-width="2.4" stroke-linecap="square" stroke-linejoin="miter"/>
+<path d="M 830 310 L 880 340 L 830 370 L 780 340 Z" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="830" y="340" font-family="SimSun, Songti SC, serif" font-size="24" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">包含</text>
+<path d="M 740 480 L 780 340" fill="none" stroke="#202020" stroke-width="2.4" stroke-linecap="square" stroke-linejoin="miter"/>
+<path d="M 880 340 L 1010 230" fill="none" stroke="#202020" stroke-width="2.4" stroke-linecap="square" stroke-linejoin="miter"/>
+<path d="M 350 310 L 400 340 L 350 370 L 300 340 Z" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="350" y="340" font-family="SimSun, Songti SC, serif" font-size="24" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">收藏</text>
+<path d="M 560 250 L 350 250 L 350 310" fill="none" stroke="#202020" stroke-width="2.4" stroke-linecap="square" stroke-linejoin="miter"/>
+<path d="M 350 370 L 200 450" fill="none" stroke="#202020" stroke-width="2.4" stroke-linecap="square" stroke-linejoin="miter"/>
+<path d="M 950 310 L 1000 340 L 950 370 L 900 340 Z" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="950" y="340" font-family="SimSun, Songti SC, serif" font-size="24" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">评价</text>
+<path d="M 740 250 L 950 250 L 950 310" fill="none" stroke="#202020" stroke-width="2.4" stroke-linecap="square" stroke-linejoin="miter"/>
+<path d="M 950 370 L 1100 450" fill="none" stroke="#202020" stroke-width="2.4" stroke-linecap="square" stroke-linejoin="miter"/>
+<path d="M 210 520 L 260 550 L 210 580 L 160 550 Z" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="210" y="550" font-family="SimSun, Songti SC, serif" font-size="24" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">发布</text>
+<path d="M 630 260 L 630 490 L 210 490 L 210 520" fill="none" stroke="#202020" stroke-width="2.4" stroke-linecap="square" stroke-linejoin="miter"/>
+<path d="M 210 580 L 200 650" fill="none" stroke="#202020" stroke-width="2.4" stroke-linecap="square" stroke-linejoin="miter"/>
+</svg>

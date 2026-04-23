@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="760" viewBox="0 0 1800 760" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#202020" />
+    </marker>
+    <marker id="dashArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#555" />
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="1800" height="760" fill="#ffffff"/>
+  <rect x="620" y="40" width="570" height="90" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="905" y="85" font-family="SimHei, PingFang SC, sans-serif" font-size="42" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">社区老年食堂订餐系统</text>
+<path d="M 900 130 L 900 180" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"/>
+<path d="M 300 180 L 1500 180" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"/>
+<rect x="210" y="240" width="180" height="80" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="300" y="280" font-family="SimHei, PingFang SC, sans-serif" font-size="32" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">用户端模块</text>
+<path d="M 300 180 L 300 240" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"/>
+<path d="M 300 320 L 300 390" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"/>
+<path d="M 80 390 L 520 390" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"/>
+<path d="M 80 390 L 80 440" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"/>
+<rect x="40" y="440" width="80" height="220" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="80" y="501" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">菜</text>
+<text x="80" y="534" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">品</text>
+<text x="80" y="566" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">浏</text>
+<text x="80" y="599" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">览</text>
+<path d="M 170 390 L 170 440" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"/>
+<rect x="130" y="440" width="80" height="220" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="170" y="501" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">在</text>
+<text x="170" y="534" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">线</text>
+<text x="170" y="566" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">订</text>
+<text x="170" y="599" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">餐</text>
+<path d="M 260 390 L 260 440" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"/>
+<rect x="220" y="440" width="80" height="220" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="260" y="501" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">订</text>
+<text x="260" y="534" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">单</text>
+<text x="260" y="566" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">管</text>
+<text x="260" y="599" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">理</text>
+<path d="M 350 390 L 350 440" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"/>
+<rect x="310" y="440" width="80" height="220" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="350" y="501" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">菜</text>
+<text x="350" y="534" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">品</text>
+<text x="350" y="566" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">收</text>
+<text x="350" y="599" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">藏</text>
+<path d="M 430 390 L 430 440" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"/>
+<rect x="390" y="440" width="80" height="220" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="430" y="501" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">菜</text>
+<text x="430" y="534" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">品</text>
+<text x="430" y="566" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">评</text>
+<text x="430" y="599" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">价</text>
+<path d="M 520 390 L 520 440" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"/>
+<rect x="480" y="440" width="80" height="220" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="520" y="501" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">论</text>
+<text x="520" y="534" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">坛</text>
+<text x="520" y="566" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">交</text>
+<text x="520" y="599" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">流</text>
+<rect x="810" y="240" width="180" height="80" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="900" y="280" font-family="SimHei, PingFang SC, sans-serif" font-size="32" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">员工端模块</text>
+<path d="M 900 180 L 900 240" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"/>
+<path d="M 900 320 L 900 390" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"/>
+<path d="M 810 390 L 990 390" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"/>
+<path d="M 810 390 L 810 440" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"/>
+<rect x="770" y="440" width="80" height="220" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="810" y="485" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">菜</text>
+<text x="810" y="518" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">品</text>
+<text x="810" y="550" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">上</text>
+<text x="810" y="582" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">下</text>
+<text x="810" y="615" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">架</text>
+<path d="M 900 390 L 900 440" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"/>
+<rect x="860" y="440" width="80" height="220" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="900" y="501" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">订</text>
+<text x="900" y="534" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">单</text>
+<text x="900" y="566" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">发</text>
+<text x="900" y="599" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">货</text>
+<path d="M 990 390 L 990 440" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"/>
+<rect x="950" y="440" width="80" height="220" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="990" y="501" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">公</text>
+<text x="990" y="534" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">告</text>
+<text x="990" y="566" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">管</text>
+<text x="990" y="599" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">理</text>
+<rect x="1410" y="240" width="180" height="80" rx="0" ry="0" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="1500" y="280" font-family="SimHei, PingFang SC, sans-serif" font-size="32" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">管理员模块</text>
+<path d="M 1500 180 L 1500 240" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"/>
+<path d="M 1500 320 L 1500 390" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"/>
+<path d="M 1280 390 L 1720 390" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"/>
+<path d="M 1280 390 L 1280 440" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"/>
+<rect x="1240" y="440" width="80" height="220" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="1280" y="501" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">用</text>
+<text x="1280" y="534" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">户</text>
+<text x="1280" y="566" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">管</text>
+<text x="1280" y="599" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">理</text>
+<path d="M 1370 390 L 1370 440" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"/>
+<rect x="1330" y="440" width="80" height="220" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="1370" y="501" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">员</text>
+<text x="1370" y="534" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">工</text>
+<text x="1370" y="566" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">管</text>
+<text x="1370" y="599" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">理</text>
+<path d="M 1460 390 L 1460 440" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"/>
+<rect x="1420" y="440" width="80" height="220" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="1460" y="485" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">供</text>
+<text x="1460" y="518" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">应</text>
+<text x="1460" y="550" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">商</text>
+<text x="1460" y="582" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">管</text>
+<text x="1460" y="615" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">理</text>
+<path d="M 1550 390 L 1550 440" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"/>
+<rect x="1510" y="440" width="80" height="220" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="1550" y="501" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">字</text>
+<text x="1550" y="534" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">典</text>
+<text x="1550" y="566" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">管</text>
+<text x="1550" y="599" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">理</text>
+<path d="M 1630 390 L 1630 440" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"/>
+<rect x="1590" y="440" width="80" height="220" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="1630" y="485" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">轮</text>
+<text x="1630" y="518" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">播</text>
+<text x="1630" y="550" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">图</text>
+<text x="1630" y="582" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">管</text>
+<text x="1630" y="615" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">理</text>
+<path d="M 1720 390 L 1720 440" fill="none" stroke="#202020" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"/>
+<rect x="1680" y="440" width="80" height="220" fill="#fff" stroke="#202020" stroke-width="3"/>
+<text x="1720" y="501" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">系</text>
+<text x="1720" y="534" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">统</text>
+<text x="1720" y="566" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">设</text>
+<text x="1720" y="599" font-family="SimHei, PingFang SC, sans-serif" font-size="30" font-weight="400" fill="#202020" text-anchor="middle" dominant-baseline="middle">置</text>
+</svg>
