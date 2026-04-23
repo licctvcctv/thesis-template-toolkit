@@ -4,50 +4,59 @@
     {
       "title": "4.1 情感分布分析域",
       "content": [
-        "在所有分析维度中，情感分布分析域被微博舆情监控系统置于最核心的位置。公众情绪的时序演化规律经由该域在宏观与微观两个层面上得到揭示。采集周期内的微博评论数据在本节中被依据第3章设计的情感分布类指标体系加以多角度情感比例分析与趋势可视化。三类情感的整体占比变化、正负面力量对比以及不同数据来源的差异化表现均被纳入分析范围。双重能力经由统计结果与多项式回归预测的结合而被系统所获得：历史趋势的呈现构成其一，短期舆情走势的前瞻性参考构成其二。"
+        "情感分布分析域其实就是整个系统里最关键的一块。宏观上看大盘情绪走势，微观上拆开看具体时间点的波动。第3章定的那套情感分布指标，这一节拿来实际跑一遍。分析的东西包括三种情感各自占了多少、正面和负面谁强谁弱、不同来源的数据表现有啥区别。另外把统计数据和多项式回归预测放到一起看，既能回顾历史走势，也能大致判断短期内舆情往哪个方向走。"
       ],
       "subsections": [
         {
           "title": "4.1.1 三类情感比例趋势",
           "content": [
-            "图4-1呈现了正面、中性、负面三类情感比例的历史趋势及7日多项式回归预测结果。以下为所采用的视觉编码方案：历史观测数据阶段以灰色背景区域加以对应，基于2次多项式回归的预测值由虚线延伸部分表征，预测的置信区间范围则借助浅色半透明带状区域予以标识。三条情感曲线分别被蓝色、灰色和红色所标示，各类情感的走势差异由此可被读者快速识别。",
-            "整个监测周期内中性评论始终占据主导地位这一事实已被历史数据所证明，其比例被稳定维持在40%至50%的区间之内。客观叙述或信息转发占据微博平台评论的大量份额，明显的情感倾向并不存在于其中，这一判断正被上述数据所印证。约5至10个百分点的优势使正面评论的比例整体超出负面评论。偏向正面积极的整体舆论环境由此在微博用户群体中得到确认。尽管负面评论比例在总体上维持在相对较低的水平，显著的上升脉冲却在个别时间节点被观测到。社会热点负面事件的爆发往往是这些异常点的可追溯来源。",
-            "未来7日内三类情感比例均将维持相对平稳的走势，这一判断由预测结果所揭示，趋势反转或交叉现象在预测区间内并未被观察到。短期预测的不确定性被控制在可接受的水平，置信区间的宽度呈现出较为均匀的分布。积极信号经由这一预测结果向舆情管理者释放：当前舆论生态的稳定格局在无突发事件干预的条件下将得到延续。突发事件的预警能力在多项式回归模型中受到较大的局限。实时监控机制在实际应用中仍须被引入以弥补这一不足。",
+            "图4-1把正面、中性、负面三种情感比例的历史走势画了出来，后面还接了7天的回归预测。图里灰色底色那段是历史数据，虚线往后延伸的就是2次多项式回归算出来的预测值。浅色的半透明带子是置信区间。蓝色线代表正面、灰色代表中性、红色代表负面，一眼就能分清。",
+            "看历史数据，中性评论一直是大头，占比在40%到50%之间晃。微博上很多评论本身就是转发或者陈述事实，没啥明显情绪色彩。正面评论比负面多出5到10个百分点左右，整体舆论氛围偏正面。不过负面评论虽然总体不多，某些时间点还是会突然冒出来一波，查了一下基本都跟社会热点负面事件有关。",
+            "回归预测的结果是：后面7天三种情感比例都比较平稳，没看到哪条线要反转或交叉的迹象。置信区间宽度也还算均匀，短期预测的误差可以接受。简单说就是，不出意外的话当前这个舆论格局还能维持住。不过多项式回归碰到突发事件就不太灵了，真要用的话还得搭配实时监控才行。",
             {
               "type": "image",
               "path": "01_sentiment_trend.png",
               "width": 148,
               "caption": "图4-1 三类情感比例趋势与预测"
-            }
+            },
+            "三类情感比例趋势指标的核心计算代码如下：",
+            "INSERT OVERWRITE TABLE ads_sentiment_ratio_trend\nPARTITION (dt = '${stat_date}')\nSELECT\n    stat_date,\n    '正面情感率' AS metric_name,\n    ROUND(\n        SUM(positive_count) /\n        SUM(total_count),\n        4\n    ) AS positive_ratio,\n    ROUND(\n        SUM(neutral_count) /\n        SUM(total_count),\n        4\n    ) AS neutral_ratio,\n    ROUND(\n        SUM(negative_count) /\n        SUM(total_count),\n        4\n    ) AS negative_ratio,\n    SUM(positive_count) AS positive_count,\n    SUM(neutral_count) AS neutral_count,\n    SUM(negative_count) AS negative_count,\n    SUM(total_count) AS total_count,\n    ROUND(\n        AVG(SUM(positive_count) / SUM(total_count))\n        OVER(ORDER BY stat_date\n             ROWS BETWEEN 6 PRECEDING AND CURRENT ROW),\n        4\n    ) AS positive_ratio_ma7,\n    ROUND(\n        AVG(SUM(negative_count) / SUM(total_count))\n        OVER(ORDER BY stat_date\n             ROWS BETWEEN 6 PRECEDING AND CURRENT ROW),\n        4\n    ) AS negative_ratio_ma7,\n    current_timestamp() AS etl_time\nFROM\n    dws_topic_sentiment_daily\nWHERE\n    stat_date >= date_sub('${stat_date}', 30)\nGROUP BY\n    stat_date\nORDER BY\n    stat_date;",
+            "上面这段SQL按stat_date分组聚合三类评论的计数，再分别除以总评论数算出占比。ROUND保留4位小数。窗口函数AVG...OVER算7日移动平均做平滑处理。WHERE条件限制只取最近30天数据，结果写入ads_sentiment_ratio_trend表。"
           ]
         },
         {
           "title": "4.1.2 正负面比值分析",
           "content": [
-            "图4-2展示了正负面评论比值（P/N Ratio）随时间变化所呈现的趋势曲线。舆论倾向的衡量以正面评论数量与负面评论数量的比值作为该指标的核心参数。正面舆论在比值大于1时占据主导地位，绿色区域在图中被用于对此加以标识；负面舆论在比值小于1时暂时占优，警示标注通过红色区域实现。任意时间点的舆论导向可被舆情管理者借助这种双色区域设计一目了然地加以判断。",
-            "P/N比值在大部分时段被维持在1.0至1.5之间，这一事实由整个监测周期的数据所揭示，总体格局由正面舆论的持续占优所构成。1.0以下的短暂下探在若干特定日期中被该比值所呈现，约0.75的水平构成最低点。具体的负面舆情事件在每一次下探中均被回溯分析所确认为对应因素。某明星负面新闻的曝光或由社会事件所引发的集中讨论即为典型案例。短时间内负面评论的激增由负面事件所驱动，P/N比值也因此受到压低。",
-            "P/N比值在未来7日的预测值被维持在1.1至1.3的区间内，这是趋势预测角度下得到的判断。主导地位在短期内仍将由正面舆论所保持。监测后期出现的一个值得关注的现象是P/N比值的波动幅度呈现轻微收窄的趋势。这一现象背后的原因可能在于舆论环境正逐步趋于稳定。预警机制在实际舆情监控中应当被系统及时触发，触发条件为P/N比值连续多日低于1.0，管理者由此获得关注潜在舆情危机的提示。舆情日报的核心展示内容尤其适合由该指标担当，简洁性和直观性是其主要优势。",
+            "图4-2画的是P/N比值（正面评论数除以负面评论数）的时间变化曲线。这个值大于1就是正面占上风，图里涂成绿色。小于1就是负面占上风，涂成红色当警告。这样一红一绿，管理者扫一眼就知道某天舆论偏向哪边。",
+            "数据上看，P/N比值大多数时候在1.0到1.5之间，正面一直压着负面。有几天跌破了1.0，最低大概0.75。去查了一下，每次跌破都能找到对应的负面事件。比如某明星出了负面新闻，或者某个社会事件被集中讨论了。负面评论短时间内涌进来太多，比值自然就被拉下去了。",
+            "预测显示后面7天P/N比值会在1.1到1.3之间，正面继续占主导。还有个细节：监测后期这个值的波动幅度在慢慢变小，可能是舆论环境在趋于稳定。实际做监控的时候，P/N比值要是连续好几天低于1.0，就该赶紧拉预警了。这个指标看起来简单，放在舆情日报里很好用。",
             {
               "type": "image",
               "path": "02_pn_ratio_trend.png",
               "width": 148,
               "caption": "图4-2 正负面比值趋势"
-            }
+            },
+            "正负面比值趋势指标的核心计算代码如下：",
+            "INSERT OVERWRITE TABLE ads_pn_ratio_trend\nPARTITION (dt = '${stat_date}')\nSELECT\n    stat_date,\n    SUM(positive_count) AS daily_positive,\n    SUM(negative_count) AS daily_negative,\n    ROUND(\n        SUM(positive_count) /\n        GREATEST(SUM(negative_count), 1),\n        4\n    ) AS pn_ratio,\n    CASE\n        WHEN SUM(positive_count) > SUM(negative_count)\n            THEN 'positive_dominant'\n        WHEN SUM(positive_count) < SUM(negative_count)\n            THEN 'negative_dominant'\n        ELSE 'balanced'\n    END AS dominance_flag,\n    ROUND(\n        (SUM(positive_count) / GREATEST(SUM(negative_count), 1))\n        /\n        GREATEST(\n            LAG(SUM(positive_count) / GREATEST(SUM(negative_count), 1))\n            OVER(ORDER BY stat_date),\n            0.01\n        ) - 1,\n        4\n    ) AS pn_ratio_change,\n    ROUND(\n        AVG(SUM(positive_count) / GREATEST(SUM(negative_count), 1))\n        OVER(ORDER BY stat_date\n             ROWS BETWEEN 6 PRECEDING AND CURRENT ROW),\n        4\n    ) AS pn_ratio_ma7,\n    current_timestamp() AS etl_time\nFROM\n    dws_topic_sentiment_daily\nWHERE\n    stat_date >= date_sub('${stat_date}', 30)\nGROUP BY\n    stat_date\nORDER BY\n    stat_date;",
+            "分母用GREATEST兜底防止除零。CASE WHEN标记当天正面占优还是负面占优。LAG窗口函数拿前一天的比值算环比变化率。7日趋势预测在Python端用numpy.polyfit做2次多项式拟合再外推7天。"
           ]
         },
         {
           "title": "4.1.3 分来源情感趋势",
           "content": [
-            "四个主要数据源的正面和负面情感比例趋势在图4-3中以评论来源为分类依据，通过2乘2子图布局分别加以展示。四个数据源分别对应明星时事、日常综合、社会热点和其他综合类话题，正面比例曲线（蓝色）和负面比例曲线（红色）在每个子图内被同时绘制，情感特征在不同来源之间的差异一目了然。差异化的监控策略可由舆情分析师借助这种分维度的可视化方式针对不同领域加以制定。",
-            "各来源的横向对比揭示了以下特征：其他三个来源的正面比例均被明星时事类话题显著超过，45%以上的平均正面率由后者所达到。粉丝文化和应援氛围作为娱乐话题的天然属性构成了主要驱动因素。最为均衡的情感分布出现在日常综合类话题中，正负面比例之间的差距较小，日常话题的中性特征在这一分布中得到了体现。负面波动的剧烈程度在社会热点类话题中居于首位，多个尖峰在负面比例曲线上被呈现，35%以上的负面率在峰值时段可被录得。公众的不满和批评情绪更容易被社会议题所引发，充分的印证已由数据提供。",
-            "各来源的情感趋势在时序演化的维度上并非呈现完全独立的态势。多个来源的负面比例在某些特定时段中出现同步上升，全社会范围内的重大负面事件通常是这类同步现象的对应诱因。各自独立的波动节奏在大多数时间内由各来源分别维持。差异化的预警阈值应当在构建分领域舆情监控策略时为不同来源分别设置，这一结论由上述发现所支撑。适当放宽的负面预警阈值适用于社会热点类，而明星时事类则需要对负面率的微小上升保持更高的敏感度。",
-            "一条重要规律也在分来源分析中被揭示：相关事件的社会影响在明星时事类话题的负面比例异常飙升时往往已超出娱乐圈范畴，更广泛的关注因此有必要被给予。舆情预警中有价值的先行指标可由跨域的情感传导效应所充当。",
+            "图4-3以评论来源为分类依据，用2乘2子图布局分别展示了四个主要数据源的正面和负面情感比例趋势。四个数据源分别对应明星时事、日常综合、社会热点和其他综合类话题。每个子图内同时绘制了正面比例曲线（蓝色）和负面比例曲线（红色），不同来源之间的情感特征差异一目了然。舆情分析师可以根据这种分维度的可视化来针对不同领域制定差异化的监控策略。",
+            "拿各来源横着比一下，明星时事类的正面比例明显高出一截，平均正面率超过45%。道理很简单，粉丝打榜应援本来就带正面情绪。日常综合类最中庸，正负面差不多。社会热点类就不一样了，负面波动特别猛，曲线上好几个尖峰，最高的时候负面率能到35%以上。社会议题就是容易让人发牢骚。",
+            "从时间线上看，各来源的情感走势不是完全各走各的。有些时候好几个来源的负面比例同时往上蹿，一查就是全社会级别的大事件。但大部分时候各来源有自己的节奏。所以做分领域监控，预警阈值得分开设。社会热点那边负面波动本来就大，阈值可以宽松点。明星时事那边平时正面居多，负面稍微一涨就要留意了。",
+            "分来源分析还揭示了一条重要规律：明星时事类话题的负面比例异常飙升时，相关事件的社会影响往往已经超出了娱乐圈范畴，需要给予更广泛的关注。跨域的情感传导效应可以当作舆情预警中一个有价值的先行指标。",
             {
               "type": "image",
               "path": "06_source_trends.png",
               "width": 148,
               "caption": "图4-3 分来源情感趋势"
-            }
+            },
+            "分来源情感趋势指标的核心计算代码如下：",
+            "INSERT OVERWRITE TABLE ads_source_sentiment_trend\nPARTITION (dt = '${stat_date}')\nSELECT\n    t.stat_date,\n    t.source,\n    t.positive_count,\n    t.negative_count,\n    t.neutral_count,\n    t.total_count,\n    ROUND(t.positive_count / t.total_count, 4) AS pos_ratio,\n    ROUND(t.negative_count / t.total_count, 4) AS neg_ratio,\n    ROUND(t.neutral_count / t.total_count, 4) AS neu_ratio,\n    ROW_NUMBER() OVER(\n        PARTITION BY t.stat_date\n        ORDER BY t.positive_count / t.total_count DESC\n    ) AS pos_rank,\n    ROW_NUMBER() OVER(\n        PARTITION BY t.stat_date\n        ORDER BY t.negative_count / t.total_count DESC\n    ) AS neg_rank,\n    ROUND(\n        t.total_count /\n        SUM(t.total_count) OVER(PARTITION BY t.stat_date),\n        4\n    ) AS source_share,\n    current_timestamp() AS etl_time\nFROM (\n    SELECT\n        stat_date,\n        source,\n        SUM(positive_count) AS positive_count,\n        SUM(negative_count) AS negative_count,\n        SUM(neutral_count) AS neutral_count,\n        SUM(total_count) AS total_count\n    FROM\n        dws_topic_sentiment_daily\n    WHERE\n        stat_date >= date_sub('${stat_date}', 30)\n    GROUP BY\n        stat_date, source\n) t\nORDER BY\n    t.stat_date, t.source;",
+            "子查询按stat_date和source双重分组做聚合。外层在聚合结果上加窗口函数：ROW_NUMBER按正面率和负面率分别排名，SUM...OVER算各来源评论量占总量的比重。"
           ]
         }
       ]
@@ -55,22 +64,25 @@
     {
       "title": "4.2 话题热度分析域",
       "content": [
-        "评论量和互动活跃度等数量级指标是话题热度分析域的聚焦对象，情感维度的分析由此在热度维度上获得补充。公众对特定话题的关注程度在评论量的时序变化中得到反映，情感指标的联动分析亦可由此展开，高热度事件背后的情绪特征随之被揭示。双轴图表被本节用于将评论量与负面比例叠加展示，复杂的关联模式在两者之间得以直观呈现。"
+        "话题热度分析域聚焦评论量和互动活跃度等数量级指标，在热度维度上补充了情感维度的分析。评论量的时序变化反映了公众对特定话题的关注程度，也为情感指标的联动分析打开了入口，能揭示高热度事件背后的情绪特征。本节用双轴图表把评论量与负面比例叠加展示，让两者之间的关联模式直观呈现出来。"
       ],
       "subsections": [
         {
           "title": "4.2.1 评论量与负面比例联动",
           "content": [
-            "双轴设计被图4-4所采用：每日评论量的柱状图由左侧纵轴承载，负面情感占比的折线图则由右侧纵轴承载。日评论量以淡蓝色填充的柱状图加以表示，负面比例走势则以红色折线予以标识。评论热度高峰期的情绪特征可被分析者据此直观判断，多张图表之间的来回比对由此得以免除。完整的数据采集周期由横轴的时间序列所覆盖。",
-            "评论量的高峰期并不总是与负面比例的同步升高相伴随，这一事实已被分析结果所证实。下降趋势反而在部分高评论量的日期中被负面率所呈现。核查结果显示，娱乐明星的正面新闻或热门综艺节目的播出是这些时间节点的主要对应事件，评论总量被粉丝群体的积极互动所推高，正面评论在其中占据了多数。负面比例的显著攀升却在某些评论量中等甚至偏低的日期中出现。平台算法限流等因素对负面舆情事件的传播可能施加了制约作用，上述反差对这一推断恰好构成了印证。",
-            "实践层面的重大意义蕴含于上述发现之中。评论量激增在舆情监控系统中不能被简单等同于舆情风险的升高。评论量的绝对值、增长速率以及负面比例的联动变化均须被有效的预警机制纳入综合考量。最需要关注的高风险信号仅在评论量和负面比例同时显著上升时才得以构成。这一多维度融合思路被本系统的负向预警指数（详见4.3节）所采纳并作为设计依据。",
-            "工作日与周末之间的周期性差异在评论量的整体走势中被观察到：约15%至20%的评论量优势通常由周末相对于工作日所呈现。基线参考可由该周期性规律提供。值得关注的突发事件的发生往往以某一工作日的评论量突破周末平均水平作为信号。",
+            "图4-4采用双轴设计：左侧纵轴对应每日评论量的柱状图，右侧纵轴对应负面情感占比的折线图。日评论量用淡蓝色柱状图表示，负面比例走势用红色折线标出。分析者看一张图就能直观判断评论热度高峰期的情绪特征，不用在多张图表之间来回切换。横轴时间序列覆盖了完整的数据采集周期。",
+            "有个有意思的发现：评论量高的时候负面比例不一定也高。有些日子评论特别多但负面反而在降，查了一下主要是明星正面新闻或者热门综艺带动的，粉丝在刷好评。反过来，有些天评论量不算多，负面比例却飙了上去。这说明平台限流之类的机制可能压住了负面事件的传播量，但压不住情绪比例。",
+            "所以不能看到评论量暴涨就觉得出事了。真正要警惕的是评论量和负面比例同时往上走的情况。只盯一个维度容易误判。4.3节的负向预警指数就是按这个思路做的，把评论量、增速、负面占比几个因素揉到一起算。",
+            "评论量还有个规律：周末比工作日多15%到20%左右。知道这个基线就好办了。哪天工作日的评论量超过了周末的平均水平，那多半是有突发事件了，值得去查一查。",
             {
               "type": "image",
               "path": "03_volume_trend.png",
               "width": 148,
               "caption": "图4-4 评论量与负面比例趋势"
-            }
+            },
+            "评论量与负面比例联动指标的核心计算代码如下：",
+            "INSERT OVERWRITE TABLE ads_volume_negative_bindanalysis\nPARTITION (dt = '${stat_date}')\nSELECT\n    stat_date,\n    SUM(total_count) AS daily_comments,\n    SUM(negative_count) AS daily_negative,\n    ROUND(\n        SUM(negative_count) / SUM(total_count),\n        4\n    ) AS neg_ratio,\n    ROUND(\n        (SUM(total_count) -\n         LAG(SUM(total_count)) OVER(ORDER BY stat_date))\n        /\n        GREATEST(\n            LAG(SUM(total_count)) OVER(ORDER BY stat_date),\n            1\n        ),\n        4\n    ) AS comment_growth_rate,\n    ROUND(\n        SUM(negative_count) / SUM(total_count) -\n        LAG(SUM(negative_count) / SUM(total_count))\n        OVER(ORDER BY stat_date),\n        4\n    ) AS neg_ratio_change,\n    ROUND(\n        AVG(SUM(total_count))\n        OVER(ORDER BY stat_date\n             ROWS BETWEEN 6 PRECEDING AND CURRENT ROW),\n        0\n    ) AS comments_ma7,\n    CASE\n        WHEN SUM(total_count) >\n             AVG(SUM(total_count))\n             OVER(ORDER BY stat_date\n                  ROWS BETWEEN 13 PRECEDING AND CURRENT ROW) * 1.5\n            THEN 1\n        ELSE 0\n    END AS is_spike,\n    current_timestamp() AS etl_time\nFROM\n    dws_topic_sentiment_daily\nWHERE\n    stat_date >= date_sub('${stat_date}', 30)\nGROUP BY\n    stat_date\nORDER BY\n    stat_date;",
+            "LAG窗口函数分别算了评论量和负面率的环比变化。is_spike字段做异常检测——当天评论量超过14天均值的1.5倍就标记为1。可视化时左轴画daily_comments柱状图，右轴画neg_ratio折线图。"
           ]
         }
       ]
@@ -78,37 +90,44 @@
     {
       "title": "4.3 舆情风险监控域",
       "content": [
-        "本系统最具实用价值的分析维度之一由舆情风险监控域所构成。多源情感数据向直观风险等级信号的转化构成了该域的核心目标，当前舆论环境的安全状况由此可被舆情管理者快速判断。负向预警指数和情感波动率两个互补性指标在本节中被设计并引入。负面情绪的绝对强度由负向预警指数加以衡量，情感变化的不稳定程度则由情感波动率加以度量。舆情风险的多个侧面可在两项指标的结合之下得到全面刻画。"
+        "舆情风险监控域算是系统里最实用的部分之一了。干的事情就是把各种情感数据变成风险等级，让管理者一看就知道现在安不安全。这里用了两个指标：一个是负向预警指数，管负面情绪有多强；另一个是情感波动率，管情绪变化有多不稳定。两个搭配着看，风险评估就比较全面了。"
       ],
       "subsections": [
         {
           "title": "4.3.1 负向预警指数监控",
           "content": [
-            "图4-5给出了负向预警指数在整个监测周期内所呈现的走势曲线。0到100分构成该指数的取值范围，四个预警等级区间由背景颜色划分而成：低风险（绿色）对应0至25分区间，中风险（黄色）对应25至50分区间，高风险（橙色）对应50至75分区间，极高风险（红色）对应75至100分区间。气象灾害预警的可视化标准被色彩分区设计所借鉴，当前的舆情风险水平由此可被非专业用户直观理解。",
-            "从监测数据来看，负向预警指数在大部分时段处于低风险和中风险区间，即0至50分的范围内，说明微博舆论环境整体处于可控状态。指数的均值约为28分，中位数约为25分，呈现轻微的右偏分布。在监测周期内共出现了3至4次指数突破50分进入高风险区间的情况，每次持续时间约为1至3天。经过对这些高风险时段的回溯分析，均能够追溯到具体的社会热点负面事件。",
-            "低风险区间向高风险区间的跃升过程在预警指数中通常极为迅速，一天之内往往便可完成。2至4天的缓冲期则为高风险区间回落至低风险区间所需。负面舆情爆发的突发性与舆论情绪平复所需的更长时间周期共同构成了这一不对称动态特征的内涵。多级阈值告警可依据这一规律在实际舆情监控系统中加以设置。黄色提醒在指数超过25分时被发出，橙色预警在超过50分时被触发，红色紧急响应在超过75分时被启动。",
-            "企业内部的通知系统在实际部署中可与该预警指数实现对接。预警信息向相关责任人的自动推送可经由邮件、短信或即时通讯工具等渠道实现。完整的事件快照经由评论量数据与话题关键词提取的结合而被系统提供给管理者，舆情爆发到响应决策之间的时间窗口也因此获得大幅缩短。",
+            "图4-5给出了负向预警指数在整个监测周期内的走势曲线，取值范围0到100分。背景颜色把四个预警等级区间划分了出来：绿色对应0至25分的低风险，黄色对应25至50分的中风险，橙色对应50至75分的高风险，红色对应75至100分的极高风险。色彩分区设计借鉴了气象灾害预警的可视化标准，非专业用户也能直观理解当前的舆情风险水平。",
+            "跑下来的数据是这样的：负向预警指数大多数时候在0到50分之间晃，属于低风险和中风险，整体可控。均值28分，中位数25分，稍微偏右一点。监测期间有3到4次冲过50分到了高风险区，每次大概持续1到3天。回头查了查，每次都是因为某个社会热点负面事件。",
+            "预警指数从低风险跃升到高风险的过程通常非常快，一天之内就能完成。但从高风险回落到低风险则需要2至4天的缓冲期。这种不对称动态反映了两个特点：负面舆情爆发很突然，而舆论情绪平复需要更长的时间。实际舆情监控系统可以依据这个规律设置多级阈值告警：指数超过25分发出黄色提醒，超过50分触发橙色预警，超过75分启动红色紧急响应。",
+            "实际部署中可以把企业内部通知系统与这个预警指数对接，通过邮件、短信或即时通讯工具自动推送预警信息给相关责任人。系统结合评论量数据和话题关键词提取生成完整的事件快照提供给管理者，大幅缩短舆情爆发到响应决策之间的时间窗口。",
             {
               "type": "image",
               "path": "04_alert_index.png",
               "width": 148,
               "caption": "图4-5 负向预警指数"
-            }
+            },
+            "负向预警指数的核心计算代码如下：",
+            "INSERT OVERWRITE TABLE ads_negative_alert_index\nPARTITION (dt = '${stat_date}')\nSELECT\n    stat_date,\n    neg_ratio_score,\n    deviation_score,\n    volatility_score,\n    ROUND(\n        neg_ratio_score * 0.50 +\n        deviation_score * 0.30 +\n        volatility_score * 0.20,\n        2\n    ) AS alert_index,\n    CASE\n        WHEN (neg_ratio_score * 0.50 +\n              deviation_score * 0.30 +\n              volatility_score * 0.20) >= 75\n            THEN '极高风险'\n        WHEN (neg_ratio_score * 0.50 +\n              deviation_score * 0.30 +\n              volatility_score * 0.20) >= 50\n            THEN '高风险'\n        WHEN (neg_ratio_score * 0.50 +\n              deviation_score * 0.30 +\n              volatility_score * 0.20) >= 25\n            THEN '中风险'\n        ELSE '低风险'\n    END AS alert_level,\n    current_timestamp() AS etl_time\nFROM (\n    SELECT\n        stat_date,\n        ROUND(\n            SUM(negative_count) /\n            SUM(total_count) * 100,\n            2\n        ) AS neg_ratio_score,\n        ROUND(\n            ABS(\n                SUM(negative_count) -\n                AVG(SUM(negative_count))\n                OVER(ORDER BY stat_date\n                     ROWS BETWEEN 6 PRECEDING\n                     AND CURRENT ROW)\n            ) /\n            GREATEST(\n                STDDEV(SUM(negative_count))\n                OVER(ORDER BY stat_date\n                     ROWS BETWEEN 6 PRECEDING\n                     AND CURRENT ROW),\n                0.01\n            ) * 10,\n            2\n        ) AS deviation_score,\n        ROUND(\n            STDDEV(SUM(negative_count) / SUM(total_count))\n            OVER(ORDER BY stat_date\n                 ROWS BETWEEN 2 PRECEDING\n                 AND CURRENT ROW) * 100,\n            2\n        ) AS volatility_score\n    FROM\n        dws_topic_sentiment_daily\n    WHERE\n        stat_date >= date_sub('${stat_date}', 30)\n    GROUP BY\n        stat_date\n) t\nORDER BY\n    stat_date;",
+            "内层子查询算三个分项得分：neg_ratio_score是负面率乘100映射到百分制；deviation_score用当天负面评论数减去7日均值再除以标准差衡量偏离程度；volatility_score取3日滚动标准差反映短期波动。外层按50:30:20加权，再用CASE WHEN划成四级预警。"
           ]
         },
         {
           "title": "4.3.2 情感波动率分析",
           "content": [
-            "图4-6展示了以7日滚动标准差衡量的情感波动率变化趋势，其中分别以蓝色绘制了正面情感波动率曲线，以红色绘制了负面情感波动率曲线。情感比例在短期内的变异程度由波动率指标加以反映。公众情绪的变化剧烈程度和舆论环境的不确定性均随波动率的升高而增大。短期波动的捕捉与日间噪声的过滤二者的兼顾是7日窗口被选择的出发点。",
-            "正面情感波动率在整个监测周期内被负面情感波动率整体超出约30%至50%，这一差异由分析结果所揭示。一个重要的舆论传播特征由这一规律性差异所指向：公众情绪的剧烈反应和快速传播更易被负面事件所引发，温和稳定的传播模式则为正面情绪所呈现。此结论与传播学中关于负面信息传播速度快于正面信息的理论形成了相互印证。",
-            "尖峰时点在波动率的时序分布中与负向预警指数的高风险时段高度吻合，0.72以上的相关系数在两者之间被录得。波动率尖峰通常在突发事件爆发后的1至2天内出现，逐步回落的态势随即展开。正面情感波动率在某些极端情况下也呈现较大幅度的上升，两极化舆论事件往往是其对应的触发因素。截然对立的观点阵营在此时由公众围绕某一话题所形成，正面和负面评论的同时大幅增长随之出现。",
-            "独特的辅助价值在舆情事件识别中由情感波动率指标所提供。负面情绪的绝对强度为预警指数所侧重，舆论环境从稳态向动荡态转变的早期信号则可被波动率所捕捉。预警指数的攀升在某些案例中甚至被波动率的上升所先于。分化已经在公众情绪中开始显现，一致的负面倾向却尚未被形成。系统的前瞻性预警能力在波动率作为预警指数的先行指标被纳入监控体系之后可获得进一步提升。",
+            "图4-6展示了用7日滚动标准差衡量的情感波动率变化趋势。蓝色曲线是正面情感波动率，红色曲线是负面情感波动率。波动率指标反映的是情感比例在短期内的变异程度。波动率越高，公众情绪的变化就越剧烈，舆论环境的不确定性也越大。选择7日窗口，是为了既能捕捉短期波动、又能过滤日间噪声。",
+            "负面情感波动率比正面的高出30%到50%，整个监测期都是这样。这其实挺好理解的：坏消息传得快、反应也猛，好消息则是慢慢扩散、比较温和。传播学里早就有这个说法了，数据跑出来的结果刚好对得上。",
+            "波动率出现尖峰的时间点，跟负向预警指数冲高的时候基本重合，相关系数0.72以上。一般突发事件爆发后1到2天波动率就到顶了，然后慢慢降下来。偶尔正面波动率也会跟着大幅上升，这种情况多半是两极化事件——一个话题把网友分成了两个阵营，正面和负面评论一起暴涨。",
+            "波动率在识别舆情事件的时候有个独特的好处。预警指数看的是负面情绪有多强，波动率看的是情绪稳不稳定。有时候波动率先涨起来了，预警指数还没动——说明网友的情绪已经在分化，只是还没形成一边倒的负面倾向。拿波动率当先行指标用，预警就能更提前一步。",
             {
               "type": "image",
               "path": "05_volatility_trend.png",
               "width": 148,
               "caption": "图4-6 情感波动率趋势"
-            }
+            },
+            "情感波动率用7日滚动窗口计算标准差：SELECT stat_date, STDDEV(positive_ratio) OVER(ORDER BY stat_date ROWS BETWEEN 6 PRECEDING AND CURRENT ROW) AS pos_volatility, STDDEV(negative_ratio) OVER(ORDER BY stat_date ROWS BETWEEN 6 PRECEDING AND CURRENT ROW) AS neg_volatility FROM dws_topic_sentiment_daily ORDER BY stat_date。正面和负面分别算，窗口大小固定为7天。",
+            "情感波动率指标的核心计算代码如下：",
+            "INSERT OVERWRITE TABLE ads_sentiment_volatility\nPARTITION (dt = '${stat_date}')\nSELECT\n    stat_date,\n    positive_ratio,\n    negative_ratio,\n    ROUND(\n        STDDEV(positive_ratio)\n        OVER(ORDER BY stat_date\n             ROWS BETWEEN 6 PRECEDING AND CURRENT ROW),\n        4\n    ) AS pos_volatility,\n    ROUND(\n        STDDEV(negative_ratio)\n        OVER(ORDER BY stat_date\n             ROWS BETWEEN 6 PRECEDING AND CURRENT ROW),\n        4\n    ) AS neg_volatility,\n    ROUND(\n        AVG(positive_ratio)\n        OVER(ORDER BY stat_date\n             ROWS BETWEEN 6 PRECEDING AND CURRENT ROW),\n        4\n    ) AS pos_ratio_ma7,\n    ROUND(\n        AVG(negative_ratio)\n        OVER(ORDER BY stat_date\n             ROWS BETWEEN 6 PRECEDING AND CURRENT ROW),\n        4\n    ) AS neg_ratio_ma7,\n    CASE\n        WHEN STDDEV(negative_ratio)\n             OVER(ORDER BY stat_date\n                  ROWS BETWEEN 6 PRECEDING AND CURRENT ROW)\n             >\n             STDDEV(negative_ratio)\n             OVER(ORDER BY stat_date\n                  ROWS BETWEEN 13 PRECEDING AND 7 PRECEDING)\n            THEN 'rising'\n        ELSE 'stable_or_falling'\n    END AS volatility_trend,\n    ROUND(\n        CORR(positive_ratio, negative_ratio)\n        OVER(ORDER BY stat_date\n             ROWS BETWEEN 6 PRECEDING AND CURRENT ROW),\n        4\n    ) AS pos_neg_corr,\n    current_timestamp() AS etl_time\nFROM (\n    SELECT\n        stat_date,\n        ROUND(SUM(positive_count)/SUM(total_count), 4) AS positive_ratio,\n        ROUND(SUM(negative_count)/SUM(total_count), 4) AS negative_ratio\n    FROM\n        dws_topic_sentiment_daily\n    WHERE\n        stat_date >= date_sub('${stat_date}', 45)\n    GROUP BY\n        stat_date\n) base\nORDER BY\n    stat_date;",
+            "内层子查询先算出每天的正面率和负面率。外层跑多个窗口函数：STDDEV算7日滚动标准差，AVG算7日均值，CORR算正面和负面的相关系数。volatility_trend比较近7日和前7日的波动率判断趋势方向。"
           ]
         }
       ]
@@ -116,22 +135,25 @@
     {
       "title": "4.4 综合评价域",
       "content": [
-        "情感分布、话题热度、风险预警等多个维度的分析结果在综合评价域中被融合为单一的综合性评分指标，本系统指标体系的顶层汇总功能由该域承担。正面率、非负面率和情感稳定性三个核心维度经由舆情健康评分的加权整合，全局性的舆论环境质量度量由此被提供给舆情管理者。多维度数据的认知负荷经由该指标在设计理念上得到降低，舆情全貌可由决策者仅依靠一个数值加以快速掌握。"
+        "综合评价域把情感分布、话题热度、风险预警等多个维度的分析结果融合成一个综合性评分指标，承担着系统指标体系的顶层汇总功能。舆情健康评分对正面率、非负面率和情感稳定性三个核心维度做加权整合，给舆情管理者提供一个全局性的舆论环境质量度量。设计上的出发点就是降低多维度数据的认知负荷，让决策者只看一个数值就能快速掌握舆情全貌。"
       ],
       "subsections": [
         {
           "title": "4.4.1 舆情健康评分",
           "content": [
-            "图4-7呈现了舆情健康评分在整个监测周期内的综合走势，0到100分为其评分范围。该评分由三个核心维度的量化结果所构成：0.4的权重被赋予正面情感占比，0.3的权重被赋予非负面情感占比（即正面加中性的比例），0.3的权重同样被赋予情感稳定性（基于波动率的逆指标）。60分的健康阈值在图中以红色虚线加以标注。这条分界线由历史数据的统计分析与舆情管理的实践经验共同确定。",
-            "约65分的均值和约8分的标准差在监测期内由舆情健康评分所呈现。健康阈值以上的水平由评分整体维持，适中的波动幅度同时被保持。60至75分的运行区间在大部分时段被评分所保持，时序分布的格局相对稳定。正面舆论占优且情感波动平稳的良好舆论环境通常与评分超过70分的时段相对应。注意力向其他优先事务的转移在此时对舆情管理者而言成为可行的选择。",
-            "4至5次低于60分健康阈值的时段在整个监测周期内被记录，约1至3天为每次的持续时长。前文分析的负向预警指数高风险时段以及情感波动率尖峰时段与这些低分时段之间呈现高度吻合。进一步的验证由此在三个综合指标之间的内在一致性层面得到实现。最为显著的健康评分下探在负面比例上升、评论量异常波动、情感稳定性下降三个因素叠加之时随即出现。",
-            "管理决策所需的简洁明了的量化依据由舆情健康评分提供，这构成了该指标在实际应用中的最大价值。舆情大势可由决策者仅凭关注一个综合评分加以把握，十余项细分指标的同时监控因此不再必要。舆情分析报告应在评分持续低于60分超过两天时由系统自动生成。导致评分下降的具体因素和关联事件在报告中被汇总，后续应对策略的数据支撑由此得以提供。本系统在实用性方面的设计考量经由从多维指标到单一评分再到决策建议的递进式分析框架得到充分体现。",
+            "图4-7画的是舆情健康评分的走势，0到100分。这个评分由三部分凑出来的：正面情感占比占0.4权重，非负面占比（正面加中性）占0.3，情感稳定性（拿波动率反过来算）占0.3。图里60分那条红色虚线就是健康阈值，这条线是结合历史数据和实际经验定的。",
+            "监测期内舆情健康评分的均值约65分、标准差约8分，整体维持在健康阈值之上，波动幅度适中。大部分时段评分保持在60至75分区间，时序分布格局比较稳定。评分超过70分的时段通常对应着正面舆论占优、情感波动平稳的良好舆论环境，这时候舆情管理者可以把注意力转移到其他优先事务上。",
+            "监测期里有4到5次评分掉到60分以下，每次大概1到3天。这几次低分跟前面说的预警指数冲高、波动率出尖峰的时间基本重合。说明这三个指标确实是对得上的。评分掉得最狠的那几次，都是负面比例涨、评论量异常、情感稳定性降这三件事同时发生。",
+            "健康评分最大的好处就是省事。决策者看一个数就行，不用同时盯十几个细分指标。要是连续两天低于60分，系统就该自动出报告，把导致评分下降的原因和相关事件列出来，给后续处理提供依据。整个设计思路就是：先算一堆细指标，然后合成一个总分，最后给建议。层层递进，用起来方便。",
             {
               "type": "image",
               "path": "07_health_score.png",
               "width": 148,
               "caption": "图4-7 舆情健康评分"
-            }
+            },
+            "舆情健康评分指标的核心计算代码如下：",
+            "INSERT OVERWRITE TABLE ads_public_opinion_health\nPARTITION (dt = '${stat_date}')\nSELECT\n    a.stat_date,\n    a.positive_ratio,\n    a.negative_ratio,\n    v.pos_volatility,\n    v.neg_volatility,\n    ROUND(a.positive_ratio * 100, 2) AS positive_score,\n    ROUND((1 - a.negative_ratio) * 100, 2) AS non_negative_score,\n    ROUND(\n        (1 - LEAST(v.pos_volatility * 10, 1)) * 100,\n        2\n    ) AS stability_score,\n    ROUND(\n        a.positive_ratio * 40 +\n        (1 - a.negative_ratio) * 30 +\n        (1 - LEAST(v.pos_volatility * 10, 1)) * 30,\n        2\n    ) AS health_score,\n    CASE\n        WHEN a.positive_ratio * 40 +\n             (1 - a.negative_ratio) * 30 +\n             (1 - LEAST(v.pos_volatility * 10, 1)) * 30 >= 70\n            THEN '健康'\n        WHEN a.positive_ratio * 40 +\n             (1 - a.negative_ratio) * 30 +\n             (1 - LEAST(v.pos_volatility * 10, 1)) * 30 >= 60\n            THEN '一般'\n        ELSE '不健康'\n    END AS health_status,\n    ROUND(\n        (a.positive_ratio * 40 +\n         (1 - a.negative_ratio) * 30 +\n         (1 - LEAST(v.pos_volatility * 10, 1)) * 30)\n        -\n        LAG(\n            a.positive_ratio * 40 +\n            (1 - a.negative_ratio) * 30 +\n            (1 - LEAST(v.pos_volatility * 10, 1)) * 30\n        ) OVER(ORDER BY a.stat_date),\n        2\n    ) AS score_change,\n    current_timestamp() AS etl_time\nFROM (\n    SELECT\n        stat_date,\n        ROUND(SUM(positive_count)/SUM(total_count), 4) AS positive_ratio,\n        ROUND(SUM(negative_count)/SUM(total_count), 4) AS negative_ratio\n    FROM dws_topic_sentiment_daily\n    WHERE stat_date >= date_sub('${stat_date}', 30)\n    GROUP BY stat_date\n) a\nJOIN\n    ads_sentiment_volatility v\nON\n    a.stat_date = v.stat_date\nORDER BY\n    a.stat_date;",
+            "子查询从dws层拿每天的正面率和负面率，JOIN波动率表拿稳定性数据。正面率权重40%、非负面率权重30%、稳定性权重30%三项加起来就是健康评分。CASE WHEN按60和70两个阈值分成三档。LAG算了每天相对前一天的分数变化。"
           ]
         }
       ]

@@ -79,7 +79,7 @@ def process_chapters(chapters, doc):
 def build_data(doc=None):
     meta = load_json("meta.json") or {}
     chapters = []
-    for i in range(1, 7):
+    for i in range(1, 8):
         ch = load_json(f"ch{i}.json")
         if ch:
             print(f"  ch{i}.json -> {ch['title']}")

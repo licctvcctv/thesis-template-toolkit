@@ -239,8 +239,77 @@ def _post_process(docx_path):
         if to_remove:
             print(f"  修复: 清理目录→绪论间 {len(to_remove)} 个空段")
 
+    # ---- 5. 修复页脚页码：确保所有section都绑定footer ----
+    _fix_footer_page_numbers(doc)
+
     doc.save(docx_path)
     print(f"  后处理: {len(_pending_tables)} 个表格")
+
+
+def _fix_footer_page_numbers(doc):
+    from docx.oxml import OxmlElement
+    from docx.oxml.ns import qn
+    from docx.shared import Pt
+    from docx.enum.text import WD_ALIGN_PARAGRAPH
+
+    for i, section in enumerate(doc.sections):
+        footer = section.footer
+        # 解除"链接到上一节"，确保每节有独立footer
+        footer.is_linked_to_previous = False
+
+        # 检查footer是否已有PAGE域
+        footer_xml = footer._element.xml if footer._element is not None else ''
+        if 'PAGE' in footer_xml:
+            continue
+
+        # 清空footer后添加页码
+        for p in footer.paragraphs:
+            p.clear()
+
+        if not footer.paragraphs:
+            footer._element.append(OxmlElement('w:p'))
+
+        para = footer.paragraphs[0]
+        para.alignment = WD_ALIGN_PARAGRAPH.CENTER
+
+        run = para.add_run()
+        rPr = run._r.get_or_add_rPr()
+        rFonts = OxmlElement('w:rFonts')
+        rFonts.set(qn('w:ascii'), 'Times New Roman')
+        rFonts.set(qn('w:hAnsi'), 'Times New Roman')
+        rPr.append(rFonts)
+        sz = OxmlElement('w:sz')
+        sz.set(qn('w:val'), '18')
+        rPr.append(sz)
+
+        # fldChar begin
+        fldChar1 = OxmlElement('w:fldChar')
+        fldChar1.set(qn('w:fldCharType'), 'begin')
+        run._r.append(fldChar1)
+
+        # instrText PAGE
+        run2 = para.add_run()
+        instrText = OxmlElement('w:instrText')
+        instrText.set(qn('xml:space'), 'preserve')
+        instrText.text = 'PAGE   \\* MERGEFORMAT'
+        run2._r.append(instrText)
+
+        # fldChar separate
+        run3 = para.add_run()
+        fldChar2 = OxmlElement('w:fldChar')
+        fldChar2.set(qn('w:fldCharType'), 'separate')
+        run3._r.append(fldChar2)
+
+        # placeholder text
+        run4 = para.add_run('1')
+
+        # fldChar end
+        run5 = para.add_run()
+        fldChar3 = OxmlElement('w:fldChar')
+        fldChar3.set(qn('w:fldCharType'), 'end')
+        run5._r.append(fldChar3)
+
+    print(f"  修复: {len(doc.sections)} 个section已绑定页脚页码")
 
 
 def _insert_table(doc, after_para, tbl_data):

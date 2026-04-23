@@ -1,0 +1,65 @@
+import json
+
+with open('ch4.json', 'r', encoding='utf-8') as f:
+    ch4 = json.load(f)
+
+codes = {
+    "4.1.1": [
+        "三类情感比例趋势指标的核心计算代码如下：",
+        "INSERT OVERWRITE TABLE ads_sentiment_ratio_trend\nPARTITION (dt = '${stat_date}')\nSELECT\n    stat_date,\n    '正面情感率' AS metric_name,\n    ROUND(\n        SUM(positive_count) /\n        SUM(total_count),\n        4\n    ) AS positive_ratio,\n    ROUND(\n        SUM(neutral_count) /\n        SUM(total_count),\n        4\n    ) AS neutral_ratio,\n    ROUND(\n        SUM(negative_count) /\n        SUM(total_count),\n        4\n    ) AS negative_ratio,\n    SUM(positive_count) AS positive_count,\n    SUM(neutral_count) AS neutral_count,\n    SUM(negative_count) AS negative_count,\n    SUM(total_count) AS total_count,\n    ROUND(\n        AVG(SUM(positive_count) / SUM(total_count))\n        OVER(ORDER BY stat_date\n             ROWS BETWEEN 6 PRECEDING AND CURRENT ROW),\n        4\n    ) AS positive_ratio_ma7,\n    ROUND(\n        AVG(SUM(negative_count) / SUM(total_count))\n        OVER(ORDER BY stat_date\n             ROWS BETWEEN 6 PRECEDING AND CURRENT ROW),\n        4\n    ) AS negative_ratio_ma7,\n    current_timestamp() AS etl_time\nFROM\n    dws_topic_sentiment_daily\nWHERE\n    stat_date >= date_sub('${stat_date}', 30)\nGROUP BY\n    stat_date\nORDER BY\n    stat_date;",
+        "上面这段SQL按stat_date分组聚合三类评论的计数，再分别除以总评论数算出占比。ROUND保留4位小数。窗口函数AVG...OVER算7日移动平均做平滑处理。WHERE条件限制只取最近30天数据，结果写入ads_sentiment_ratio_trend表。"
+    ],
+    "4.1.2": [
+        "正负面比值趋势指标的核心计算代码如下：",
+        "INSERT OVERWRITE TABLE ads_pn_ratio_trend\nPARTITION (dt = '${stat_date}')\nSELECT\n    stat_date,\n    SUM(positive_count) AS daily_positive,\n    SUM(negative_count) AS daily_negative,\n    ROUND(\n        SUM(positive_count) /\n        GREATEST(SUM(negative_count), 1),\n        4\n    ) AS pn_ratio,\n    CASE\n        WHEN SUM(positive_count) > SUM(negative_count)\n            THEN 'positive_dominant'\n        WHEN SUM(positive_count) < SUM(negative_count)\n            THEN 'negative_dominant'\n        ELSE 'balanced'\n    END AS dominance_flag,\n    ROUND(\n        (SUM(positive_count) / GREATEST(SUM(negative_count), 1))\n        /\n        GREATEST(\n            LAG(SUM(positive_count) / GREATEST(SUM(negative_count), 1))\n            OVER(ORDER BY stat_date),\n            0.01\n        ) - 1,\n        4\n    ) AS pn_ratio_change,\n    ROUND(\n        AVG(SUM(positive_count) / GREATEST(SUM(negative_count), 1))\n        OVER(ORDER BY stat_date\n             ROWS BETWEEN 6 PRECEDING AND CURRENT ROW),\n        4\n    ) AS pn_ratio_ma7,\n    current_timestamp() AS etl_time\nFROM\n    dws_topic_sentiment_daily\nWHERE\n    stat_date >= date_sub('${stat_date}', 30)\nGROUP BY\n    stat_date\nORDER BY\n    stat_date;",
+        "分母用GREATEST兜底防止除零。CASE WHEN标记当天正面占优还是负面占优。LAG窗口函数拿前一天的比值算环比变化率。7日趋势预测在Python端用numpy.polyfit做2次多项式拟合再外推7天。"
+    ],
+    "4.1.3": [
+        "分来源情感趋势指标的核心计算代码如下：",
+        "INSERT OVERWRITE TABLE ads_source_sentiment_trend\nPARTITION (dt = '${stat_date}')\nSELECT\n    t.stat_date,\n    t.source,\n    t.positive_count,\n    t.negative_count,\n    t.neutral_count,\n    t.total_count,\n    ROUND(t.positive_count / t.total_count, 4) AS pos_ratio,\n    ROUND(t.negative_count / t.total_count, 4) AS neg_ratio,\n    ROUND(t.neutral_count / t.total_count, 4) AS neu_ratio,\n    ROW_NUMBER() OVER(\n        PARTITION BY t.stat_date\n        ORDER BY t.positive_count / t.total_count DESC\n    ) AS pos_rank,\n    ROW_NUMBER() OVER(\n        PARTITION BY t.stat_date\n        ORDER BY t.negative_count / t.total_count DESC\n    ) AS neg_rank,\n    ROUND(\n        t.total_count /\n        SUM(t.total_count) OVER(PARTITION BY t.stat_date),\n        4\n    ) AS source_share,\n    current_timestamp() AS etl_time\nFROM (\n    SELECT\n        stat_date,\n        source,\n        SUM(positive_count) AS positive_count,\n        SUM(negative_count) AS negative_count,\n        SUM(neutral_count) AS neutral_count,\n        SUM(total_count) AS total_count\n    FROM\n        dws_topic_sentiment_daily\n    WHERE\n        stat_date >= date_sub('${stat_date}', 30)\n    GROUP BY\n        stat_date, source\n) t\nORDER BY\n    t.stat_date, t.source;",
+        "子查询按stat_date和source双重分组做聚合。外层在聚合结果上加窗口函数：ROW_NUMBER按正面率和负面率分别排名，SUM...OVER算各来源评论量占总量的比重。"
+    ],
+    "4.2.1": [
+        "评论量与负面比例联动指标的核心计算代码如下：",
+        "INSERT OVERWRITE TABLE ads_volume_negative_bindanalysis\nPARTITION (dt = '${stat_date}')\nSELECT\n    stat_date,\n    SUM(total_count) AS daily_comments,\n    SUM(negative_count) AS daily_negative,\n    ROUND(\n        SUM(negative_count) / SUM(total_count),\n        4\n    ) AS neg_ratio,\n    ROUND(\n        (SUM(total_count) -\n         LAG(SUM(total_count)) OVER(ORDER BY stat_date))\n        /\n        GREATEST(\n            LAG(SUM(total_count)) OVER(ORDER BY stat_date),\n            1\n        ),\n        4\n    ) AS comment_growth_rate,\n    ROUND(\n        SUM(negative_count) / SUM(total_count) -\n        LAG(SUM(negative_count) / SUM(total_count))\n        OVER(ORDER BY stat_date),\n        4\n    ) AS neg_ratio_change,\n    ROUND(\n        AVG(SUM(total_count))\n        OVER(ORDER BY stat_date\n             ROWS BETWEEN 6 PRECEDING AND CURRENT ROW),\n        0\n    ) AS comments_ma7,\n    CASE\n        WHEN SUM(total_count) >\n             AVG(SUM(total_count))\n             OVER(ORDER BY stat_date\n                  ROWS BETWEEN 13 PRECEDING AND CURRENT ROW) * 1.5\n            THEN 1\n        ELSE 0\n    END AS is_spike,\n    current_timestamp() AS etl_time\nFROM\n    dws_topic_sentiment_daily\nWHERE\n    stat_date >= date_sub('${stat_date}', 30)\nGROUP BY\n    stat_date\nORDER BY\n    stat_date;",
+        "LAG窗口函数分别算了评论量和负面率的环比变化。is_spike字段做异常检测——当天评论量超过14天均值的1.5倍就标记为1。可视化时左轴画daily_comments柱状图，右轴画neg_ratio折线图。"
+    ],
+    "4.3.1": [
+        "负向预警指数的核心计算代码如下：",
+        "INSERT OVERWRITE TABLE ads_negative_alert_index\nPARTITION (dt = '${stat_date}')\nSELECT\n    stat_date,\n    neg_ratio_score,\n    deviation_score,\n    volatility_score,\n    ROUND(\n        neg_ratio_score * 0.50 +\n        deviation_score * 0.30 +\n        volatility_score * 0.20,\n        2\n    ) AS alert_index,\n    CASE\n        WHEN (neg_ratio_score * 0.50 +\n              deviation_score * 0.30 +\n              volatility_score * 0.20) >= 75\n            THEN '极高风险'\n        WHEN (neg_ratio_score * 0.50 +\n              deviation_score * 0.30 +\n              volatility_score * 0.20) >= 50\n            THEN '高风险'\n        WHEN (neg_ratio_score * 0.50 +\n              deviation_score * 0.30 +\n              volatility_score * 0.20) >= 25\n            THEN '中风险'\n        ELSE '低风险'\n    END AS alert_level,\n    current_timestamp() AS etl_time\nFROM (\n    SELECT\n        stat_date,\n        ROUND(\n            SUM(negative_count) /\n            SUM(total_count) * 100,\n            2\n        ) AS neg_ratio_score,\n        ROUND(\n            ABS(\n                SUM(negative_count) -\n                AVG(SUM(negative_count))\n                OVER(ORDER BY stat_date\n                     ROWS BETWEEN 6 PRECEDING\n                     AND CURRENT ROW)\n            ) /\n            GREATEST(\n                STDDEV(SUM(negative_count))\n                OVER(ORDER BY stat_date\n                     ROWS BETWEEN 6 PRECEDING\n                     AND CURRENT ROW),\n                0.01\n            ) * 10,\n            2\n        ) AS deviation_score,\n        ROUND(\n            STDDEV(SUM(negative_count) / SUM(total_count))\n            OVER(ORDER BY stat_date\n                 ROWS BETWEEN 2 PRECEDING\n                 AND CURRENT ROW) * 100,\n            2\n        ) AS volatility_score\n    FROM\n        dws_topic_sentiment_daily\n    WHERE\n        stat_date >= date_sub('${stat_date}', 30)\n    GROUP BY\n        stat_date\n) t\nORDER BY\n    stat_date;",
+        "内层子查询算三个分项得分：neg_ratio_score是负面率乘100映射到百分制；deviation_score用当天负面评论数减去7日均值再除以标准差衡量偏离程度；volatility_score取3日滚动标准差反映短期波动。外层按50:30:20加权，再用CASE WHEN划成四级预警。"
+    ],
+    "4.3.2": [
+        "情感波动率指标的核心计算代码如下：",
+        "INSERT OVERWRITE TABLE ads_sentiment_volatility\nPARTITION (dt = '${stat_date}')\nSELECT\n    stat_date,\n    positive_ratio,\n    negative_ratio,\n    ROUND(\n        STDDEV(positive_ratio)\n        OVER(ORDER BY stat_date\n             ROWS BETWEEN 6 PRECEDING AND CURRENT ROW),\n        4\n    ) AS pos_volatility,\n    ROUND(\n        STDDEV(negative_ratio)\n        OVER(ORDER BY stat_date\n             ROWS BETWEEN 6 PRECEDING AND CURRENT ROW),\n        4\n    ) AS neg_volatility,\n    ROUND(\n        AVG(positive_ratio)\n        OVER(ORDER BY stat_date\n             ROWS BETWEEN 6 PRECEDING AND CURRENT ROW),\n        4\n    ) AS pos_ratio_ma7,\n    ROUND(\n        AVG(negative_ratio)\n        OVER(ORDER BY stat_date\n             ROWS BETWEEN 6 PRECEDING AND CURRENT ROW),\n        4\n    ) AS neg_ratio_ma7,\n    CASE\n        WHEN STDDEV(negative_ratio)\n             OVER(ORDER BY stat_date\n                  ROWS BETWEEN 6 PRECEDING AND CURRENT ROW)\n             >\n             STDDEV(negative_ratio)\n             OVER(ORDER BY stat_date\n                  ROWS BETWEEN 13 PRECEDING AND 7 PRECEDING)\n            THEN 'rising'\n        ELSE 'stable_or_falling'\n    END AS volatility_trend,\n    ROUND(\n        CORR(positive_ratio, negative_ratio)\n        OVER(ORDER BY stat_date\n             ROWS BETWEEN 6 PRECEDING AND CURRENT ROW),\n        4\n    ) AS pos_neg_corr,\n    current_timestamp() AS etl_time\nFROM (\n    SELECT\n        stat_date,\n        ROUND(SUM(positive_count)/SUM(total_count), 4) AS positive_ratio,\n        ROUND(SUM(negative_count)/SUM(total_count), 4) AS negative_ratio\n    FROM\n        dws_topic_sentiment_daily\n    WHERE\n        stat_date >= date_sub('${stat_date}', 45)\n    GROUP BY\n        stat_date\n) base\nORDER BY\n    stat_date;",
+        "内层子查询先算出每天的正面率和负面率。外层跑多个窗口函数：STDDEV算7日滚动标准差，AVG算7日均值，CORR算正面和负面的相关系数。volatility_trend比较近7日和前7日的波动率判断趋势方向。"
+    ],
+    "4.4.1": [
+        "舆情健康评分指标的核心计算代码如下：",
+        "INSERT OVERWRITE TABLE ads_public_opinion_health\nPARTITION (dt = '${stat_date}')\nSELECT\n    a.stat_date,\n    a.positive_ratio,\n    a.negative_ratio,\n    v.pos_volatility,\n    v.neg_volatility,\n    ROUND(a.positive_ratio * 100, 2) AS positive_score,\n    ROUND((1 - a.negative_ratio) * 100, 2) AS non_negative_score,\n    ROUND(\n        (1 - LEAST(v.pos_volatility * 10, 1)) * 100,\n        2\n    ) AS stability_score,\n    ROUND(\n        a.positive_ratio * 40 +\n        (1 - a.negative_ratio) * 30 +\n        (1 - LEAST(v.pos_volatility * 10, 1)) * 30,\n        2\n    ) AS health_score,\n    CASE\n        WHEN a.positive_ratio * 40 +\n             (1 - a.negative_ratio) * 30 +\n             (1 - LEAST(v.pos_volatility * 10, 1)) * 30 >= 70\n            THEN '健康'\n        WHEN a.positive_ratio * 40 +\n             (1 - a.negative_ratio) * 30 +\n             (1 - LEAST(v.pos_volatility * 10, 1)) * 30 >= 60\n            THEN '一般'\n        ELSE '不健康'\n    END AS health_status,\n    ROUND(\n        (a.positive_ratio * 40 +\n         (1 - a.negative_ratio) * 30 +\n         (1 - LEAST(v.pos_volatility * 10, 1)) * 30)\n        -\n        LAG(\n            a.positive_ratio * 40 +\n            (1 - a.negative_ratio) * 30 +\n            (1 - LEAST(v.pos_volatility * 10, 1)) * 30\n        ) OVER(ORDER BY a.stat_date),\n        2\n    ) AS score_change,\n    current_timestamp() AS etl_time\nFROM (\n    SELECT\n        stat_date,\n        ROUND(SUM(positive_count)/SUM(total_count), 4) AS positive_ratio,\n        ROUND(SUM(negative_count)/SUM(total_count), 4) AS negative_ratio\n    FROM dws_topic_sentiment_daily\n    WHERE stat_date >= date_sub('${stat_date}', 30)\n    GROUP BY stat_date\n) a\nJOIN\n    ads_sentiment_volatility v\nON\n    a.stat_date = v.stat_date\nORDER BY\n    a.stat_date;",
+        "子查询从dws层拿每天的正面率和负面率，JOIN波动率表拿稳定性数据。正面率权重40%、非负面率权重30%、稳定性权重30%三项加起来就是健康评分。CASE WHEN按60和70两个阈值分成三档。LAG算了每天相对前一天的分数变化。"
+    ],
+}
+
+# 先删除之前加的短SQL（末尾的那段），再添加新的代码块
+count = 0
+for sec in ch4['sections']:
+    for sub in sec.get('subsections', []):
+        title = sub['title']
+        for key, code_items in codes.items():
+            if key in title:
+                # 删除之前追加的短SQL描述（最后一个字符串元素如果包含"核心Hive SQL"或"核心计算代码"）
+                while sub['content'] and isinstance(sub['content'][-1], str) and ('SQL' in sub['content'][-1] or '核心计算代码' in sub['content'][-1] or '计算逻辑' in sub['content'][-1] or '分母用GREATEST' in sub['content'][-1] or '子查询按' in sub['content'][-1] or 'LAG窗口' in sub['content'][-1] or '内层子查询' in sub['content'][-1] or '用子查询' in sub['content'][-1]):
+                    sub['content'].pop()
+                # 添加新的代码块
+                sub['content'].extend(code_items)
+                count += 1
+                break
+
+with open('ch4.json', 'w', encoding='utf-8') as f:
+    json.dump(ch4, f, ensure_ascii=False, indent=2)
+
+print(f"ch4.json: {count}/7 代码块替换完成")
+# Count total chars
+with open('ch4.json', 'r', encoding='utf-8') as f:
+    print(f"ch4.json 总字符数: {len(f.read())}")

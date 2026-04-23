@@ -1,90 +1,547 @@
 {
-  "title": "4 系统功能的实现",
+  "title": "4 系统设计",
+  "chapter_number": 4,
   "sections": [
     {
-      "title": "4.1 前台功能模块实现",
+      "title": "4.1 系统功能设计",
+      "number": "4.1",
       "content": [
-        "前台功能模块由main蓝图承载，面向所有访客提供首页浏览、栏目导航、文章阅读、站内搜索和联系留言等功能。所有前台页面继承自base.html基础模板，导航栏和页脚结构是统一的，页面布局用Bootstrap 5的栅格系统做响应式适配。"
+        "根据前期需求分析的结果，系统功能分成了前台展示模块、用户认证模块和后台管理模块三个部分，划分依据是使用角色和业务场景。前台展示模块面向普通访客，包含首页浏览、栏目导航、文章阅读、单页访问、站内搜索和联系留言六项功能。访客可以浏览企业资讯，也可以提交留言反馈。用户认证模块面向后台管理人员，负责登录验证、登出操作和角色权限校验。只有登录并且权限匹配的用户才能访问对应的后台管理功能。",
+        "后台管理模块是功能最集中的部分，下面分成文章管理、栏目管理、单页管理、媒体资源管理、用户管理、留言管理和站点设置七个子模块。文章管理负责文章的新增、编辑、删除、状态切换与推荐置顶；栏目管理支持层级结构配置和导航显示控制；单页管理用于维护关于我们等静态页面；媒体资源管理负责图片上传与元数据记录；用户管理维护后台账号信息；留言管理处理访客提交的联系信息；站点设置维护站点名称、联系方式和首页文案等全局参数。",
+        "三个模块各自独立又相互关联。前台展示模块从数据库中读取后台录入的内容来渲染页面，用户认证模块负责后台管理模块的访问安全，后台管理模块为前台展示持续提供内容数据。系统功能结构图如图3-1所示。",
+        {
+          "type": "image",
+          "path": "cms-function-structure.png",
+          "width": 148,
+          "caption": "图3-1 系统功能结构图"
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "4.2 系统架构设计",
+      "number": "4.2",
+      "content": [
+        "系统基于B/S架构，用户在浏览器中访问前台页面与管理后台，服务器端负责业务逻辑处理和页面渲染。系统初始化时使用Flask应用工厂模式，代码结构按MVC分层思想来组织。模型层用SQLAlchemy ORM定义数据实体及其关联关系，视图层由Jinja2模板引擎完成页面渲染，控制层则由蓝图路由分发请求并组织业务流程。",
+        "模块划分上，按功能职责拆成了main、auth和admin三个蓝图。main蓝图注册在根路径下，负责前台展示逻辑，包括首页、栏目页、文章详情页、单页、搜索页和联系页的路由与视图；auth蓝图注册在/auth路径下，负责后台登录与登出功能；admin蓝图注册在/admin路径下，负责文章、栏目、单页、媒体、留言、用户和站点设置等管理功能。每个蓝图有独立的路由前缀、视图函数和模板目录，模块边界比较清晰，维护和扩展时互不影响。",
+        "数据访问层用Flask-SQLAlchemy扩展，模型类统一管理数据库表结构与外键关联，避免手工拼接SQL语句带来的安全隐患和维护成本。开发阶段用的SQLite，数据库文件放在instance目录下。如果部署到生产环境，改一下配置里的连接字符串就可以切到MySQL等关系型数据库。表现层由Jinja2模板引擎和Bootstrap 5框架负责前台与后台页面构建，模板继承机制用来复用导航栏、页脚和侧边栏等公共布局组件，实现前台响应式展示和后台统一管理界面。系统总体架构图如图3-2所示。",
+        {
+          "type": "image",
+          "path": "cms-system-arch.png",
+          "width": 148,
+          "caption": "图3-2 系统总体架构图"
+        },
+        "请求处理的大致链路是：浏览器发出HTTP请求，Flask路由把请求分发到对应蓝图的视图函数。视图函数依次完成参数校验、模型调用和权限判断，将处理结果传递给Jinja2模板进行渲染并返回HTML响应。对于后台管理请求，视图函数执行前，Flask-Login会校验用户登录状态，自定义装饰器会校验角色权限；对于前台展示请求，则根据文章和栏目的发布状态过滤展示内容，保证未发布内容不对外可见。"
+      ],
+      "subsections": []
+    },
+    {
+      "title": "4.3 业务流程设计",
+      "number": "4.3",
+      "content": [
+        "系统的业务流程围绕访客浏览和管理员维护两条主线展开。访客进入系统后，首页会展示推荐文章和栏目入口，点击栏目查看分类文章列表，选择具体文章阅读详情内容，也可通过搜索功能按关键词检索文章。如果访客需要联系企业，可进入联系页面填写姓名、邮箱和留言内容并提交。整个前台浏览流程无需登录，访客可自由获取公开发布的内容信息。",
+        "管理员通过后台登录页面输入用户名和密码完成身份验证后，进入后台管理界面。管理员可以进行文章发布与编辑、栏目结构维护、单页内容更新、媒体资源上传、留言查看处理、用户账号管理和站点参数配置等操作。后台所有操作均需通过登录校验和角色权限判断，编辑角色仅可访问内容管理相关功能，管理员角色拥有全部管理权限。系统业务流程图如图3-3所示。",
+        {
+          "type": "image",
+          "path": "cms-business-flow.png",
+          "width": 100,
+          "caption": "图3-3 系统业务流程图"
+        },
+        "在内容发布流程上，管理员新建文章时设置为草稿状态，经过编辑校对后切换为已发布状态，前台页面即可展示该文章。如需临时下架，可将状态切换为已归档。这样文章从创建到发布再到归档的整个过程都通过状态字段来控制，不会出现内容状态不明的情况。"
+      ],
+      "subsections": []
+    },
+    {
+      "title": "4.4 数据库设计",
+      "number": "4.4",
+      "content": [
+        "系统数据库设计分为概念结构设计和逻辑结构设计两个阶段，分别从实体关系建模和数据表结构定义两个层面完成数据组织方案的设计。"
       ],
       "subsections": [
         {
-          "title": "4.1.1 首页展示实现",
+          "title": "4.4.1 概念结构设计",
+          "number": "4.4.1",
           "content": [
-            "首页由main蓝图的home路由渲染，页面包含英雄横幅区域、置顶文章区域、最新文章列表和栏目导航四个板块。置顶文章是查询is_top标志为真的已发布文章得到的，最新文章按发布时间倒序查询前六条记录，栏目列表按排序字段升序加载。首页运行效果如图4-1所示。",
-            {"type": "image", "path": "runtime_home.png", "width": 148, "caption": "图4-1 系统首页运行效果"},
-            "首页路由的关键实现代码如下。",
-            {"type": "code", "language": "python", "content": "@bp.route('/')\ndef home():\n    top_articles = (\n        Article.query.filter_by(status='published', is_top=True)\n        .order_by(Article.published_at.desc().nullslast())\n        .limit(3).all()\n    )\n    latest_articles = (\n        Article.query.filter_by(status='published')\n        .order_by(Article.published_at.desc().nullslast())\n        .limit(6).all()\n    )\n    categories = Category.query.filter_by(status=True)\\\n        .order_by(Category.sort_order.asc()).all()\n    return render_template('main/home.html',\n        top_articles=top_articles,\n        latest_articles=latest_articles,\n        categories=categories)"}
+            "根据系统功能需求，梳理出用户、文章、栏目、媒体资源、单页和联系留言六个核心业务实体。下面分别对各实体的属性及其E-R图进行说明。",
+            "（1）用户实体。用户实体用于描述后台管理人员的基本信息，属性包括用户编号（主键）、用户名、邮箱、密码哈希、账号状态、最后登录时间、角色外键、创建时间和更新时间。用户实体E-R图如图3-4所示。",
+            {
+              "type": "image",
+              "path": "er-user.png",
+              "width": 100,
+              "caption": "图3-4 用户实体E-R图"
+            },
+            "（2）文章实体。文章实体是系统内容管理的核心数据对象，属性包括文章编号（主键）、标题、URL别名、摘要、正文内容、封面图片、发布状态、置顶标记、推荐标记、浏览次数、发布时间、所属栏目外键和作者外键。文章实体E-R图如图3-5所示。",
+            {
+              "type": "image",
+              "path": "er-article.png",
+              "width": 100,
+              "caption": "图3-5 文章实体E-R图"
+            },
+            "（3）栏目实体。栏目实体用于组织文章的分类结构，属性包括栏目编号（主键）、栏目名称、URL别名、描述信息、排序值、是否显示在导航栏、栏目状态和父栏目外键。栏目通过自引用外键实现父子层级关系。栏目实体E-R图如图3-6所示。",
+            {
+              "type": "image",
+              "path": "er-category.png",
+              "width": 100,
+              "caption": "图3-6 栏目实体E-R图"
+            },
+            "（4）媒体资源实体。媒体资源实体用于记录后台上传的图片等文件信息，属性包括资源编号（主键）、原始文件名、存储文件名、MIME类型、文件大小、上传者外键和上传时间。媒体资源实体E-R图如图3-7所示。",
+            {
+              "type": "image",
+              "path": "er-media.png",
+              "width": 100,
+              "caption": "图3-7 媒体资源实体E-R图"
+            },
+            "（5）单页实体。单页实体用于管理关于我们、服务说明等静态页面，属性包括页面编号（主键）、标题、URL别名、正文内容、是否显示在导航栏、排序值、页面状态、创建时间和更新时间。单页实体E-R图如图3-8所示。",
+            {
+              "type": "image",
+              "path": "er-page.png",
+              "width": 100,
+              "caption": "图3-8 单页实体E-R图"
+            },
+            "（6）联系留言实体。联系留言实体用于保存访客通过联系页提交的反馈信息，属性包括留言编号（主键）、姓名、邮箱、电话号码、留言内容、处理状态和提交时间。联系留言实体E-R图如图3-9所示。",
+            {
+              "type": "image",
+              "path": "er-message.png",
+              "width": 100,
+              "caption": "图3-9 联系留言实体E-R图"
+            },
+            "上述六个实体之间存在如下关联关系：用户与文章为一对多关系，一个用户可发布多篇文章；栏目与文章为一对多关系，一个栏目下可包含多篇文章；栏目与栏目之间为自引用一对多关系，实现层级分类；用户与媒体资源为一对多关系，一个用户可上传多个媒体文件。系统总体E-R图如图3-10所示。",
+            {
+              "type": "image",
+              "path": "er-diagram.png",
+              "width": 148,
+              "caption": "图3-10 系统总体E-R图"
+            }
           ]
         },
         {
-          "title": "4.1.2 栏目与文章浏览实现",
+          "title": "4.4.2 逻辑结构设计",
+          "number": "4.4.2",
           "content": [
-            "栏目列表页对应category_detail路由，根据URL中的栏目slug查询对应栏目下的已发布文章并分页展示。文章详情页对应article_detail路由，根据文章slug查询文章记录，页面加载时自动将浏览量加一，并在底部展示同栏目下的相关推荐文章。栏目文章列表页面如图4-2所示，文章详情页面如图4-3所示。",
-            {"type": "image", "path": "runtime_category_news.png", "width": 148, "caption": "图4-2 栏目文章列表页面"},
-            {"type": "image", "path": "runtime_article.png", "width": 148, "caption": "图4-3 文章详情页面"},
-            "文章详情路由的关键实现代码如下。",
-            {"type": "code", "language": "python", "content": "@bp.route('/article/<slug>')\ndef article_detail(slug):\n    article = Article.query.filter_by(\n        slug=slug, status='published').first_or_404()\n    article.view_count += 1\n    db.session.commit()\n    related_articles = (\n        Article.query.filter(\n            Article.category_id == article.category_id,\n            Article.id != article.id,\n            Article.status == 'published')\n        .order_by(Article.published_at.desc().nullslast())\n        .limit(5).all()\n    )\n    return render_template('main/article_detail.html',\n        article=article, related_articles=related_articles)"}
-          ]
-        },
-        {
-          "title": "4.1.3 联系留言实现",
-          "content": [
-            "联系留言页面对应contact路由，页面提供姓名、邮箱、电话和留言内容四个输入字段，所有字段均设置了WTForms验证规则。表单内嵌CSRF令牌防护跨站请求伪造，提交成功后留言数据保存为ContactMessage模型记录。联系留言页面如图4-4所示。",
-            {"type": "image", "path": "runtime_contact.png", "width": 148, "caption": "图4-4 联系留言页面"},
-            "联系表单提交的关键实现代码如下。",
-            {"type": "code", "language": "python", "content": "@bp.route('/contact', methods=['GET', 'POST'])\ndef contact():\n    form = ContactForm()\n    if form.validate_on_submit():\n        message = ContactMessage(\n            name=form.name.data.strip(),\n            email=form.email.data.strip(),\n            phone=(form.phone.data or '').strip(),\n            message=form.message.data.strip())\n        db.session.add(message)\n        db.session.commit()\n        flash('留言已提交，我们会尽快联系您。', 'success')\n        return redirect(url_for('main.contact'))\n    return render_template('main/contact.html', form=form)"}
+            "根据概念结构设计的E-R模型，将各实体转化为具体的数据库表结构。系统共设计8张数据表，下面分别列出各表的字段定义。",
+            {
+              "type": "table",
+              "caption": "表4-1 roles 角色表",
+              "headers": [
+                "字段名",
+                "数据类型",
+                "说明"
+              ],
+              "rows": [
+                [
+                  "id",
+                  "INTEGER",
+                  "主键，自增"
+                ],
+                [
+                  "name",
+                  "VARCHAR(50)",
+                  "角色名称（admin/editor）"
+                ],
+                [
+                  "description",
+                  "VARCHAR(200)",
+                  "角色描述"
+                ],
+                [
+                  "created_at",
+                  "DATETIME",
+                  "创建时间"
+                ]
+              ]
+            },
+            {
+              "type": "table",
+              "caption": "表4-2 users 用户表",
+              "headers": [
+                "字段名",
+                "数据类型",
+                "说明"
+              ],
+              "rows": [
+                [
+                  "id",
+                  "INTEGER",
+                  "主键，自增"
+                ],
+                [
+                  "username",
+                  "VARCHAR(80)",
+                  "用户名（唯一）"
+                ],
+                [
+                  "email",
+                  "VARCHAR(120)",
+                  "邮箱地址（唯一）"
+                ],
+                [
+                  "password_hash",
+                  "VARCHAR(256)",
+                  "密码哈希值"
+                ],
+                [
+                  "is_active",
+                  "BOOLEAN",
+                  "账号状态"
+                ],
+                [
+                  "last_login",
+                  "DATETIME",
+                  "最后登录时间"
+                ],
+                [
+                  "role_id",
+                  "INTEGER",
+                  "角色外键"
+                ],
+                [
+                  "created_at",
+                  "DATETIME",
+                  "创建时间"
+                ],
+                [
+                  "updated_at",
+                  "DATETIME",
+                  "更新时间"
+                ]
+              ]
+            },
+            {
+              "type": "table",
+              "caption": "表4-3 categories 栏目表",
+              "headers": [
+                "字段名",
+                "数据类型",
+                "说明"
+              ],
+              "rows": [
+                [
+                  "id",
+                  "INTEGER",
+                  "主键，自增"
+                ],
+                [
+                  "name",
+                  "VARCHAR(100)",
+                  "栏目名称"
+                ],
+                [
+                  "slug",
+                  "VARCHAR(100)",
+                  "URL别名（唯一）"
+                ],
+                [
+                  "description",
+                  "TEXT",
+                  "栏目描述"
+                ],
+                [
+                  "sort_order",
+                  "INTEGER",
+                  "排序值"
+                ],
+                [
+                  "show_in_nav",
+                  "BOOLEAN",
+                  "是否显示在导航栏"
+                ],
+                [
+                  "is_active",
+                  "BOOLEAN",
+                  "栏目状态"
+                ],
+                [
+                  "parent_id",
+                  "INTEGER",
+                  "父栏目外键（自引用）"
+                ],
+                [
+                  "created_at",
+                  "DATETIME",
+                  "创建时间"
+                ]
+              ]
+            },
+            {
+              "type": "table",
+              "caption": "表4-4 articles 文章表",
+              "headers": [
+                "字段名",
+                "数据类型",
+                "说明"
+              ],
+              "rows": [
+                [
+                  "id",
+                  "INTEGER",
+                  "主键，自增"
+                ],
+                [
+                  "title",
+                  "VARCHAR(200)",
+                  "文章标题"
+                ],
+                [
+                  "slug",
+                  "VARCHAR(200)",
+                  "URL别名（唯一）"
+                ],
+                [
+                  "summary",
+                  "TEXT",
+                  "文章摘要"
+                ],
+                [
+                  "content",
+                  "TEXT",
+                  "正文内容（HTML）"
+                ],
+                [
+                  "cover_image",
+                  "VARCHAR(500)",
+                  "封面图片路径"
+                ],
+                [
+                  "status",
+                  "VARCHAR(20)",
+                  "状态（draft/published/archived）"
+                ],
+                [
+                  "is_sticky",
+                  "BOOLEAN",
+                  "是否置顶"
+                ],
+                [
+                  "is_featured",
+                  "BOOLEAN",
+                  "是否推荐"
+                ],
+                [
+                  "view_count",
+                  "INTEGER",
+                  "浏览次数"
+                ],
+                [
+                  "published_at",
+                  "DATETIME",
+                  "发布时间"
+                ],
+                [
+                  "category_id",
+                  "INTEGER",
+                  "所属栏目外键"
+                ],
+                [
+                  "author_id",
+                  "INTEGER",
+                  "作者外键"
+                ],
+                [
+                  "created_at",
+                  "DATETIME",
+                  "创建时间"
+                ],
+                [
+                  "updated_at",
+                  "DATETIME",
+                  "更新时间"
+                ]
+              ]
+            },
+            {
+              "type": "table",
+              "caption": "表4-5 pages 单页表",
+              "headers": [
+                "字段名",
+                "数据类型",
+                "说明"
+              ],
+              "rows": [
+                [
+                  "id",
+                  "INTEGER",
+                  "主键，自增"
+                ],
+                [
+                  "title",
+                  "VARCHAR(200)",
+                  "页面标题"
+                ],
+                [
+                  "slug",
+                  "VARCHAR(200)",
+                  "URL别名（唯一）"
+                ],
+                [
+                  "content",
+                  "TEXT",
+                  "页面正文"
+                ],
+                [
+                  "show_in_nav",
+                  "BOOLEAN",
+                  "是否显示在导航"
+                ],
+                [
+                  "sort_order",
+                  "INTEGER",
+                  "排序值"
+                ],
+                [
+                  "is_active",
+                  "BOOLEAN",
+                  "页面状态"
+                ],
+                [
+                  "created_at",
+                  "DATETIME",
+                  "创建时间"
+                ],
+                [
+                  "updated_at",
+                  "DATETIME",
+                  "更新时间"
+                ]
+              ]
+            },
+            {
+              "type": "table",
+              "caption": "表4-6 media_assets 媒体资源表",
+              "headers": [
+                "字段名",
+                "数据类型",
+                "说明"
+              ],
+              "rows": [
+                [
+                  "id",
+                  "INTEGER",
+                  "主键，自增"
+                ],
+                [
+                  "original_name",
+                  "VARCHAR(255)",
+                  "原始文件名"
+                ],
+                [
+                  "stored_name",
+                  "VARCHAR(255)",
+                  "存储文件名"
+                ],
+                [
+                  "mime_type",
+                  "VARCHAR(100)",
+                  "MIME类型"
+                ],
+                [
+                  "file_size",
+                  "INTEGER",
+                  "文件大小（字节）"
+                ],
+                [
+                  "uploader_id",
+                  "INTEGER",
+                  "上传者外键"
+                ],
+                [
+                  "created_at",
+                  "DATETIME",
+                  "上传时间"
+                ]
+              ]
+            },
+            {
+              "type": "table",
+              "caption": "表4-7 contact_messages 联系留言表",
+              "headers": [
+                "字段名",
+                "数据类型",
+                "说明"
+              ],
+              "rows": [
+                [
+                  "id",
+                  "INTEGER",
+                  "主键，自增"
+                ],
+                [
+                  "name",
+                  "VARCHAR(100)",
+                  "留言者姓名"
+                ],
+                [
+                  "email",
+                  "VARCHAR(120)",
+                  "邮箱地址"
+                ],
+                [
+                  "phone",
+                  "VARCHAR(20)",
+                  "电话号码"
+                ],
+                [
+                  "message",
+                  "TEXT",
+                  "留言内容"
+                ],
+                [
+                  "is_read",
+                  "BOOLEAN",
+                  "是否已读"
+                ],
+                [
+                  "created_at",
+                  "DATETIME",
+                  "提交时间"
+                ]
+              ]
+            },
+            {
+              "type": "table",
+              "caption": "表4-8 site_settings 站点设置表",
+              "headers": [
+                "字段名",
+                "数据类型",
+                "说明"
+              ],
+              "rows": [
+                [
+                  "id",
+                  "INTEGER",
+                  "主键，自增"
+                ],
+                [
+                  "key",
+                  "VARCHAR(100)",
+                  "设置项键名（唯一）"
+                ],
+                [
+                  "value",
+                  "TEXT",
+                  "设置项值"
+                ],
+                [
+                  "description",
+                  "VARCHAR(200)",
+                  "设置项说明"
+                ],
+                [
+                  "updated_at",
+                  "DATETIME",
+                  "更新时间"
+                ]
+              ]
+            },
+            "上述8张表通过SQLAlchemy模型定义外键约束和索引。users表的username和email字段设置了唯一约束，articles表的slug字段设置了唯一约束以保证URL地址唯一，categories表的slug字段同样设置了唯一约束。所有DateTime类型字段在模型层通过default参数设置默认值，确保记录创建时自动填充时间戳。"
           ]
         }
       ]
     },
     {
-      "title": "4.2 后台功能模块实现",
+      "title": "4.5 本章小结",
+      "number": "4.5",
       "content": [
-        "后台功能模块由auth蓝图和admin蓝图共同承载。auth蓝图负责管理员登录与登出，admin蓝图负责仪表盘、文章管理、栏目管理、单页管理、媒体管理、留言处理、用户管理和站点设置等功能。所有后台路由都加了Flask-Login的login_required装饰器，关键操作还额外加了自定义的permission_required装饰器做权限校验。"
-      ],
-      "subsections": [
-        {
-          "title": "4.2.1 管理员登录实现",
-          "content": [
-            "管理员登录由auth蓝图的login路由处理，用户提交用户名和密码后，系统先用WTForms做非空校验和CSRF令牌验证，然后根据用户名查询User记录并调用check_password方法比对密码哈希值。验证没问题后调用Flask-Login的login_user函数创建会话，并更新last_login_at字段记录登录时间。管理员登录页面如图4-5所示。",
-            {"type": "image", "path": "runtime_admin_login.png", "width": 148, "caption": "图4-5 管理员登录页面"},
-            "登录路由的关键实现代码如下。",
-            {"type": "code", "language": "python", "content": "@bp.route('/login', methods=['GET', 'POST'])\ndef login():\n    if current_user.is_authenticated:\n        return redirect(url_for('admin.dashboard'))\n    form = LoginForm()\n    if form.validate_on_submit():\n        user = User.query.filter_by(\n            username=form.username.data.strip()).first()\n        if user and user.status \\\n                and user.check_password(form.password.data):\n            login_user(user)\n            user.last_login_at = utcnow_naive()\n            db.session.commit()\n            flash('登录成功。', 'success')\n            next_url = request.args.get('next') \\\n                or url_for('admin.dashboard')\n            return redirect(next_url)\n        flash('用户名或密码错误。', 'danger')\n    return render_template('auth/login.html', form=form)"}
-          ]
-        },
-        {
-          "title": "4.2.2 后台仪表盘实现",
-          "content": [
-            "后台仪表盘对应admin蓝图的dashboard路由，页面顶部展示文章总数、已发布文章数、栏目数、留言数和用户数五项统计数据，下方分别展示最近发布的五篇文章和最近收到的五条留言。仪表盘为管理员提供了系统运行状态的全局视图。后台仪表盘页面如图4-6所示。",
-            {"type": "image", "path": "runtime_admin_dashboard.png", "width": 148, "caption": "图4-6 后台仪表盘页面"},
-            "仪表盘路由的关键实现代码如下。",
-            {"type": "code", "language": "python", "content": "@bp.route('/')\n@login_required\n@permission_required('dashboard.view')\ndef dashboard():\n    stats = {\n        'article_count': Article.query.count(),\n        'published_count': Article.query.filter_by(\n            status='published').count(),\n        'category_count': Category.query.count(),\n        'message_count': ContactMessage.query.count(),\n        'user_count': User.query.count(),\n    }\n    latest_articles = Article.query.order_by(\n        Article.created_at.desc()).limit(5).all()\n    latest_messages = ContactMessage.query.order_by(\n        ContactMessage.created_at.desc()).limit(5).all()\n    return render_template('admin/dashboard.html',\n        stats=stats, latest_articles=latest_articles,\n        latest_messages=latest_messages)"}
-          ]
-        },
-        {
-          "title": "4.2.3 文章管理实现",
-          "content": [
-            "文章管理包含列表展示、新建、编辑和删除四个核心操作。文章列表页支持按发布状态和关键词组合筛选，查询结果用paginate方法做分页。新建文章时系统根据标题自动生成URL别名slug，封面图片经扩展名白名单校验后以哈希文件名保存至uploads目录。文章状态支持草稿、已发布和已归档三种取值的流转。文章管理页面如图4-7所示。",
-            {"type": "image", "path": "runtime_admin_articles.png", "width": 148, "caption": "图4-7 文章管理页面"},
-            "文章列表路由支持按状态和关键词筛选，关键实现代码如下。",
-            {"type": "code", "language": "python", "content": "@bp.route('/articles')\n@login_required\n@permission_required('article.view')\ndef article_list():\n    page = request.args.get('page', 1, type=int)\n    status = request.args.get('status', '', type=str)\n    keyword = request.args.get('q', '', type=str).strip()\n    query = Article.query\n    if status:\n        query = query.filter_by(status=status)\n    if keyword:\n        query = query.filter(\n            Article.title.ilike(f'%{keyword}%'))\n    pagination = query.order_by(\n        Article.is_top.desc(),\n        Article.created_at.desc()\n    ).paginate(page=page, per_page=10, error_out=False)\n    return render_template('admin/article_list.html',\n        pagination=pagination, keyword=keyword,\n        status=status)"}
-          ]
-        },
-        {
-          "title": "4.2.4 站点设置实现",
-          "content": [
-            "站点设置功能对应admin蓝图的settings路由，全局参数以键值对方式管理。页面加载时从SiteSetting表读取所有键值对并填充到表单中，管理员修改保存后系统遍历表单字段逐一更新对应的数据库记录，若键不存在则自动创建新记录。站点设置页面如图4-8所示。",
-            {"type": "image", "path": "runtime_admin_settings.png", "width": 148, "caption": "图4-8 站点设置页面"},
-            "站点设置路由的关键实现代码如下。",
-            {"type": "code", "language": "python", "content": "@bp.route('/settings', methods=['GET', 'POST'])\n@login_required\n@permission_required('setting.view')\ndef settings():\n    key_map = {item.key: item\n               for item in SiteSetting.query.all()}\n    form = SiteSettingForm(data={\n        key: key_map.get(key).value\n        if key in key_map else ''\n        for key in SiteSettingForm()._fields\n        if key != 'csrf_token'})\n    if form.validate_on_submit():\n        for key, field in form._fields.items():\n            if key in {'csrf_token', 'submit'}:\n                continue\n            setting = key_map.get(key)\n            if setting is None:\n                setting = SiteSetting(\n                    key=key, label=field.label.text,\n                    group_name='general')\n                db.session.add(setting)\n            setting.value = field.data or ''\n        db.session.commit()\n        flash('站点设置已保存。', 'success')\n        return redirect(url_for('admin.settings'))\n    return render_template('admin/settings.html',\n        form=form)"}
-          ]
-        }
-      ]
-    },
-    {
-      "title": "4.3 本章小结",
-      "content": [
-        "本章分前台和后台两部分，展示了各主要页面的运行效果和对应的路由代码。前台部分包括首页展示、栏目文章浏览和联系留言，后台部分包括管理员登录、仪表盘、文章管理和站点设置。每个功能均以运行截图配合核心代码的方式呈现，体现了Flask蓝图机制、SQLAlchemy查询构建和Flask-Login权限控制在实际业务场景中的应用。"
+        "本章分别从功能设计、架构设计、业务流程设计和数据库设计四个方面对企业官网CMS进行了整体设计。功能设计部分把系统拆成了前台展示、用户认证和后台管理三个模块，明确了各自的职责和功能组成。架构设计确定了基于Flask蓝图的B/S分层架构方案；业务流程设计描述了访客浏览和管理员维护两条核心业务路径；数据库设计部分用E-R建模和关系表定义完成了六个业务实体的数据组织。以上设计成果为下一章的功能实现提供了依据。"
       ],
       "subsections": []
     }
