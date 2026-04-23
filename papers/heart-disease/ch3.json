@@ -1,0 +1,154 @@
+{
+  "title": "3 数据来源与数据仓库构建",
+  "chapter_number": 3,
+  "sections": [
+    {
+      "title": "3.1 数据集介绍",
+      "number": "3.1",
+      "content": [
+        "本文使用三个公开数据集，覆盖健康行为调查和临床检测两类数据。三个数据集的基本信息汇总如表3-1所示。",
+        {
+          "type": "table",
+          "caption": "表3-1 三个数据集基本信息",
+          "headers": ["数据集", "来源", "记录数", "字段数", "目标变量"],
+          "rows": [
+            ["Kaggle 2020", "CDC BRFSS调查", "319795", "18", "HeartDisease（Yes/No）"],
+            ["Kaggle 2022", "CDC BRFSS调查（扩展版）", "246022", "40", "HadHeartAttack/HadAngina"],
+            ["UCI Cleveland", "Cleveland Clinic临床数据", "303", "14", "num（0-4）"]
+          ]
+        },
+        "Kaggle 2020这份数据集，原始来源是美国CDC的行为风险因素监测系统（BRFSS）。2020年CDC通过电话调查了大约40万人，清洗完剩下319795条。一共18个字段。HeartDisease是目标变量，只有Yes和No两个值。剩下17个字段覆盖了BMI、吸烟、饮酒、中风、身体健康天数、精神健康天数、行走困难、性别、年龄段、种族、糖尿病、运动习惯、整体健康评价、睡眠时长、哮喘、肾病、皮肤癌。心脏病阳性样本只占8.6%——非常典型的类别不均衡，图3-1画出了这个分布。",
+        {
+          "type": "image",
+          "path": "heart_disease_dist.png",
+          "width": 130
+        },
+        "图3-1 Kaggle 2020心脏病样本分布",
+        "Kaggle 2022是2020版本的加强版，字段从18个扩到40个，多了疫苗接种、COVID感染状态、口腔健康这些维度。原始445132条记录里有不少缺失值，清洗完剩246022条。UCI Cleveland数据集小得多，Cleveland Clinic收集的303名患者，13个临床检测指标。"
+      ],
+      "subsections": []
+    },
+    {
+      "title": "3.2 Hadoop集群环境搭建",
+      "number": "3.2",
+      "content": [
+        "数据仓库运行在Hadoop分布式平台上。本文采用Docker方式搭建Hadoop集群，包含1个NameNode和2个DataNode，HDFS副本数设为2。Hive 3.x作为数据仓库引擎安装在NameNode节点上，MetaStore使用MySQL存储元数据。集群搭建完成后，通过hdfs dfs -put命令将三个CSV数据文件上传到HDFS的/user/heart_disease/raw/目录下。",
+        "Hive的配置中，hive.exec.mode.local.auto设为true以加速小数据集上的查询；hive.cli.print.header设为true以便在CLI中查看列名。序列化工具选用OpenCSVSerde，它能正确处理CSV文件中包含逗号的字段值。"
+      ],
+      "subsections": []
+    },
+    {
+      "title": "3.3 ODS层设计与实现",
+      "number": "3.3",
+      "content": [
+        "ODS层干的事情就是把原始数据原封不动存进来，不改任何东西。这一层建了4张Hive外部表，具体见表3-2。",
+        {
+          "type": "table",
+          "caption": "表3-2 ODS层表结构",
+          "headers": ["表名", "字段数", "数据来源", "序列化方式"],
+          "rows": [
+            ["ods_heart_2020_raw", "18", "Kaggle 2020 CSV", "OpenCSVSerde"],
+            ["ods_heart_2022_raw", "40", "Kaggle 2022 CSV", "OpenCSVSerde"],
+            ["ods_uci_cleveland_raw", "14", "UCI Cleveland CSV", "OpenCSVSerde"],
+            ["ods_uci_cost_raw", "2", "UCI检查费用", "分隔符(:)"]
+          ]
+        },
+        "ODS表的所有字段类型统一设为STRING。使用外部表（EXTERNAL TABLE）而非内部表，这样删除Hive表时不会影响HDFS上的原始文件。以ods_heart_2020_raw为例，该表包含heart_disease、bmi、smoking、alcohol_drinking、stroke、physical_health、mental_health、diff_walking、sex、age_category、race、diabetic、physical_activity、gen_health、sleep_time、asthma、kidney_disease、skin_cancer共18个STRING字段。",
+        "建表后通过LOAD DATA INPATH将HDFS上的CSV文件加载到对应的ODS表中。加载过程不做任何转换，数据以原始格式进入Hive。通过SELECT COUNT(*)验证各表的记录数与原始CSV一致。"
+      ],
+      "subsections": []
+    },
+    {
+      "title": "3.4 DWD层设计与实现",
+      "number": "3.4",
+      "content": [
+        "DWD层接ODS层的原始数据，主要做三件事：清洗脏数据、转数据类型、统一字段名。处理完之后就是能直接拿来分析的明细数据了。这一层建了5张表，见表3-3。",
+        {
+          "type": "table",
+          "caption": "表3-3 DWD层表结构",
+          "headers": ["表名", "字段数", "清洗内容"],
+          "rows": [
+            ["dwd_heart_2020_clean", "21", "STRING→DECIMAL/INT；Yes/No→1/0；派生risk_label、sex_code"],
+            ["dwd_heart_2022_clean", "45", "40字段类型转换；HadHeartAttack OR HadAngina→risk_label"],
+            ["dwd_uci_cleveland_clean", "17", "?→NULL；num>0→risk_label=1；年龄→年龄段"],
+            ["dwd_uci_cost_clean", "7", "费用STRING→DECIMAL；窗口函数生成cost_rank"],
+            ["dwd_heart_feature_sample", "28", "三数据集UNION ALL；共有维度对齐；缺失字段NULL"]
+          ]
+        },
+        "清洗过程通过HiveQL的INSERT OVERWRITE语句实现。以Kaggle 2020数据为例，主要的清洗操作包括：（1）BMI从STRING转为DECIMAL(6,2)；（2）Smoking、AlcoholDrinking等Yes/No字段通过CASE WHEN映射为1/0的INT类型；（3）Sex字段从Male/Female映射为1/0的sex_code；（4）HeartDisease字段映射为risk_label（Yes→1，No→0）；（5）Diabetic字段保留原始文本值（diabetic_text）同时生成二值标记（diabetic_flag）。",
+        "UCI Cleveland数据集的问题主要是缺失值。ca和thal两个字段里有问号（?），用CASE WHEN换成了NULL。目标变量num原来是0到4五个值，这里简化成二分类：num>0就算有病，risk_label设为1。年龄按10岁一档分段，方便跟Kaggle那边对齐。",
+        "DWD层最关键的一张表是dwd_heart_feature_sample。做法是把三个数据集都有的维度（risk_label、age_band、sex_code、bmi、smoking_flag这些）用UNION ALL拼成一张28列的宽表。Kaggle那边没有的临床指标（trestbps、chol之类）填NULL，UCI那边没有的生活习惯字段也填NULL。每条记录多挂一个source_dataset字段标来源，ADS层按数据集分组的时候要用。"
+      ],
+      "subsections": []
+    },
+    {
+      "title": "3.5 ADS层设计与实现",
+      "number": "3.5",
+      "content": [
+        "ADS层是直接面向应用的。DWD层的明细数据在这里按各种维度做GROUP BY聚合，产出的结果表前端可以直接拿来画图、后端可以直接拿来查。一共9张聚合表，6个分析维度，详见表3-4。",
+        {
+          "type": "table",
+          "caption": "表3-4 ADS层聚合表",
+          "headers": ["表名", "分析维度", "聚合粒度"],
+          "rows": [
+            ["ads_heart_overview", "总览", "按数据集：样本数、阳性数、患病率"],
+            ["ads_heart_by_age", "年龄", "按数据集×年龄段：样本数、阳性数、患病率"],
+            ["ads_heart_by_sex", "性别", "按数据集×性别：样本数、阳性数、患病率"],
+            ["ads_heart_by_bmi", "BMI", "按数据集×BMI分组：样本数、阳性数、患病率"],
+            ["ads_heart_lifestyle", "生活习惯", "按因素名×因素值：样本数、阳性数、患病率"],
+            ["ads_heart_comorbidity", "共病史", "按疾病名×是否患病：样本数、阳性数、患病率"],
+            ["ads_uci_clinical_risk", "UCI临床指标", "按指标名×指标值：样本数、阳性数、患病率"],
+            ["ads_uci_cost_analysis", "检查费用", "按检查项：费用值、费用等级、排名"],
+            ["ads_model_metrics", "模型指标", "按模型名：准确率、精确率、召回率、F1、AUC"]
+          ]
+        },
+        "ADS层的SQL统一使用GROUP BY做分组聚合。以ads_heart_by_age为例，按dataset_name和age_band两个维度分组，COUNT(*)统计样本数，SUM(risk_label)统计阳性数，SUM(risk_label)/COUNT(*)计算患病率。ads_heart_lifestyle将吸烟、饮酒、运动、睡眠四个因素用UNION ALL拼成统一的factor_name/factor_value格式，每行输出一个因素值的统计结果。ads_uci_clinical_risk对UCI Cleveland的10个临床指标逐一做分组统计，每个指标的每个取值各输出一行。",
+        "整个数据仓库的三层架构如图3-2所示，从左到右展示了数据从CSV原始文件到最终应用端的完整流转过程。",
+        {
+          "type": "image",
+          "path": "warehouse_layers.png",
+          "width": 155
+        },
+        "图3-2 数据仓库ODS-DWD-ADS三层架构",
+        "ETL流程如图3-3所示，数据依次经过HDFS上传、ODS建表、DWD清洗、ADS聚合、MySQL同步五个阶段。",
+        {
+          "type": "image",
+          "path": "heart-disease-etl-flow.png",
+          "width": 155
+        },
+        "图3-3 数据处理ETL流程"
+      ],
+      "subsections": []
+    },
+    {
+      "title": "3.6 ADS层数据同步至MySQL",
+      "number": "3.6",
+      "content": [
+        "ADS层的9张Hive表需要同步到MySQL，原因是前端API请求需要毫秒级响应，而Hive查询通常需要数秒。MySQL中建了同名的9张表，字段类型做对应转换：Hive的STRING→MySQL的VARCHAR(64)，BIGINT→BIGINT，DECIMAL(8,4)→DECIMAL(8,4)，字符集设为utf8mb4。",
+        "同步脚本用Python编写，通过PyHive连接Hive读取ADS表全量数据，通过PyMySQL写入MySQL。写入前先TRUNCATE目标表再批量INSERT。ADS表每张只有几十到几百行，全量同步耗时在秒级。同步完成后Django后端直接查询MySQL的ADS表，实现了Hive离线分析和MySQL在线查询的解耦。",
+        "表3-5展示了MySQL中ADS表的部分字段类型映射。",
+        {
+          "type": "table",
+          "caption": "表3-5 Hive与MySQL字段类型映射",
+          "headers": ["Hive类型", "MySQL类型", "示例字段"],
+          "rows": [
+            ["STRING", "VARCHAR(64)", "dataset_name, age_band, sex_label"],
+            ["BIGINT", "BIGINT", "sample_count, positive_count"],
+            ["DECIMAL(8,4)", "DECIMAL(8,4)", "prevalence_rate, accuracy"],
+            ["STRING", "VARCHAR(128)", "feature_name, feature_label"],
+            ["DECIMAL(12,6)", "DECIMAL(12,6)", "importance（特征重要性）"]
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "3.7 本章小结",
+      "number": "3.7",
+      "content": [
+        "本章详细介绍了基于Hadoop和Hive的数据仓库构建过程。首先说明了三个数据集的来源和结构特征；然后描述了Hadoop集群的搭建和Hive的配置；接着按ODS、DWD、ADS三层分别说明了各层的表结构、清洗逻辑和聚合方式；最后介绍了ADS层到MySQL的离线同步方案。三层数据仓库将来自不同来源的56万余条原始数据清洗标准化为统一的分析基础，9张ADS聚合表覆盖了6个分析维度，为后续的数据分析和可视化展示提供了直接可用的数据支撑。"
+      ],
+      "subsections": []
+    }
+  ]
+}

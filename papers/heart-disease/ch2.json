@@ -1,0 +1,75 @@
+{
+  "title": "2 相关技术介绍",
+  "chapter_number": 2,
+  "sections": [
+    {
+      "title": "2.1 Hadoop与HDFS",
+      "number": "2.1",
+      "content": [
+        "Hadoop是Apache下面的一个开源项目，干的事情就是分布式计算。核心就两块：HDFS管存储，YARN管资源调度。HDFS的做法是把文件切成固定大小的块（默认128MB），分散放到集群里不同的机器上，每个块存3份。NameNode记的是元数据——哪个文件切成了哪几个块、块在哪台机器上。DataNode就管读写数据本身。靠这个架构，PB级的数据能扛得住，某台机器挂了数据也丢不了。",
+        "YARN是Hadoop 2.0引入的资源管理层。ResourceManager掌管整个集群的CPU和内存资源，NodeManager管理单个节点上的容器。用户提交的计算任务先向ResourceManager申请资源，拿到容器后在各节点上并行执行。YARN把资源管理和任务调度分开，使Hadoop不再局限于MapReduce一种计算模型。",
+        "本文使用Hadoop主要出于两个目的：一是用HDFS存储原始CSV数据文件，为Hive数据仓库提供底层存储；二是通过MapReduce完成部分ETL数据清洗任务。"
+      ],
+      "subsections": []
+    },
+    {
+      "title": "2.2 Hive数据仓库",
+      "number": "2.2",
+      "content": [
+        "Hive是建立在Hadoop之上的数据仓库工具，用户写SQL（HiveQL），Hive把SQL翻译成MapReduce或Tez任务在集群上执行。对于熟悉关系数据库的开发者来说，Hive的上手成本很低——建表、查询、聚合的语法和MySQL基本一样，底层的分布式计算细节被完全屏蔽了。",
+        "Hive支持多种数据格式。本文在ODS层使用OpenCSVSerde直接读取CSV文件，字段全部以STRING类型载入；DWD层用INSERT OVERWRITE把STRING转换为DECIMAL、INT等精确类型，同时做字段标准化和缺失值处理；ADS层用GROUP BY和窗口函数做多维聚合，产出可直接用于可视化和API查询的结果表。",
+        "Hive的分区和分桶机制可以加速查询。本文按dataset_name做分区，把Kaggle 2020、Kaggle 2022和UCI三个数据集的记录分开存储，查询某个数据集时只需要扫描对应分区的文件。"
+      ],
+      "subsections": []
+    },
+    {
+      "title": "2.3 MapReduce",
+      "number": "2.3",
+      "content": [
+        "MapReduce是Hadoop原生的批处理计算模型。一个MapReduce任务分两步：Map阶段把输入数据拆成键值对，Reduce阶段把相同键的值聚合到一起。以心脏病数据清洗为例，Map阶段读入CSV的每一行，解析字段并检查格式——BMI是否在合理范围内、年龄分类是否属于预定义的列表；Reduce阶段把通过检查的记录写入清洗后的输出文件，不合格的记录写入异常日志。",
+        "MapReduce的优点是容错性好、可处理任意大的数据集；缺点是中间结果要写磁盘，迭代计算效率低。本文的ETL任务属于一次性处理，不需要迭代，MapReduce足够胜任。"
+      ],
+      "subsections": []
+    },
+    {
+      "title": "2.4 机器学习分类算法",
+      "number": "2.4",
+      "content": [
+        "本文训练了四种分类模型来预测心脏病风险。",
+        "逻辑回归是最基础的二分类模型。它对输入特征做线性加权求和后过Sigmoid函数，输出0到1之间的概率值。逻辑回归的优点是训练快、可解释性强，缺点是只能学到线性决策边界。本文使用scikit-learn的LogisticRegression，设置class_weight='balanced'来应对正负样本不均衡。",
+        "随机森林由多棵决策树组成。每棵树在训练时只看到一部分样本和一部分特征，最终预测结果由所有树投票决定。随机性降低了过拟合风险，集成多棵弱分类器也提高了泛化能力。本文配置了250棵树。",
+        "Extra Trees（Extremely Randomized Trees）和随机森林的区别在于：随机森林在每个节点选最优分裂点，Extra Trees随机选分裂点。这让Extra Trees训练更快，方差更低，但偏差略高。本文配置了300棵树。",
+        "SGD线性分类器用随机梯度下降来训练逻辑回归，适合大规模数据集。loss设为log_loss时等效于逻辑回归，但训练速度更快。",
+        "四种模型的选择以AUC（ROC曲线下面积）为首要标准。AUC衡量的是模型区分阳性和阴性样本的总体能力，不受分类阈值的影响，在正负样本不均衡的情况下比准确率更有参考价值。"
+      ],
+      "subsections": []
+    },
+    {
+      "title": "2.5 Django Web框架",
+      "number": "2.5",
+      "content": [
+        "Django是Python生态中使用面很广的Web框架，自带ORM、认证系统、管理后台和模板引擎。本文选用Django REST Framework（DRF）来构建后端API。DRF在Django的基础上增加了序列化器、视图集和路由器，可以快速把数据库查询结果或业务逻辑封装成RESTful接口。",
+        "选择Django而不是Spring Boot或Express的原因比较直接：机器学习模型用Python的scikit-learn训练，预测推理也是Python代码，放在Django后端可以直接加载模型文件做推理，不用跨语言调用。"
+      ],
+      "subsections": []
+    },
+    {
+      "title": "2.6 其他相关技术",
+      "number": "2.6",
+      "content": [
+        "Vue3是当前主流的前端框架之一，采用Composition API组织组件逻辑。本文前端项目用Vue3搭配TypeScript开发，组件库选用Naive UI，构建工具为Vite。",
+        "ECharts是百度开源的JavaScript可视化库，支持柱状图、折线图、饼图、雷达图、热力图等数十种图表类型。本文用ECharts在前端渲染心脏病数据的各类分析图表。",
+        "Docker Compose用于容器化部署，将MySQL、Django后端和Vue3前端分别打包为独立镜像，统一编排启动。"
+      ],
+      "subsections": []
+    },
+    {
+      "title": "2.7 本章小结",
+      "number": "2.7",
+      "content": [
+        "本章分别介绍了Hadoop与HDFS、Hive数据仓库、MapReduce编程模型、逻辑回归等四种机器学习分类算法、Django Web框架以及Vue3、ECharts和Docker等相关技术。上述技术构成了本文系统的技术栈：Hadoop+Hive负责数据存储和仓库构建，Django负责后端服务，Vue3+ECharts负责前端展示，scikit-learn负责模型训练和预测。"
+      ],
+      "subsections": []
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "title_zh": "基于Hadoop的心脏病健康数据分析与预测系统",
+  "title_en": "Heart Disease Health Data Analysis and Prediction System Based on Hadoop",
+  "college": "信息工程学院",
+  "major": "数据科学与大数据技术",
+  "class_name": "{{ class_name }}",
+  "name": "{{ name }}",
+  "student_id": "{{ student_id }}",
+  "advisor": "{{ advisor }}",
+  "class_year": "2025届",
+  "date": "2025年5月",
+  "abstract_zh": "心血管疾病的致死人数多年来一直排在全球第一位。能不能在发病之前把高风险的人筛出来，直接关系到发病率和死亡率能不能降下去。这篇论文做的事情是：拿心脏病相关的健康数据，搭一套从离线数据仓库、统计分析、机器学习预测到Web可视化都能跑通的大数据分析系统。数据一共用了三份：Kaggle 2020心脏病调查（319795条、18个字段）、Kaggle 2022扩展版（246022条、40个字段）、UCI Cleveland临床数据（303条、13个临床指标）。三份数据全部灌进Hadoop，用Hive搭了ODS-DWD-ADS三层仓库，做完清洗、字段对齐和多维聚合之后，ADS层的结果同步到MySQL给线上用。\n分析的角度有六个：年龄、性别、BMI、生活习惯、共病史、UCI临床指标。在Kaggle 2020数据上跑了逻辑回归、SGD、随机森林、Extra Trees四个模型，拿AUC当主要选型标准。最后逻辑回归AUC=0.8207排第一，召回率78.30%。换到UCI Cleveland数据集上，同一个模型AUC到了0.9665，准确率86.89%。前端用Vue3+ECharts画了可视化大屏和多页分析界面，后端是Django REST Framework，提供数据查询和在线预测两类接口。用户把自己的健康指标填进去，就能拿到心脏病风险等级和影响最大的几个因素。整套系统用Docker Compose打包部署，前后端分开跑，工程上基本能用。",
+  "abstract_en": "Cardiovascular disease has long been the leading cause of death worldwide, making early risk identification crucial for reducing morbidity and mortality. This thesis designs and implements a big data analysis system for heart disease health data, covering an offline data warehouse, statistical analysis, machine learning prediction, and web-based visualization. The system integrates the Kaggle 2020 heart disease survey dataset (319,795 records, 18 fields), the Kaggle 2022 extended version (246,022 records, 40 fields), and the UCI Cleveland clinical dataset (303 records, 13 clinical indicators). A three-layer data warehouse (ODS-DWD-ADS) is built on the Hadoop platform using Hive for data cleaning, field standardization, and multi-dimensional aggregation, with ADS results synchronized to MySQL for online queries. Analysis dimensions cover age, gender, BMI, lifestyle habits, comorbidity history, and UCI clinical indicators. Four classification models were trained on the Kaggle 2020 dataset, with logistic regression achieving the best AUC of 0.8207 and a recall of 78.30%. On the UCI Cleveland dataset, the same model reached an AUC of 0.9665 with 86.89% accuracy. The frontend is built with Vue3 and ECharts for visualization dashboards, while the backend uses Django REST Framework for data query and online prediction APIs. The entire system is deployed using Docker Compose with a separated frontend and backend architecture.",
+  "keywords_zh": "心脏病；大数据分析；Hadoop；Hive数据仓库；机器学习；可视化",
+  "keywords_en": "heart disease; big data analysis; Hadoop; Hive data warehouse; machine learning; visualization",
+  "acknowledgement": "毕设做到这里，最想感谢的是指导老师。选题阶段我对大数据方向的了解仅限于课堂上学过的Hadoop和Hive，具体该怎么结合实际场景做一个完整的系统心里没底。老师建议从公开医疗数据集入手，先把数据仓库跑通，再在上面加分析和预测——这条路线事后看确实比一开始就去搞复杂模型要稳妥得多。后来写SQL建表、调Django接口、画ECharts图表的过程中遇到不少问题，老师每次都能给出具体的排查方向，省去了很多在网上漫无目的搜索的时间。\n四年本科课程里学到的东西在这次毕设中全部派上了用场。数据结构课上学的哈希表和排序在写MapReduce的时候用到了；数据库课上的范式和索引知识在设计MySQL表结构时直接套用；机器学习课上跑过的逻辑回归和随机森林模型，这次在真实数据集上重新训练了一遍，体会和课堂作业完全不同。\n同学们在环境配置上帮了不少忙。Hadoop集群搭建、Docker网络配置这些坑，几个人一起踩比自己摸索快得多。\n家人在生活上的支持让我能够把精力集中在毕设上，不用操心其他事情。在此一并致谢。",
+  "conclusion": "这篇论文围绕心脏病健康数据，做了四件事：建数据仓库、跑多维统计、训练机器学习模型、开发Web系统。数据这块，三份公开数据集走了ODS-DWD-ADS三层Hive仓库，清洗和标准化之后产出9张ADS聚合表，分别对应年龄、性别、BMI、生活习惯、共病史、UCI临床指标六个维度。模型这块，Kaggle数据上逻辑回归AUC=0.8207、召回率78.30%，排第一。UCI数据上同一模型AUC到了0.9665。系统这块，Vue3+ECharts负责可视化大屏和分页分析界面，Django后端负责RESTful查询和在线预测，Docker Compose负责容器化部署。\n目前的问题也比较明显。Kaggle数据集阳性只有8.6%，正负样本差太多，模型精确率只有23.31%。数据仓库只能离线批处理，没接实时数据流。预测模型也只输出一个概率值，没有可解释性分析。\n后面如果要改，样本不平衡的问题可以试SMOTE过采样或者Focal Loss；实时性的问题可以在Hive旁边加一路Spark Streaming；可解释性的问题可以用SHAP值给每个预测结果标出哪些特征影响最大。"
+}
