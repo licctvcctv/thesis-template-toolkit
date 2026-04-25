@@ -1,0 +1,369 @@
+{
+  "title": "6 智慧停车系统实现",
+  "content": [
+    {
+      "text": "系统实现部分结合实际项目结构介绍主要功能。前端项目为 smart-parking-frontend，后端项目为 smart-parking-backend。前端通过 Vite 启动开发服务，后端通过 Spring Boot 提供接口服务，数据库使用 smart_parking 保存业务数据。"
+    },
+    {
+      "text": "为了使实现章节更接近模板的写法，本章不仅展示运行页面，还对每个页面背后的接口、数据流和业务规则进行说明。页面截图用于证明系统能够运行，文字说明用于解释系统如何完成相关功能。"
+    }
+  ],
+  "sections": [
+    {
+      "title": "6.1 开发环境与项目结构",
+      "content": [
+        {
+          "table": {
+            "caption": "表6-1 系统开发环境",
+            "headers": [
+              "环境项",
+              "版本或说明",
+              "用途"
+            ],
+            "rows": [
+              [
+                "JDK",
+                "17",
+                "运行 Spring Boot 后端"
+              ],
+              [
+                "Spring Boot",
+                "3.3.5",
+                "后端主体框架"
+              ],
+              [
+                "Node.js",
+                "本地开发环境",
+                "运行 Vue3 前端项目"
+              ],
+              [
+                "Vue",
+                "3.x",
+                "构建用户端和管理员端页面"
+              ],
+              [
+                "MySQL",
+                "8.x 兼容",
+                "保存业务数据"
+              ],
+              [
+                "Maven",
+                "项目构建工具",
+                "管理后端依赖"
+              ],
+              [
+                "Vite",
+                "前端构建工具",
+                "开发调试和打包前端页面"
+              ]
+            ]
+          }
+        },
+        {
+          "text": "后端项目的核心目录包括 controller、service、mapper、entity、dto、vo、security、config、aspect 和 task。前端项目的核心目录包括 views、api、router、store、layout 和 utils。这样的目录划分使前后端模块职责清晰，便于开发和维护。"
+        },
+        {
+          "text": "后端项目启动类为 SmartParkingApplication，配置文件位于 application.yml。数据库初始化脚本包含 smart_parking 数据库、8 张主要业务表、默认管理员、测试用户和演示停车场数据。项目使用 Maven 管理依赖，主要依赖包括 Spring Boot Web、Spring Security、Validation、MyBatis-Plus、JWT、Knife4j、Lombok、Hutool 和 EasyExcel。"
+        },
+        {
+          "text": "前端项目通过 Vite 启动，src 目录下按 api、layout、router、store、utils 和 views 进行划分。api 目录封装不同业务的请求方法，views 目录保存实际页面，layout 目录保存用户端和管理员端整体布局，store 目录保存认证状态。"
+        },
+        {
+          "table": {
+            "caption": "表6-2 前后端主要目录说明",
+            "headers": [
+              "项目",
+              "目录或包",
+              "作用"
+            ],
+            "rows": [
+              [
+                "后端",
+                "controller",
+                "提供认证、停车场、车位、订单、用户、日志、配置等 REST 接口"
+              ],
+              [
+                "后端",
+                "service / service.impl",
+                "封装业务规则、状态流转和事务处理"
+              ],
+              [
+                "后端",
+                "mapper / entity",
+                "完成数据库表映射和数据访问"
+              ],
+              [
+                "后端",
+                "security",
+                "实现 JWT 解析、登录用户封装和权限配置"
+              ],
+              [
+                "后端",
+                "aspect / task",
+                "实现操作日志切面和预约超时定时任务"
+              ],
+              [
+                "前端",
+                "views",
+                "保存用户端和管理员端页面"
+              ],
+              [
+                "前端",
+                "api",
+                "封装 Axios 请求方法"
+              ],
+              [
+                "前端",
+                "router / store",
+                "完成路由管理和登录状态管理"
+              ]
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "title": "6.2 登录认证功能实现",
+      "content": [
+        {
+          "text": "登录功能由前端登录页面、AuthController、SysUserService 和 JwtUtils 共同完成。前端将用户名和密码提交至 /public/auth/login，后端根据用户名或手机号查询用户，校验密码和账号状态后生成 JWT，并返回给前端。管理员端登录后进入后台统计页面，普通用户登录后进入用户端页面。"
+        },
+        {
+          "code": "const res = await login(form.value)\nconst { token, userInfo } = res.data\nauthStore.setAuth(token, userInfo)\nrouter.push(userInfo.role === 'ADMIN' ? '/admin/dashboard' : '/home')",
+          "caption": "代码6-1 前端登录调用示例"
+        },
+        {
+          "text": "前端请求拦截器会从本地存储读取 token，并在请求头中加入 Authorization。后端 JwtAuthenticationFilter 对后续请求进行解析和认证，从而实现前后端分离场景下的登录保持。"
+        },
+        {
+          "text": "注册功能由用户端注册页面调用后端公开接口完成。用户提交用户名、手机号和密码后，后端首先校验用户名和手机号是否重复，再对密码进行 BCrypt 加密，最后保存普通用户账号。相比直接保存明文密码，加密存储能够降低数据库泄露时的安全风险。"
+        },
+        {
+          "text": "登录成功后，前端会将 Token 和用户信息写入 Pinia 状态，并同步保存到本地存储。请求工具 request.js 在发送请求前读取 Token 并加入请求头，当后端返回未登录或 Token 失效时，前端清理登录状态并跳转登录页。"
+        },
+        {
+          "code": "service.interceptors.request.use(config => {\n    const token = getToken()\n    if (token) {\n        config.headers.Authorization = `Bearer ${token}`\n    }\n    return config\n})",
+          "caption": "代码6-3 请求拦截器携带 Token 示例"
+        }
+      ]
+    },
+    {
+      "title": "6.3 后台统计模块实现",
+      "content": [
+        {
+          "text": "后台统计页面是管理员登录后的首页，主要展示今日收入、今日订单、在场车辆和注册用户等统计卡片，同时通过图表展示收入与订单趋势、订单状态分布、停车场利用率和最近订单。该页面能够帮助管理员快速了解停车场整体运营情况。"
+        },
+        {
+          "image": "screenshots/fig6-1-admin-dashboard.png",
+          "caption": "图6-1 后台数据统计页面",
+          "width_cm": 13.2
+        },
+        {
+          "text": "后台统计模块的数据来自 AdminDashboardController。后端分别统计今日收入、今日订单、在场车辆、用户数量、收入趋势、订单趋势、订单状态分布和停车场利用率，再由前端使用 ECharts 绘制图表。"
+        },
+        {
+          "text": "统计模块的实现意义在于把零散订单数据转化为运营指标。管理员不需要逐条查看订单，也可以通过趋势图判断近期收入变化，通过状态分布判断待支付或取消订单是否异常，通过停车场利用率判断哪些停车场更繁忙。"
+        }
+      ]
+    },
+    {
+      "title": "6.4 停车场管理模块实现",
+      "content": [
+        {
+          "text": "停车场管理页面通过表格展示停车场名称、地址、总车位、空闲车位、收费标准、营业时间、状态和创建时间。管理员可以按停车场名称和状态筛选数据，也可以新增、编辑、删除停车场，或跳转查看该停车场下的车位。"
+        },
+        {
+          "image": "screenshots/fig6-2-admin-parking-lot.png",
+          "caption": "图6-2 停车场管理页面",
+          "width_cm": 13.2
+        },
+        {
+          "text": "停车场新增和编辑页面需要校验名称、地址、收费标准、总车位数和营业状态等字段。由于停车场还涉及经纬度与地图展示，因此系统在字段设计上保留 longitude 和 latitude，为后续地图选点和导航能力提供基础。"
+        },
+        {
+          "text": "删除停车场时需要考虑关联数据。如果停车场已经存在车位或历史订单，直接物理删除会影响订单展示和统计结果，因此系统采用软删除思路，并在业务上限制对重要数据的随意删除。"
+        }
+      ]
+    },
+    {
+      "title": "6.5 车位管理模块实现",
+      "content": [
+        {
+          "text": "车位管理页面展示车位编号、所属停车场、楼层区域、车位类型和车位状态。管理员可以按停车场、车位编号、状态和类型筛选车位，支持单个新增和批量新增。系统通过状态控制避免对已预约和已占用车位执行不合理操作。"
+        },
+        {
+          "image": "screenshots/fig6-3-admin-parking-space.png",
+          "caption": "图6-3 车位管理页面",
+          "width_cm": 13.2
+        },
+        {
+          "text": "车位管理模块需要频繁处理状态字段。空闲车位可以被用户预约；已预约车位等待用户入场；已占用车位表示车辆正在停车；维护中车位不能被预约。前端通过不同标签显示状态，后端通过状态字段控制业务操作。"
+        },
+        {
+          "text": "批量新增车位功能能够提高初始化效率。管理员只需要输入停车场、区域、类型、编号前缀和数量，系统即可生成一组连续编号的车位，适合停车场第一次录入数据或新增区域时使用。"
+        }
+      ]
+    },
+    {
+      "title": "6.6 订单管理模块实现",
+      "content": [
+        {
+          "text": "订单管理页面用于管理停车业务的完整过程。订单列表展示订单编号、用户名、车牌号、停车场、车位、入场时间、出场时间、停车时长、费用和订单状态。管理员可以按订单编号、车牌号、停车场、状态和时间范围进行查询。"
+        },
+        {
+          "image": "screenshots/fig6-4-admin-order.png",
+          "caption": "图6-4 订单管理页面",
+          "width_cm": 13.2
+        },
+        {
+          "text": "在业务实现上，预约订单生成后状态为已预约；用户入场后状态变为进行中；出场时系统根据停车时长和 hourly_rate 计算费用，订单进入待支付；支付成功后订单变为已完成。"
+        },
+        {
+          "text": "订单管理是系统实现中最复杂的模块。预约订单创建时，系统需要锁定车位；订单取消时，需要释放车位；订单入场时，需要将车位改为已占用；订单出场时，需要计算费用；订单支付完成后，需要生成支付记录并释放车位。"
+        },
+        {
+          "text": "为了防止业务状态混乱，系统将订单状态流转集中放在服务层处理。控制器只负责接收请求和返回结果，不直接修改多个表。服务层在同一业务方法中同时更新订单、车位和支付记录，使状态变化更加集中。"
+        },
+        {
+          "table": {
+            "caption": "表6-3 订单状态流转说明",
+            "headers": [
+              "状态",
+              "含义",
+              "允许操作"
+            ],
+            "rows": [
+              [
+                "已预约",
+                "用户已提交预约，车位被锁定",
+                "取消预约、入场"
+              ],
+              [
+                "进行中",
+                "车辆已经入场，正在停车",
+                "出场计费"
+              ],
+              [
+                "待支付",
+                "车辆已出场，订单金额已计算",
+                "支付"
+              ],
+              [
+                "已完成",
+                "支付成功，订单结束",
+                "查看详情"
+              ],
+              [
+                "已取消",
+                "用户取消或预约超时",
+                "查看详情"
+              ]
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "title": "6.7 用户管理、日志与系统配置实现",
+      "content": [
+        {
+          "text": "用户管理页面用于查看系统账号、手机号、昵称、角色、注册时间和状态，管理员可以查看详情、重置密码和启用禁用账号。操作日志页面记录系统登录、停车场管理、车位管理、订单管理等关键操作。系统配置页面用于维护预约锁定时长、默认收费标准、每用户最大车辆数和系统公告。"
+        },
+        {
+          "image": "screenshots/fig6-5-admin-user.png",
+          "caption": "图6-5 用户管理页面",
+          "width_cm": 13.2
+        },
+        {
+          "image": "screenshots/fig6-6-admin-log.png",
+          "caption": "图6-6 操作日志页面",
+          "width_cm": 13.2
+        },
+        {
+          "image": "screenshots/fig6-7-admin-config.png",
+          "caption": "图6-7 系统配置页面",
+          "width_cm": 13.2
+        },
+        {
+          "text": "用户管理模块与系统安全直接相关。管理员可以禁用异常账号或重置用户密码，但不能直接查看用户明文密码。重置密码后，系统仍然使用 BCrypt 加密方式保存，保证密码字段不会以明文形式出现在数据库中。"
+        },
+        {
+          "text": "操作日志由自定义注解和 AOP 切面完成。后台新增、修改、删除、登录等操作执行时，切面自动记录操作人、操作类型、模块、请求地址和时间。该设计减少了业务代码中重复写日志的工作量，也方便后续审计。"
+        },
+        {
+          "text": "系统配置模块将预约超时时长、默认收费标准和车辆绑定数量限制保存在数据库中。后端服务读取配置后应用到预约、计费和车辆管理逻辑中，使系统具备一定的参数化能力。"
+        }
+      ]
+    },
+    {
+      "title": "6.8 用户端停车服务实现",
+      "content": [
+        {
+          "text": "用户端停车服务主要包括停车场列表、停车场详情、车位状态展示、车辆管理、订单管理和个人中心。停车场列表页可以按名称或地址搜索，并显示剩余车位、收费标准和营业时间；停车场详情页展示地址、电话、车位网格和状态图例。"
+        },
+        {
+          "image": "screenshots/fig6-8-user-parking-list.png",
+          "caption": "图6-8 用户端停车场列表页面",
+          "width_cm": 13.0
+        },
+        {
+          "image": "screenshots/fig6-9-user-parking-detail.png",
+          "caption": "图6-9 用户端停车场详情页面",
+          "width_cm": 13.0
+        },
+        {
+          "text": "用户登录后可以查看自己的停车订单和车辆信息。订单页面按状态展示预约、进行中、待支付、已完成和已取消订单，车辆页面支持查看车牌、车辆颜色、品牌和默认车辆标记。"
+        },
+        {
+          "image": "screenshots/fig6-10-user-orders.png",
+          "caption": "图6-10 用户端订单页面",
+          "width_cm": 13.0
+        },
+        {
+          "image": "screenshots/fig6-11-user-vehicles.png",
+          "caption": "图6-11 用户端车辆管理页面",
+          "width_cm": 13.0
+        },
+        {
+          "image": "screenshots/fig6-12-user-profile.png",
+          "caption": "图6-12 用户端个人中心页面",
+          "width_cm": 13.0
+        },
+        {
+          "text": "用户端停车场列表页面以卡片形式展示停车场信息，用户可以根据停车场名称或地址搜索。每个停车场卡片显示营业状态、剩余车位、收费标准和地址，使用户在列表层面就能做出初步判断。"
+        },
+        {
+          "text": "停车场详情页面展示地图、基本信息和车位状态。用户选择车位时，系统只允许选择空闲车位，并要求用户选择已绑定车辆。预约成功后，用户可以在订单页面查看订单状态。"
+        },
+        {
+          "text": "用户订单页面按照状态展示停车过程。用户可以对已预约订单执行入场或取消，对进行中订单执行出场，对待支付订单执行支付。车辆管理页面为预约流程提供车辆基础数据，个人中心页面用于展示账号资料。"
+        }
+      ]
+    },
+    {
+      "title": "6.9 核心业务实现说明",
+      "content": [
+        {
+          "text": "停车预约业务在服务层进行统一校验。系统首先检查用户是否存在未完成订单，再校验车辆归属、停车场状态和车位状态。只有当车位为空闲且停车场营业时，系统才会锁定车位并生成订单。该设计能够减少重复预约和状态不一致问题。"
+        },
+        {
+          "code": "if (hasActiveOrder(userId)) {\n    throw new BusinessException(\"存在未完成订单\");\n}\ncheckVehicleBelongsToUser(vehicleId, userId);\ncheckLotOpen(lotId);\ncheckSpaceAvailable(spaceId);\nreserveSpace(spaceId);\ncreateParkingOrder(userId, vehicleId, spaceId);",
+          "caption": "代码6-2 预约业务核心逻辑示例"
+        },
+        {
+          "text": "出场计费业务根据订单入场时间、出场时间和停车场收费标准计算金额。为了便于用户理解，系统按小时计费并对不足一小时的部分进行向上取整。支付完成后，系统生成 payment_record，并将订单和车位状态同步更新。"
+        },
+        {
+          "text": "预约超时任务由 ReserveTimeoutTask 完成。系统定期查询已超过 expire_time 且仍处于已预约状态的订单，将其更新为已取消，并将对应车位恢复为空闲。该功能可以避免用户预约后长期不入场导致车位被无效占用。"
+        },
+        {
+          "text": "支付功能由 UserPaymentController 和 PaymentRecordService 共同完成。由于毕业设计环境中没有接入真实支付平台，系统采用模拟支付方式完成业务闭环，但数据库仍然保存 trade_no、pay_time 和 pay_method 等字段，为后续对接真实支付平台保留扩展空间。"
+        },
+        {
+          "code": "List<ParkingOrder> expiredOrders = orderMapper.selectExpiredReservedOrders(now)\nfor (ParkingOrder order : expiredOrders) {\n    order.setStatus(OrderStatus.CANCELLED)\n    order.setCancelReason(\"预约超时自动取消\")\n    orderMapper.updateById(order)\n    spaceService.release(order.getSpaceId())\n}",
+          "caption": "代码6-4 预约超时处理逻辑示例"
+        }
+      ]
+    }
+  ]
+}

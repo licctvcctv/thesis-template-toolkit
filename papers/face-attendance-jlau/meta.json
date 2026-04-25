@@ -1,0 +1,37 @@
+{
+  "title_zh": "基于百度AI人脸识别的考勤系统设计与实现",
+  "title_en": "Design and Implementation of Attendance System Based on Baidu AI Face Recognition",
+  "name": "段翔宇",
+  "student_id": "2212100323",
+  "college": "信息技术学院",
+  "major": "计算机科学与技术",
+  "advisor": "徐兴梅",
+  "advisor_title": "教授",
+  "year": "2026",
+  "month": "4",
+  "day": "25",
+  "abstract_zh": [
+    "随着企事业单位信息化管理程度的不断提高，传统纸质签到、人工核对和事后统计方式已经难以满足考勤管理对实时性、准确性和可追溯性的要求。普通账号密码登录虽然能够完成身份区分，但在代签、补录和地点核验方面仍存在一定漏洞。针对上述问题，本文结合 Spring Boot、Vue、MyBatis-Plus、MySQL 以及百度 AI 人脸识别能力，设计并实现了一套基于百度 AI 人脸识别的考勤系统。系统以员工打卡业务为主线，将人脸比对、考勤设备、部门管理、请假审核、考勤记录、维保记录、公告资讯和交流互动等模块统一组织，形成面向员工、部门主管和管理员的综合考勤管理平台。",
+    "本文首先分析了考勤业务的应用背景和国内外研究现状，明确系统在身份核验、数据记录、权限分离和统计管理方面的设计目标；其次对 Spring Boot 后端框架、Vue 前端框架、MyBatis-Plus 持久层、MySQL 数据库、百度 AI 人脸比对接口和高德定位能力进行了说明；随后从功能需求、非功能需求、数据需求和角色权限四个角度展开需求分析，并在总体设计中给出系统架构、功能结构、用例模型、包图、E-R 图、数据库逻辑关系图和核心业务流程。实现部分重点阐述登录鉴权、人脸比对、定位打卡、请假审核、考勤统计和后台管理等关键模块，并结合项目运行页面截图说明系统实现效果。",
+    "测试结果表明，系统能够完成用户登录、员工信息管理、考勤设备维护、人脸识别打卡、地理位置采集、请假申请审核、考勤记录统计和公告资讯管理等功能。系统前后端分离结构清晰，接口返回格式统一，数据库表设计能够覆盖主要考勤业务数据，百度 AI 接口的引入提高了考勤身份核验的可靠性。本文的研究与实现对中小型单位考勤管理信息化具有一定参考价值，也为后续加入活体检测、移动端推送和异常考勤预警等功能提供了基础。"
+  ],
+  "keywords_zh": [
+    "人脸识别",
+    "考勤系统",
+    "Spring Boot",
+    "Vue",
+    "百度AI"
+  ],
+  "abstract_en": [
+    "With the continuous improvement of information management in enterprises and institutions, traditional paper-based attendance, manual checking and delayed statistics can no longer meet the requirements of real-time, accurate and traceable attendance management. To solve problems such as proxy check-in, incomplete identity verification and inefficient attendance statistics, this thesis designs and implements an attendance system based on Baidu AI face recognition. The system is developed with Spring Boot, Vue, MyBatis-Plus and MySQL, and integrates Baidu AI face matching and map-based location acquisition. It provides attendance check-in, employee management, department management, leave approval, attendance records, device maintenance, announcements and communication functions for employees, department supervisors and administrators.",
+    "The thesis first analyzes the application background and related research of attendance systems, and then introduces the key technologies used in the project. Based on the actual source code and database script, the functional requirements, non-functional requirements, role permissions and data requirements are analyzed. The overall design presents the system architecture, functional structure, use case model, package diagram, E-R model, database logical relationship and core business processes. The detailed implementation focuses on login authentication, face comparison, location-based attendance, leave approval, attendance statistics and management modules, and explains the implementation effect with real running screenshots from the project.",
+    "The test results show that the system can complete login authentication, employee information management, attendance device maintenance, face recognition attendance, geographic location collection, leave review, attendance record statistics and announcement management. The front-end and back-end separation structure is clear, the interface response format is unified, and the database tables cover the main business data of attendance management. The integration of Baidu AI improves the reliability of identity verification and provides a practical reference for the informatization of attendance management in small and medium-sized organizations."
+  ],
+  "keywords_en": [
+    "face recognition",
+    "attendance system",
+    "Spring Boot",
+    "Vue",
+    "Baidu AI"
+  ]
+}

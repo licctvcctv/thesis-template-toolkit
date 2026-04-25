@@ -1,0 +1,22 @@
+[
+  "陈刚. Spring Boot 企业级应用开发实战[M]. 北京: 电子工业出版社, 2022.",
+  "王珊, 萨师煊. 数据库系统概论[M]. 北京: 高等教育出版社, 2023.",
+  "尤雨溪. Vue.js 设计与实现[M]. 北京: 人民邮电出版社, 2022.",
+  "刘伟. 基于 Spring Boot 的停车场管理系统设计与实现[J]. 信息与电脑, 2023(12): 88-91.",
+  "张明, 李强. 智慧停车系统关键技术研究[J]. 现代信息科技, 2024, 8(3): 45-49.",
+  "赵文. 基于前后端分离的 Web 管理系统设计[J]. 电脑知识与技术, 2023, 19(20): 72-75.",
+  "周立. MySQL 数据库索引优化在管理系统中的应用[J]. 软件导刊, 2022, 21(8): 101-104.",
+  "李敏. 基于 JWT 的前后端分离认证机制研究[J]. 网络安全技术与应用, 2023(9): 53-55.",
+  "黄俊. 基于 Vue 和 Spring Boot 的后台管理系统实现[J]. 电子技术与软件工程, 2024(5): 64-67.",
+  "郭磊. 城市智慧停车平台架构设计研究[J]. 中国交通信息化, 2023(7): 112-116.",
+  "张浩. 基于 ECharts 的数据可视化系统设计[J]. 信息技术与信息化, 2022(11): 136-139.",
+  "李晓. MyBatis-Plus 在 Java Web 项目中的应用研究[J]. 软件工程, 2023, 26(4): 30-33.",
+  "王磊, 赵宁. 基于微服务思想的停车管理平台设计[J]. 计算机时代, 2024(2): 58-61.",
+  "刘洋. 基于角色权限控制的管理系统设计[J]. 网络安全和信息化, 2023(6): 79-82.",
+  "朱峰. 停车场车位预约与计费模型研究[J]. 交通科技与管理, 2023(15): 41-44.",
+  "Oracle Corporation. MySQL 8.0 Reference Manual[EB/OL]. https://dev.mysql.com/doc/.",
+  "VMware Tanzu. Spring Boot Reference Documentation[EB/OL]. https://docs.spring.io/spring-boot/.",
+  "Vue.js Team. Vue 3 Documentation[EB/OL]. https://vuejs.org/.",
+  "Naive UI Team. Naive UI Documentation[EB/OL]. https://www.naiveui.com/.",
+  "Apache Software Foundation. MyBatis Documentation[EB/OL]. https://mybatis.org/mybatis-3/."
+]

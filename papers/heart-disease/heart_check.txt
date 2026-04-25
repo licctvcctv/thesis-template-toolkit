@@ -1,0 +1,2595 @@
+2026 届毕业生
+毕业设计说明书
+题
+
+目: 基于 Hadoop 的心脏病健康数据分析与预测系统
+
+院系名称： 信息工程学院专业班级： {{ class_name }}
+
+学生姓名： {{ name }}学
+
+号： {{ student_id }}
+
+指导教师： {{ advisor }}教师职称：
+
+2025 年 5 月
+
+摘 要
+心血管疾病的致死人数多年来一直
+排在全球第一位。能不能在发病之前把
+高风险的人筛出来，直接关系到发病率
+和死亡率能不能降下去。这篇论文做的
+事情是：拿心脏病相关的健康数据，搭
+一套从离线数据仓库、统计分析、机器
+学习预测到 Web 可视化都能跑通的大
+数据分析系统。数据一共用了三份：
+Indicators of Heart Disease （ 2020 ）
+数 据 集 （ 319795 条 、 18 个 字 段 ） 、
+Indicators of Heart Disease （ 2022
+UPDATE）数据集（246022 条、40 个
+字 段 ） 、 UCI Cleveland 临 床 数 据
+（303 条、13 个临床指标）。三份数
+据 全 部 灌 进 Hadoop ， 用 Hive 搭 了
+ODS-DWD-ADS 三 层 仓 库 ， 做 完 清
+洗、字段对齐和多维聚合之后， ADS
+层的结果同步到 MySQL 给线上用。
+分析的角度有六个：年龄、性别、
+BMI、生活习惯、共病史、UCI 临床指
+标 。 在 Indicators of Heart Disease
+（ 2020 ） 数 据 集 上 跑 了 逻 辑 回 归 、
+SGD、随机森林、Extra Trees 四个模
+型，拿 AUC 当主要选型标准。最后逻
+辑回归 AUC=0.8207 排第一，召回率
+78.30% 。 换 到 UCI Cleveland 数 据 集
+上，同一个模型 AUC 到了 0.9665，准
+确 率 86.89% 。 前 端 用 Vue3+ECharts
+画了可视化大屏和多页分析界面，后端
+是 Django REST Framework，提供数
+据查询和在线预测两类接口。用户把自
+己的健康指标填进去，就能拿到心脏病
+风险等级和影响最大的几个因素。整套
+系统用 Docker Compose 打包部署，前
+
+I
+
+Heart Disease Health Data
+Analysis
+and
+Prediction
+System Based on Hadoop
+Abstract
+Cardiovascular disease has long
+been the leading cause of death
+worldwide,
+making
+early
+risk
+identification crucial for reducing
+morbidity and mortality. This thesis
+designs and implements a big data
+analysis system for heart disease
+health data, covering an offline data
+warehouse,
+statistical
+analysis,
+machine learning prediction, and
+web-based visualization. The system
+integrates the Indicators of Heart
+Disease (2020) dataset (319,795
+records, 18 fields), the Indicators of
+Heart Disease (2022 UPDATE)
+dataset (246,022 records, 40 fields),
+and the UCI Cleveland clinical
+dataset (303 records, 13 clinical
+indicators).
+A
+three-layer
+data
+warehouse (ODS-DWD-ADS) is built
+on the Hadoop platform using Hive
+for
+data
+cleaning,
+field
+standardization,
+and
+multidimensional aggregation, with ADS
+results synchronized to MySQL for
+online queries. Analysis dimensions
+cover age, gender, BMI, lifestyle
+habits, comorbidity history, and UCI
+clinical indicators. Four classification
+models
+were
+trained
+on
+the
+Indicators of Heart Disease (2020)
+dataset, with logistic regression
+achieving the best AUC of 0.8207
+and a recall of 78.30%. On the UCI
+Cleveland dataset, the same model
+reached an AUC of 0.9665 with
+II
+
+86.89% accuracy. The frontend is
+built with Vue3 and ECharts for
+visualization dashboards, while the
+backend
+uses
+Django
+REST
+Framework for data query and
+online prediction APIs. The entire
+system is deployed using Docker
+Compose with a separated frontend
+and backend architecture.
+
+Keywords heart disease; big data
+analysis; Hadoop; Hive data warehouse;
+machine learning; visualization
+
+III
+
+目
+
+录
+
+在 Word/WPS 中更新目录后显示
+
+IV
+
+1 概述
+1.1 研究背景
+心血管疾病杀死的人比任何一种病都多——这个排名已经持续了很多年。WHO
+
+在 2023 年给出的数字是：每年大约 1790 万人死于心血管疾病，占全球死亡总数的
+
+32%上下。国内的情况也差不多，不管城市还是农村，心血管疾病都是排第一的死
+
+因。《中国心血管健康与疾病报告 2022》里面的估算是：全国心血管病患者大约
+
+3.3 亿，光冠心病就超过 1100 万。心脏病不是单一原因造成的。年龄、性别、吸不
+
+吸烟、有没有糖尿病和高血压这些因素会一起起作用，而且因素之间还会互相影响 。
+
+要是能在发病之前把高风险的人找出来，让他们改改生活习惯或者提前吃药，发病
+
+率和死亡率是可以明显降下来的。
+传统的心脏病风险评估主要依赖医生的临床经验和单一指标的阈值判断。
+
+Framingham 风险评分是目前应用最广的工具之一，它用年龄、总胆固醇、 HDL 胆
+
+固醇、收缩压、吸烟状态等几个变量算出未来 10 年的冠心病风险概率。这种方法
+
+简单直观，但局限也很明显——变量数量有限，无法纳入 BMI、睡眠时长、精神健
+
+康天数等维度的信息；对不同人群的适用性也受到质疑。
+
+1
+
+大数据技术这几年发展得比较快，这给心脏病风险分析打开了一条新路。网上
+
+能找到好几个大规模的健康调查数据集，里面记录了几十万人的健康行为和疾病情
+
+况。Hadoop 和 Hive 这类分布式框架拿来处理这些数据正好合适——清洗、转换、
+
+多维聚合都能跑得动。聚合完的数据拿去喂机器学习模型，模型可以同时看多个维
+
+度的风险因素，预测粒度比传统的评分卡细得多。分析结果再用 ECharts 之类的可
+
+视化工具画出来，医护人员和普通人看着都比较直观。
+
+1.2 国内外研究现状
+心脏病风险预测是机器学习在医疗领域最早的应用方向之一。 UCI Machine
+
+Learning Repository 在 1988 年就公开了 Cleveland 心脏病数据集，包含 303 条记录
+
+和 13 个临床指标。Robert Detrano 等人在该数据集上用逻辑回归做二分类，准确率
+
+达到 77%。此后大量研究以此为基线展开改进。
+后面陆续有人用集成学习和深度学习来做，准确率确实上去了不少。比如
+
+Mohan 等 人 （ 2019 ） 把 随 机 森 林 和 线 性 模 型 混 在 一 起 搞 了 个 HRFLM 方 法 ，
+
+Cleveland 数据集上跑出 88.7%的准确率。Ali 等人（2021）更狠，一口气跑了 14 种
+
+分类器，结果是 Extra Trees 和随机森林表现最好，AUC 都超过了 0.91。Kaggle 平
+
+2
+
+台发布的 Indicators of Heart Disease 数据集（基于 CDC BRFSS 2020，319795 条
+
+记录、18 个字段）也带火了一波分析，数据量比传统的临床数据集大了好几个数
+
+量级。
+Hadoop 和 Hive 用在医疗健康方向的案例也不少。Viceconti 等人（2015）讨论
+
+过 Hadoop 生态在临床数据仓库里怎么落地。国内这边，朱文球等人（ 2020）用
+
+Hive+Spark 搭了慢性病数据分析平台，从数据采集到可视化的链路跑通了。曹丽娜
+
+等人（2022）的工作跟本文比较接近——也是心脏病方向，MapReduce 清洗数据，
+
+Hive 建仓库，Pyecharts 画大屏。
+综合来看，现有研究存在两方面不足。一是大多数机器学习研究只用一个小规
+
+模临床数据集，缺少对多数据源、大规模调查数据的整合分析。二是不少大数据平
+
+台类的工作止步于可视化展示，没有把机器学习预测和在线服务做进去。本文试图
+
+在这两个方面做改进：既在 Hadoop 数据仓库中整合多个数据集做分析，又在此基
+
+础上训练预测模型并提供 Web 在线预测服务。
+
+1.3 研究目的
+这个课题要做的事情就是搭一套基于 Hadoop 的心脏病数据分析和预测系统。
+
+3
+
+功能上要跑通四个环节：离线数据仓库、多维统计分析、机器学习预测、Web 可视
+
+化展示。
+为什么要做这个？数据层面，BRFSS 调查数据和 UCI 临床数据的心脏病数据集
+
+格式不一样、字段不一样，放到 Hadoop 上用 Hive 统一建 ODS-DWD-ADS 三层仓
+
+库，后面不管做分析还是建模都有一个干净的数据底座。模型层面，同一份数据跑
+
+多种算法然后横向对比，哪个模型好用不是拍脑袋说的，是数字说的。应用层面，
+
+分析结果和预测能力如果只能在命令行里跑，除了开发者谁也用不了——封装成
+
+Web 系统，打开浏览器就能看分析、填指标、拿风险评估。
+
+1.4 项目规划
+本系统基于 Hadoop 大数据平台和机器学习技术，构建心脏病健康数据的完整
+
+处理链路。具体规划如下六个模块：
+1. 多源数据整合：整合 Indicators of Heart Disease（2020）数据集（319795 条
+
+18 字段）、Indicators of Heart Disease（2022 UPDATE）数据集（246022 条、40
+
+字段）和 UCI Cleveland 临床数据集（303 条、14 个临床指标），覆盖健康行为调
+
+查和临床检测两类数据源。
+2. 数据仓库构建：在 Hadoop 平台上通过 Hive 构建 ODS-DWD-ADS 三层数据
+4
+
+仓库。ODS 层原样存储 CSV 数据，DWD 层完成类型转换、字段标准化和缺失值处
+
+理，ADS 层按年龄、性别、BMI、生活习惯、共病史和 UCI 临床指标六个维度做
+
+聚合统计。
+3. 多维统计分析：基于 ADS 聚合表从六个维度展示心脏病患病率的分布特征，
+
+包括年龄段的指数增长趋势、性别差异、生活习惯影响、共病关联强度和睡眠时长
+
+的 U 形分布等。
+4. 机 器 学 习 预 测 ： 在 Indicators of Heart Disease （ 2020 ） 数 据 集 和 UCI
+
+Cleveland 两个数据集上训练逻辑回归、SGD 线性分类器、随机森林和 Extra Trees
+
+四种模型，以 AUC 为主要选型标准进行对比评估，选出最优模型用于在线预测。
+5. 数据可视化展示：前端采用 Vue3 配合 ECharts 搭建可视化大屏和多页分析界
+
+面，展示各维度的统计图表、模型评估指标和特征重要性排名。
+6. 在线预测服务：后端基于 Django REST Framework 提供数据查询和在线预
+
+测 API 接口，用户输入健康指标后即可获得心脏病风险等级和关键影响因素。整套
+
+系统用 Docker Compose 容器化部署，前后端分离。
+论文共分为五章。第一章概述研究背景、国内外现状和项目规划。第二章需求
+
+分析，阐述功能需求和非功能需求。第三章概要设计，包括技术支撑、各模块设计
+5
+
+和数据库设计。第四章详细设计，描述大数据端、预测模型、后端接口和前端框架
+
+的具体实现。第五章系统展示与测试，展示系统运行效果并进行功能和性能测试。
+
+6
+
+2 需求分析
+2.1 功能需求
+2.1.1 用户角色与核心功能
+本系统面向两类用户角色：普通用户和系统管理员。普通用户是系统的主要受
+
+众，包括关注自身心血管健康的公众、从事健康管理和流行病学研究的专业人员，
+
+以及医学院校的教学科研人员。系统管理员负责数据维护、系统配置和用户管理。
+普通用户的核心需求包括：查看心脏病在年龄、性别、BMI、生活习惯、共病
+
+史和临床指标六个维度上的患病率分布图表；输入个人健康指标获取心脏病风险评
+
+估结果和关键影响因素；查看四种机器学习模型的评估指标对比和特征重要性排名 ；
+
+在可视化大屏上一览数据集总体概况和核心分析结论。
+系统管理员的核心需求包括：管理数据仓库的三层表结构和数据同步状态；查
+
+看数据清洗日志和异常记录；管理用户账户和角色权限；查看系统运行日志和预测
+
+接口调用记录。
+系统用例图如图 2-1 所示。
+
+7
+
+图 2-1 系统用例图
+
+为了进一步说明系统用例图中的功能边界，本文将普通用户和系统管理员的主
+
+要用例拆分为触发条件、前置条件和后置结果。这样可以避免只停留在功能名称层
+
+面，也便于后续进行接口设计和测试用例设计。
+表 2-2 主要用例说明
+
+用例名称
+注册登录
+查看数据
+总览
+年龄分布
+分析
+模型指标
+查看
+在线风险
+预测
+数据同步
+监控
+模型文件
+
+参与者
+普通用
+户/管理员
+
+触发条件
+用户进入系统并提交账号
+信息
+用户进入可视化大屏或数
+据概览页
+
+系统返回样本数、患病率和数据集规
+模
+
+普通用户
+
+用户选择年龄分析页面
+
+系统展示年龄段样本量和患病率图表
+
+普通用户
+
+用户进入机器学习模块
+
+普通用户
+
+用户填写健康指标并提交
+
+管理员
+
+管理员查看同步任务状态
+
+管理员
+
+管理员替换训练后的模型
+
+普通用户
+
+8
+
+后置结果
+系统签发 JWT 令牌并进入对应首页
+
+系统展示 Accuracy、Precision、
+Recall、F1、AUC
+系统返回概率、风险等级和影响因素
+Top3
+系统展示同步时间、条数、成功/失败
+状态
+系统重新加载 joblib 模型并记录版本
+
+更新
+系统日志
+查看
+
+文件
+管理员
+
+管理员进入日志管理页面
+
+系统按时间倒序展示接口调用和异常
+信息
+
+从表 2-2 可以看出，普通用户关注的是分析结果和预测结果，管理员关注的是
+
+数据链路和系统运行状态。系统设计时需要将二者的权限边界分开：普通用户只允
+
+许访问查询类接口和个人预测历史，管理员可以访问同步日志、用户管理和模型维
+
+护接口。
+2.1.2 数据分析功能
+数据分析模块是系统的核心展示功能，面向普通用户提供六个维度的心脏病患
+
+病率统计图表。具体功能需求如下：
+年龄维度分析：以柱状图展示各年龄段（18-24、25-29、30-34、35-39、40-
+
+44、45-49、50-54、55-59、60-64、65-69、70-74、75-79、80+）的样本量和患病率，
+
+支持按数据集切换查看。
+性别维度分析：以对比柱状图展示男性和女性的样本数和患病率差异，标注患
+
+病率比值。
+生活习惯维度分析：将吸烟、饮酒、运动习惯三个因素的患病率以分组柱状图
+
+展示，支持单因素和多因素交叉分析。
+BMI 维度分析：按偏瘦、正常、超重、肥胖四组展示患病率，以饼图辅助展示
+
+9
+
+各组人数占比。
+共病维度分析：展示中风、糖尿病、肾病、哮喘、皮肤癌五种共病的患病率对
+
+比，标注相对风险倍数。
+睡眠维度分析：以折线图展示不同睡眠时长与患病率的 U 形关系。
+各分析维度对应的页面入口、数据来源和展示方式如表 2-3 所示。所有图表数
+
+据 均 来 自 ADS 层 聚 合 表 ， 前 端 不 直 接 访 问 Hive ， 而 是 通 过 Django API 查 询
+
+MySQL 中的同步结果。
+表 2-3 数据分析功能明细
+
+功能项
+
+数据来源
+
+数据总览
+
+ads_heart_overview
+
+年龄分析
+性别分析
+BMI 分析
+生活习惯分
+析
+共病分析
+临床指标分
+析
+
+ads_heart_by_age
+ads_heart_by_sex
+ads_heart_by_bmi
+
+展示方式
+指标卡、饼图、条形
+图
+柱状图、折线图
+对比柱状图
+分组柱状图、饼图
+
+交互要求
+
+ads_heart_lifestyle
+
+分组柱状图
+
+ads_heart_comorbidity
+
+横向柱状图
+
+年龄段排序固定
+展示样本数和患病率
+按偏瘦/正常/超重/肥胖展示
+可切换吸烟、饮酒、运动、睡
+眠
+标注相对风险倍数
+
+ads_uci_clinical_risk
+
+多指标柱状图
+
+仅对 UCI 数据集启用
+
+支持按数据集查看
+
+为保证分析结果具有可解释性，页面不仅展示图形，还应在图表旁显示统计口
+
+径说明。例如年龄分析页面需要注明年龄段来自原始字段 AgeCategory，BMI 分析
+
+页面需要注明 BMI 分组阈值，共病分析页面需要注明患病率的计算公式为阳性样
+
+本数除以总样本数。
+10
+
+2.1.3 机器学习预测功能
+机器学习模块提供模型训练结果的查看和在线预测两项功能：
+模型对比：展示逻辑回归、SGD 线性分类器、随机森林和 Extra Trees 四种模
+
+型在 Indicators of Heart Disease（2020）数据集和 UCI Cleveland 两个数据集上的
+
+Accuracy、Precision、Recall、F1 和 AUC 五项指标，以分组柱状图、雷达图和 ROC
+
+曲线呈现。
+特征重要性：展示影响心脏病风险的 Top-10 特征排名及其重要性数值，支持按
+
+数据集切换查看。
+在线预测：提供一个包含 16 个健康指标字段的输入表单（BMI、年龄段、性别、
+
+吸烟、饮酒、运动习惯、整体健康状况、睡眠时长、行走困难、中风、糖尿病、哮
+
+喘、肾病、皮肤癌、身体健康天数、精神健康天数），用户填写后提交即可获得风
+
+险概率、风险等级（低/中/高）和影响当前结果最大的三个因素。缺失字段由模型
+
+训练时记录的默认值自动补全。
+在线预测功能要求训练阶段和推理阶段使用完全一致的特征处理流程。系统不
+
+能在前端直接计算风险概率，而应由后端加载训练好的 Pipeline 对象完成预处理和
+
+模型推理，避免不同端实现不一致导致结果偏差。
+11
+
+表 2-4 预测模块输入输出要求
+
+类别
+
+模型输出
+等级输出
+解释输出
+
+字段/结果
+BMI、PhysicalHealth、
+MentalHealth、SleepTime
+AgeCategory、Sex、Smoking 等 13 个
+字段
+probability
+risk_level
+top_factors
+
+记录输出
+
+PredictionRecord
+
+数值输入
+分类输入
+
+处理要求
+允许为空；为空时使用训练集统计默认
+值补全
+必须落在枚举集合中；非法值返回 400
+错误
+输出 0 到 1 之间的小数，保留 4 位
+按 0.33 和 0.67 阈值划分低/中/高风险
+返回贡献度绝对值最高的三个因素
+保存输入 JSON、概率、等级、模型名
+和创建时间
+
+预测结果属于辅助评估信息，系统页面需要明确提示结果不能替代医生诊断。
+
+系统只根据公开数据集训练得到统计模型，输出的是风险趋势判断，而不是医学意
+
+义上的确诊结论。
+2.1.4 数据管理功能
+数据管理模块面向管理员，提供数据仓库和业务数据的维护能力：
+数据概览：展示系统接入的三个数据集的样本数、字段数、存储空间和数据质
+
+量评分，以饼图和条形图分别展示样本量分布和特征维度对比。
+数据清洗记录：展示 ODS 到 DWD 层的清洗日志，包括字段类型转换数、缺失
+
+值处理数和异常值过滤数。
+数据同步状态：展示 ADS 层到 MySQL 的同步时间、同步条数和失败记录。
+预测历史记录：展示所有用户的预测记录，按时间倒序排列，支持按用户和时
+
+12
+
+间范围筛选。
+
+2.2 非功能需求
+系统非功能需求涵盖性能、安全、兼容性和可维护性四个方面，如表 2-1 所示。
+表 2-1 非功能需求说明
+
+需求类别
+性能
+安全
+兼容性
+可维护性
+可靠性
+易用性
+可扩展性
+
+具体要求
+API 响应<500ms；预测接口<100ms；页面首屏<2s；图表渲染<300ms
+JWT 令牌认证；BCrypt 密码加密；角色权限隔离；输入参数校验
+Chrome/Firefox/Safari/Edge；支持 1920×1080/1440×900/1366×768 分辨率
+前后端分离；Django ViewSet 分层；数据仓库三层可扩展；Docker Compose 容
+器化
+后端服务异常自动重启；数据同步失败保留日志；模型加载失败回退到上一个
+可用版本
+图表加载状态清晰；预测表单给出枚举选项；错误信息以中文提示
+新增 ADS 主题表后只需补充 Serializer、ViewSet 和前端图表组件
+
+性能方面，预测接口的耗时主要在特征预处理的 OneHotEncoder 转换上，模型
+
+推理本身几毫秒即可完成。页面首次加载需要下载 Vue3 和 ECharts 的 JavaScript 资
+
+源，后续切换页面为毫秒级。ECharts 图表渲染时间与数据点数量正相关，当前各
+
+维度聚合后的数据量在几十到几百条之间，渲染速度完全可控。
+安全方面，JWT 令牌设置 7 天有效期，过期后需重新登录获取新令牌。BCrypt
+
+加密采用 12 轮盐值计算，即使数据库泄露也无法通过彩虹表攻击还原密码。管理
+
+员接口在 Django 的 URL 配置中通过自定义 Permission 类进行拦截，普通用户无法
+
+访问管理相关的 API 端点。预测接口对 BMI、睡眠时长等数值型字段做范围校验
+
+13
+
+（如 BMI 限制在 10-80 之间），对年龄段、性别等分类型字段做枚举值校验，防止
+
+异常输入导致模型推理出错。
+兼容性方面，前端采用 Vue3 的响应式布局配合 CSS 媒体查询，在不同分辨率
+
+下自动调整布局。ECharts 图表设置了 resize 事件监听，窗口大小变化时自动重绘。
+
+Naive UI 组件库本身支持主流浏览器，不需要额外的 polyfill。
+可维护性方面，前后端代码分别在独立的 Git 仓库中管理。Django 后端通过
+
+DRF 的 Router 自 动 注 册 URL ， 新 增 功 能 模 块 只 需 编 写 对 应 的 ViewSet 和
+
+Serializer。数据仓库的 ADS 层设计为宽表形式，每张表对应一个分析维度，新增
+
+维度只需添加一张 ADS 表并编写对应的 HiveQL 聚合语句。Docker Compose 配置
+
+文件中为每个服务定义了健康检查和重启策略，生产环境下服务异常可自动恢复。
+可靠性方面，系统将数据同步任务和在线查询服务解耦。Hive 负责离线计算，
+
+MySQL 负责在线查询，即使某次同步失败，前端仍可读取上一次成功同步的数据 。
+
+同步日志表记录任务开始时间、结束时间、同步行数和错误信息，管理员可以根据
+
+日志定位问题。
+易用性方面，预测页面尽量减少自由文本输入，年龄段、性别、吸烟、运动等
+
+14
+
+字段均使用下拉框或单选框，避免用户输入不规范。图表页面提供加载中、暂无数
+
+据和接口异常三种状态提示，减少空白页面带来的误解。
+可扩展性方面，ADS 层采用主题表设计。新增一个分析主题时，可以按“新增
+
+Hive 聚合表—同步到 MySQL—新增 Django 接口—新增 ECharts 组件”的顺序扩展，
+
+不需要改动已有分析页面。
+
+15
+
+3 概要设计
+3.1 技术支撑
+3.1.1 大数据端
+大数据端负责原始数据的存储、清洗、分析和迁移四个环节：
+（1）数据存储。三个 CSV 数据文件（Indicators of Heart Disease（2020）、
+
+Indicators of Heart Disease（2022 UPDATE）、UCI Cleveland）存储在 HDFS 上。
+
+Hadoop 集群采用 Docker 方式搭建，包含 1 个 NameNode 和 2 个 DataNode，HDFS
+
+副本数设为 2。HDFS 把文件切成固定大小的块（默认 128MB），分散放到集群里
+
+不同的机器上，每个块存 3 份。NameNode 记的是元数据——哪个文件切成了哪几
+
+个块、块在哪台机器上。DataNode 就管读写数据本身。
+（2）数据清洗。Hive 是建立在 Hadoop 之上的数据仓库工具，用户写 SQL
+
+（HiveQL），Hive 把 SQL 翻译成 MapReduce 或 Tez 任务在集群上执行。本系统在
+
+Hive 上构建 ODS-DWD-ADS 三层数据仓库。ODS 层通过外部表直接映射 HDFS 上
+
+的 CSV 文件，字段全部以 STRING 类型载入；DWD 层通过 INSERT OVERWRITE
+
+将 STRING 转换为 DECIMAL、INT 等精确类型，同时做字段标准化和缺失值处理；
+
+16
+
+ADS 层用 GROUP BY 和窗口函数做多维聚合。
+（3）数据分析。ADS 层产出 9 张聚合表，覆盖年龄、性别、BMI、生活习惯、
+
+共病史和 UCI 临床指标六个分析维度。每张表的粒度为数据集×维度值的交叉组合，
+
+输出样本数、阳性数和患病率三个核心指标。Hive 的分区和分桶机制可以加速查询
+
+——本系统按 dataset_name 做分区，查询某个数据集时只需要扫描对应分区的文件。
+（4）数据迁移。ADS 层的聚合结果通过 Python 脚本（PyHive + PyMySQL）
+
+同步到 MySQL。同步方式为全量覆盖：先 TRUNCATE 目标表再批量 INSERT。
+
+ADS 表每张只有几十到几百行，全量同步耗时在秒级。MySQL 同时存储用户账户
+
+信息和预测历史记录。
+系 统 技 术 栈 如 图 3-1 所 示 。 系 统 前 端 采 用 Vue3 、 TypeScript 、 Naive UI 和
+
+ECharts 实现页面展示，后端采用 Django REST Framework 提供接口服务，数据端
+
+采用 Hadoop、HDFS、Hive 和 MySQL 完成数据存储、清洗、聚合与同步，模型端
+
+采用 scikit-learn 训练分类模型并通过 joblib 保存模型文件。
+
+17
+
+图 3-1 系统技术栈图
+
+Hive 数据仓库工作原理如图 3-2 所示。用户通过 CLI、JDBC 或 Web 接口提交
+
+HiveQL ，Driver 完成 SQL 解析、 语义编译 和 执行计划优 化， 再把任务 提交给
+
+MapReduce 或 Tez 执行引擎。MetaStore 保存表结构、分区信息和 HDFS 路径，保
+
+证 SQL 层和底层文件存储之间能够对应起来。
+
+18
+
+图 3-2 Hive 数据仓库工作原理
+
+3.1.2 机器学习预测
+预测模块使用 scikit-learn 训练四种分类模型：
+逻辑回归是最基础的二分类模型。它对输入特征做线性加权求和后过 Sigmoid
+
+函数，输出 0 到 1 之间的概率值。训练快、可解释性强，缺点是只能学到线性决策
+
+边界。设置 class_weight='balanced'来应对正负样本不均衡。
+随机森林由 250 棵决策树组成。每棵树在训练时只看到一部分样本和一部分特
+
+征，最终预测结果由所有树投票决定。随机性降低了过拟合风险，集成多棵弱分类
+
+器也提高了泛化能力。
+Extra Trees（Extremely Randomized Trees）和随机森林的区别在于：随机森林
+
+19
+
+在每个节点选最优分裂点，Extra Trees 随机选分裂点。这让 Extra Trees 训练更快，
+
+方差更低，但偏差略高。本系统配置了 300 棵树。
+SGD 线性分类器用随机梯度下降来训练逻辑回归，适合大规模数据集。loss 设
+
+为 log_loss 时等效于逻辑回归，但训练速度更快。
+四种模型的选择以 AUC（ROC 曲线下面积）为首要标准。AUC 衡量的是模型
+
+区分阳性和阴性样本的总体能力，不受分类阈值的影响，在正负样本不均衡的情况
+
+下比准确率更有参考价值。
+3.1.3 系统框架
+系统采用前后端分离的 B/S 架构，技术栈如下：
+（ 1 ） 后 端 框 架 。 Django 是 Python 生 态 中 使 用 面 很 广 的 Web 框 架 ， 自 带
+
+ORM、认证系统、管理后台和模板引擎。本系统选用 Django REST Framework
+
+（DRF）来构建后端 API。DRF 在 Django 的基础上增加了序列化器、视图集和路
+
+由器，可以快速把数据库查询结果或业务逻辑封装成 RESTful 接口。选择 Django
+
+而不是 Spring Boot 的原因比较直接：机器学习模型用 Python 的 scikit-learn 训练，
+
+预测推理也是 Python 代码，放在 Django 后端可以直接加载模型文件做推理，不用
+
+跨语言调用。
+20
+
+（2）数据库访问。Django 自带 ORM 框架，通过 Python 类定义数据库表结构，
+
+支持链式查询、事务管理和数据迁移。对于复杂的聚合查询，可以直接使用原始
+
+SQL。
+（3）前端框架。Vue3 是当前主流的前端框架之一，采用 Composition API 组
+
+织组件逻辑。本系统前端用 Vue3 搭配 TypeScript 开发，组件库选用 Naive UI，构
+
+建工具为 Vite。ECharts 是百度开源的 JavaScript 可视化库，支持柱状图、折线图、
+
+饼图、雷达图等数十种图表类型，用于渲染心脏病数据的各类分析图表。
+（4）容器化部署。Docker Compose 将 MySQL、Django 后端和 Vue3 前端分别
+
+打包为独立镜像，统一编排启动。通过 docker-compose.yml 定义服务依赖关系、端
+
+口映射和数据卷挂载，一条命令即可在任意 Linux 服务器上部署完整系统。
+系统总体架构如图 3-3 所示。
+
+21
+
+图 3-3 系统总体架构图
+
+3.2 大数据端模块设计
+3.2.1 数据采集模块
+本系统整合三个公开数据集。Indicators of Heart Disease（2020）数据集来源
+
+于美国 CDC 的行为风险因素监测系统（BRFSS），覆盖 2020 年约 40 万人的电话
+
+调查结果，清洗后剩 319795 条记录，18 个字段。HeartDisease 为二值目标变量
+
+22
+
+（Yes/No），其余 17 个字段覆盖 BMI、吸烟、饮酒、中风、身体健康天数、精神
+
+健康天数、行走困难、性别、年龄段、种族、糖尿病、运动习惯、整体健康评价、
+
+睡眠时长、哮喘、肾病、皮肤癌。阳性样本占 8.6%，属于典型的类别不均衡。
+Indicators of Heart Disease（2022 UPDATE）数据集是在 2020 版基础上的扩展，
+
+字段从 18 个扩到 40 个，多了疫苗接种、COVID 感染状态、口腔健康等维度。原
+
+始 445132 条记录里有不少缺失值，清洗后剩 246022 条。UCI Cleveland 数据集小
+
+得多，Cleveland Clinic 收集的 303 名患者，13 个临床检测指标。
+三个数据集的基本信息汇总如表 3-1 所示。
+表 3-1 三个数据集基本信息
+
+数据集
+Indicators of Heart
+Disease（2020）
+Indicators of Heart
+Disease（2022
+UPDATE）
+UCI Cleveland
+
+来源
+
+记录数
+
+字段数
+
+目标变量
+HeartDisease
+（Yes/No）
+
+CDC BRFSS 调查
+
+319795
+
+18
+
+CDC BRFSS 调查
+（扩展版）
+
+246022
+
+40
+
+HadHeartAttack/
+HadAngina
+
+Cleveland Clinic 临
+床数据
+
+303
+
+14
+
+num（0-4）
+
+3.2.2 数据预处理模块
+数据预处理在 Hive 的 DWD 层完成，主要包括三类操作：
+（1）数据清洗。去除重复记录，处理缺失值。 Indicators of Heart Disease
+
+（2020）数据集中 Diabetic 字段存在"Yes (during pregnancy)"等特殊值，需要保留
+
+23
+
+原始文本的同时生成二值标记。UCI 数据集的 ca 和 thal 两个字段中包含问号（?），
+
+通过 CASE WHEN 替换为 NULL。
+（2）数据变换。STRING 类型的字段转换为精确类型——BMI 从 STRING 转
+
+为 DECIMAL(6,2)，Smoking 等 Yes/No 字段映射为 1/0 的 INT 类型，Sex 字段从
+
+Male/Female 映 射 为 sex_code 。 目 标 变 量 统 一 为 risk_label ： Indicators of Heart
+
+Disease （ 2020 ） 的 HeartDisease Yes→ 1 ， Indicators of Heart Disease （ 2022
+
+UPDATE）的 HadHeartAttack/HadAngina→1，UCI 的 num>0→1。
+（3）数据归约。三个数据集的字段不完全一致，通过 UNION ALL 将共有维
+
+度（risk_label、age_band、sex_code、bmi、smoking_flag 等）拼成一张 28 列的宽表
+
+dwd_heart_feature_sample。BRFSS 调查数据缺少的临床指标字段填 NULL，UCI 缺
+
+少的生活习惯字段也填 NULL。每条记录多挂一个 source_dataset 字段标来源。
+DWD 层共建立 5 张表，各表职责如表 3-2 所示。
+表 3-2 DWD 层表结构
+
+表名
+
+字段数
+
+dwd_heart_2020_clean
+
+21
+
+dwd_heart_2022_clean
+
+45
+
+dwd_uci_cleveland_clea
+n
+
+17
+
+清洗内容
+STRING→DECIMAL/INT；Yes/No→1/0；派生
+risk_label、sex_code
+40 字段类型转换；HadHeartAttack OR
+HadAngina→risk_label
+?→NULL；num>0→risk_label=1；年龄→年龄段
+
+24
+
+dwd_uci_cost_clean
+dwd_heart_feature_samp
+le
+
+费用 STRING→DECIMAL；窗口函数生成 cost_rank
+三数据集 UNION ALL；共有维度对齐；缺失字段
+NULL
+
+7
+28
+
+3.2.3 数据分析模块
+ADS 层面向应用场景，对 DWD 层明细数据按各种维度做 GROUP BY 聚合。
+
+一共 9 张聚合表，6 个分析维度，如表 3-3 所示。
+表 3-3 ADS 层聚合表
+
+表名
+ads_heart_overview
+ads_heart_by_age
+ads_heart_by_sex
+ads_heart_by_bmi
+ads_heart_lifestyle
+ads_heart_comorbidity
+ads_uci_clinical_risk
+ads_uci_cost_analysis
+ads_model_metrics
+
+分析维度
+总览
+年龄
+性别
+BMI
+生活习惯
+共病史
+UCI 临床指
+标
+检查费用
+模型指标
+
+聚合粒度
+按数据集：样本数、阳性数、患病率
+按数据集×年龄段：样本数、阳性数、患病率
+按数据集×性别：样本数、阳性数、患病率
+按数据集×BMI 分组：样本数、阳性数、患病率
+按因素名×因素值：样本数、阳性数、患病率
+按疾病名×是否患病：样本数、阳性数、患病率
+按指标名×指标值：样本数、阳性数、患病率
+按检查项：费用值、费用等级、排名
+按模型名：准确率、精确率、召回率、F1、AUC
+
+ADS 层的 SQL 统一使用 GROUP BY 做分组聚合。以 ads_heart_by_age 为例，
+
+按 dataset_name 和 age_band 两 个 维 度 分 组 ， COUNT(*) 统 计 样 本 数 ，
+
+SUM(risk_label)统计阳性数，SUM(risk_label)/COUNT(*)计算患病率。
+3.2.4 数据迁移模块
+ADS 层的 9 张 Hive 表通过 Python 脚本同步到 MySQL。MySQL 中建了同名的 9
+
+张 表 ， 字 段 类 型 做 对 应 转 换 ： Hive 的 STRING→ MySQL 的 VARCHAR(64) ，
+
+BIGINT→BIGINT，DECIMAL(8,4)→DECIMAL(8,4)，字符集设为 utf8mb4。
+
+25
+
+同步脚本通过 PyHive 连接 Hive 读取 ADS 表全量数据，通过 PyMySQL 写入
+
+MySQL。写入前先 TRUNCATE 目标表再批量 INSERT。ADS 表每张只有几十到几
+
+百行，全量同步耗时在秒级。
+数据仓库的三层架构如图 3-4 所示。
+
+图 3-4 数据仓库 ODS-DWD-ADS 三层架构
+
+ETL 流程如图 3-5 所示，数据依次经过 HDFS 上传、ODS 建表、DWD 清洗、
+26
+
+ADS 聚合、MySQL 同步五个阶段。
+
+图 3-5 数据处理 ETL 流程
+
+Hive 与 MySQL 的字段类型映射如表 3-4 所示。
+表 3-4 Hive 与 MySQL 字段类型映射
+
+Hive 类型
+STRING
+BIGINT
+DECIMAL(8,4)
+STRING
+DECIMAL(12,6)
+
+MySQL 类型
+VARCHAR(64)
+BIGINT
+DECIMAL(8,4)
+VARCHAR(128)
+DECIMAL(12,6)
+
+示例字段
+dataset_name, age_band, sex_label
+sample_count, positive_count
+prevalence_rate, accuracy
+feature_name, feature_label
+importance（特征重要性）
+
+3.3 预测模块设计
+预测模块的输入是用户填写的 16 个健康指标字段，输出包括风险概率、风险
+
+等级和 Top-3 影响因素。模块架构分为三层：
+用户交互层：前端提供表单界面接收输入，以卡片形式展示预测结果。16 个字
+
+段全部为可选，缺失字段由训练时记录的默认值补全。
+
+27
+
+特征处理层：数值型字段（BMI、PhysicalHealth、MentalHealth、SleepTime）
+
+做 StandardScaler 标准化；分类型字段（13 个）做 OneHotEncoder 独热编码。scikit-
+
+learn 的 ColumnTransformer 将两路处理组合为 Pipeline，保证训练和推理逻辑一致。
+模 型 推 理 层 ： 加 载 预 训 练 的 逻 辑 回 归 模 型 文 件 （ joblib 格 式 ） ， 调 用
+
+predict_proba 获取风险概率。概率≥0.67 为高风险、0.33-0.67 为中风险、0.33 为低
+
+风险。通过模型系数矩阵计算各特征对当前预测结果的贡献度，取绝对值最大的三
+
+个特征作为影响因素返回。每次预测结果写入 MySQL 的 PredictionRecord 表。
+预测流程如图 3-6 所示。
+
+28
+
+图 3-6 在线预测流程图
+
+3.4 前端框架模块设计
+前端采用 Vue3 + Naive UI + ECharts 的组合。页面结构分为两种模式：
+（1）可视化大屏模式。全屏深色主题面板，集中展示患病率、年龄分布柱状
+
+图、特征重要性排名、生活方式分析、UCI 临床指标、数据集规模对比和风险预测
+
+29
+
+统计等核心信息。大屏通过 CSS Grid 布局划分为多个区域，ECharts 图表设置
+
+resize 监听实现自适应。
+（2）分页管理模式。左侧边栏加右侧内容区的布局。左侧菜单分为可视化大
+
+屏、数据分析、机器学习、数据治理、系统运维五个一级模块。数据分析下又分年
+
+龄分布、生活方式、临床指标、相关性、综合对比等二级页面。 Vue Router 负责路
+
+由管理，Vuex（Pinia）管理全局状态。
+前端与后端通过 Axios 进行 HTTP 通信，采用 RESTful API 规范。请求拦截器
+
+自动附加 JWT 令牌，响应拦截器统一处理错误码。ECharts 图表的数据通过 API 异
+
+步获取后渲染，支持 loading 状态和错误提示。
+系统功能结构如图 3-7 所示。
+
+30
+
+图 3-7 系统功能模块图
+
+用例图如图 3-8 所示。
+
+图 3-8 系统用例图
+
+3.5 数据库设计
+31
+
+系统使用 MySQL 存储三类数据：ADS 聚合表（9 张，由 Hive 同步而来）、用
+
+户账户表和预测记录表。ADS 表的结构已在 3.2.3 节介绍，此处说明业务表。
+系统 E-R 图如图 3-9 所示。
+
+图 3-9 系统 E-R 图
+
+用户账户表采用 Django 内置的 auth_user 表，表结构如表 3-5 所示。
+表 3-5 用户表（auth_user）结构
+
+字段
+id
+username
+password
+email
+is_active
+date_joined
+
+类型
+INT
+VARCHAR(150)
+VARCHAR(128)
+VARCHAR(254)
+BOOL
+DATETIME
+
+说明
+主键，自增
+用户名
+加密后的密码
+邮箱
+账户是否启用
+注册时间
+
+预测记录表用于保存每次在线预测的输入和输出，表结构如表 3-6 所示。
+表 3-6 预测记录表（prediction_record）结构
+32
+
+字段
+id
+user_id
+probability
+risk_level
+risk_label
+model_name
+input_data
+created_at
+
+类型
+INT
+INT
+DECIMAL(6,4)
+VARCHAR(16)
+VARCHAR(16)
+VARCHAR(64)
+JSON
+DATETIME
+
+说明
+主键，自增
+外键，关联 auth_user
+预测概率
+风险等级（low/medium/high）
+中文标签（低/中/高风险）
+使用的模型名称
+用户输入的 16 字段数据
+预测时间
+
+角色权限表用于定义系统角色和对应权限，表结构如表 3-7 所示。
+表 3-7 角色权限表（user_role）结构
+
+字段
+id
+role_name
+permissions
+description
+
+类型
+INT
+VARCHAR(32)
+JSON
+VARCHAR(128)
+
+说明
+主键，自增
+角色名称（admin/user）
+权限列表
+角色描述
+
+数据同步日志表用于记录 Hive 到 MySQL 的每次同步状态，表结构如表 3-8 所
+
+示。
+表 3-8 数据同步日志表（sync_log）结构
+
+字段
+id
+table_name
+sync_time
+row_count
+status
+error_msg
+
+类型
+INT
+VARCHAR(64)
+DATETIME
+INT
+VARCHAR(16)
+TEXT
+
+说明
+主键，自增
+同步的 ADS 表名
+同步时间
+同步条数
+状态（success/failed）
+失败时的错误信息
+
+轮播图表用于管理首页和大屏的轮播展示内容，表结构如表 3-9 所示。
+表 3-9 轮播图表（rotation）结构
+
+33
+
+字段
+id
+image_url
+link_url
+sort_order
+is_active
+
+类型
+INT
+VARCHAR(256)
+VARCHAR(256)
+INT
+BOOL
+
+说明
+主键，自增
+图片 URL
+跳转链接
+排序序号
+是否启用
+
+除业务表外，系统还需要保存 ADS 层同步后的主题分析结果。由于这些表来
+
+自 Hive 离线聚合，MySQL 端只负责查询和展示，不在业务接口中直接修改。下面
+
+列出系统中几个核心 ADS 表和模型表的物理结构。
+表 3-10 ADS 总览表（ads_heart_overview）结构
+
+字段
+dataset_name
+sample_count
+positive_count
+prevalence_rate
+updated_at
+
+类型
+VARCHAR(64)
+BIGINT
+BIGINT
+DECIMAL(8,4)
+DATETIME
+
+说明
+数据集名称
+样本总数
+阳性样本数
+患病率
+同步更新时间
+
+表 3-11 ADS 年龄分析表（ads_heart_by_age）结构
+
+字段
+dataset_name
+age_band
+sample_count
+positive_count
+prevalence_rate
+
+类型
+VARCHAR(64)
+VARCHAR(32)
+BIGINT
+BIGINT
+DECIMAL(8,4)
+
+说明
+数据集名称
+年龄段
+样本数
+阳性样本数
+患病率
+
+表 3-12 ADS 生活习惯表（ads_heart_lifestyle）结构
+
+字段
+dataset_name
+factor_name
+factor_value
+sample_count
+prevalence_rate
+
+类型
+VARCHAR(64)
+VARCHAR(64)
+VARCHAR(64)
+BIGINT
+DECIMAL(8,4)
+
+说明
+数据集名称
+因素名称，如 smoking、alcohol
+因素取值
+样本数
+患病率
+
+表 3-13 模型指标表（ads_model_metrics）结构
+
+34
+
+字段
+model_name
+dataset_name
+accuracy
+precision_score
+recall_score
+f1_score
+auc_score
+
+类型
+VARCHAR(64)
+VARCHAR(64)
+DECIMAL(8,4)
+DECIMAL(8,4)
+DECIMAL(8,4)
+DECIMAL(8,4)
+DECIMAL(8,4)
+
+说明
+模型名称
+训练/验证数据集
+准确率
+精确率
+召回率
+F1 值
+AUC 值
+
+表 3-14 特征重要性表（model_feature_importance）结构
+
+字段
+id
+model_name
+feature_name
+feature_label
+importance
+
+类型
+INT
+VARCHAR(64)
+VARCHAR(128)
+VARCHAR(128)
+DECIMAL(12,6)
+
+说明
+主键，自增
+模型名称
+特征字段名
+中文展示名
+重要性或贡献度
+
+表 3-15 同步日志表（sync_log）结构
+
+字段
+id
+table_name
+start_time
+end_time
+row_count
+status
+error_msg
+
+类型
+INT
+VARCHAR(64)
+DATETIME
+DATETIME
+INT
+VARCHAR(16)
+TEXT
+
+说明
+主键，自增
+同步表名
+开始时间
+结束时间
+同步行数
+success/failed
+失败原因
+
+数据库设计的核心原则是把离线分析结果和在线业务数据分开。ADS 表不承载
+
+事务更新，适合按主题查询；业务表保存用户、权限、预测记录和日志，适合通过
+
+Django ORM 进行增删改查。这样的设计既保留了 Hive 处理大数据的优势，也保
+
+证了 Web 系统查询响应速度。
+
+35
+
+4 详细设计
+4.1 大数据端设计
+4.1.1 Hadoop 集群搭建
+数据仓库运行在 Hadoop 分布式平台上。本系统采用 Docker 方式搭建 Hadoop
+
+集群，包含 1 个 NameNode 和 2 个 DataNode，HDFS 副本数设为 2。Hive 3.x 作为
+
+数据仓库引擎安装在 NameNode 节点上，MetaStore 使用 MySQL 存储元数据。集群
+
+搭 建 完 成 后 ， 通 过 hdfs dfs -put 命 令 将 三 个 CSV 数 据 文 件 上 传 到 HDFS
+
+的/user/heart_disease/raw/目录下。
+Hive 的配置中，hive.exec.mode.local.auto 设为 true 以加速小数据集上的查询；
+
+hive.cli.print.header 设 为 true 以 便 在 CLI 中 查 看 列 名 。 序 列 化 工 具 选 用
+
+OpenCSVSerde，它能正确处理 CSV 文件中包含逗号的字段值。
+开发环境配置如表 4-1 所示。
+表 4-1 开发环境配置
+
+类别
+操作系统
+后端框架
+前端框架
+图表库
+数据库
+大数据平台
+
+工具/版本
+macOS / Ubuntu 22.04
+Django 4.2 + DRF 3.15
+Vue3 + Vite + Naive UI
+ECharts 5
+MySQL 8.0
+Hadoop 3.x + Hive 3.x
+36
+
+ML 框架
+容器化
+编程语言
+
+scikit-learn 1.x
+Docker Compose 2.x
+Python 3.10 / TypeScript
+
+4.1.2 ODS 层实现
+ODS 层的职责是把原始数据原封不动存进来，不改任何东西。这一层建了 4 张
+
+Hive 外部表，如表 4-2 所示。
+表 4-2 ODS 层表结构
+
+表名
+ods_heart_2020_raw
+ods_heart_2022_raw
+ods_uci_cleveland_raw
+ods_uci_cost_raw
+
+字段数
+18
+40
+14
+2
+
+数据来源
+Indicators 2020 CSV
+Indicators 2022 CSV
+UCI Cleveland CSV
+UCI 检查费用
+
+序列化方式
+OpenCSVSerde
+OpenCSVSerde
+OpenCSVSerde
+分隔符(:)
+
+ODS 表 的 所 有 字 段 类 型 统 一 设 为 STRING 。 使 用 外 部 表 （ EXTERNAL
+
+TABLE ） 而非内 部表 ，这 样 删除 Hive 表时 不会影响 HDFS 上的 原 始文件。以
+
+ods_heart_2020_raw 为 例 ， 该 表 包 含 heart_disease 、 bmi 、 smoking 、
+
+alcohol_drinking 、 stroke 、 physical_health 、 mental_health 、 diff_walking 、 sex 、
+
+age_category、race、diabetic、physical_activity、gen_health、sleep_time、asthma、
+
+kidney_disease、skin_cancer 共 18 个 STRING 字段。
+建表后通过 LOAD DATA INPATH 将 HDFS 上的 CSV 文件加载到对应的 ODS
+
+表 中 。 加 载 过 程 不 做 任 何 转 换 ， 数 据 以 原 始 格 式 进 入 Hive 。 通 过 SELECT
+
+COUNT(*)验证各表的记录数与原始 CSV 一致。
+37
+
+ODS 层建表以外部表为主，建表语句只描述字段和文件格式，不对业务含义做
+
+解 释 。 以 Indicators of Heart Disease （ 2020 ） 数 据 为 例 ， 建 表 语 句 包 含 18 个
+
+STRING 字段，并指定 OpenCSVSerde 处理 CSV 转义字符。建表完成后，通过
+
+LOAD DATA INPATH 把 HDFS 路径中的 CSV 文件挂载到 Hive 表目录下。
+CREATE EXTERNAL TABLE ods_heart_2020_raw(heart_disease STRING,bmi
+STRING,smoking STRING,alcohol_drinking STRING,stroke STRING,physical_health
+STRING,mental_health
+STRING,race
+
+STRING,diff_walking
+
+STRING,diabetic
+
+STRING,sex
+
+STRING,age_category
+
+STRING,physical_activity
+
+STRING,gen_health
+
+STRING,sleep_time STRING,asthma STRING,kidney_disease STRING,skin_cancer
+STRING) ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
+STORED AS TEXTFILE;
+ODS 层不做清洗的原因是为了保留追溯能力。当 DWD 层某个字段转换结果异
+
+常时，可以回到 ODS 层核对原始值。如果 ODS 层直接覆盖或删除原始字段，后续
+
+排查会变得困难。
+4.1.3 DWD 层实现
+DWD 层接 ODS 层的原始数据，主要做三件事：清洗脏数据、转数据类型、统
+
+一字段名。处理完之后就是能直接拿来分析的明细数据了。
+清 洗 过 程 通 过 HiveQL 的 INSERT OVERWRITE 语 句 实 现 。 以 Indicators of
+
+Heart Disease（2020）数据为例，主要的清洗操作包括：（1）BMI 从 STRING 转
+
+38
+
+为 DECIMAL(6,2) ； （ 2 ） Smoking 、 AlcoholDrinking 等 Yes/No 字 段 通 过 CASE
+
+WHEN 映 射 为 1/0 的 INT 类 型 ； （ 3 ） Sex 字 段 从 Male/Female 映 射 为 1/0 的
+
+sex_code ； （ 4 ） HeartDisease 字 段 映 射 为 risk_label （ Yes→ 1 ， No→ 0 ） ； （ 5 ）
+
+Diabetic 字段保留原始文本值（diabetic_text）同时生成二值标记（diabetic_flag）。
+UCI Cleveland 数据集的问题主要是缺失值。ca 和 thal 两个字段里有问号（?），
+
+用 CASE WHEN 换成了 NULL。目标变量 num 原来是 0 到 4 五个值，这里简化成
+
+二 分 类 ： num>0 就 算 有 病 ， risk_label 设 为 1 。 年 龄 按 10 岁 一 档 分 段 ， 方 便 跟
+
+BRFSS 调查数据对齐。
+DWD 层最关键的一张表是 dwd_heart_feature_sample。做法是把三个数据集都
+
+有的维度（risk_label、age_band、sex_code、bmi、smoking_flag 这些）用 UNION
+
+ALL 拼成一张 28 列的宽表。BRFSS 调查数据中没有的临床指标（trestbps、chol 之
+
+类）填 NULL，UCI 那边没有的生活习惯字段也填 NULL。每条记录多挂一个
+
+source_dataset 字段标来源，ADS 层按数据集分组的时候要用。
+DWD 清洗脚本按字段类型分为三类处理。第一类是数 值字段，如 BMI、
+
+PhysicalHealth、SleepTime，通过 CAST 转换为 DECIMAL 或 INT；第二类是二值字
+
+39
+
+段 ， 如 Smoking 、 Stroke 、 KidneyDisease ， 通 过 CASE WHEN 把 Yes/No 映 射 为
+
+1/0；第三类是分组字段，如 AgeCategory 和 BMI 分组，用于后续统计展示。
+在统一特征表 dwd_heart_feature_sample 中，BRFSS 调查数据和 UCI 临床数据
+
+的字段并不完全相同。为保证 UNION ALL 能够执行，系统先定义统一字段清单，
+
+再让各数据源按同样顺序输出字段。某个数据源没有的字段统一填 NULL，例如
+
+BRFSS 调查数据没有 trestbps、chol、thalach 等临床指标， UCI 没有 Smoking、
+
+AlcoholDrinking 等生活习惯指标。
+清洗完成后需要进行三类校验：第一，COUNT(*)核对清洗前后记录数，确认
+
+没有误删；第二，检查 risk_label 只能取 0 或 1；第三，抽样查看 BMI、SleepTime
+
+等数值字段是否存在异常范围。只有校验通过后，DWD 表才进入 ADS 聚合流程。
+4.1.4 ADS 层实现与数据迁移
+ADS 层的 SQL 统一使用 GROUP BY 做分组聚合。以 ads_heart_by_age 为例，
+
+按 dataset_name 和 age_band 两 个 维 度 分 组 ， COUNT(*) 统 计 样 本 数 ，
+
+SUM(risk_label) 统 计 阳 性 数 ， SUM(risk_label)/COUNT(*) 计 算 患 病 率 。
+
+ads_heart_lifestyle 将吸烟、饮酒、运动、睡眠四个因素用 UNION ALL 拼成统一的
+
+40
+
+factor_name/factor_value 格 式 ， 每 行 输 出 一 个 因 素 值 的 统 计 结 果 。
+
+ads_uci_clinical_risk 对 UCI Cleveland 的 10 个临床指标逐一做分组统计，每个指标
+
+的每个取值各输出一行。
+ADS 层的聚合结果通过 Python 同步脚本迁移到 MySQL。脚本流程为：PyHive
+
+连接 Hive → SELECT * FROM ads_xxx → TRUNCATE MySQL 目标表 → 批量
+
+INSERT INTO。9 张表全部同步完成后，Django 后端直接查询 MySQL 即可获取分
+
+析数据，实现了 Hive 离线分析和 MySQL 在线查询的解耦。
+ADS 层面向页面而不是面向原始字段建表。前端每个图表需要什么数据，ADS
+
+层就提前聚合成什么粒度，避免用户打开页面时再做复杂计算。年龄、性别、 BMI
+
+等 图 表 的 SQL 结 构 类 似 ， 都 是 按 dataset_name 和 维 度 字 段 分 组 ， 计 算
+
+sample_count、positive_count 和 prevalence_rate。
+以年龄分析为例，ads_heart_by_age 的聚合语句为：SELECT source_dataset AS
+dataset_name,
+
+age_band,
+
+COUNT(*)
+
+AS
+
+sample_count,
+
+SUM(risk_label)
+
+AS
+
+positive_count, ROUND(SUM(risk_label)/COUNT(*),4) AS prevalence_rate FROM
+dwd_heart_feature_sample GROUP BY source_dataset, age_band;
+同步脚本运行时按表顺序执行。先同步样本规模较小的总览表，确认 MySQL
+
+连接正常后，再同步年龄、性别、BMI、生活习惯、共病和模型指标表。每张表同
+
+41
+
+步前写入开始日志，同步成功后更新行数和状态；如果 SQL 执行失败，则捕获异
+
+常文本写入 error_msg 字段。
+
+4.2 预测模型设计
+4.2.1 特征工程
+特 征 工 程 基 于 DWD 层 的 dwd_heart_2020_clean 表 。 数 值 型 字 段 （ BMI 、
+
+PhysicalHealth、MentalHealth、SleepTime）做 StandardScaler 标准化，将均值调整
+
+为 0 、 标 准 差 调 整 为 1 。 分 类 型 字 段 （ Smoking 、 AlcoholDrinking 、 Stroke 、
+
+DiffWalking、Sex、AgeCategory、Race、Diabetic、PhysicalActivity、GenHealth、
+
+Asthma、KidneyDisease、SkinCancer 共 13 个）做 OneHotEncoder 独热编码，将每
+
+个类别值展开为一个二值列。
+scikit-learn 的 ColumnTransformer 将两路处理组合为 Pipeline，保证训练和推理
+
+逻辑一致。数据按 8:2 划分训练集和验证集，分层抽样保持正负样本比例一致，随
+
+机种子 42。
+模型训练流程如图 4-1 所示。
+
+42
+
+图 4-1 模型训练流程
+
+特征工程不仅影响模型精度，也影响线上预测接口的稳定性。训练阶段使用的
+
+ColumnTransformer 会被整体保存到 joblib 文件中，线上预测时不重新手写编码逻辑，
+
+而是直接调用 Pipeline.transform 和 predict_proba。这样可以保证 OneHotEncoder 的
+
+类别顺序、StandardScaler 的均值方差和训练阶段完全一致。
+类 别 不 均 衡 是 心 脏 病 预 测 数 据 中 的 主 要 问 题 。 Indicators of Heart Disease
+
+（2020）数据中阳性样本占比约 8.6%，如果只追求准确率，模型可能倾向于把多
+
+数样本判为阴性。本文在逻辑回归和 SGD 模型中设置 class_weight='balanced'，让
+
+阳性样本在损失函数中获得更高权重，从而提升召回率。
+
+43
+
+模型评估时不仅看 Accuracy，还需要同时比较 Precision、Recall、F1 和 AUC。
+
+心脏病风险筛查更强调尽量发现潜在高风险人群，因此 Recall 和 AUC 比单纯准确
+
+率更有参考价值。
+4.2.2 模型训练与评估
+训 练 了 四 种 模 型 ： 逻 辑 回 归 （ class_weight=balanced ） 、 SGD 线 性 分 类 器
+
+（loss=log_loss）、随机森林（250 棵树）和 Extra Trees（300 棵树）。以 AUC 为
+
+首要选择标准。
+表 4-3 列出了 Indicators of Heart Disease（2020）数据集上四种模型的评估结
+
+果。
+表 4-3 Indicators 2020 模型评估结果
+
+模型
+逻辑回归
+SGD
+随机森林
+Extra Trees
+
+准确率
+0.704
+0.754
+0.898
+0.876
+
+精确率
+0.233
+0.259
+0.591
+0.350
+
+44
+
+召回率
+0.783
+0.708
+0.123
+0.198
+
+F1
+0.359
+0.379
+0.203
+0.253
+
+AUC
+0.821
+0.801
+0.788
+0.777
+
+图 4-2 Indicators 2020 四种模型指标对比
+
+逻辑回归 AUC 最高（0.821），召回率 78.3%，被选为最终模型。随机森林准
+
+确率高（89.8%）但召回率极低（12.3%），在 8.6%阳性率的数据集上几乎把所有
+
+样本都判为阴性。心脏病筛查场景下高召回率更重要。
+表 4-4 为 UCI Cleveland 数据集的结果，逻辑回归 AUC 达到 0.967，准确率
+
+86.9%。临床指标的预测效果远好于自报告调查数据。
+表 4-4 UCI Cleveland 模型评估结果
+
+模型
+逻辑回归
+随机森林
+SGD
+Extra Trees
+
+准确率
+0.869
+0.885
+0.803
+0.852
+
+精确率
+0.813
+0.839
+0.700
+0.806
+
+45
+
+召回率
+0.929
+0.929
+1.000
+0.893
+
+F1
+0.867
+0.881
+0.824
+0.847
+
+AUC
+0.967
+0.950
+0.945
+0.929
+
+图 4-3 UCI Cleveland 模型指标对比
+
+4.2.3 特征重要性与模型选用
+图 4-4 和图 4-5 分别展示了两个数据集上的特征重要性排名。BRFSS 调查数据
+
+中年龄相关特征占据前几位；UCI 数据集中主要血管数目（ca）和胸痛类型（cp）
+
+最重要。
+
+46
+
+图 4-4 Indicators 2020 特征重要性排名
+
+47
+
+图 4-5 UCI Cleveland 特征重要性排名
+
+综合两个数据集的结果，选择 Indicators of Heart Disease（2020）数据集训练
+
+的逻辑回归模型作为系统的在线预测模型——该数据集的输入字段（ BMI、年龄段、
+
+吸烟等）均为用户可自行填写的健康指标，不需要临床检查。模型的评估指标和特
+
+48
+
+征 重 要 性 通 过 Python 脚 本 写 入 ADS 层 的 ads_model_metrics 和
+
+ads_model_feature_importance 表，同步到 MySQL 后供前端展示。
+
+4.3 多维数据分析
+第三章建好的 ADS 聚合表里已经有现成的数据了，这一节就是把结果拿出来
+
+看。六个维度：年龄、性别、生活习惯、 BMI、共病史、睡眠。数据全是 Hive 那
+
+边 GROUP BY 出来的，同步到 MySQL 之后前端用 ECharts 画图。
+ads_heart_by_age 表按数据集和年龄段两个维度做了统计。 Indicators of Heart
+
+Disease（2020）数据集的分布见图 4-6。18 到 24 岁那一组患病率连 1%都不到，55
+
+到 59 岁大约 8%，80 岁以上直接超过了 20%。一看就知道年龄对心脏病影响最大
+
+——基本上就是越老越危险，增长曲线接近指数。
+
+49
+
+图 4-6 各年龄段心脏病样本分布
+
+ads_heart_by_sex 表的数字是：男性患病率 10.5%左右，女性 6.8%左右。男的
+
+比女的高出将近一半。一般认为跟雌激素的心血管保护作用有关，另外男性抽烟比
+
+例也更高。具体对比见图 4-7 的柱状图。
+
+图 4-7 性别与心脏病患病率
+
+ads_heart_lifestyle 表 将 吸 烟 、 饮 酒 、 运 动 三 个 因 素 统 一 为 factor_name/
+
+factor_value 格 式 输 出 。 吸 烟 人 群 患 病 率 11.4% ， 非 吸 烟 7.0% ； 有 运 动 习 惯 的
+
+7.7%，无运动习惯 11.7%。饮酒的情况比较特殊——适量饮酒人群患病率反而低于
+
+不饮酒人群，可能与健康人群更倾向适量饮酒的选择偏差有关。图 4-8 展示了各因
+
+素的对比。
+
+50
+
+图 4-8 生活习惯因素与心脏病患病率
+
+ads_heart_by_bmi 表将 BMI 分为偏瘦(18.5)、正常(18.5-24)、超重(24-28)和肥胖
+
+(≥28)四组。肥胖组患病率约 10%，正常组约 7%。图 4-9 展示了 BMI 的分布情况。
+
+图 4-9 BMI 分布与心脏病
+
+ads_heart_comorbidity 表看的是共病。有过中风的人群患病率 29%上下，没中
+
+51
+
+风过的才 7%出头——差了将近 4 倍。糖尿病人群 18%，肾病人群 23%。共病跟心
+
+脏病的关联非常强，图 4-10 画出了各项对比。
+
+图 4-10 共病史与心脏病患病率
+
+sleep_metric 字段的结果有点意思：睡太少（不到 6 小时）和睡太多（超过 8 小
+
+时）的人，患病率都比正常睡眠（6 到 8 小时）的人高，画出来是个 U 形。这跟流
+
+行病学里已有的结论对得上。见图 4-11。
+
+52
+
+图 4-11 睡眠时长与心脏病患病率
+
+4.4 后端接口设计
+后端采用 Django REST Framework 的 ViewSet + Serializer 分层架构，核心接
+
+口如表 4-5 所示。
+表 4-5 主要 API 接口
+
+接口路径
+/api/health
+/api/auth/login
+/api/auth/register
+/api/dashboard/overview
+/api/analysis/age
+/api/analysis/lifestyle
+/api/analysis/clinical
+/api/analysis/comparison
+/api/model/metrics
+/api/predict
+/api/predict/history
+/api/admin/sync-log
+/api/admin/users
+
+方法
+GET
+POST
+POST
+GET
+GET
+GET
+GET
+GET
+GET
+POST
+GET
+GET
+GET
+
+功能描述
+服务健康检查
+用户登录，返回 JWT 令牌
+用户注册
+总览指标（样本数、患病率）
+年龄维度分析数据
+生活习惯和共病维度分析
+UCI 临床指标分析
+数据集综合对比
+模型评估指标和特征重要性
+在线心脏病风险预测
+预测历史记录查询
+数据同步日志（管理员）
+用户管理列表（管理员）
+
+后端分层设计遵循 Django REST Framework 的标准模式。Model 层通过 Django
+53
+
+ORM 定义数据库表结构，每个 ADS 表和业务表对应一个 Model 类，Meta.db_table
+
+指定 MySQL 表名。Serializer 层负责 Model 实例与 JSON 之间的序列化和反序列化，
+
+分析类接口使用 ModelSerializer 自动映射，预测接口使用自定义 Serializer 定义校验
+
+规则。ViewSet 层每个功能模块对应一个类，分析类继承 ReadOnlyModelViewSet 只
+
+提供查询操作，预测 ViewSet 自定义 create 方法处理推理逻辑。权限控制通过
+
+permission_classes 配置，管理员接口设置 IsAdminUser 权限。URL 路由通过 DRF
+
+的 DefaultRouter 自动注册。
+预测接口的字段校验规则如表 4-6 所示。后端在 Serializer 层完成类型转换和范
+
+围校验，只有校验通过的数据才会进入模型推理流程。
+表 4-6 预测接口字段校验规则
+
+字段
+BMI
+AgeCategory
+Sex
+Smoking
+SleepTime
+PhysicalHealth
+MentalHealth
+
+校验规则
+10≤BMI≤80，可为空
+必须属于固定年龄段枚举
+Male/Female 二选一
+Yes/No 二选一
+0≤SleepTime≤24
+0≤天数≤30
+0≤天数≤30
+
+异常处理
+超出范围返回 400
+非法枚举返回 400
+缺失时使用训练默认值
+非法值返回 400
+超出范围返回 400
+超出范围返回 400
+超出范围返回 400
+
+接口异常处理规则如表 4-7 所示。系统把可预期错误和系统错误区分处理，前
+
+者返回明确中文提示，后者记录日志后返回统一错误信息。
+表 4-7 接口异常处理规则
+54
+
+异常类型
+参数错误
+未登录
+权限不足
+模型未加载
+数据为空
+数据库异常
+
+触发场景
+字段类型错误或枚举值非法
+请求头缺少 JWT 令牌
+普通用户访问管理员接口
+joblib 文件缺失或损坏
+ADS 表暂无同步数据
+MySQL 连接失败或 SQL 执行失败
+
+处理方式
+返回 400 和字段级错误信息
+返回 401 并提示重新登录
+返回 403
+返回 500 并写入系统日志
+返回空数组并在页面提示暂无数据
+捕获异常并记录 error_msg
+
+Django 接口按模块划分路由：analysis 负责分析图表数据，model 负责模型指标
+
+和特征重要性，predict 负责在线预测与历史记录，admin 负责同步日志、用户管理
+
+和模型维护。这样的路由划分与前端菜单结构保持一致，便于定位接口问题。
+
+4.5 前端框架设计
+前端基于 Vue3 Composition API 构建，主要技术组件包括：
+Vue Router 负责页面路由管理。配置了路由守卫（beforeEach），未登录用户
+
+自动跳转登录页；管理员页面通过 meta.requiresAdmin 标记，普通用户访问时重定
+
+向到首页。路由采用懒加载（dynamic import），减少首屏资源体积。
+Pinia 替代 Vuex 作为全局状态管理方案。定义了 useUserStore（用户登录状态、
+
+角色信息）和 useAnalysisStore（缓存分析数据，避免重复 API 请求）两个 Store。
+
+分析页面切换时，如果 Store 中已有对应维度的数据则直接渲染，不再重复请求后
+
+端。
+ECharts 集成方面，封装了 useChart 组合式函数，统一管理图表实例的创建、更
+55
+
+新和销毁。图表组件通过 props 接收数据和配置，内部使用 watch 监听数据变化自
+
+动重绘。柱状图、折线图、饼图、雷达图和 ROC 曲线图各封装为独立组件。
+Axios 封装方面，创建 axios 实例并配置 baseURL、超时时间和拦截器。请求拦
+
+截器从 Pinia 的 userStore 中读取 JWT 令牌附加到 Authorization 头；响应拦截器统一
+
+处理 401（令牌过期）、403（权限不足）和 500（服务器错误）。
+CSS 布局方面，大屏模式使用 CSS Grid 定义多个网格区域，每个图表占据指
+
+定的 grid-area。分页管理模式使用 Naive UI 的 NLayout + NMenu 组件构建侧边栏
+
+导航。
+前端页面按业务域拆分为五组路由：dashboard 用于可视化大屏，analysis 用于
+
+年龄、生活习惯、临床指标和综合对比， model 用于模型指标和特征重要性，
+
+predict 用于在线预测，admin 用于用户、日志和同步管理。每个页面只负责渲染自
+
+身业务数据，公共请求逻辑放在 api 目录中统一封装。
+预测页面的交互流程为：用户填写表单后点击开始预测，页面先执行前端基础
+
+校验，再调用/api/predict 接口。接口返回后，页面右侧展示风险概率、风险等级和
+
+影响因素 Top3，下方预测历史表格自动刷新。若接口返回 400 错误，表单项附近显
+
+56
+
+示具体错误；若返回 401，路由守卫跳转到登录页。
+为了提升图表页面体验，ECharts 组件在 mounted 阶段初始化实例，在 watch 中
+
+监听数据变化，在 beforeUnmount 中销毁实例。窗口大小变化时触发 resize，保证
+
+大屏模式和分页模式都能正常自适应。
+
+57
+
+5 系统展示与测试
+5.1 系统展示
+本系统采用浏览器/服务器架构开发模式，前端基于 Vue3、Naive UI 和 ECharts
+
+构建，后端基于 Django REST Framework 提供 API 服务。系统页面围绕数据可视
+
+化、数据概览、综合对比、模型评估和风险预测五类功能展开，页面数据来源于
+
+ADS 层同步到 MySQL 后的聚合结果。
+5.1.1 可视化大屏
+可视化大屏用于集中展示系统核心指标，包括总样本数、心脏病阳性样本数、
+
+总体患病率、年龄高风险区间、模型 AUC 和主要特征重要性。页面通过 ECharts 渲
+
+染柱状图、饼图、折线图和雷达图，适合作为系统演示时的首页入口。
+
+58
+
+图 5-1 可视化大屏页面
+
+从图 5-1 可以看出，系统把多维分析结果集中展示在一个页面中。顶部统计卡
+
+片给出总样本量、阳性样本数和整体患病率，中部区域展示年龄、性别、BMI 等维
+
+度的分布情况，右侧区域展示模型指标和特征重要性，便于用户快速了解数据总体
+
+特征。
+5.1.2 数据概览页面
+数据概览页面主要展示三个数据集的基本信息和清洗后的统计结果。页面上方
+
+展 示 Indicators of Heart Disease （ 2020 ） 数 据 集 、 Indicators of Heart Disease
+
+（2022 UPDATE）数据集和 UCI Cleveland 三个数据集的记录数、字段数、阳性样
+
+本占比和数据来源，下方展示各数据集之间的样本规模对比。
+
+59
+
+图 5-2 数据概览页面
+
+图 5-2 展示了数据概览页面的运行效果。系统将数据集元信息、样本规模、目
+
+标变量分布和数据质量检查结果放在同一页面中，用户可以直观看到不同数据源之
+
+间的差异，为后续的数据分析和模型训练提供基础依据。
+5.1.3 综合对比分析页面
+综合对比分析页面用于展示年龄、性别、BMI、生活习惯、共病史和临床指标
+
+等多个维度的统计结果。页面通过筛选条件控制数据集来源，用户可以在同一页面
+
+中对不同数据集的患病率趋势进行横向比较。
+
+60
+
+图 5-3 综合对比分析页面
+
+图 5-3 展示了系统的综合对比分析页面。页面左侧为筛选条件和指标选择区域 ，
+
+右侧为图表展示区域。通过折线图、柱状图和雷达图的组合，系统能够同时呈现不
+
+同维度之间的差异，便于分析心脏病风险因素的分布规律。
+5.1.4 模型性能对比页面
+模型性能对比页面展示逻辑回归、SGD 线性分类器、随机森林和 Extra Trees
+
+四类模型的训练评估结果。页面重点展示 Accuracy、Precision、Recall、F1 和 AUC
+
+五项指标，其中 AUC 和召回率是心脏病风险筛查场景中更需要关注的指标。
+
+61
+
+图 5-4 模型性能对比页面
+
+图 5-4 展示了模型性能对比页面的运行效果。系统以柱状图和指标卡片的形式
+
+展示不同模型的性能差异，便于比较模型在分类准确性、召回能力和综合判别能力
+
+上的表现。根据测试结果，逻辑回归模型在 AUC 和召回率方面表现较稳定，因此
+
+被选为在线预测模块的默认模型。
+
+图 5-5 ROC 曲线对比
+
+62
+
+ROC 曲线用于描述分类阈值变化时真正率和假正率之间的关系。图 5-5 展示了
+
+不同模型的 ROC 曲线对比结果，曲线越靠近左上角表示模型区分能力越好。结合
+
+AUC 数值可以看出，逻辑回归和 SGD 线性模型在样本不均衡条件下具有较稳定的
+
+分类表现。
+5.1.5 风险预测页面
+风险预测页面提供 BMI、年龄段、性别、吸烟、饮酒、运动习惯、睡眠时长、
+
+身体健康天数、精神健康天数、中风、糖尿病、哮喘、肾病、皮肤癌等输入字段。
+
+用户提交后，后端使用保存好的 scikit-learn Pipeline 进行特征预处理和模型推理。
+预测结果包含三部分：第一是风险概率，保留四位小数；第二是风险等级，按
+
+照 0.33 和 0.67 两个阈值划分为低风险、中风险和高风险；第三是影响因素 Top3，
+
+根据当前样本在模型系数上的贡献度计算得到。
+系统会将每次预测的输入 JSON、风险概率、风险等级、模型名称和创建时间
+
+写入 prediction_record 表。用户可以查看自己的预测历史，管理员可以在后台查看
+
+接口调用记录和模型文件状态。
+
+5.2 系统测试
+5.2.1 功能测试
+63
+
+对系统的主要功能做了逐项测试，结果如表 5-1 所示。
+表 5-1 功能测试用例及结果
+
+测试项
+用户登录
+用户注册
+权限控制
+数据总览
+年龄分析
+生活习惯分
+析
+临床指标分
+析
+综合对比
+模型指标查
+询
+在线预测
+预测-缺失字
+段
+预测-异常输
+入
+预测历史
+大屏展示
+Docker 部署
+
+测试内容
+输入正确工号和密码
+填写用户名、密码和邮
+箱
+普通用户访问管理员接
+口
+进入总览页面
+查看年龄分析图表
+
+预期结果
+登录成功，跳转首页
+
+实际结果
+通过
+
+注册成功，自动登录
+
+通过
+
+返回 403 禁止访问
+
+通过
+
+显示三个数据集的样本数和患病率
+柱状图和饼图正确渲染
+
+通过
+通过
+
+查看各因素患病率
+
+六个因素的分组柱状图正确
+
+通过
+
+选择 UCI 数据集
+
+展示 10 个临床指标的分组统计
+
+通过
+
+查看三数据集对比
+
+柱状图和雷达图正确
+
+通过
+
+查看模型对比
+
+四种模型的五项指标正确显示
+
+通过
+
+填写 16 字段提交
+
+返回风险概率和等级
+缺失字段自动补默认值，正常返回结
+果
+
+通过
+
+BMI 填入负数
+
+返回参数校验错误提示
+
+通过
+
+查看历史记录
+切换到大屏模式
+docker compose up
+
+按时间倒序展示预测记录
+全屏展示，图表自适应
+前后端和 MySQL 正常启动
+
+通过
+通过
+通过
+
+只填 BMI 和年龄段
+
+通过
+
+全部 15 项功能测试用例均通过，系统各模块功能完整，接口运行正常。
+除表 5-1 的功能测试外，本文还对预测接口进行了样例输入测试。测试时构造
+
+低风险、中风险和高风险三组输入，观察系统返回的概率区间和风险等级是否符合
+
+阈值规则。
+表 5-2 预测样例测试结果
+
+样例
+样例 1
+
+主要输入
+BMI=21.6，25-29 岁，不吸烟，有运动
+64
+
+预测概率
+0.18
+
+风险等级
+低风险
+
+结果
+通过
+
+样例 2
+样例 3
+样例 4
+样例 5
+
+BMI=27.4，50-54 岁，吸烟，睡眠 6 小时
+BMI=31.2，65-69 岁，吸烟，有中风史
+仅填写年龄段和 BMI，其余为空
+BMI=-1，年龄段非法
+
+0.46
+0.74
+0.33
+拒绝请求
+
+中风险
+高风险
+中风险
+参数错误
+
+通过
+通过
+通过
+通过
+
+预测样例测试表明，接口能够正确处理完整输入、部分缺失输入和异常输入。
+
+缺失字段会进入默认值补全流程，异常字段会在 Serializer 校验阶段被拦截，不会
+
+进入模型推理。
+5.2.2 性能测试
+对系统的关键性能指标进行了测试，结果如表 5-3 所示。
+表 5-3 性能测试结果
+
+测试项
+预测接口响应
+分析接口响应
+页面首屏加载
+ECharts 渲染
+
+测试方法
+单次调用/api/predict
+单次调用/api/analysis/age
+Chrome DevTools Network
+Chrome Performance 面板
+
+并发预测
+
+wrk -c10 -d30s /api/predict
+
+数据同步耗时
+
+9 张 ADS 表全量同步
+
+结果
+平均 87ms
+平均 32ms
+1.4s
+230ms
+QPS=45，
+P99=210ms
+3.2s
+
+是否达标
+达标（<100ms）
+达标（<500ms）
+达标（<2s）
+达标（<300ms）
+可接受
+可接受
+
+预测接口的耗时主要在特征预处理的 OneHotEncoder 转换上，模型推理本身几
+
+毫秒就完事。页面第一次打开 1.4 秒，后面切换页面很快。ECharts 画图大概 230 毫
+
+秒，体验上不卡。在 10 并发的压力下预测接口 QPS 为 45，P99 延迟 210 毫秒，对
+
+于本科毕设级别的系统足够使用。
+为了进一步验证页面兼容性，使用不同浏览器和分辨率打开系统核心页面，测
+
+65
+
+试结果如表 5-4 所示。
+表 5-4 浏览器兼容性测试
+
+环境
+Chrome 124 / 1920×1080
+Edge 124 / 1440×900
+Firefox 125 / 1366×768
+Safari / 1440×900
+
+测试页面
+可视化大屏
+数据概览页面
+风险预测页面
+模型对比页面
+
+显示结果
+图表完整显示
+布局正常，无横向滚动
+表单和结果卡片正常
+ECharts 正常渲染
+
+结论
+通过
+通过
+通过
+通过
+
+兼容性测试结果说明，系统在主流桌面浏览器上均能正常运行。由于本系统主
+
+要用于毕业设计展示和后台数据分析，重点适配桌面端场景，移动端仅保证基本浏
+
+览。
+5.2.3 安全测试
+对系统的安全机制进行了验证，结果如表 5-5 所示。
+表 5-5 安全测试结果
+
+测试项
+JWT 令牌过
+期
+无令牌访问
+密码加密
+
+测试方法
+
+预期结果
+
+实际结果
+
+使用过期令牌调用 API
+
+返回 401 未授权
+
+通过
+
+不带 Authorization 头调用 API
+查看数据库 password 字段
+
+返回 401 未授权
+BCrypt 加密，不可逆
+被 Django ORM 参数化查询拦
+截
+被 Vue 模板自动转义
+返回 403 禁止访问
+
+通过
+通过
+
+SQL 注入
+
+预测接口输入含 SQL 的字符串
+
+XSS 攻击
+越权访问
+
+输入含 script 标签的文本
+普通用户调用/api/admin/users
+
+通过
+通过
+通过
+
+全部 6 项安全测试通过。JWT 认证机制和 BCrypt 密码加密确保了用户身份安全；
+
+Django ORM 的参数化查询和 Vue 模板的自动转义分别从后端和前端两个层面防御
+
+66
+
+了注入攻击；角色权限隔离保证了管理员接口不被普通用户越权访问。
+
+67
+
+68
+
+结 论
+
+这篇论文围绕心脏病健康数据，做了四件事：建数据仓库、跑多维统计、训练
+
+机器学习模型、开发 Web 系统。数据这块，三份公开数据集走了 ODS-DWD-ADS
+
+三层 Hive 仓库，清洗和标准化之后产出 9 张 ADS 聚合表，分别对应年龄、性别、
+
+BMI、生活习惯、共病史、UCI 临床指标六个维度。模型这块，Indicators of Heart
+
+Disease（2020）数据集上逻辑回归 AUC=0.8207、召回率 78.30%，排第一。UCI 数
+
+据上同一模型 AUC 到了 0.9665。系统这块，Vue3+ECharts 负责可视化大屏和分页
+
+分析界面，Django 后端负责 RESTful 查询和在线预测，Docker Compose 负责容器
+
+化部署。
+
+目前的 问题 也比较明显 。 Indicators of Heart Disease （2020）数据集 阳性只有
+
+8.6%，正负样本差太多，模型精确率只有 23.31%。数据仓库只能离线批处理，没
+
+接实时数据流。预测模型也只输出一个概率值，没有可解释性分析。
+
+后面如果要改，样本不平衡的问题可以试 SMOTE 过采样或者 Focal Loss；实时性
+
+69
+
+的问题可以在 Hive 旁边加一路 Spark Streaming；可解释性的问题可以用 SHAP 值
+
+给每个预测结果标出哪些特征影响最大。
+
+70
+
+致
+
+谢
+
+毕设做到这里，最想感谢的是指导老师。选题阶段我对大数据方向的了解仅限
+
+于课堂上学过的 Hadoop 和 Hive，具体该怎么结合实际场景做一个完整的系统心里
+
+没底。老师建议从公开医疗数据集入手，先把数据仓库跑通，再在上面加分析和预
+
+测——这条路线事后看确实比一开始就去搞复杂模型要稳妥得多。后来写 SQL 建
+
+表、调 Django 接口、画 ECharts 图表的过程中遇到不少问题，老师每次都能给出具
+
+体的排查方向，省去了很多在网上漫无目的搜索的时间。
+
+四年本科课程里学到的东西在这次毕设中全部派上了用场。数据结构课上学的哈希
+
+表和排序在写 MapReduce 的时候用到了；数据库课上的范式和索引知识在设计
+
+MySQL 表结构时直接套用；机器学习课上跑过的逻辑回归和随机森林模型，这次
+
+在真实数据集上重新训练了一遍，体会和课堂作业完全不同。
+
+同学们在环境配置上帮了不少忙。Hadoop 集群搭建、Docker 网络配置这些坑，几
+
+个人一起踩比自己摸索快得多。
+
+71
+
+家人在生活上的支持让我能够把精力集中在毕设上，不用操心其他事情。在此一并
+
+致谢。
+
+72
+
+参 考 文 献
+
+[1] 梁靖涵;许亚杰.基于机器学习算法的心脏病预测诊断模型研究[J].现代信息科
+技,2022:4.
+[2] 李楠楠.基于神经网络算法建立心血管疾病预测模型[J].信息系统工程,2022:4.
+[3] 朱宵彤;庞春颖;朱涵.基于深度学习的心血管疾病预测模型[J].计算机应用,2021:5.
+[4] 吕婷婷;丁子建;袁亦方;林剑平;王贵锦;张萍.深度学习在心电图自动诊断和预测
+心血管疾病中的应用[J].中国心血管杂志,2021:4.
+[5] 左维.心血管疾病危险人群风险预测分级与心血管疾病的相关性研究[J].吉林医
+学,2021:4.
+[6] 林在宁;杨文杰;陈修洁.基于 Hadoop 的网站大数据分析系统设计[J].北京印刷学
+院学报,2022:4.
+[7] 王金元;王宇;张亚松;林昊;龚致富;李盼;安新艳.基于 Hadoop 的分布式财务异常
+数据分析系统设计[J].信息技术,2022:6.
+[8] 卢金龙.基于 Hadoop 生态圈的数据分析平台设计[J].金融电子化,2022:2.
+[9] 宋柯萱.基于 Hadoop 的大数据分析与优化略论[J].电脑知识与技术,2021:3.
+[10]吴静.基于改进随机森林的苹果分类系统设计[J].陇东学院学报,2023:7.
+[11] 聂云丽,高国忠.基于随机森林的页岩气“甜点”分类方法 [J].油气藏评价与开
+发,2023:15.
+[12]刘文昌,魏赟,袁浩轩.基于 SMOTE 和 gcForest 的医疗小样本数据分类研究[J].物
+联网学报,2023:18.
+[13]董佳.融合采样算法的信贷不平衡数据分类研究[J].商情,2023:4(41-44).
+[14]陈静雯,张鹏鹏,徐思语.基于机器学习的呼吸道疾病预测可视化系统[J].物联网技
+术,2023:3.
+[15]范梓豪,杨楚雯.基于 Vue 的气象信息可视化大屏的设计与实现[J].气象水文海洋
+仪器,2023:3.
+[16]张 业 男 . 基 于 农 业 数 据 的 可 视 化 大 屏 教 学 案 例 研 究 [J]. 牡 丹 江 教 育 学 院 学
+报,2023:4.
+[17]郭尚志;章光裕;唐玉玲.基于机器学习的医疗大数据分析与临床应用[J].电脑知识
+与技术,2022:2.
+[18]刘珺;蔡迎;张向阳;孙玮;杜思铭;王佳.医疗大数据分析技术在临床医学中的应用
+[J].中华医学图书情报杂志,2021:5.
+[19]医疗数据分析中隐私保护方法研究[D].山东科技大学,2020.
+73
+
+74
+
+

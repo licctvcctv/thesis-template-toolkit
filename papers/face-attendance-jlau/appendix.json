@@ -1,0 +1,21 @@
+[
+  {
+    "type": "p",
+    "text": "附录列出系统核心代码片段，主要包括人脸比对接口、百度 AI 比对工具方法和前台打卡控制逻辑。为避免泄露实际配置，代码中的密钥值不在论文中展示。"
+  },
+  {
+    "type": "code",
+    "caption": "附录A-1 公共人脸比对接口",
+    "code": "@RequestMapping(\"/matchFace\")\n@IgnoreAuth\npublic R matchFace(String face1, String face2, HttpServletRequest request) {\n    return CommonUtil.matchFace(face1, face2);\n}"
+  },
+  {
+    "type": "code",
+    "caption": "附录A-2 百度AI人脸比对核心方法节选",
+    "code": "String apiKey = configService.selectOne(\n        new EntityWrapper<ConfigEntity>().eq(\"name\", \"APIKey\")).getValue();\nString secretKey = configService.selectOne(\n        new EntityWrapper<ConfigEntity>().eq(\"name\", \"SecretKey\")).getValue();\nAipFace client = new AipFace(null, apiKey, secretKey);\nString img1 = Base64Util.encode(FileUtil.FileToByte(file1));\nString img2 = Base64Util.encode(FileUtil.FileToByte(file2));\nArrayList<MatchRequest> requests = new ArrayList<MatchRequest>();\nrequests.add(new MatchRequest(img1, \"BASE64\"));\nrequests.add(new MatchRequest(img2, \"BASE64\"));\nJSONObject res = client.match(requests);\nreturn R.ok().put(\"score\", JSONObject.parse(\n        res.getJSONObject(\"result\").get(\"score\").toString()));"
+  },
+  {
+    "type": "code",
+    "caption": "附录A-3 前台打卡提交逻辑节选",
+    "code": "if (!this.faceMatchFlag) {\n    const res = await this.$http.get(\"matchFace\", { params: params });\n    if (res.data && res.data.code == 0 && res.data.score > 60) {\n        this.faceMatchFlag = true;\n        this.$message({ message: \"匹配成功\", type: \"success\" });\n    } else {\n        this.faceMatchFlag = false;\n        this.$message.error(\"匹配失败\");\n    }\n    await this.forceGetCurrentPosition();\n    return;\n}\nawait this.$http.post(`kaoqindaka/${this.ruleForm.id ? \"update\" : \"add\"}`,\n        this.ruleForm);"
+  }
+]

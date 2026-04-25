@@ -1,0 +1,2303 @@
+Document: /Users/a136/vs/45425/要求66/吉林农业大学本科生毕业论文参考模板.docx
+Sections: 8
+Body blocks: paragraphs and tables in source order
+[body]
+  T000 rows=1 cols=1 first_cell='本科生毕业论文（设计） 题 目： 姓 名： 学 号： 学 院： 专 业： 指导教师： 职 称： 年 月 日'
+  P001 style='Body Text Indent 2' align=None runs=0 num=None text=''
+  P002 style='Normal' align='center' runs=0 num=None text=''
+  P003 style='Normal' align='center' runs=4 num=None text='论文题目（三号加粗黑体）'
+  P004 style='Normal' align='center' runs=0 num=None text=''
+  P005 style='Heading 1' align=None runs=4 num=None text='摘 要（四号黑体）'
+  P006 style='Normal' align=None runs=0 num=None text=''
+  P007 style='Normal' align=None runs=7 num=None text='摘要内容应概括地反映出本论文的主要内容，主要说明本论文的研究目的、内容、方法、成果和结论。语言力求精练、准确，不含图表，不加注释，具有独立性和完整性，一般在300字左右。'
+  P008 style='Normal' align=None runs=8 num=None text='中文摘要应含论文题目，在题目之下打印“摘要”二字（四号黑体），摘要的内容用小四号宋体，行间距为固定值20磅。'
+  P009 style='Normal' align=None runs=5 num=None text='论文的关键词是反映毕业论文（设计）主题内容的名词，一般为3-5个，排在摘要正文部分下方。'
+  P010 style='Normal' align=None runs=1 num=None text='摘要内容后下空一行打印“关键词”三字（四号黑体），其后为关键词（小四号宋体），每一关键词之间用分号分开，最后一个关键词后不打标点符号。'
+  P011 style='Normal' align=None runs=0 num=None text=''
+  P012 style='Normal' align='left' runs=2 num=None text='关键词：×××；×××；×××；×××'
+  P013 style='Normal' align='center' runs=1 num=None text=''
+  P014 style='Normal' align='center' runs=0 num=None text=''
+  P015 style='Normal' align='center' runs=6 num=None text='XXXXXXXXXXXXXXX（论文英文题目，全部采用大写字母，三号加粗，字体为Times New Roman）'
+  P016 style='Normal' align='center' runs=0 num=None text=''
+  P017 style='Heading 1' align=None runs=4 num=None text='ABSTRACT（四号加粗，字体为Times New Roman）'
+  P018 style='Normal' align='center' runs=0 num=None text=''
+  P019 style='Normal' align=None runs=1 num=None text='英文摘要和关键词内容与中文摘要和关键词相一致，其中英文摘要以300个左右实词为宜。'
+  P020 style='Normal' align=None runs=11 num=None text='英文摘要应含论文的英文题目，全部采用大写字母，在题目之下打印“ABSTRACT”（四号字加粗），摘要正文用小四号字Times New Roman，行间距为固定值20磅。摘要内容后下空两行打印“KEY WORDS”（四号字加粗），其后的关键…'
+  P021 style='Normal' align=None runs=0 num=None text=''
+  P022 style='Normal' align=None runs=0 num=None text=''
+  P023 style='Normal' align='left' runs=8 num=None text='KEY WORDS：×××,×××,×××,×××'
+  P024 style='Normal' align='left' runs=0 num=None text=''
+  P025 style='Heading 1' align=None runs=0 num=None text=''
+  P026 style='Heading 1' align=None runs=0 num=None text=''
+  P027 style='Heading 1' align=None runs=6 num=None text='目 录（农、理、工科类毕业论文可参考）'
+  P028 style='toc 1' align=None runs=3 num=None text=''
+  P029 style='toc 1' align=None runs=14 num=None text='第一章 前言 1'
+  P030 style='toc 2' align=None runs=8 num=None text='1.1 XXX XX'
+  P031 style='toc 2' align=None runs=8 num=None text='1.2 XXX XX'
+  P032 style='toc 1' align=None runs=10 num=None text='第二章 XXX XX'
+  P033 style='toc 2' align=None runs=8 num=None text='2.1 XXX XX'
+  P034 style='Normal' align=None runs=3 num=None text='2.2.1 XXX..............................................................................................................…'
+  P035 style='toc 2' align=None runs=8 num=None text='2.2 XXX XX'
+  P036 style='toc 2' align=None runs=8 num=None text='2.3 XXX XX'
+  P037 style='toc 1' align=None runs=10 num=None text='第三章 XXX XX'
+  P038 style='toc 2' align=None runs=8 num=None text='3.1 XXX XX'
+  P039 style='toc 2' align=None runs=8 num=None text='3.2 XXX XX'
+  P040 style='toc 1' align=None runs=7 num=None text='参考文献 XX'
+  P041 style='toc 1' align=None runs=7 num=None text='附 录 XX'
+  P042 style='toc 1' align=None runs=10 num=None text='相关的学术成果目录 XX'
+  P043 style='toc 1' align=None runs=7 num=None text='致 谢 XX'
+  P044 style='Normal' align=None runs=1 num=None text=''
+  P045 style='Heading 1' align=None runs=1 num=None text=''
+  P046 style='Heading 1' align=None runs=0 num=None text=''
+  P047 style='Heading 1' align=None runs=6 num=None text='目 录（毕业设计可参考）'
+  P048 style='toc 1' align=None runs=0 num=None text=''
+  P049 style='toc 1' align=None runs=11 num=None text='1 XXX 1'
+  P050 style='toc 2' align=None runs=8 num=None text='1.1 XXX XX'
+  P051 style='toc 2' align=None runs=8 num=None text='1.2 XXX XX'
+  P052 style='toc 1' align=None runs=9 num=None text='2 XXX XX'
+  P053 style='toc 2' align=None runs=8 num=None text='2.1 XXX XX'
+  P054 style='Normal' align=None runs=2 num=None text='2.2.1........................................................................................................XX'
+  P055 style='toc 2' align=None runs=8 num=None text='2.2 XXX XX'
+  P056 style='toc 2' align=None runs=8 num=None text='2.3 XXX XX'
+  P057 style='toc 1' align=None runs=9 num=None text='3 XXX XX'
+  P058 style='toc 2' align=None runs=8 num=None text='3.1 XXX XX'
+  P059 style='toc 2' align=None runs=8 num=None text='3.2 XXX XX'
+  P060 style='toc 1' align=None runs=7 num=None text='参考文献 XX'
+  P061 style='toc 1' align=None runs=7 num=None text='附 录 XX'
+  P062 style='toc 1' align=None runs=10 num=None text='相关的学术成果目录 XX'
+  P063 style='toc 1' align=None runs=7 num=None text='致 谢 XX'
+  P064 style='Normal' align=None runs=1 num=None text=''
+  P065 style='Heading 1' align=None runs=0 num=None text=''
+  P066 style='Heading 1' align=None runs=6 num=None text='目 录（经管及人文社科类论文毕业论文可参考）'
+  P067 style='toc 1' align=None runs=0 num=None text=''
+  P068 style='toc 1' align=None runs=11 num=None text='一、XXX 1'
+  P069 style='toc 2' align=None runs=10 num=None text='（一）XXX XX'
+  P070 style='toc 2' align=None runs=10 num=None text='（二）XXX XX'
+  P071 style='toc 1' align=None runs=8 num=None text='二、XXX XX'
+  P072 style='toc 2' align=None runs=10 num=None text='（一）XXX XX'
+  P073 style='Normal' align=None runs=3 num=None text='1.XXX....................................................................................................XX'
+  P074 style='toc 2' align=None runs=10 num=None text='（二）XXX XX'
+  P075 style='toc 2' align=None runs=10 num=None text='（三）XXX XX'
+  P076 style='toc 1' align=None runs=8 num=None text='三、XXX XX'
+  P077 style='toc 2' align=None runs=10 num=None text='（一）XXX XX'
+  P078 style='toc 2' align=None runs=10 num=None text='（二）XXX XX'
+  P079 style='toc 1' align=None runs=7 num=None text='参考文献 XX'
+  P080 style='toc 1' align=None runs=7 num=None text='附 录 XX'
+  P081 style='toc 1' align=None runs=10 num=None text='相关的学术成果目录 XX'
+  P082 style='toc 1' align=None runs=7 num=None text='致 谢 XX'
+  P083 style='Normal' align=None runs=1 num=None text=''
+  P084 style='Normal' align=None runs=0 num=None text=''
+  P085 style='Heading 1' align=None runs=0 num=None text=''
+  P086 style='Heading 1' align=None runs=6 num={'numId': 0, 'ilvl': 0} text='第一章 前言（三号黑体加粗）'
+  P087 style='Normal' align=None runs=0 num={'numId': 0, 'ilvl': 0} text=''
+  P088 style='Normal' align=None runs=7 num=None text='在论文主体前，作为正文第一章，内容为：研究背景及国内外文献综述；论文所要解决的问题；该研究工作的实用价值与理论意义。通过前言，读者能全面了解学位论文的目的、意义和工作内容。'
+  P089 style='Normal' align=None runs=6 num=None text='各章标题（如，第一章 前言）：三号黑体加粗居中。'
+  P090 style='Normal' align=None runs=7 num=None text='正文中文一律采用小四号宋体，首行缩进两个字符，无段前、段后间距，行间距为固定值20磅。英文、罗马字符一般采用新罗马体（Times New Roman）。'
+  P091 style='Normal' align=None runs=0 num=None text=''
+  P092 style='Normal' align='left' runs=1 num=None text=''
+  P093 style='Heading 1' align=None runs=0 num=None text=''
+  P094 style='Heading 1' align=None runs=2 num=None text='第X章 （正文）'
+  P095 style='Normal' align=None runs=0 num=None text=''
+  P096 style='Normal' align=None runs=3 num=None text='论文正文由文献综述与实验两部分组成，也可只含实验部分。人文社会学科的论文可用实证研究、分析综合、归纳演绎等内容取代实验部分。文献综述应将与论文内容有关的国内外研究进展作回顾与分析，篇幅不宜超过实验部分。'
+  P097 style='Normal' align=None runs=1 num=None text='实验部分一般由标题、文字叙述、图、表格和公式等部分构成。写作形式因科研项目的性质不同而变化，一般可包括试验材料与方法（计算方法、实验设置和测试方法）、经过整理加工的实验结果、对结果的分析讨论与结论。'
+  P098 style='Normal' align=None runs=13 num=None text='各章标题：三号黑体加粗居中，上、下各空一行；二级标题（如，2.1 本文研究内容）：四号黑体居左；三级标题（如，2.1.1 实验方法）：小四号宋体居左。正文各部分的标题应简明扼要，不使用标点符号。'
+  P099 style='Normal' align=None runs=6 num=None text='正文中文为小四号宋体，英文及数字为小四号Times New Roman，首行缩进2个字符，行间距为固定值20磅，其中行间距可在保持论文美观的前提下进行微调。'
+  P100 style='Normal' align=None runs=3 num=None text='各章及各节标题的格式均需按照本“参考模板”执行；标题层次及内容根据人文社科类和农、理、工科类等不同专业的学科特点、论文写作惯例、研究实际情况可灵活调整，本“参考模板”仅做示例。'
+  P101 style='Normal' align=None runs=2 num=None text='公式应另起一行，正文中的公式、算式或方程式等应编排序号，公式的编号用圆括号括起，序号标注于该式所在行(当有续行时，应标注于最后一行)的行末。公式可按章节顺序编号或按全文统一编号。公式序号必须连续，不得重复或跳缺。重复引用的公式不得另编新序…'
+  P102 style='Normal' align='right' runs=1 num=None text='（X-1）'
+  P103 style='Normal' align=None runs=0 num=None text=''
+  P104 style='Normal' align=None runs=0 num=None text=''
+  P105 style='Normal' align=None runs=1 num=None text='较长的公式，如必须转行时，最好在等号处转行,如做不到这一点,要在+，-，×，÷等数学符号处转行。数学符号应写在转行处的行首。上下式尽可能在等号“＝”处对齐。'
+  P106 style='Normal' align=None runs=0 num=None text=''
+  P107 style='Normal' align='justify' runs=3 num=None text=''
+  P108 style='Normal' align=None runs=0 num=None text=''
+  P109 style='Normal' align=None runs=0 num=None text=''
+  P110 style='Normal' align='right' runs=1 num=None text='（X-2）'
+  P111 style='Normal' align=None runs=0 num=None text=''
+  P112 style='Normal' align=None runs=0 num=None text=''
+  P113 style='Normal' align=None runs=0 num=None text=''
+  P114 style='Normal' align=None runs=1 num=None text='表题应写在表格上方正中，表序写在表题左方不加标点，空一格写表题，表题末尾不加标点，全文的表格统一编序，也可以逐章编序，表序必须连续，表格格式采用简明三线表。表题用五号宋体加黑，表格内中文用五号宋体，英文用五号Times New Roman…'
+  P115 style='Normal' align=None runs=0 num=None text=''
+  P116 style='Normal' align='justify' runs=4 num=None text='表X-1 xxxxxxxxxxxxxxxxx'
+  T117 rows=2 cols=4 first_cell='xx'
+  P118 style='Normal' align=None runs=0 num=None text=''
+  P119 style='Normal' align=None runs=3 num=None text='表题允许下页接写，接写时表题省略，页面顶端空一行，表头应重复书写，并在右上方写“续表xx”。'
+  P120 style='Normal' align='right' runs=3 num=None text='续表X－1'
+  T121 rows=2 cols=4 first_cell='xx'
+  P122 style='Normal' align=None runs=0 num=None text=''
+  P123 style='Normal' align=None runs=1 num=None text='每幅插图应有图序和图题，全文插图可以统一编序，也可以逐章单独编序，图序必须连续，不得重复或跳缺。图序和图题写在图的下方居中，五号宋体加黑居中。'
+  P124 style='Normal' align='center' runs=1 num=None text=''
+  P125 style='Normal' align='center' runs=4 num=None text='图X-1 xxxxxxxxxxxxxxxxxxx'
+  P126 style='标题2' align='left' runs=0 num=None text=''
+  P127 style='标题2' align='left' runs=0 num=None text=''
+  P128 style='Heading 1' align=None runs=0 num=None text=''
+  P129 style='Heading 1' align=None runs=3 num=None text='第X章 结论与展望'
+  P130 style='Normal' align=None runs=0 num=None text=''
+  P131 style='Normal' align=None runs=1 num=None text='最后一章结论与展望着重总结论文的创新点或新见解及研究展望或建议。'
+  P132 style='Normal' align=None runs=3 num=None text='结论是对论文主要研究结果、论点的提炼与概括，应准确、简明、完整、有条理，主要阐述自己的创造性工作及所取得的研究成果在本学术领域中的地位、作用和意义及对生产与社会实践的指导意义。'
+  P133 style='Normal' align=None runs=1 num=None text='结论要严格区分自己取得的成果与导师及他人的科研工作成果。在评价自己的研究工作成果时，要实事求是，除非有足够的证据表明自己的研究是“首次”的、“领先”的、“填补空白”的，否则应避免使用这些或类似词语。'
+  P134 style='Normal' align=None runs=1 num=None text='展望或建议，是在总结研究工作和现有结论的基础上，对该领域今后的发展方向及重要研究内容进行预测，同时对所获研究结果的应用前景和社会影响加以评价，从而对今后的研究有所启发。'
+  P135 style='Normal' align='left' runs=1 num=None text=''
+  P136 style='Heading 1' align=None runs=0 num=None text=''
+  P137 style='Heading 1' align=None runs=4 num=None text='参考文献（三号黑体）'
+  P138 style='Normal' align=None runs=0 num=None text=''
+  P139 style='Normal' align=None runs=3 num=None text='参考文献表是文中引用的有具体文字来源的文献集合，应置于正文后并另起页；所有被引用文献均要列入参考文献表中，按论文中参考文献出现的次序，用中括号的数字连续编号，顶格书写，中文为五号宋体，英文及数字为五号Times New Roman字体，标…'
+  P140 style='Normal' align=None runs=5 num=None text='论文中引用的文献的标注方法遵照GB/T 7714-2015《文后参考文献著录规则》。'
+  P141 style='Normal' align=None runs=2 num=None text='在引用别人的科研成果时，应在引用处加以说明，避免论文抄袭现象的发生。参考文献标注用中括号，以上标的形式标注。'
+  P142 style='Normal' align=None runs=1 num=None text='常用的参考文献著录项目和格式示例如下：'
+  P143 style='Normal' align='left' runs=2 num=None text='普通图书示例'
+  P144 style='Normal' align='left' runs=1 num=None text='[1] 蒋有绪，郭泉水，马娟，等. 中国森林群落分类及其群落学特征[M]. 北京: 科学出版社，1998'
+  P145 style='Normal' align='left' runs=1 num=None text='[2] CRAWFPRD W, GORMAN M. Future libraries: dreams, madness, & reality[M]. Chicago: American Library Association, 1995.'
+  P146 style='Normal' align='left' runs=2 num=None text='期刊中析出的文献示例'
+  P147 style='Normal' align='left' runs=1 num=None text='[1] 李炳穆. 理想的图书馆员和信息专家的素质与形象[J]. 图书情报工作，2000(2):5-8.'
+  P148 style='Normal' align='left' runs=1 num=None text='[2] DES MARAIS D J, STRAUSS H, SUMMONS R E, et al. Carbon isotope evidence for the stepwise oxidation of the Proterozoi…'
+  P149 style='Normal' align='left' runs=2 num=None text='论文集、会议录示例'
+  P150 style='Normal' align='left' runs=1 num=None text='[1] 中国力学学会. 第3届全国实验流体力学学术会议论文集[C]. 天津: [出版者不详],1990.'
+  P151 style='Normal' align='left' runs=1 num=None text='[2] ROSENTHALL E M. Proceedings of the Fifth Canadian Mathematical Congress, University of Montreal, 1961[C]. Toronto: …'
+  P152 style='Normal' align='left' runs=2 num=None text='科技报告示例'
+  P153 style='Normal' align='left' runs=12 num=None text='[1] 冯西桥.核反应堆压力管道与压力容器的LBB分析［R］.北京：清华大学核能技术设计研究院，1997.'
+  P154 style='Normal' align='left' runs=3 num=None text='[2] World Health Organization. Factors regulating the immune response: report of WHO Scientific Group[R]. Geneva: WHO, …'
+  P155 style='Normal' align='left' runs=2 num=None text='学位论文示例'
+  P156 style='Normal' align='left' runs=1 num=None text='[1] 张志祥. 间断动力系统的随机扰动及其在守恒律方程中的应用[D]. 北京: 北京大学数学学院，1998.'
+  P157 style='Normal' align='left' runs=1 num=None text='[2] CALMS R B. Infrared spectroscopic studies on solid oxygen[D]. Berkeley:Univ. of California. 1965.'
+  P158 style='Normal' align='left' runs=2 num=None text='专利文献示例'
+  P159 style='正文1' align=None runs=8 num=None text='[1] 河北绿洲生态环境科技有限公司. 一种荒漠化地区生态植被综合培育种植方法:中国，01129210.5[P/OL].2001-10-24[2002-05-28].http://211.152.9.47/sipoasp/zlijs/hy…'
+  P160 style='Normal' align='left' runs=3 num=None text='专著中析出的文献示例'
+  P161 style='正文1' align=None runs=3 num={'numId': 0, 'ilvl': 0} text='[1] 国家标准局信息分类编码研究所. GB/T 2659-1986世界各国和地区名称代码[S]// 全国文献工作标准化技术委员会. 文献工作国家标准汇编:3.北京:中国标准出版社，1988:59-92.'
+  P162 style='正文1' align=None runs=3 num={'numId': 0, 'ilvl': 0} text='报纸中析出的文献示例'
+  P163 style='正文1' align=None runs=3 num=None text='[1] 丁文祥. 数字革命与竞争国际化[N]. 中国青年报,2000-11-20(15).'
+  P164 style='正文1' align=None runs=1 num={'numId': 0, 'ilvl': 0} text='电子文献'
+  P165 style='正文1' align=None runs=3 num=None text='[1] 江向东. 互联网环境下的信息处理与图书管理系统解决方案[J/OL]. 情报学报,1999,18(2);4[2000-01-18].http://www.chinainfo.gov.cn/periodical/gbxb/gbxb99…'
+  P166 style='正文1' align=None runs=3 num=None text='[2] CHRISTINE M. Plant physiology:plant biology in the Genome Era[J/OL].Science,1998,281: 331-332[1998-09-23].http://ww…'
+  P167 style='Normal' align='left' runs=0 num=None text=''
+  P168 style='Heading 1' align=None runs=0 num=None text=''
+  P169 style='Heading 1' align=None runs=9 num=None text='附 录 附录名称（三号黑体）'
+  P170 style='Normal' align=None runs=0 num=None text=''
+  P171 style='Normal' align=None runs=2 num=None text='如果有不宜放在正文中的重要支撑材料，可编入毕业论文（设计）的附录中。包括某些重要的原始数据、详细数学推导、程序全文及其说明、复杂的图表、设计图纸等一系列需要补充提供的说明材料。附录的篇幅不宜太多，一般不超过正文。使用小四号宋体书写，首行缩…'
+  P172 style='Heading 1' align=None runs=0 num=None text=''
+  P173 style='Heading 1' align=None runs=4 num=None text='相关的学术成果目录（三号黑体）'
+  P174 style='Normal' align=None runs=0 num=None text=''
+  P175 style='Normal' align=None runs=2 num=None text='包括本科期间发表的与毕业论文（设计）相关的已发表论文或被鉴定的技术成果、发明专利等成果，应在成果目录中列出。此项非必需项。使用小四号宋体书写，首行缩进两个字符。'
+  P176 style='Normal' align=None runs=0 num=None text=''
+  P177 style='Heading 1' align=None runs=0 num=None text=''
+  P178 style='Heading 1' align=None runs=0 num=None text=''
+  P179 style='Heading 1' align=None runs=3 num=None text='致 谢'
+  P180 style='Normal' align=None runs=0 num=None text=''
+  P181 style='Normal' align=None runs=9 num=None text='学位论文正文和附录之后，一般应放置致谢，主要感谢指导老师和对论文工作有直接贡献和帮助的人士和单位，以及资助的项目。致谢言语应谦虚诚恳，实事求是。字数一般在500字之内。'
+  P182 style='Normal' align=None runs=5 num=None text='“致谢”用三号黑体居中，两字之间空两格。致谢内容为小四号宋体，行间距为固定值20磅。'
+  P183 style='Normal' align=None runs=0 num=None text=''
+  P184 style='Normal' align=None runs=0 num=None text=''
+[section[0].header]
+[section[0].footer]
+[section[1].header]
+[section[1].footer]
+[section[2].header]
+[section[2].footer]
+[section[3].header]
+[section[3].footer]
+[section[4].header]
+[section[4].footer]
+[section[5].header]
+[section[5].footer]
+[section[6].header]
+[section[6].footer]
+[section[7].header]
+[section[7].footer]
+[xml markers]
+  w:txbxContent: 0
+  w:fldSimple: 0
+  w:instrText: 96
+  w:numPr: 10
+  w:bookmarkStart: 14
+  w:drawing: 14
+{
+  "docx": "/Users/a136/vs/45425/要求66/吉林农业大学本科生毕业论文参考模板.docx",
+  "sections": 8,
+  "body_blocks": [
+    {
+      "kind": "table",
+      "index": 0,
+      "text": "本科生毕业论文（设计） 题 目： 姓 名： 学 号： 学 院： 专 业： 指导教师： 职 称： 年 月 日",
+      "style": null,
+      "alignment": null,
+      "numbering": null,
+      "run_count": null,
+      "runs": null,
+      "table_shape": {
+        "rows": 1,
+        "cols": 1
+      }
+    },
+    {
+      "kind": "paragraph",
+      "index": 1,
+      "text": "",
+      "style": "Body Text Indent 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 2,
+      "text": "",
+      "style": "Normal",
+      "alignment": "center",
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 3,
+      "text": "论文题目（三号加粗黑体）",
+      "style": "Normal",
+      "alignment": "center",
+      "numbering": null,
+      "run_count": 4,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 4,
+      "text": "",
+      "style": "Normal",
+      "alignment": "center",
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 5,
+      "text": "摘 要（四号黑体）",
+      "style": "Heading 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 4,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 6,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 7,
+      "text": "摘要内容应概括地反映出本论文的主要内容，主要说明本论文的研究目的、内容、方法、成果和结论。语言力求精练、准确，不含图表，不加注释，具有独立性和完整性，一般在300字左右。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 7,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 8,
+      "text": "中文摘要应含论文题目，在题目之下打印“摘要”二字（四号黑体），摘要的内容用小四号宋体，行间距为固定值20磅。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 8,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 9,
+      "text": "论文的关键词是反映毕业论文（设计）主题内容的名词，一般为3-5个，排在摘要正文部分下方。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 5,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 10,
+      "text": "摘要内容后下空一行打印“关键词”三字（四号黑体），其后为关键词（小四号宋体），每一关键词之间用分号分开，最后一个关键词后不打标点符号。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 11,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 12,
+      "text": "关键词：×××；×××；×××；×××",
+      "style": "Normal",
+      "alignment": "left",
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 13,
+      "text": "",
+      "style": "Normal",
+      "alignment": "center",
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 14,
+      "text": "",
+      "style": "Normal",
+      "alignment": "center",
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 15,
+      "text": "XXXXXXXXXXXXXXX（论文英文题目，全部采用大写字母，三号加粗，字体为Times New Roman）",
+      "style": "Normal",
+      "alignment": "center",
+      "numbering": null,
+      "run_count": 6,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 16,
+      "text": "",
+      "style": "Normal",
+      "alignment": "center",
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 17,
+      "text": "ABSTRACT（四号加粗，字体为Times New Roman）",
+      "style": "Heading 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 4,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 18,
+      "text": "",
+      "style": "Normal",
+      "alignment": "center",
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 19,
+      "text": "英文摘要和关键词内容与中文摘要和关键词相一致，其中英文摘要以300个左右实词为宜。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 20,
+      "text": "英文摘要应含论文的英文题目，全部采用大写字母，在题目之下打印“ABSTRACT”（四号字加粗），摘要正文用小四号字Times New Roman，行间距为固定值20磅。摘要内容后下空两行打印“KEY WORDS”（四号字加粗），其后的关键…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 11,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 21,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 22,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 23,
+      "text": "KEY WORDS：×××,×××,×××,×××",
+      "style": "Normal",
+      "alignment": "left",
+      "numbering": null,
+      "run_count": 8,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 24,
+      "text": "",
+      "style": "Normal",
+      "alignment": "left",
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 25,
+      "text": "",
+      "style": "Heading 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 26,
+      "text": "",
+      "style": "Heading 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 27,
+      "text": "目 录（农、理、工科类毕业论文可参考）",
+      "style": "Heading 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 6,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 28,
+      "text": "",
+      "style": "toc 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 29,
+      "text": "第一章 前言 1",
+      "style": "toc 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 14,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 30,
+      "text": "1.1 XXX XX",
+      "style": "toc 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 8,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 31,
+      "text": "1.2 XXX XX",
+      "style": "toc 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 8,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 32,
+      "text": "第二章 XXX XX",
+      "style": "toc 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 10,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 33,
+      "text": "2.1 XXX XX",
+      "style": "toc 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 8,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 34,
+      "text": "2.2.1 XXX..............................................................................................................…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 35,
+      "text": "2.2 XXX XX",
+      "style": "toc 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 8,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 36,
+      "text": "2.3 XXX XX",
+      "style": "toc 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 8,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 37,
+      "text": "第三章 XXX XX",
+      "style": "toc 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 10,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 38,
+      "text": "3.1 XXX XX",
+      "style": "toc 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 8,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 39,
+      "text": "3.2 XXX XX",
+      "style": "toc 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 8,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 40,
+      "text": "参考文献 XX",
+      "style": "toc 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 7,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 41,
+      "text": "附 录 XX",
+      "style": "toc 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 7,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 42,
+      "text": "相关的学术成果目录 XX",
+      "style": "toc 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 10,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 43,
+      "text": "致 谢 XX",
+      "style": "toc 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 7,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 44,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 45,
+      "text": "",
+      "style": "Heading 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 46,
+      "text": "",
+      "style": "Heading 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 47,
+      "text": "目 录（毕业设计可参考）",
+      "style": "Heading 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 6,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 48,
+      "text": "",
+      "style": "toc 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 49,
+      "text": "1 XXX 1",
+      "style": "toc 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 11,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 50,
+      "text": "1.1 XXX XX",
+      "style": "toc 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 8,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 51,
+      "text": "1.2 XXX XX",
+      "style": "toc 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 8,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 52,
+      "text": "2 XXX XX",
+      "style": "toc 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 9,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 53,
+      "text": "2.1 XXX XX",
+      "style": "toc 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 8,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 54,
+      "text": "2.2.1........................................................................................................XX",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 55,
+      "text": "2.2 XXX XX",
+      "style": "toc 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 8,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 56,
+      "text": "2.3 XXX XX",
+      "style": "toc 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 8,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 57,
+      "text": "3 XXX XX",
+      "style": "toc 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 9,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 58,
+      "text": "3.1 XXX XX",
+      "style": "toc 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 8,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 59,
+      "text": "3.2 XXX XX",
+      "style": "toc 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 8,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 60,
+      "text": "参考文献 XX",
+      "style": "toc 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 7,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 61,
+      "text": "附 录 XX",
+      "style": "toc 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 7,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 62,
+      "text": "相关的学术成果目录 XX",
+      "style": "toc 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 10,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 63,
+      "text": "致 谢 XX",
+      "style": "toc 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 7,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 64,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 65,
+      "text": "",
+      "style": "Heading 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 66,
+      "text": "目 录（经管及人文社科类论文毕业论文可参考）",
+      "style": "Heading 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 6,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 67,
+      "text": "",
+      "style": "toc 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 68,
+      "text": "一、XXX 1",
+      "style": "toc 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 11,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 69,
+      "text": "（一）XXX XX",
+      "style": "toc 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 10,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 70,
+      "text": "（二）XXX XX",
+      "style": "toc 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 10,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 71,
+      "text": "二、XXX XX",
+      "style": "toc 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 8,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 72,
+      "text": "（一）XXX XX",
+      "style": "toc 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 10,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 73,
+      "text": "1.XXX....................................................................................................XX",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 74,
+      "text": "（二）XXX XX",
+      "style": "toc 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 10,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 75,
+      "text": "（三）XXX XX",
+      "style": "toc 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 10,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 76,
+      "text": "三、XXX XX",
+      "style": "toc 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 8,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 77,
+      "text": "（一）XXX XX",
+      "style": "toc 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 10,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 78,
+      "text": "（二）XXX XX",
+      "style": "toc 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 10,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 79,
+      "text": "参考文献 XX",
+      "style": "toc 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 7,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 80,
+      "text": "附 录 XX",
+      "style": "toc 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 7,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 81,
+      "text": "相关的学术成果目录 XX",
+      "style": "toc 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 10,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 82,
+      "text": "致 谢 XX",
+      "style": "toc 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 7,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 83,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 84,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 85,
+      "text": "",
+      "style": "Heading 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 86,
+      "text": "第一章 前言（三号黑体加粗）",
+      "style": "Heading 1",
+      "alignment": null,
+      "numbering": {
+        "numId": 0,
+        "ilvl": 0
+      },
+      "run_count": 6,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 87,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": {
+        "numId": 0,
+        "ilvl": 0
+      },
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 88,
+      "text": "在论文主体前，作为正文第一章，内容为：研究背景及国内外文献综述；论文所要解决的问题；该研究工作的实用价值与理论意义。通过前言，读者能全面了解学位论文的目的、意义和工作内容。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 7,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 89,
+      "text": "各章标题（如，第一章 前言）：三号黑体加粗居中。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 6,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 90,
+      "text": "正文中文一律采用小四号宋体，首行缩进两个字符，无段前、段后间距，行间距为固定值20磅。英文、罗马字符一般采用新罗马体（Times New Roman）。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 7,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 91,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 92,
+      "text": "",
+      "style": "Normal",
+      "alignment": "left",
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 93,
+      "text": "",
+      "style": "Heading 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 94,
+      "text": "第X章 （正文）",
+      "style": "Heading 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 95,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 96,
+      "text": "论文正文由文献综述与实验两部分组成，也可只含实验部分。人文社会学科的论文可用实证研究、分析综合、归纳演绎等内容取代实验部分。文献综述应将与论文内容有关的国内外研究进展作回顾与分析，篇幅不宜超过实验部分。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 97,
+      "text": "实验部分一般由标题、文字叙述、图、表格和公式等部分构成。写作形式因科研项目的性质不同而变化，一般可包括试验材料与方法（计算方法、实验设置和测试方法）、经过整理加工的实验结果、对结果的分析讨论与结论。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 98,
+      "text": "各章标题：三号黑体加粗居中，上、下各空一行；二级标题（如，2.1 本文研究内容）：四号黑体居左；三级标题（如，2.1.1 实验方法）：小四号宋体居左。正文各部分的标题应简明扼要，不使用标点符号。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 13,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 99,
+      "text": "正文中文为小四号宋体，英文及数字为小四号Times New Roman，首行缩进2个字符，行间距为固定值20磅，其中行间距可在保持论文美观的前提下进行微调。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 6,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 100,
+      "text": "各章及各节标题的格式均需按照本“参考模板”执行；标题层次及内容根据人文社科类和农、理、工科类等不同专业的学科特点、论文写作惯例、研究实际情况可灵活调整，本“参考模板”仅做示例。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 101,
+      "text": "公式应另起一行，正文中的公式、算式或方程式等应编排序号，公式的编号用圆括号括起，序号标注于该式所在行(当有续行时，应标注于最后一行)的行末。公式可按章节顺序编号或按全文统一编号。公式序号必须连续，不得重复或跳缺。重复引用的公式不得另编新序…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 102,
+      "text": "（X-1）",
+      "style": "Normal",
+      "alignment": "right",
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 103,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 104,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 105,
+      "text": "较长的公式，如必须转行时，最好在等号处转行,如做不到这一点,要在+，-，×，÷等数学符号处转行。数学符号应写在转行处的行首。上下式尽可能在等号“＝”处对齐。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 106,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 107,
+      "text": "",
+      "style": "Normal",
+      "alignment": "justify",
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 108,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 109,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 110,
+      "text": "（X-2）",
+      "style": "Normal",
+      "alignment": "right",
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 111,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 112,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 113,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 114,
+      "text": "表题应写在表格上方正中，表序写在表题左方不加标点，空一格写表题，表题末尾不加标点，全文的表格统一编序，也可以逐章编序，表序必须连续，表格格式采用简明三线表。表题用五号宋体加黑，表格内中文用五号宋体，英文用五号Times New Roman…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 115,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 116,
+      "text": "表X-1 xxxxxxxxxxxxxxxxx",
+      "style": "Normal",
+      "alignment": "justify",
+      "numbering": null,
+      "run_count": 4,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "table",
+      "index": 117,
+      "text": "xx",
+      "style": null,
+      "alignment": null,
+      "numbering": null,
+      "run_count": null,
+      "runs": null,
+      "table_shape": {
+        "rows": 2,
+        "cols": 4
+      }
+    },
+    {
+      "kind": "paragraph",
+      "index": 118,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 119,
+      "text": "表题允许下页接写，接写时表题省略，页面顶端空一行，表头应重复书写，并在右上方写“续表xx”。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 120,
+      "text": "续表X－1",
+      "style": "Normal",
+      "alignment": "right",
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "table",
+      "index": 121,
+      "text": "xx",
+      "style": null,
+      "alignment": null,
+      "numbering": null,
+      "run_count": null,
+      "runs": null,
+      "table_shape": {
+        "rows": 2,
+        "cols": 4
+      }
+    },
+    {
+      "kind": "paragraph",
+      "index": 122,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 123,
+      "text": "每幅插图应有图序和图题，全文插图可以统一编序，也可以逐章单独编序，图序必须连续，不得重复或跳缺。图序和图题写在图的下方居中，五号宋体加黑居中。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 124,
+      "text": "",
+      "style": "Normal",
+      "alignment": "center",
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 125,
+      "text": "图X-1 xxxxxxxxxxxxxxxxxxx",
+      "style": "Normal",
+      "alignment": "center",
+      "numbering": null,
+      "run_count": 4,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 126,
+      "text": "",
+      "style": "标题2",
+      "alignment": "left",
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 127,
+      "text": "",
+      "style": "标题2",
+      "alignment": "left",
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 128,
+      "text": "",
+      "style": "Heading 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 129,
+      "text": "第X章 结论与展望",
+      "style": "Heading 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 130,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 131,
+      "text": "最后一章结论与展望着重总结论文的创新点或新见解及研究展望或建议。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 132,
+      "text": "结论是对论文主要研究结果、论点的提炼与概括，应准确、简明、完整、有条理，主要阐述自己的创造性工作及所取得的研究成果在本学术领域中的地位、作用和意义及对生产与社会实践的指导意义。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 133,
+      "text": "结论要严格区分自己取得的成果与导师及他人的科研工作成果。在评价自己的研究工作成果时，要实事求是，除非有足够的证据表明自己的研究是“首次”的、“领先”的、“填补空白”的，否则应避免使用这些或类似词语。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 134,
+      "text": "展望或建议，是在总结研究工作和现有结论的基础上，对该领域今后的发展方向及重要研究内容进行预测，同时对所获研究结果的应用前景和社会影响加以评价，从而对今后的研究有所启发。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 135,
+      "text": "",
+      "style": "Normal",
+      "alignment": "left",
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 136,
+      "text": "",
+      "style": "Heading 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 137,
+      "text": "参考文献（三号黑体）",
+      "style": "Heading 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 4,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 138,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 139,
+      "text": "参考文献表是文中引用的有具体文字来源的文献集合，应置于正文后并另起页；所有被引用文献均要列入参考文献表中，按论文中参考文献出现的次序，用中括号的数字连续编号，顶格书写，中文为五号宋体，英文及数字为五号Times New Roman字体，标…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 140,
+      "text": "论文中引用的文献的标注方法遵照GB/T 7714-2015《文后参考文献著录规则》。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 5,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 141,
+      "text": "在引用别人的科研成果时，应在引用处加以说明，避免论文抄袭现象的发生。参考文献标注用中括号，以上标的形式标注。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 142,
+      "text": "常用的参考文献著录项目和格式示例如下：",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 143,
+      "text": "普通图书示例",
+      "style": "Normal",
+      "alignment": "left",
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 144,
+      "text": "[1] 蒋有绪，郭泉水，马娟，等. 中国森林群落分类及其群落学特征[M]. 北京: 科学出版社，1998",
+      "style": "Normal",
+      "alignment": "left",
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 145,
+      "text": "[2] CRAWFPRD W, GORMAN M. Future libraries: dreams, madness, & reality[M]. Chicago: American Library Association, 1995.",
+      "style": "Normal",
+      "alignment": "left",
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 146,
+      "text": "期刊中析出的文献示例",
+      "style": "Normal",
+      "alignment": "left",
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 147,
+      "text": "[1] 李炳穆. 理想的图书馆员和信息专家的素质与形象[J]. 图书情报工作，2000(2):5-8.",
+      "style": "Normal",
+      "alignment": "left",
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 148,
+      "text": "[2] DES MARAIS D J, STRAUSS H, SUMMONS R E, et al. Carbon isotope evidence for the stepwise oxidation of the Proterozoi…",
+      "style": "Normal",
+      "alignment": "left",
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 149,
+      "text": "论文集、会议录示例",
+      "style": "Normal",
+      "alignment": "left",
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 150,
+      "text": "[1] 中国力学学会. 第3届全国实验流体力学学术会议论文集[C]. 天津: [出版者不详],1990.",
+      "style": "Normal",
+      "alignment": "left",
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 151,
+      "text": "[2] ROSENTHALL E M. Proceedings of the Fifth Canadian Mathematical Congress, University of Montreal, 1961[C]. Toronto: …",
+      "style": "Normal",
+      "alignment": "left",
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 152,
+      "text": "科技报告示例",
+      "style": "Normal",
+      "alignment": "left",
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 153,
+      "text": "[1] 冯西桥.核反应堆压力管道与压力容器的LBB分析［R］.北京：清华大学核能技术设计研究院，1997.",
+      "style": "Normal",
+      "alignment": "left",
+      "numbering": null,
+      "run_count": 12,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 154,
+      "text": "[2] World Health Organization. Factors regulating the immune response: report of WHO Scientific Group[R]. Geneva: WHO, …",
+      "style": "Normal",
+      "alignment": "left",
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 155,
+      "text": "学位论文示例",
+      "style": "Normal",
+      "alignment": "left",
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 156,
+      "text": "[1] 张志祥. 间断动力系统的随机扰动及其在守恒律方程中的应用[D]. 北京: 北京大学数学学院，1998.",
+      "style": "Normal",
+      "alignment": "left",
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 157,
+      "text": "[2] CALMS R B. Infrared spectroscopic studies on solid oxygen[D]. Berkeley:Univ. of California. 1965.",
+      "style": "Normal",
+      "alignment": "left",
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 158,
+      "text": "专利文献示例",
+      "style": "Normal",
+      "alignment": "left",
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 159,
+      "text": "[1] 河北绿洲生态环境科技有限公司. 一种荒漠化地区生态植被综合培育种植方法:中国，01129210.5[P/OL].2001-10-24[2002-05-28].http://211.152.9.47/sipoasp/zlijs/hy…",
+      "style": "正文1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 8,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 160,
+      "text": "专著中析出的文献示例",
+      "style": "Normal",
+      "alignment": "left",
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 161,
+      "text": "[1] 国家标准局信息分类编码研究所. GB/T 2659-1986世界各国和地区名称代码[S]// 全国文献工作标准化技术委员会. 文献工作国家标准汇编:3.北京:中国标准出版社，1988:59-92.",
+      "style": "正文1",
+      "alignment": null,
+      "numbering": {
+        "numId": 0,
+        "ilvl": 0
+      },
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 162,
+      "text": "报纸中析出的文献示例",
+      "style": "正文1",
+      "alignment": null,
+      "numbering": {
+        "numId": 0,
+        "ilvl": 0
+      },
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 163,
+      "text": "[1] 丁文祥. 数字革命与竞争国际化[N]. 中国青年报,2000-11-20(15).",
+      "style": "正文1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 164,
+      "text": "电子文献",
+      "style": "正文1",
+      "alignment": null,
+      "numbering": {
+        "numId": 0,
+        "ilvl": 0
+      },
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 165,
+      "text": "[1] 江向东. 互联网环境下的信息处理与图书管理系统解决方案[J/OL]. 情报学报,1999,18(2);4[2000-01-18].http://www.chinainfo.gov.cn/periodical/gbxb/gbxb99…",
+      "style": "正文1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 166,
+      "text": "[2] CHRISTINE M. Plant physiology:plant biology in the Genome Era[J/OL].Science,1998,281: 331-332[1998-09-23].http://ww…",
+      "style": "正文1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 167,
+      "text": "",
+      "style": "Normal",
+      "alignment": "left",
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 168,
+      "text": "",
+      "style": "Heading 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 169,
+      "text": "附 录 附录名称（三号黑体）",
+      "style": "Heading 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 9,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 170,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 171,
+      "text": "如果有不宜放在正文中的重要支撑材料，可编入毕业论文（设计）的附录中。包括某些重要的原始数据、详细数学推导、程序全文及其说明、复杂的图表、设计图纸等一系列需要补充提供的说明材料。附录的篇幅不宜太多，一般不超过正文。使用小四号宋体书写，首行缩…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 172,
+      "text": "",
+      "style": "Heading 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 173,
+      "text": "相关的学术成果目录（三号黑体）",
+      "style": "Heading 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 4,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 174,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 175,
+      "text": "包括本科期间发表的与毕业论文（设计）相关的已发表论文或被鉴定的技术成果、发明专利等成果，应在成果目录中列出。此项非必需项。使用小四号宋体书写，首行缩进两个字符。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 176,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 177,
+      "text": "",
+      "style": "Heading 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 178,
+      "text": "",
+      "style": "Heading 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 179,
+      "text": "致 谢",
+      "style": "Heading 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 180,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 181,
+      "text": "学位论文正文和附录之后，一般应放置致谢，主要感谢指导老师和对论文工作有直接贡献和帮助的人士和单位，以及资助的项目。致谢言语应谦虚诚恳，实事求是。字数一般在500字之内。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 9,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 182,
+      "text": "“致谢”用三号黑体居中，两字之间空两格。致谢内容为小四号宋体，行间距为固定值20磅。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 5,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 183,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 184,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    }
+  ],
+  "headers_footers": {
+    "section_0_header": [],
+    "section_0_footer": [],
+    "section_1_header": [],
+    "section_1_footer": [],
+    "section_2_header": [],
+    "section_2_footer": [],
+    "section_3_header": [],
+    "section_3_footer": [],
+    "section_4_header": [],
+    "section_4_footer": [],
+    "section_5_header": [],
+    "section_5_footer": [],
+    "section_6_header": [],
+    "section_6_footer": [],
+    "section_7_header": [],
+    "section_7_footer": []
+  },
+  "xml_markers": {
+    "w:txbxContent": 0,
+    "w:fldSimple": 0,
+    "w:instrText": 96,
+    "w:numPr": 10,
+    "w:bookmarkStart": 14,
+    "w:drawing": 14
+  }
+}

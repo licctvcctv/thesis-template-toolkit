@@ -1,0 +1,27 @@
+{
+  "title_zh": "基于Hadoop+Spark+Hive的智能出行交通数据可视化分析系统的设计与实现",
+  "title_en": "Design and Implementation of an Intelligent Travel Traffic Data Visualization and Analysis System Based on Hadoop, Spark and Hive",
+  "major": "数据科学与大数据技术",
+  "class_id": "大数据2201班",
+  "student_no": "0307220122",
+  "student_name": "余天乐",
+  "advisor": "王若凡",
+  "advisor_title": "副教授",
+  "college": "信息技术工程学院",
+  "year_cn": "二〇二六",
+  "month_cn": "六月",
+  "year": "2026",
+  "month": "6",
+  "keywords_zh": "智能出行；Hadoop；Spark；Hive；数据可视化；拥堵预测",
+  "keywords_en": "intelligent travel; Hadoop; Spark; Hive; data visualization; congestion prediction",
+  "abstract_zh": [
+    "随着城市出行方式不断丰富，出租车、地铁、共享单车和道路拥堵状态之间呈现明显的时空关联。面向单一数据源的统计系统难以完整描述城市交通运行结构，也难以支撑热点识别、OD流向分析、拥堵研判和接驳分析等综合应用。围绕天津智能交通场景，设计并实现一套基于Hadoop、Spark和Hive的智能出行交通数据可视化分析系统，构建从数据采集、清洗、分层存储、批量计算到前端展示的完整技术链路。",
+    "系统采用前后端分离架构，后端基于Django REST Framework提供统一接口，前端采用Vue3、TypeScript、Naive UI和ECharts完成交互式可视化展示。大数据侧以HDFS承载原始文件，使用Hive组织ODS、DWD、DWS和ADS分层数据，通过Spark SQL和PySpark完成多源出行明细归一、小时趋势统计、OD流向聚合、热点区域识别、道路拥堵排名和模型特征构建。系统使用基于真实公开样本分布、天津公开地理事实和交通规律构造的高真实性仿真数据开展实验，主业务数据共50000条，并包含出租车轨迹点、天气和地铁拓扑等辅助数据。",
+    "测试结果表明，系统能够完成交通数据管理、可视化大屏、热点分析、趋势分析、OD分析、拥堵分析、模型训练和预测查询等功能，页面展示稳定，接口返回结构清晰，数仓分层能够有效降低前端查询与离线计算之间的耦合度。该设计对城市出行数据教学实验、毕业设计展示和多源交通分析原型验证具有一定参考价值，同时也为后续接入实时流数据、扩展更完整路网和引入更高精度预测模型提供了基础。"
+  ],
+  "abstract_en": [
+    "With the diversification of urban travel modes, taxi trips, subway ridership, shared-bike orders and road congestion records show clear spatial and temporal correlations. A statistical system based on a single data source can hardly describe the overall structure of urban traffic or support integrated applications such as hotspot detection, OD flow analysis, congestion ranking and transfer analysis. This thesis designs and implements an intelligent travel traffic data visualization and analysis system based on Hadoop, Spark and Hive for a Tianjin-oriented traffic scenario.",
+    "The system adopts a separated front-end and back-end architecture. The back end uses Django REST Framework to provide unified APIs, while the front end uses Vue3, TypeScript, Naive UI and ECharts for interactive visualization. In the big data layer, HDFS stores raw files, Hive organizes ODS, DWD, DWS and ADS tables, and Spark SQL with PySpark implements unified trip cleaning, hourly trend aggregation, OD flow statistics, hotspot identification, road congestion ranking and model feature construction. The experiment uses high-realism simulated traffic data generated from public sample distributions, Tianjin public geographic facts and common traffic rules.",
+    "The results show that the system can support data source management, visualization dashboard, hotspot analysis, trend analysis, OD analysis, congestion analysis, model training and prediction query. The interface structure is clear, the pages run stably, and the layered data warehouse design reduces the coupling between offline computation and online query. The system provides a practical reference for teaching experiments, graduation project demonstration and prototype verification of multi-source urban traffic analysis."
+  ]
+}

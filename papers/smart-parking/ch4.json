@@ -1,0 +1,738 @@
+{
+  "title": "4 数据库设计",
+  "content": [
+    {
+      "text": "数据库设计需要将需求分析中的业务对象转换为关系型数据表。城市智慧停车系统的核心业务围绕用户、车辆、停车场、车位、停车订单和支付记录展开，同时为了支持后台管理，还需要操作日志表和系统配置表。"
+    },
+    {
+      "text": "本章按照模板中数据库设计章节的写法，先说明数据库环境和总体模型，再分别介绍主要业务表。每张表前均给出文字说明，使表结构与业务作用对应起来，避免只罗列字段而缺少解释。"
+    },
+    {
+      "image": "images/fig4-1-er.png",
+      "caption": "图4-1 系统数据库逻辑结构图",
+      "width_cm": 11.8
+    }
+  ],
+  "sections": [
+    {
+      "title": "4.1 数据库环境与连接配置",
+      "content": [
+        {
+          "text": "系统数据库名称为 smart_parking，字符集采用 utf8mb4，以支持中文停车场名称、地址、用户名、日志内容和配置说明等信息。各表均使用自增 id 作为主键，业务删除场景采用 deleted 字段进行软删除，避免直接物理删除造成历史订单和统计数据丢失。"
+        },
+        {
+          "text": "后端通过 Spring Boot 配置数据源连接 MySQL，并使用 MyBatis-Plus 完成实体映射和条件查询。数据库初始化脚本位于后端项目 sql/init.sql 中，包含建库、建表、默认管理员、测试用户、系统配置和演示停车场数据。"
+        },
+        {
+          "text": "在字段命名上，数据库采用下划线命名方式，Java 实体类采用驼峰命名方式，由 MyBatis-Plus 完成映射。时间字段主要包括 create_time、update_time、reserve_time、enter_time、exit_time 和 pay_time，用于记录业务发生时间。"
+        }
+      ]
+    },
+    {
+      "title": "4.2 数据库逻辑模型设计",
+      "content": [
+        {
+          "text": "用户与车辆之间是一对多关系，一个用户可以绑定多辆车；停车场与车位之间是一对多关系，一个停车场包含多个车位；订单表关联用户、车辆、停车场和车位，是系统业务流转的核心表；支付记录表与订单表关联，用于记录支付金额、支付方式和交易流水。"
+        },
+        {
+          "text": "从业务依赖看，停车订单表处于模型中心位置。订单创建时需要读取用户、车辆、停车场和车位数据；订单入场和出场时需要同步更新车位状态；订单支付完成后需要生成支付记录。因此数据库设计需要保证这些表之间具备清晰的关联字段。"
+        }
+      ],
+      "subsections": [
+        {
+          "title": "4.2.1 用户与车辆业务表",
+          "content": [
+            {
+              "text": "用户表用于保存系统登录账号和基础身份信息，包括用户名、手机号、昵称、角色、状态等字段。系统通过 role 字段区分普通用户和管理员，通过 status 字段控制账号是否可用。"
+            },
+            {
+              "image": "images/fig4-2-user-vehicle-model.png",
+              "caption": "图4-2 用户与车辆业务逻辑模型",
+              "width_cm": 11.2
+            },
+            {
+              "table": {
+                "caption": "表4-1 用户表（sys_user）",
+                "headers": [
+                  "字段名",
+                  "类型",
+                  "说明"
+                ],
+                "rows": [
+                  [
+                    "id",
+                    "BIGINT",
+                    "主键，自增"
+                  ],
+                  [
+                    "username",
+                    "VARCHAR(50)",
+                    "用户名，唯一"
+                  ],
+                  [
+                    "password",
+                    "VARCHAR(255)",
+                    "BCrypt 加密后的密码"
+                  ],
+                  [
+                    "phone",
+                    "VARCHAR(20)",
+                    "手机号，唯一"
+                  ],
+                  [
+                    "nickname",
+                    "VARCHAR(50)",
+                    "昵称"
+                  ],
+                  [
+                    "avatar",
+                    "VARCHAR(255)",
+                    "头像地址"
+                  ],
+                  [
+                    "gender",
+                    "TINYINT",
+                    "性别：0未知、1男、2女"
+                  ],
+                  [
+                    "email",
+                    "VARCHAR(100)",
+                    "邮箱"
+                  ],
+                  [
+                    "role",
+                    "VARCHAR(20)",
+                    "角色：USER 或 ADMIN"
+                  ],
+                  [
+                    "status",
+                    "TINYINT",
+                    "状态：0禁用、1启用"
+                  ],
+                  [
+                    "create_time",
+                    "DATETIME",
+                    "创建时间"
+                  ],
+                  [
+                    "update_time",
+                    "DATETIME",
+                    "更新时间"
+                  ],
+                  [
+                    "deleted",
+                    "TINYINT",
+                    "软删除标识"
+                  ]
+                ]
+              }
+            },
+            {
+              "text": "车辆表用于保存用户绑定的车牌和车辆属性。预约停车时，订单需要关联具体车辆，因此车辆表通过 user_id 与用户表建立关联，并通过 plate_number 保存车牌号。"
+            },
+            {
+              "table": {
+                "caption": "表4-2 车辆表（user_vehicle）",
+                "headers": [
+                  "字段名",
+                  "类型",
+                  "说明"
+                ],
+                "rows": [
+                  [
+                    "id",
+                    "BIGINT",
+                    "主键，自增"
+                  ],
+                  [
+                    "user_id",
+                    "BIGINT",
+                    "所属用户 ID"
+                  ],
+                  [
+                    "plate_number",
+                    "VARCHAR(20)",
+                    "车牌号"
+                  ],
+                  [
+                    "vehicle_type",
+                    "VARCHAR(20)",
+                    "车辆类型"
+                  ],
+                  [
+                    "vehicle_color",
+                    "VARCHAR(20)",
+                    "车辆颜色"
+                  ],
+                  [
+                    "vehicle_brand",
+                    "VARCHAR(50)",
+                    "车辆品牌"
+                  ],
+                  [
+                    "is_default",
+                    "TINYINT",
+                    "是否默认车辆"
+                  ],
+                  [
+                    "create_time",
+                    "DATETIME",
+                    "创建时间"
+                  ],
+                  [
+                    "update_time",
+                    "DATETIME",
+                    "更新时间"
+                  ],
+                  [
+                    "deleted",
+                    "TINYINT",
+                    "软删除标识"
+                  ]
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "title": "4.2.2 停车场与车位业务表",
+          "content": [
+            {
+              "text": "停车场表用于保存停车场基础资料，是用户查询与管理员维护的核心基础表。该表保存地址、经纬度、收费标准、营业时间、剩余车位数和状态等信息。"
+            },
+            {
+              "image": "images/fig4-3-lot-space-model.png",
+              "caption": "图4-3 停车场与车位业务逻辑模型",
+              "width_cm": 12.0
+            },
+            {
+              "table": {
+                "caption": "表4-3 停车场表（parking_lot）",
+                "headers": [
+                  "字段名",
+                  "类型",
+                  "说明"
+                ],
+                "rows": [
+                  [
+                    "id",
+                    "BIGINT",
+                    "主键，自增"
+                  ],
+                  [
+                    "name",
+                    "VARCHAR(100)",
+                    "停车场名称"
+                  ],
+                  [
+                    "address",
+                    "VARCHAR(255)",
+                    "详细地址"
+                  ],
+                  [
+                    "longitude",
+                    "DECIMAL(10,7)",
+                    "经度"
+                  ],
+                  [
+                    "latitude",
+                    "DECIMAL(10,7)",
+                    "纬度"
+                  ],
+                  [
+                    "total_spaces",
+                    "INT",
+                    "总车位数"
+                  ],
+                  [
+                    "available_spaces",
+                    "INT",
+                    "空闲车位数"
+                  ],
+                  [
+                    "hourly_rate",
+                    "DECIMAL(10,2)",
+                    "每小时收费"
+                  ],
+                  [
+                    "open_time",
+                    "VARCHAR(20)",
+                    "营业开始时间"
+                  ],
+                  [
+                    "close_time",
+                    "VARCHAR(20)",
+                    "营业结束时间"
+                  ],
+                  [
+                    "contact_phone",
+                    "VARCHAR(20)",
+                    "联系电话"
+                  ],
+                  [
+                    "images",
+                    "VARCHAR(1000)",
+                    "停车场图片地址"
+                  ],
+                  [
+                    "status",
+                    "TINYINT",
+                    "状态：0关闭、1营业"
+                  ],
+                  [
+                    "create_time",
+                    "DATETIME",
+                    "创建时间"
+                  ],
+                  [
+                    "update_time",
+                    "DATETIME",
+                    "更新时间"
+                  ],
+                  [
+                    "deleted",
+                    "TINYINT",
+                    "软删除标识"
+                  ]
+                ]
+              }
+            },
+            {
+              "text": "车位表用于描述停车场内的具体停车位。系统通过 lot_id 将车位归属到停车场，通过 status 字段标记车位是否空闲、占用、预约或维护。"
+            },
+            {
+              "table": {
+                "caption": "表4-4 车位表（parking_space）",
+                "headers": [
+                  "字段名",
+                  "类型",
+                  "说明"
+                ],
+                "rows": [
+                  [
+                    "id",
+                    "BIGINT",
+                    "主键，自增"
+                  ],
+                  [
+                    "lot_id",
+                    "BIGINT",
+                    "所属停车场 ID"
+                  ],
+                  [
+                    "space_code",
+                    "VARCHAR(30)",
+                    "车位编号"
+                  ],
+                  [
+                    "floor",
+                    "VARCHAR(30)",
+                    "楼层或区域"
+                  ],
+                  [
+                    "space_type",
+                    "VARCHAR(20)",
+                    "车位类型"
+                  ],
+                  [
+                    "status",
+                    "TINYINT",
+                    "状态：0空闲、1占用、2预约、3维护"
+                  ],
+                  [
+                    "create_time",
+                    "DATETIME",
+                    "创建时间"
+                  ],
+                  [
+                    "update_time",
+                    "DATETIME",
+                    "更新时间"
+                  ],
+                  [
+                    "deleted",
+                    "TINYINT",
+                    "软删除标识"
+                  ]
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "title": "4.2.3 订单与支付业务表",
+          "content": [
+            {
+              "text": "停车订单表是业务流转的核心表，保存用户预约、入场、出场、计费、取消和支付状态等信息。订单表冗余保存 lot_name、space_code 和 plate_number，便于历史订单展示。"
+            },
+            {
+              "image": "images/fig4-4-order-payment-model.png",
+              "caption": "图4-4 订单与支付业务逻辑模型",
+              "width_cm": 12.4
+            },
+            {
+              "table": {
+                "caption": "表4-5 停车订单表（parking_order）",
+                "headers": [
+                  "字段名",
+                  "类型",
+                  "说明"
+                ],
+                "rows": [
+                  [
+                    "id",
+                    "BIGINT",
+                    "主键，自增"
+                  ],
+                  [
+                    "order_no",
+                    "VARCHAR(32)",
+                    "订单编号，唯一"
+                  ],
+                  [
+                    "user_id",
+                    "BIGINT",
+                    "用户 ID"
+                  ],
+                  [
+                    "vehicle_id",
+                    "BIGINT",
+                    "车辆 ID"
+                  ],
+                  [
+                    "plate_number",
+                    "VARCHAR(20)",
+                    "车牌号"
+                  ],
+                  [
+                    "lot_id",
+                    "BIGINT",
+                    "停车场 ID"
+                  ],
+                  [
+                    "lot_name",
+                    "VARCHAR(100)",
+                    "停车场名称"
+                  ],
+                  [
+                    "space_id",
+                    "BIGINT",
+                    "车位 ID"
+                  ],
+                  [
+                    "space_code",
+                    "VARCHAR(30)",
+                    "车位编号"
+                  ],
+                  [
+                    "reserve_time",
+                    "DATETIME",
+                    "预约时间"
+                  ],
+                  [
+                    "expire_time",
+                    "DATETIME",
+                    "预约过期时间"
+                  ],
+                  [
+                    "enter_time",
+                    "DATETIME",
+                    "入场时间"
+                  ],
+                  [
+                    "exit_time",
+                    "DATETIME",
+                    "出场时间"
+                  ],
+                  [
+                    "duration_minutes",
+                    "INT",
+                    "停车时长"
+                  ],
+                  [
+                    "hourly_rate",
+                    "DECIMAL(10,2)",
+                    "订单收费标准"
+                  ],
+                  [
+                    "amount",
+                    "DECIMAL(10,2)",
+                    "订单金额"
+                  ],
+                  [
+                    "status",
+                    "TINYINT",
+                    "订单状态"
+                  ],
+                  [
+                    "pay_status",
+                    "TINYINT",
+                    "支付状态"
+                  ],
+                  [
+                    "cancel_reason",
+                    "VARCHAR(200)",
+                    "取消原因"
+                  ],
+                  [
+                    "remark",
+                    "VARCHAR(500)",
+                    "管理备注"
+                  ],
+                  [
+                    "create_time",
+                    "DATETIME",
+                    "创建时间"
+                  ],
+                  [
+                    "update_time",
+                    "DATETIME",
+                    "更新时间"
+                  ],
+                  [
+                    "deleted",
+                    "TINYINT",
+                    "软删除标识"
+                  ]
+                ]
+              }
+            },
+            {
+              "text": "支付记录表用于保存订单支付结果。一个订单支付成功后生成一条支付记录，记录支付金额、支付方式、交易号和支付时间，为后续对账和统计提供依据。"
+            },
+            {
+              "table": {
+                "caption": "表4-6 支付记录表（payment_record）",
+                "headers": [
+                  "字段名",
+                  "类型",
+                  "说明"
+                ],
+                "rows": [
+                  [
+                    "id",
+                    "BIGINT",
+                    "主键，自增"
+                  ],
+                  [
+                    "order_id",
+                    "BIGINT",
+                    "订单 ID"
+                  ],
+                  [
+                    "order_no",
+                    "VARCHAR(32)",
+                    "订单编号"
+                  ],
+                  [
+                    "user_id",
+                    "BIGINT",
+                    "用户 ID"
+                  ],
+                  [
+                    "amount",
+                    "DECIMAL(10,2)",
+                    "支付金额"
+                  ],
+                  [
+                    "pay_method",
+                    "VARCHAR(20)",
+                    "支付方式"
+                  ],
+                  [
+                    "trade_no",
+                    "VARCHAR(64)",
+                    "第三方交易号"
+                  ],
+                  [
+                    "pay_time",
+                    "DATETIME",
+                    "支付时间"
+                  ],
+                  [
+                    "status",
+                    "TINYINT",
+                    "支付状态"
+                  ],
+                  [
+                    "create_time",
+                    "DATETIME",
+                    "创建时间"
+                  ]
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "title": "4.2.4 运维管理业务表",
+          "content": [
+            {
+              "text": "操作日志表用于记录管理员和系统关键操作，包括操作人、操作类型、模块、摘要、请求方法、请求地址和 IP 地址。该表可以帮助管理员追踪异常操作和定位问题。"
+            },
+            {
+              "table": {
+                "caption": "表4-7 操作日志表（operation_log）",
+                "headers": [
+                  "字段名",
+                  "类型",
+                  "说明"
+                ],
+                "rows": [
+                  [
+                    "id",
+                    "BIGINT",
+                    "主键，自增"
+                  ],
+                  [
+                    "operator_id",
+                    "BIGINT",
+                    "操作人 ID"
+                  ],
+                  [
+                    "operator",
+                    "VARCHAR(50)",
+                    "操作人用户名"
+                  ],
+                  [
+                    "operate_type",
+                    "VARCHAR(20)",
+                    "操作类型"
+                  ],
+                  [
+                    "module",
+                    "VARCHAR(50)",
+                    "业务模块"
+                  ],
+                  [
+                    "content",
+                    "VARCHAR(500)",
+                    "操作摘要"
+                  ],
+                  [
+                    "request_method",
+                    "VARCHAR(10)",
+                    "请求方法"
+                  ],
+                  [
+                    "request_url",
+                    "VARCHAR(255)",
+                    "请求路径"
+                  ],
+                  [
+                    "ip",
+                    "VARCHAR(50)",
+                    "客户端 IP"
+                  ],
+                  [
+                    "create_time",
+                    "DATETIME",
+                    "操作时间"
+                  ]
+                ]
+              }
+            },
+            {
+              "text": "系统配置表用于保存业务参数，避免将可变配置写死在程序中。例如预约锁定时长、默认收费标准、每个用户最大车辆数和系统公告均可通过配置表维护。"
+            },
+            {
+              "table": {
+                "caption": "表4-8 系统配置表（sys_config）",
+                "headers": [
+                  "字段名",
+                  "类型",
+                  "说明"
+                ],
+                "rows": [
+                  [
+                    "id",
+                    "BIGINT",
+                    "主键，自增"
+                  ],
+                  [
+                    "config_key",
+                    "VARCHAR(100)",
+                    "配置键，唯一"
+                  ],
+                  [
+                    "config_value",
+                    "VARCHAR(500)",
+                    "配置值"
+                  ],
+                  [
+                    "description",
+                    "VARCHAR(200)",
+                    "配置说明"
+                  ],
+                  [
+                    "create_time",
+                    "DATETIME",
+                    "创建时间"
+                  ],
+                  [
+                    "update_time",
+                    "DATETIME",
+                    "更新时间"
+                  ]
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "4.3 数据库约束与索引设计",
+      "content": [
+        {
+          "text": "数据库约束主要用于保证基础数据不重复和业务数据可追踪。用户表对 username 和 phone 设置唯一约束，车辆表对 user_id 与 plate_number 设置联合唯一约束，停车位表对 lot_id 与 space_code 设置联合唯一约束，订单表对 order_no 设置唯一约束，支付记录表对 order_id 与 trade_no 设置唯一约束。"
+        },
+        {
+          "text": "索引设计围绕系统常用查询场景展开。停车场列表常按状态和名称查询，车位列表常按停车场和状态查询，订单列表常按用户、停车场、状态、车牌号和创建时间查询。通过这些索引，可以提高用户端订单列表、后台订单筛选和统计查询的效率。"
+        },
+        {
+          "table": {
+            "caption": "表4-9 主要索引设计说明",
+            "headers": [
+              "数据表",
+              "索引字段",
+              "作用说明"
+            ],
+            "rows": [
+              [
+                "sys_user",
+                "username, phone, role, status",
+                "支持登录查询、手机号唯一校验和账号筛选"
+              ],
+              [
+                "user_vehicle",
+                "user_id, plate_number",
+                "支持用户车辆列表和车牌重复校验"
+              ],
+              [
+                "parking_lot",
+                "status, longitude, latitude, name",
+                "支持营业状态筛选、地图位置和名称检索"
+              ],
+              [
+                "parking_space",
+                "lot_id, status, space_code",
+                "支持按停车场查看车位和判断空闲车位"
+              ],
+              [
+                "parking_order",
+                "user_id, lot_id, status, plate_number, create_time",
+                "支持订单列表、状态筛选和历史查询"
+              ],
+              [
+                "operation_log",
+                "operator, operate_type, create_time",
+                "支持操作日志追踪与时间筛选"
+              ]
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

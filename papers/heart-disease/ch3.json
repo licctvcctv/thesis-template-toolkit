@@ -1,152 +1,787 @@
 {
-  "title": "3 数据来源与数据仓库构建",
+  "title": "3 概要设计",
   "chapter_number": 3,
   "sections": [
     {
-      "title": "3.1 数据集介绍",
+      "title": "3.1 技术支撑",
       "number": "3.1",
-      "content": [
-        "本文使用三个公开数据集，覆盖健康行为调查和临床检测两类数据。三个数据集的基本信息汇总如表3-1所示。",
+      "content": [],
+      "subsections": [
         {
-          "type": "table",
-          "caption": "表3-1 三个数据集基本信息",
-          "headers": ["数据集", "来源", "记录数", "字段数", "目标变量"],
-          "rows": [
-            ["Kaggle 2020", "CDC BRFSS调查", "319795", "18", "HeartDisease（Yes/No）"],
-            ["Kaggle 2022", "CDC BRFSS调查（扩展版）", "246022", "40", "HadHeartAttack/HadAngina"],
-            ["UCI Cleveland", "Cleveland Clinic临床数据", "303", "14", "num（0-4）"]
+          "title": "3.1.1 大数据端",
+          "number": "3.1.1",
+          "content": [
+            "大数据端负责原始数据的存储、清洗、分析和迁移四个环节：",
+            "（1）数据存储。三个CSV数据文件（Indicators of Heart Disease（2020）、Indicators of Heart Disease（2022 UPDATE）、UCI Cleveland）存储在HDFS上。Hadoop集群采用Docker方式搭建，包含1个NameNode和2个DataNode，HDFS副本数设为2。HDFS将文件划分为固定大小的数据块（默认128MB），并分布式存储在不同节点上。NameNode负责维护文件与数据块之间的元数据信息，DataNode负责实际数据块的读写操作。",
+            "（2）数据清洗。Hive是建立在Hadoop之上的数据仓库工具，用户提交SQL（HiveQL）后，Hive将其转换为MapReduce或Tez任务并在集群上执行。本系统在Hive上构建ODS-DWD-ADS三层数据仓库。ODS层通过外部表直接映射HDFS上的CSV文件，字段全部以STRING类型载入；DWD层通过INSERT OVERWRITE将STRING转换为DECIMAL、INT等精确类型，同时进行字段标准化和缺失值处理；ADS层基于GROUP BY和窗口函数完成多维聚合。",
+            "（3）数据分析。ADS层产出9张聚合表，覆盖年龄、性别、BMI、生活习惯、共病史和UCI临床指标六个分析维度。每张表的粒度为数据集与维度值的交叉组合，输出样本数、阳性数和患病率三个核心指标。Hive的分区和分桶机制能够提升查询效率。本系统按dataset_name进行分区，查询某一数据集时仅需扫描对应分区文件。",
+            "（4）数据迁移。ADS层的聚合结果通过Python脚本（PyHive + PyMySQL）同步到MySQL。同步方式采用全量覆盖流程：先TRUNCATE目标表，再批量INSERT。由于ADS表的数据规模较小，全量同步耗时保持在秒级。MySQL同时存储用户账户信息和预测历史记录。",
+            "系统技术栈如图3-1所示。系统前端采用Vue3、TypeScript、Naive UI和ECharts实现页面展示，后端采用Django REST Framework提供接口服务，数据端采用Hadoop、HDFS、Hive和MySQL完成数据存储、清洗、聚合与同步，模型端采用scikit-learn训练分类模型并通过joblib保存模型文件。",
+            {
+              "type": "image",
+              "path": "heart-disease-tech-stack.png",
+              "width": 155
+            },
+            "图3-1 系统技术栈图",
+            "Hive数据仓库工作原理如图3-2所示。用户通过CLI、JDBC或Web接口提交HiveQL，Driver完成SQL解析、语义编译和执行计划优化，并将任务提交给MapReduce或Tez执行引擎。MetaStore保存表结构、分区信息和HDFS路径，保证SQL层和底层文件存储之间能够正确映射。",
+            {
+              "type": "image",
+              "path": "heart-disease-hive-arch.png",
+              "width": 148
+            },
+            "图3-2 Hive数据仓库工作原理"
           ]
         },
-        "Kaggle 2020这份数据集，原始来源是美国CDC的行为风险因素监测系统（BRFSS）。2020年CDC通过电话调查了大约40万人，清洗完剩下319795条。一共18个字段。HeartDisease是目标变量，只有Yes和No两个值。剩下17个字段覆盖了BMI、吸烟、饮酒、中风、身体健康天数、精神健康天数、行走困难、性别、年龄段、种族、糖尿病、运动习惯、整体健康评价、睡眠时长、哮喘、肾病、皮肤癌。心脏病阳性样本只占8.6%——非常典型的类别不均衡，图3-1画出了这个分布。",
         {
-          "type": "image",
-          "path": "heart_disease_dist.png",
-          "width": 130
-        },
-        "图3-1 Kaggle 2020心脏病样本分布",
-        "Kaggle 2022是2020版本的加强版，字段从18个扩到40个，多了疫苗接种、COVID感染状态、口腔健康这些维度。原始445132条记录里有不少缺失值，清洗完剩246022条。UCI Cleveland数据集小得多，Cleveland Clinic收集的303名患者，13个临床检测指标。"
-      ],
-      "subsections": []
-    },
-    {
-      "title": "3.2 Hadoop集群环境搭建",
-      "number": "3.2",
-      "content": [
-        "数据仓库运行在Hadoop分布式平台上。本文采用Docker方式搭建Hadoop集群，包含1个NameNode和2个DataNode，HDFS副本数设为2。Hive 3.x作为数据仓库引擎安装在NameNode节点上，MetaStore使用MySQL存储元数据。集群搭建完成后，通过hdfs dfs -put命令将三个CSV数据文件上传到HDFS的/user/heart_disease/raw/目录下。",
-        "Hive的配置中，hive.exec.mode.local.auto设为true以加速小数据集上的查询；hive.cli.print.header设为true以便在CLI中查看列名。序列化工具选用OpenCSVSerde，它能正确处理CSV文件中包含逗号的字段值。"
-      ],
-      "subsections": []
-    },
-    {
-      "title": "3.3 ODS层设计与实现",
-      "number": "3.3",
-      "content": [
-        "ODS层干的事情就是把原始数据原封不动存进来，不改任何东西。这一层建了4张Hive外部表，具体见表3-2。",
-        {
-          "type": "table",
-          "caption": "表3-2 ODS层表结构",
-          "headers": ["表名", "字段数", "数据来源", "序列化方式"],
-          "rows": [
-            ["ods_heart_2020_raw", "18", "Kaggle 2020 CSV", "OpenCSVSerde"],
-            ["ods_heart_2022_raw", "40", "Kaggle 2022 CSV", "OpenCSVSerde"],
-            ["ods_uci_cleveland_raw", "14", "UCI Cleveland CSV", "OpenCSVSerde"],
-            ["ods_uci_cost_raw", "2", "UCI检查费用", "分隔符(:)"]
+          "title": "3.1.2 机器学习预测",
+          "number": "3.1.2",
+          "content": [
+            "预测模块使用scikit-learn训练四种分类模型：",
+            "逻辑回归是基础的二分类模型。该模型对输入特征进行线性加权求和，并通过Sigmoid函数输出0到1之间的概率值。逻辑回归具有训练速度快、可解释性较强等优点，但其表达能力主要限于线性决策边界。本文通过设置class_weight='balanced'缓解正负样本不均衡问题。",
+            "随机森林由250棵决策树组成。每棵树在训练阶段基于部分样本和部分特征构建，最终预测结果由所有决策树投票决定。随机采样机制能够降低过拟合风险，集成多棵弱分类器也有助于提高模型泛化能力。",
+            "Extra Trees（Extremely Randomized Trees）与随机森林的主要区别在于节点划分方式：随机森林在每个节点选择较优分裂点，而Extra Trees随机选择分裂点。因此，Extra Trees通常具有较快的训练速度和较低的方差，但偏差可能略高。本文将Extra Trees模型的树数量设置为300棵。",
+            "SGD线性分类器采用随机梯度下降方法训练线性分类模型，适用于大规模数据集。当loss设置为log_loss时，该模型与逻辑回归具有相同的概率输出形式，但训练效率更高。",
+            "四种模型的选择以AUC（ROC曲线下面积）为首要标准。AUC衡量的是模型区分阳性和阴性样本的总体能力，不受分类阈值的影响，在正负样本不均衡的情况下比准确率更有参考价值。"
           ]
         },
-        "ODS表的所有字段类型统一设为STRING。使用外部表（EXTERNAL TABLE）而非内部表，这样删除Hive表时不会影响HDFS上的原始文件。以ods_heart_2020_raw为例，该表包含heart_disease、bmi、smoking、alcohol_drinking、stroke、physical_health、mental_health、diff_walking、sex、age_category、race、diabetic、physical_activity、gen_health、sleep_time、asthma、kidney_disease、skin_cancer共18个STRING字段。",
-        "建表后通过LOAD DATA INPATH将HDFS上的CSV文件加载到对应的ODS表中。加载过程不做任何转换，数据以原始格式进入Hive。通过SELECT COUNT(*)验证各表的记录数与原始CSV一致。"
-      ],
-      "subsections": []
-    },
-    {
-      "title": "3.4 DWD层设计与实现",
-      "number": "3.4",
-      "content": [
-        "DWD层接ODS层的原始数据，主要做三件事：清洗脏数据、转数据类型、统一字段名。处理完之后就是能直接拿来分析的明细数据了。这一层建了5张表，见表3-3。",
         {
-          "type": "table",
-          "caption": "表3-3 DWD层表结构",
-          "headers": ["表名", "字段数", "清洗内容"],
-          "rows": [
-            ["dwd_heart_2020_clean", "21", "STRING→DECIMAL/INT；Yes/No→1/0；派生risk_label、sex_code"],
-            ["dwd_heart_2022_clean", "45", "40字段类型转换；HadHeartAttack OR HadAngina→risk_label"],
-            ["dwd_uci_cleveland_clean", "17", "?→NULL；num>0→risk_label=1；年龄→年龄段"],
-            ["dwd_uci_cost_clean", "7", "费用STRING→DECIMAL；窗口函数生成cost_rank"],
-            ["dwd_heart_feature_sample", "28", "三数据集UNION ALL；共有维度对齐；缺失字段NULL"]
-          ]
-        },
-        "清洗过程通过HiveQL的INSERT OVERWRITE语句实现。以Kaggle 2020数据为例，主要的清洗操作包括：（1）BMI从STRING转为DECIMAL(6,2)；（2）Smoking、AlcoholDrinking等Yes/No字段通过CASE WHEN映射为1/0的INT类型；（3）Sex字段从Male/Female映射为1/0的sex_code；（4）HeartDisease字段映射为risk_label（Yes→1，No→0）；（5）Diabetic字段保留原始文本值（diabetic_text）同时生成二值标记（diabetic_flag）。",
-        "UCI Cleveland数据集的问题主要是缺失值。ca和thal两个字段里有问号（?），用CASE WHEN换成了NULL。目标变量num原来是0到4五个值，这里简化成二分类：num>0就算有病，risk_label设为1。年龄按10岁一档分段，方便跟Kaggle那边对齐。",
-        "DWD层最关键的一张表是dwd_heart_feature_sample。做法是把三个数据集都有的维度（risk_label、age_band、sex_code、bmi、smoking_flag这些）用UNION ALL拼成一张28列的宽表。Kaggle那边没有的临床指标（trestbps、chol之类）填NULL，UCI那边没有的生活习惯字段也填NULL。每条记录多挂一个source_dataset字段标来源，ADS层按数据集分组的时候要用。"
-      ],
-      "subsections": []
-    },
-    {
-      "title": "3.5 ADS层设计与实现",
-      "number": "3.5",
-      "content": [
-        "ADS层是直接面向应用的。DWD层的明细数据在这里按各种维度做GROUP BY聚合，产出的结果表前端可以直接拿来画图、后端可以直接拿来查。一共9张聚合表，6个分析维度，详见表3-4。",
-        {
-          "type": "table",
-          "caption": "表3-4 ADS层聚合表",
-          "headers": ["表名", "分析维度", "聚合粒度"],
-          "rows": [
-            ["ads_heart_overview", "总览", "按数据集：样本数、阳性数、患病率"],
-            ["ads_heart_by_age", "年龄", "按数据集×年龄段：样本数、阳性数、患病率"],
-            ["ads_heart_by_sex", "性别", "按数据集×性别：样本数、阳性数、患病率"],
-            ["ads_heart_by_bmi", "BMI", "按数据集×BMI分组：样本数、阳性数、患病率"],
-            ["ads_heart_lifestyle", "生活习惯", "按因素名×因素值：样本数、阳性数、患病率"],
-            ["ads_heart_comorbidity", "共病史", "按疾病名×是否患病：样本数、阳性数、患病率"],
-            ["ads_uci_clinical_risk", "UCI临床指标", "按指标名×指标值：样本数、阳性数、患病率"],
-            ["ads_uci_cost_analysis", "检查费用", "按检查项：费用值、费用等级、排名"],
-            ["ads_model_metrics", "模型指标", "按模型名：准确率、精确率、召回率、F1、AUC"]
-          ]
-        },
-        "ADS层的SQL统一使用GROUP BY做分组聚合。以ads_heart_by_age为例，按dataset_name和age_band两个维度分组，COUNT(*)统计样本数，SUM(risk_label)统计阳性数，SUM(risk_label)/COUNT(*)计算患病率。ads_heart_lifestyle将吸烟、饮酒、运动、睡眠四个因素用UNION ALL拼成统一的factor_name/factor_value格式，每行输出一个因素值的统计结果。ads_uci_clinical_risk对UCI Cleveland的10个临床指标逐一做分组统计，每个指标的每个取值各输出一行。",
-        "整个数据仓库的三层架构如图3-2所示，从左到右展示了数据从CSV原始文件到最终应用端的完整流转过程。",
-        {
-          "type": "image",
-          "path": "warehouse_layers.png",
-          "width": 155
-        },
-        "图3-2 数据仓库ODS-DWD-ADS三层架构",
-        "ETL流程如图3-3所示，数据依次经过HDFS上传、ODS建表、DWD清洗、ADS聚合、MySQL同步五个阶段。",
-        {
-          "type": "image",
-          "path": "heart-disease-etl-flow.png",
-          "width": 155
-        },
-        "图3-3 数据处理ETL流程"
-      ],
-      "subsections": []
-    },
-    {
-      "title": "3.6 ADS层数据同步至MySQL",
-      "number": "3.6",
-      "content": [
-        "ADS层的9张Hive表需要同步到MySQL，原因是前端API请求需要毫秒级响应，而Hive查询通常需要数秒。MySQL中建了同名的9张表，字段类型做对应转换：Hive的STRING→MySQL的VARCHAR(64)，BIGINT→BIGINT，DECIMAL(8,4)→DECIMAL(8,4)，字符集设为utf8mb4。",
-        "同步脚本用Python编写，通过PyHive连接Hive读取ADS表全量数据，通过PyMySQL写入MySQL。写入前先TRUNCATE目标表再批量INSERT。ADS表每张只有几十到几百行，全量同步耗时在秒级。同步完成后Django后端直接查询MySQL的ADS表，实现了Hive离线分析和MySQL在线查询的解耦。",
-        "表3-5展示了MySQL中ADS表的部分字段类型映射。",
-        {
-          "type": "table",
-          "caption": "表3-5 Hive与MySQL字段类型映射",
-          "headers": ["Hive类型", "MySQL类型", "示例字段"],
-          "rows": [
-            ["STRING", "VARCHAR(64)", "dataset_name, age_band, sex_label"],
-            ["BIGINT", "BIGINT", "sample_count, positive_count"],
-            ["DECIMAL(8,4)", "DECIMAL(8,4)", "prevalence_rate, accuracy"],
-            ["STRING", "VARCHAR(128)", "feature_name, feature_label"],
-            ["DECIMAL(12,6)", "DECIMAL(12,6)", "importance（特征重要性）"]
+          "title": "3.1.3 系统框架",
+          "number": "3.1.3",
+          "content": [
+            "系统采用前后端分离的B/S架构，技术栈如下：",
+            "（1）后端框架。Django是Python生态中应用较为广泛的Web框架，内置ORM、认证系统、管理后台和模板引擎。本系统选用Django REST Framework（DRF）构建后端API。DRF在Django基础上提供序列化器、视图集和路由器，可将数据库查询结果和业务逻辑封装为RESTful接口。由于本文机器学习模型基于Python的scikit-learn训练，预测推理过程同样采用Python实现，因此使用Django后端能够直接加载模型文件并执行推理，减少跨语言调用带来的复杂度。",
+            "（2）数据库访问。Django内置ORM框架，通过Python类定义数据库表结构，支持链式查询、事务管理和数据迁移。对于复杂聚合查询，系统可使用原始SQL提升表达灵活性。",
+            "（3）前端框架。Vue3是当前主流的前端框架之一，采用Composition API组织组件逻辑。本系统前端采用Vue3搭配TypeScript开发，组件库选用Naive UI，构建工具为Vite。ECharts是百度开源的JavaScript可视化库，支持柱状图、折线图、饼图、雷达图等数十种图表类型，用于渲染心脏病数据的各类分析图表。",
+            "（4）容器化部署。Docker Compose将MySQL、Django后端和Vue3前端分别打包为独立镜像，并进行统一编排启动。通过docker-compose.yml定义服务依赖关系、端口映射和数据卷挂载，可在Linux服务器上部署完整系统。",
+            "系统总体架构如图3-3所示。",
+            {
+              "type": "image",
+              "path": "system_architecture.png",
+              "width": 105
+            },
+            "图3-3 系统总体架构图"
           ]
         }
+      ]
+    },
+    {
+      "title": "3.2 大数据端模块设计",
+      "number": "3.2",
+      "content": [],
+      "subsections": [
+        {
+          "title": "3.2.1 数据采集模块",
+          "number": "3.2.1",
+          "content": [
+            "本系统整合三个公开数据集。Indicators of Heart Disease（2020）数据集来源于美国CDC的行为风险因素监测系统（BRFSS），覆盖2020年约40万人的电话调查结果，清洗后剩319795条记录，18个字段。HeartDisease为二值目标变量（Yes/No），其余17个字段覆盖BMI、吸烟、饮酒、中风、身体健康天数、精神健康天数、行走困难、性别、年龄段、种族、糖尿病、运动习惯、整体健康评价、睡眠时长、哮喘、肾病、皮肤癌。阳性样本占8.6%，属于典型的类别不均衡。",
+            "Indicators of Heart Disease（2022 UPDATE）数据集是在2020版基础上的扩展，字段数量由18个增加至40个，新增疫苗接种、COVID感染状态、口腔健康等维度。该数据集原始记录数为445132条，存在一定数量的缺失值，清洗后保留246022条记录。UCI Cleveland数据集由Cleveland Clinic收集，包含303名患者记录和13个临床检测指标。",
+            "三个数据集的基本信息汇总如表3-1所示。",
+            {
+              "type": "table",
+              "caption": "表3-1 三个数据集基本信息",
+              "headers": [
+                "数据集",
+                "来源",
+                "记录数",
+                "字段数",
+                "目标变量"
+              ],
+              "rows": [
+                [
+                  "Indicators of Heart Disease（2020）",
+                  "CDC BRFSS调查",
+                  "319795",
+                  "18",
+                  "HeartDisease（Yes/No）"
+                ],
+                [
+                  "Indicators of Heart Disease（2022 UPDATE）",
+                  "CDC BRFSS调查（扩展版）",
+                  "246022",
+                  "40",
+                  "HadHeartAttack/HadAngina"
+                ],
+                [
+                  "UCI Cleveland",
+                  "Cleveland Clinic临床数据",
+                  "303",
+                  "14",
+                  "num（0-4）"
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "title": "3.2.2 数据预处理模块",
+          "number": "3.2.2",
+          "content": [
+            "数据预处理在Hive的DWD层完成，主要包括三类操作：",
+            "（1）数据清洗。去除重复记录，处理缺失值。Indicators of Heart Disease（2020）数据集中Diabetic字段存在\"Yes (during pregnancy)\"等特殊值，需要保留原始文本的同时生成二值标记。UCI数据集的ca和thal两个字段中包含问号（?），通过CASE WHEN替换为NULL。",
+            "（2）数据变换。STRING类型的字段转换为精确类型——BMI从STRING转为DECIMAL(6,2)，Smoking等Yes/No字段映射为1/0的INT类型，Sex字段从Male/Female映射为sex_code。目标变量统一为risk_label：Indicators of Heart Disease（2020）的HeartDisease Yes→1，Indicators of Heart Disease（2022 UPDATE）的HadHeartAttack/HadAngina→1，UCI的num>0→1。",
+            "（3）数据归约。三个数据集的字段不完全一致，通过UNION ALL将共有维度（risk_label、age_band、sex_code、bmi、smoking_flag等）拼成一张28列的宽表dwd_heart_feature_sample。BRFSS调查数据缺少的临床指标字段填NULL，UCI缺少的生活习惯字段也填NULL。每条记录多挂一个source_dataset字段标来源。",
+            "DWD层共建立5张表，各表职责如表3-2所示。",
+            {
+              "type": "table",
+              "caption": "表3-2 DWD层表结构",
+              "headers": [
+                "表名",
+                "字段数",
+                "清洗内容"
+              ],
+              "rows": [
+                [
+                  "dwd_heart_2020_clean",
+                  "21",
+                  "STRING→DECIMAL/INT；Yes/No→1/0；派生risk_label、sex_code"
+                ],
+                [
+                  "dwd_heart_2022_clean",
+                  "45",
+                  "40字段类型转换；HadHeartAttack OR HadAngina→risk_label"
+                ],
+                [
+                  "dwd_uci_cleveland_clean",
+                  "17",
+                  "?→NULL；num>0→risk_label=1；年龄→年龄段"
+                ],
+                [
+                  "dwd_uci_cost_clean",
+                  "7",
+                  "费用STRING→DECIMAL；窗口函数生成cost_rank"
+                ],
+                [
+                  "dwd_heart_feature_sample",
+                  "28",
+                  "三数据集UNION ALL；共有维度对齐；缺失字段NULL"
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "title": "3.2.3 数据分析模块",
+          "number": "3.2.3",
+          "content": [
+            "ADS层面向应用场景，对DWD层明细数据按各种维度做GROUP BY聚合。一共9张聚合表，6个分析维度，如表3-3所示。",
+            {
+              "type": "table",
+              "caption": "表3-3 ADS层聚合表",
+              "headers": [
+                "表名",
+                "分析维度",
+                "聚合粒度"
+              ],
+              "rows": [
+                [
+                  "ads_heart_overview",
+                  "总览",
+                  "按数据集：样本数、阳性数、患病率"
+                ],
+                [
+                  "ads_heart_by_age",
+                  "年龄",
+                  "按数据集×年龄段：样本数、阳性数、患病率"
+                ],
+                [
+                  "ads_heart_by_sex",
+                  "性别",
+                  "按数据集×性别：样本数、阳性数、患病率"
+                ],
+                [
+                  "ads_heart_by_bmi",
+                  "BMI",
+                  "按数据集×BMI分组：样本数、阳性数、患病率"
+                ],
+                [
+                  "ads_heart_lifestyle",
+                  "生活习惯",
+                  "按因素名×因素值：样本数、阳性数、患病率"
+                ],
+                [
+                  "ads_heart_comorbidity",
+                  "共病史",
+                  "按疾病名×是否患病：样本数、阳性数、患病率"
+                ],
+                [
+                  "ads_uci_clinical_risk",
+                  "UCI临床指标",
+                  "按指标名×指标值：样本数、阳性数、患病率"
+                ],
+                [
+                  "ads_uci_cost_analysis",
+                  "检查费用",
+                  "按检查项：费用值、费用等级、排名"
+                ],
+                [
+                  "ads_model_metrics",
+                  "模型指标",
+                  "按模型名：准确率、精确率、召回率、F1、AUC"
+                ]
+              ]
+            },
+            "ADS层的SQL统一使用GROUP BY做分组聚合。以ads_heart_by_age为例，按dataset_name和age_band两个维度分组，COUNT(*)统计样本数，SUM(risk_label)统计阳性数，SUM(risk_label)/COUNT(*)计算患病率。"
+          ]
+        },
+        {
+          "title": "3.2.4 数据迁移模块",
+          "number": "3.2.4",
+          "content": [
+            "ADS层的9张Hive表通过Python脚本同步到MySQL。MySQL中建了同名的9张表，字段类型做对应转换：Hive的STRING→MySQL的VARCHAR(64)，BIGINT→BIGINT，DECIMAL(8,4)→DECIMAL(8,4)，字符集设为utf8mb4。",
+            "同步脚本通过PyHive连接Hive读取ADS表全量数据，通过PyMySQL写入MySQL。写入前先TRUNCATE目标表再批量INSERT。ADS表每张只有几十到几百行，全量同步耗时在秒级。",
+            "数据仓库的三层架构如图3-4所示。",
+            {
+              "type": "image",
+              "path": "warehouse_layers.png",
+              "width": 110
+            },
+            "图3-4 数据仓库ODS-DWD-ADS三层架构",
+            "ETL流程如图3-5所示，数据依次经过HDFS上传、ODS建表、DWD清洗、ADS聚合、MySQL同步五个阶段。",
+            {
+              "type": "image",
+              "path": "heart-disease-etl-flow.png",
+              "width": 155
+            },
+            "图3-5 数据处理ETL流程",
+            "Hive与MySQL的字段类型映射如表3-4所示。",
+            {
+              "type": "table",
+              "caption": "表3-4 Hive与MySQL字段类型映射",
+              "headers": [
+                "Hive类型",
+                "MySQL类型",
+                "示例字段"
+              ],
+              "rows": [
+                [
+                  "STRING",
+                  "VARCHAR(64)",
+                  "dataset_name, age_band, sex_label"
+                ],
+                [
+                  "BIGINT",
+                  "BIGINT",
+                  "sample_count, positive_count"
+                ],
+                [
+                  "DECIMAL(8,4)",
+                  "DECIMAL(8,4)",
+                  "prevalence_rate, accuracy"
+                ],
+                [
+                  "STRING",
+                  "VARCHAR(128)",
+                  "feature_name, feature_label"
+                ],
+                [
+                  "DECIMAL(12,6)",
+                  "DECIMAL(12,6)",
+                  "importance（特征重要性）"
+                ]
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "3.3 预测模块设计",
+      "number": "3.3",
+      "content": [
+        "预测模块的输入是用户填写的16个健康指标字段，输出包括风险概率、风险等级和Top-3影响因素。模块架构分为三层：",
+        "用户交互层：前端提供表单界面接收输入，以卡片形式展示预测结果。16个字段全部为可选，缺失字段由训练时记录的默认值补全。",
+        "特征处理层：数值型字段（BMI、PhysicalHealth、MentalHealth、SleepTime）做StandardScaler标准化；分类型字段（13个）做OneHotEncoder独热编码。scikit-learn的ColumnTransformer将两路处理组合为Pipeline，保证训练和推理逻辑一致。",
+        "模型推理层：加载预训练的逻辑回归模型文件（joblib格式），调用predict_proba获取风险概率。概率≥0.67为高风险、0.33-0.67为中风险、<0.33为低风险。通过模型系数矩阵计算各特征对当前预测结果的贡献度，取绝对值最大的三个特征作为影响因素返回。每次预测结果写入MySQL的PredictionRecord表。",
+        "预测流程如图3-6所示。",
+        {
+          "type": "image",
+          "path": "heart-disease-prediction-flow.png",
+          "width": 130
+        },
+        "图3-6 在线预测流程图"
       ],
       "subsections": []
     },
     {
-      "title": "3.7 本章小结",
-      "number": "3.7",
+      "title": "3.4 前端框架模块设计",
+      "number": "3.4",
       "content": [
-        "本章详细介绍了基于Hadoop和Hive的数据仓库构建过程。首先说明了三个数据集的来源和结构特征；然后描述了Hadoop集群的搭建和Hive的配置；接着按ODS、DWD、ADS三层分别说明了各层的表结构、清洗逻辑和聚合方式；最后介绍了ADS层到MySQL的离线同步方案。三层数据仓库将来自不同来源的56万余条原始数据清洗标准化为统一的分析基础，9张ADS聚合表覆盖了6个分析维度，为后续的数据分析和可视化展示提供了直接可用的数据支撑。"
+        "前端采用Vue3 + Naive UI + ECharts的组合。页面结构分为两种模式：",
+        "（1）可视化大屏模式。全屏深色主题面板，集中展示患病率、年龄分布柱状图、特征重要性排名、生活方式分析、UCI临床指标、数据集规模对比和风险预测统计等核心信息。大屏通过CSS Grid布局划分为多个区域，ECharts图表设置resize监听实现自适应。",
+        "（2）分页管理模式。左侧边栏加右侧内容区的布局。左侧菜单分为可视化大屏、数据分析、机器学习、数据治理、系统运维五个一级模块。数据分析下又分年龄分布、生活方式、临床指标、相关性、综合对比等二级页面。Vue Router负责路由管理，Vuex（Pinia）管理全局状态。",
+        "前端与后端通过Axios进行HTTP通信，采用RESTful API规范。请求拦截器自动附加JWT令牌，响应拦截器统一处理错误码。ECharts图表的数据通过API异步获取后渲染，支持loading状态和错误提示。",
+        "系统功能结构如图3-7所示。",
+        {
+          "type": "image",
+          "path": "heart-disease-function-structure.png",
+          "width": 155
+        },
+        "图3-7 系统功能模块图",
+        "用例图如图3-8所示。",
+        {
+          "type": "image",
+          "path": "heart-disease-usecase.png",
+          "width": 148
+        },
+        "图3-8 系统用例图"
+      ],
+      "subsections": []
+    },
+    {
+      "title": "3.5 数据库设计",
+      "number": "3.5",
+      "content": [
+        "系统使用MySQL存储三类数据：ADS聚合表（9张，由Hive同步而来）、用户账户表和预测记录表。ADS表的结构已在3.2.3节介绍，此处说明业务表。",
+        "系统E-R图如图3-9所示。",
+        {
+          "type": "image",
+          "path": "heart-disease-er.png",
+          "width": 148
+        },
+        "图3-9 系统E-R图",
+        "用户账户表采用Django内置的auth_user表，表结构如表3-5所示。",
+        {
+          "type": "table",
+          "caption": "表3-5 用户表（auth_user）结构",
+          "headers": [
+            "字段",
+            "类型",
+            "说明"
+          ],
+          "rows": [
+            [
+              "id",
+              "INT",
+              "主键，自增"
+            ],
+            [
+              "username",
+              "VARCHAR(150)",
+              "用户名"
+            ],
+            [
+              "password",
+              "VARCHAR(128)",
+              "加密后的密码"
+            ],
+            [
+              "email",
+              "VARCHAR(254)",
+              "邮箱"
+            ],
+            [
+              "is_active",
+              "BOOL",
+              "账户是否启用"
+            ],
+            [
+              "date_joined",
+              "DATETIME",
+              "注册时间"
+            ]
+          ]
+        },
+        "预测记录表用于保存每次在线预测的输入和输出，表结构如表3-6所示。",
+        {
+          "type": "table",
+          "caption": "表3-6 预测记录表（prediction_record）结构",
+          "headers": [
+            "字段",
+            "类型",
+            "说明"
+          ],
+          "rows": [
+            [
+              "id",
+              "INT",
+              "主键，自增"
+            ],
+            [
+              "user_id",
+              "INT",
+              "外键，关联auth_user"
+            ],
+            [
+              "probability",
+              "DECIMAL(6,4)",
+              "预测概率"
+            ],
+            [
+              "risk_level",
+              "VARCHAR(16)",
+              "风险等级（low/medium/high）"
+            ],
+            [
+              "risk_label",
+              "VARCHAR(16)",
+              "中文标签（低/中/高风险）"
+            ],
+            [
+              "model_name",
+              "VARCHAR(64)",
+              "使用的模型名称"
+            ],
+            [
+              "input_data",
+              "JSON",
+              "用户输入的16字段数据"
+            ],
+            [
+              "created_at",
+              "DATETIME",
+              "预测时间"
+            ]
+          ]
+        },
+        "角色权限表用于定义系统角色和对应权限，表结构如表3-7所示。",
+        {
+          "type": "table",
+          "caption": "表3-7 角色权限表（user_role）结构",
+          "headers": [
+            "字段",
+            "类型",
+            "说明"
+          ],
+          "rows": [
+            [
+              "id",
+              "INT",
+              "主键，自增"
+            ],
+            [
+              "role_name",
+              "VARCHAR(32)",
+              "角色名称（admin/user）"
+            ],
+            [
+              "permissions",
+              "JSON",
+              "权限列表"
+            ],
+            [
+              "description",
+              "VARCHAR(128)",
+              "角色描述"
+            ]
+          ]
+        },
+        "数据同步日志表用于记录Hive到MySQL的每次同步状态，表结构如表3-8所示。",
+        {
+          "type": "table",
+          "caption": "表3-8 数据同步日志表（sync_log）结构",
+          "headers": [
+            "字段",
+            "类型",
+            "说明"
+          ],
+          "rows": [
+            [
+              "id",
+              "INT",
+              "主键，自增"
+            ],
+            [
+              "table_name",
+              "VARCHAR(64)",
+              "同步的ADS表名"
+            ],
+            [
+              "sync_time",
+              "DATETIME",
+              "同步时间"
+            ],
+            [
+              "row_count",
+              "INT",
+              "同步条数"
+            ],
+            [
+              "status",
+              "VARCHAR(16)",
+              "状态（success/failed）"
+            ],
+            [
+              "error_msg",
+              "TEXT",
+              "失败时的错误信息"
+            ]
+          ]
+        },
+        "轮播图表用于管理首页和大屏的轮播展示内容，表结构如表3-9所示。",
+        {
+          "type": "table",
+          "caption": "表3-9 轮播图表（rotation）结构",
+          "headers": [
+            "字段",
+            "类型",
+            "说明"
+          ],
+          "rows": [
+            [
+              "id",
+              "INT",
+              "主键，自增"
+            ],
+            [
+              "image_url",
+              "VARCHAR(256)",
+              "图片URL"
+            ],
+            [
+              "link_url",
+              "VARCHAR(256)",
+              "跳转链接"
+            ],
+            [
+              "sort_order",
+              "INT",
+              "排序序号"
+            ],
+            [
+              "is_active",
+              "BOOL",
+              "是否启用"
+            ]
+          ]
+        },
+        "除业务表外，系统还需要保存ADS层同步后的主题分析结果。由于这些表来自Hive离线聚合，MySQL端只负责查询和展示，不在业务接口中直接修改。下面列出系统中几个核心ADS表和模型表的物理结构。",
+        {
+          "type": "table",
+          "caption": "表3-10 ADS总览表（ads_heart_overview）结构",
+          "headers": [
+            "字段",
+            "类型",
+            "说明"
+          ],
+          "rows": [
+            [
+              "dataset_name",
+              "VARCHAR(64)",
+              "数据集名称"
+            ],
+            [
+              "sample_count",
+              "BIGINT",
+              "样本总数"
+            ],
+            [
+              "positive_count",
+              "BIGINT",
+              "阳性样本数"
+            ],
+            [
+              "prevalence_rate",
+              "DECIMAL(8,4)",
+              "患病率"
+            ],
+            [
+              "updated_at",
+              "DATETIME",
+              "同步更新时间"
+            ]
+          ]
+        },
+        {
+          "type": "table",
+          "caption": "表3-11 ADS年龄分析表（ads_heart_by_age）结构",
+          "headers": [
+            "字段",
+            "类型",
+            "说明"
+          ],
+          "rows": [
+            [
+              "dataset_name",
+              "VARCHAR(64)",
+              "数据集名称"
+            ],
+            [
+              "age_band",
+              "VARCHAR(32)",
+              "年龄段"
+            ],
+            [
+              "sample_count",
+              "BIGINT",
+              "样本数"
+            ],
+            [
+              "positive_count",
+              "BIGINT",
+              "阳性样本数"
+            ],
+            [
+              "prevalence_rate",
+              "DECIMAL(8,4)",
+              "患病率"
+            ]
+          ]
+        },
+        {
+          "type": "table",
+          "caption": "表3-12 ADS生活习惯表（ads_heart_lifestyle）结构",
+          "headers": [
+            "字段",
+            "类型",
+            "说明"
+          ],
+          "rows": [
+            [
+              "dataset_name",
+              "VARCHAR(64)",
+              "数据集名称"
+            ],
+            [
+              "factor_name",
+              "VARCHAR(64)",
+              "因素名称，如smoking、alcohol"
+            ],
+            [
+              "factor_value",
+              "VARCHAR(64)",
+              "因素取值"
+            ],
+            [
+              "sample_count",
+              "BIGINT",
+              "样本数"
+            ],
+            [
+              "prevalence_rate",
+              "DECIMAL(8,4)",
+              "患病率"
+            ]
+          ]
+        },
+        {
+          "type": "table",
+          "caption": "表3-13 模型指标表（ads_model_metrics）结构",
+          "headers": [
+            "字段",
+            "类型",
+            "说明"
+          ],
+          "rows": [
+            [
+              "model_name",
+              "VARCHAR(64)",
+              "模型名称"
+            ],
+            [
+              "dataset_name",
+              "VARCHAR(64)",
+              "训练/验证数据集"
+            ],
+            [
+              "accuracy",
+              "DECIMAL(8,4)",
+              "准确率"
+            ],
+            [
+              "precision_score",
+              "DECIMAL(8,4)",
+              "精确率"
+            ],
+            [
+              "recall_score",
+              "DECIMAL(8,4)",
+              "召回率"
+            ],
+            [
+              "f1_score",
+              "DECIMAL(8,4)",
+              "F1值"
+            ],
+            [
+              "auc_score",
+              "DECIMAL(8,4)",
+              "AUC值"
+            ]
+          ]
+        },
+        {
+          "type": "table",
+          "caption": "表3-14 特征重要性表（model_feature_importance）结构",
+          "headers": [
+            "字段",
+            "类型",
+            "说明"
+          ],
+          "rows": [
+            [
+              "id",
+              "INT",
+              "主键，自增"
+            ],
+            [
+              "model_name",
+              "VARCHAR(64)",
+              "模型名称"
+            ],
+            [
+              "feature_name",
+              "VARCHAR(128)",
+              "特征字段名"
+            ],
+            [
+              "feature_label",
+              "VARCHAR(128)",
+              "中文展示名"
+            ],
+            [
+              "importance",
+              "DECIMAL(12,6)",
+              "重要性或贡献度"
+            ]
+          ]
+        },
+        {
+          "type": "table",
+          "caption": "表3-15 同步日志表（sync_log）结构",
+          "headers": [
+            "字段",
+            "类型",
+            "说明"
+          ],
+          "rows": [
+            [
+              "id",
+              "INT",
+              "主键，自增"
+            ],
+            [
+              "table_name",
+              "VARCHAR(64)",
+              "同步表名"
+            ],
+            [
+              "start_time",
+              "DATETIME",
+              "开始时间"
+            ],
+            [
+              "end_time",
+              "DATETIME",
+              "结束时间"
+            ],
+            [
+              "row_count",
+              "INT",
+              "同步行数"
+            ],
+            [
+              "status",
+              "VARCHAR(16)",
+              "success/failed"
+            ],
+            [
+              "error_msg",
+              "TEXT",
+              "失败原因"
+            ]
+          ]
+        },
+        "数据库设计的核心原则是把离线分析结果和在线业务数据分开。ADS表不承载事务更新，适合按主题查询；业务表保存用户、权限、预测记录和日志，适合通过Django ORM进行增删改查。这样的设计既保留了Hive处理大数据的优势，也保证了Web系统查询响应速度。"
       ],
       "subsections": []
     }

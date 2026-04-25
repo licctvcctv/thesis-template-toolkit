@@ -1,167 +1,538 @@
 {
-  "title": "4 大数据分析与预测模型",
+  "title": "4 详细设计",
   "chapter_number": 4,
   "sections": [
     {
-      "title": "4.1 基于ADS层的多维数据分析",
+      "title": "4.1 大数据端设计",
       "number": "4.1",
-      "content": [
-        "第三章建好的ADS聚合表里已经有现成的数据了，这一节就是把结果拿出来看。六个维度：年龄、性别、生活习惯、BMI、共病史、睡眠。数据全是Hive那边GROUP BY出来的，同步到MySQL之后前端用ECharts画图。"
-      ],
+      "content": [],
       "subsections": [
         {
-          "title": "4.1.1 年龄维度分析",
+          "title": "4.1.1 Hadoop集群搭建",
           "number": "4.1.1",
           "content": [
-            "ads_heart_by_age表按数据集和年龄段两个维度做了统计。Kaggle 2020的分布见图4-1。18到24岁那一组患病率连1%都不到，55到59岁大约8%，80岁以上直接超过了20%。一看就知道年龄对心脏病影响最大——基本上就是越老越危险，增长曲线接近指数。",
+            "数据仓库运行在Hadoop分布式平台上。本系统采用Docker方式搭建Hadoop集群，包含1个NameNode和2个DataNode，HDFS副本数设为2。Hive 3.x作为数据仓库引擎安装在NameNode节点上，MetaStore使用MySQL存储元数据。集群搭建完成后，通过hdfs dfs -put命令将三个CSV数据文件上传到HDFS的/user/heart_disease/raw/目录下。",
+            "Hive配置中，hive.exec.mode.local.auto设为true，用于提升小规模数据集查询效率；hive.cli.print.header设为true，用于在CLI中显示列名。序列化工具选用OpenCSVSerde，以正确处理CSV文件中包含逗号的字段值。",
+            "开发环境配置如表4-1所示。",
             {
-              "type": "image",
-              "path": "age_distribution.png",
-              "width": 148
-            },
-            "图4-1 各年龄段心脏病样本分布"
+              "type": "table",
+              "caption": "表4-1 开发环境配置",
+              "headers": [
+                "类别",
+                "工具/版本"
+              ],
+              "rows": [
+                [
+                  "操作系统",
+                  "macOS / Ubuntu 22.04"
+                ],
+                [
+                  "后端框架",
+                  "Django 4.2 + DRF 3.15"
+                ],
+                [
+                  "前端框架",
+                  "Vue3 + Vite + Naive UI"
+                ],
+                [
+                  "图表库",
+                  "ECharts 5"
+                ],
+                [
+                  "数据库",
+                  "MySQL 8.0"
+                ],
+                [
+                  "大数据平台",
+                  "Hadoop 3.x + Hive 3.x"
+                ],
+                [
+                  "ML框架",
+                  "scikit-learn 1.x"
+                ],
+                [
+                  "容器化",
+                  "Docker Compose 2.x"
+                ],
+                [
+                  "编程语言",
+                  "Python 3.10 / TypeScript"
+                ]
+              ]
+            }
           ]
         },
         {
-          "title": "4.1.2 性别维度分析",
+          "title": "4.1.2 ODS层实现",
           "number": "4.1.2",
           "content": [
-            "ads_heart_by_sex表的数字是：男性患病率10.5%左右，女性6.8%左右。男的比女的高出将近一半。一般认为跟雌激素的心血管保护作用有关，另外男性抽烟比例也更高。具体对比见图4-2的柱状图。",
+            "ODS层用于保存未经清洗和转换的原始数据，以保留数据追溯能力。本层共建立4张Hive外部表，如表4-2所示。",
             {
-              "type": "image",
-              "path": "gender_prevalence.png",
-              "width": 130
+              "type": "table",
+              "caption": "表4-2 ODS层表结构",
+              "headers": [
+                "表名",
+                "字段数",
+                "数据来源",
+                "序列化方式"
+              ],
+              "rows": [
+                [
+                  "ods_heart_2020_raw",
+                  "18",
+                  "Indicators 2020 CSV",
+                  "OpenCSVSerde"
+                ],
+                [
+                  "ods_heart_2022_raw",
+                  "40",
+                  "Indicators 2022 CSV",
+                  "OpenCSVSerde"
+                ],
+                [
+                  "ods_uci_cleveland_raw",
+                  "14",
+                  "UCI Cleveland CSV",
+                  "OpenCSVSerde"
+                ],
+                [
+                  "ods_uci_cost_raw",
+                  "2",
+                  "UCI检查费用",
+                  "分隔符(:)"
+                ]
+              ]
             },
-            "图4-2 性别与心脏病患病率"
+            "ODS表的所有字段类型统一设为STRING。系统使用外部表（EXTERNAL TABLE）而非内部表，以避免删除Hive表时影响HDFS上的原始文件。以ods_heart_2020_raw为例，该表包含heart_disease、bmi、smoking、alcohol_drinking、stroke、physical_health、mental_health、diff_walking、sex、age_category、race、diabetic、physical_activity、gen_health、sleep_time、asthma、kidney_disease、skin_cancer共18个STRING字段。",
+            "建表后通过LOAD DATA INPATH将HDFS上的CSV文件加载到对应的ODS表中。加载过程不做任何转换，数据以原始格式进入Hive。通过SELECT COUNT(*)验证各表的记录数与原始CSV一致。",
+            "ODS层建表以外部表为主，建表语句只描述字段和文件格式，不对业务含义做解释。以Indicators of Heart Disease（2020）数据为例，建表语句包含18个STRING字段，并指定OpenCSVSerde处理CSV转义字符。建表完成后，通过LOAD DATA INPATH把HDFS路径中的CSV文件挂载到Hive表目录下。",
+            "CREATE EXTERNAL TABLE ods_heart_2020_raw(heart_disease STRING,bmi STRING,smoking STRING,alcohol_drinking STRING,stroke STRING,physical_health STRING,mental_health STRING,diff_walking STRING,sex STRING,age_category STRING,race STRING,diabetic STRING,physical_activity STRING,gen_health STRING,sleep_time STRING,asthma STRING,kidney_disease STRING,skin_cancer STRING) ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde' STORED AS TEXTFILE;",
+            "ODS层不进行清洗处理，主要目的是保留数据追溯能力。当DWD层字段转换结果异常时，可回到ODS层核对原始值。若ODS层直接覆盖或删除原始字段，将增加后续问题排查难度。"
           ]
         },
         {
-          "title": "4.1.3 生活习惯维度分析",
+          "title": "4.1.3 DWD层实现",
           "number": "4.1.3",
           "content": [
-            "ads_heart_lifestyle表将吸烟、饮酒、运动三个因素统一为factor_name/factor_value格式输出。吸烟人群患病率11.4%，非吸烟7.0%；有运动习惯的7.7%，无运动习惯11.7%。饮酒的情况比较特殊——适量饮酒人群患病率反而低于不饮酒人群，可能与健康人群更倾向适量饮酒的选择偏差有关。图4-3展示了各因素的对比。",
-            {
-              "type": "image",
-              "path": "lifestyle_factors.png",
-              "width": 148
-            },
-            "图4-3 生活习惯因素与心脏病患病率"
+            "DWD层承接ODS层的原始数据，主要完成异常数据清洗、数据类型转换和字段名称统一三类处理。处理完成后，数据形成可直接用于统计分析和模型训练的明细层数据。",
+            "清洗过程通过HiveQL的INSERT OVERWRITE语句实现。以Indicators of Heart Disease（2020）数据为例，主要的清洗操作包括：（1）BMI从STRING转为DECIMAL(6,2)；（2）Smoking、AlcoholDrinking等Yes/No字段通过CASE WHEN映射为1/0的INT类型；（3）Sex字段从Male/Female映射为1/0的sex_code；（4）HeartDisease字段映射为risk_label（Yes→1，No→0）；（5）Diabetic字段保留原始文本值（diabetic_text）同时生成二值标记（diabetic_flag）。",
+            "UCI Cleveland数据集的主要问题在于缺失值处理。ca和thal两个字段中存在问号（?），本文通过CASE WHEN语句将其转换为NULL。原始目标变量num包含0到4五个取值，本文将其转换为二分类标签：当num>0时认为样本存在心脏病风险，并将risk_label设置为1。年龄字段按10岁为间隔进行分组，以便与BRFSS调查数据的年龄段字段进行对齐。",
+            "DWD层的核心表为dwd_heart_feature_sample。该表通过UNION ALL整合三个数据集中的共有维度，如risk_label、age_band、sex_code、bmi和smoking_flag等，形成28列统一宽表。BRFSS调查数据中缺失的临床指标（如trestbps、chol等）填充为NULL，UCI数据集中缺失的生活习惯字段同样填充为NULL。每条记录额外保留source_dataset字段，用于标识数据来源，并支持ADS层按数据集进行分组统计。",
+            "DWD清洗脚本按字段类型分为三类处理。第一类是数值字段，如BMI、PhysicalHealth、SleepTime，通过CAST转换为DECIMAL或INT；第二类是二值字段，如Smoking、Stroke、KidneyDisease，通过CASE WHEN将Yes/No映射为1/0；第三类是分组字段，如AgeCategory和BMI分组，用于后续统计展示。",
+            "在统一特征表dwd_heart_feature_sample中，BRFSS调查数据和UCI临床数据的字段并不完全相同。为保证UNION ALL能够执行，系统先定义统一字段清单，再要求各数据源按相同顺序输出字段。数据源缺失的字段统一填充为NULL，例如BRFSS调查数据缺少trestbps、chol、thalach等临床指标，UCI数据缺少Smoking、AlcoholDrinking等生活习惯指标。",
+            "清洗完成后需要进行三类校验：第一，通过COUNT(*)核对清洗前后记录数，确认记录数量未异常减少；第二，检查risk_label取值是否限定为0或1；第三，抽样查看BMI、SleepTime等数值字段是否存在异常范围。校验通过后，DWD表进入ADS聚合流程。"
           ]
         },
         {
-          "title": "4.1.4 BMI与共病维度分析",
+          "title": "4.1.4 ADS层实现与数据迁移",
           "number": "4.1.4",
           "content": [
-            "ads_heart_by_bmi表将BMI分为偏瘦(<18.5)、正常(18.5-24)、超重(24-28)和肥胖(≥28)四组。肥胖组患病率约10%，正常组约7%。图4-4展示了BMI的分布情况。",
-            {
-              "type": "image",
-              "path": "bmi_distribution.png",
-              "width": 148
-            },
-            "图4-4 BMI分布与心脏病",
-            "ads_heart_comorbidity表看的是共病。有过中风的人群患病率29%上下，没中风过的才7%出头——差了将近4倍。糖尿病人群18%，肾病人群23%。共病跟心脏病的关联非常强，图4-5画出了各项对比。",
-            {
-              "type": "image",
-              "path": "comorbidity_analysis.png",
-              "width": 148
-            },
-            "图4-5 共病史与心脏病患病率"
-          ]
-        },
-        {
-          "title": "4.1.5 睡眠维度分析",
-          "number": "4.1.5",
-          "content": [
-            "sleep_metric字段的结果有点意思：睡太少（不到6小时）和睡太多（超过8小时）的人，患病率都比正常睡眠（6到8小时）的人高，画出来是个U形。这跟流行病学里已有的结论对得上。见图4-6。",
-            {
-              "type": "image",
-              "path": "sleep_analysis.png",
-              "width": 148
-            },
-            "图4-6 睡眠时长与心脏病患病率"
+            "ADS层的SQL统一使用GROUP BY做分组聚合。以ads_heart_by_age为例，按dataset_name和age_band两个维度分组，COUNT(*)统计样本数，SUM(risk_label)统计阳性数，SUM(risk_label)/COUNT(*)计算患病率。ads_heart_lifestyle将吸烟、饮酒、运动、睡眠四个因素用UNION ALL拼成统一的factor_name/factor_value格式，每行输出一个因素值的统计结果。ads_uci_clinical_risk对UCI Cleveland的10个临床指标逐一做分组统计，每个指标的每个取值各输出一行。",
+            "ADS层的聚合结果通过Python同步脚本迁移到MySQL。脚本流程为：PyHive连接Hive → SELECT * FROM ads_xxx → TRUNCATE MySQL目标表 → 批量INSERT INTO。9张表全部同步完成后，Django后端查询MySQL即可获取分析数据，实现Hive离线分析和MySQL在线查询的解耦。",
+            "ADS层以页面展示需求为导向进行建表设计，而非直接面向原始字段建表。前端图表所需的数据粒度在ADS层预先完成聚合，从而避免用户访问页面时执行复杂计算。年龄、性别、BMI等图表对应的SQL结构较为相似，均按dataset_name和具体维度字段进行分组，并计算sample_count、positive_count和prevalence_rate。",
+            "以年龄分析为例，ads_heart_by_age的聚合语句为：SELECT source_dataset AS dataset_name, age_band, COUNT(*) AS sample_count, SUM(risk_label) AS positive_count, ROUND(SUM(risk_label)/COUNT(*),4) AS prevalence_rate FROM dwd_heart_feature_sample GROUP BY source_dataset, age_band;",
+            "同步脚本运行时按表顺序执行。先同步样本规模较小的总览表，确认MySQL连接正常后，再同步年龄、性别、BMI、生活习惯、共病和模型指标表。每张表同步前写入开始日志，同步成功后更新行数和状态；如果SQL执行失败，则捕获异常文本写入error_msg字段。"
           ]
         }
       ]
     },
     {
-      "title": "4.2 预测模型构建",
+      "title": "4.2 预测模型设计",
       "number": "4.2",
-      "content": [
-        "在ADS层完成统计分析后，进一步利用DWD层的明细数据训练机器学习分类模型，实现心脏病风险的量化预测。模型训练流程如图4-7所示。",
+      "content": [],
+      "subsections": [
         {
-          "type": "image",
-          "path": "heart-disease-model-pipeline.png",
-          "width": 155
+          "title": "4.2.1 特征工程",
+          "number": "4.2.1",
+          "content": [
+            "特征工程基于DWD层的dwd_heart_2020_clean表。数值型字段（BMI、PhysicalHealth、MentalHealth、SleepTime）做StandardScaler标准化，将均值调整为0、标准差调整为1。分类型字段（Smoking、AlcoholDrinking、Stroke、DiffWalking、Sex、AgeCategory、Race、Diabetic、PhysicalActivity、GenHealth、Asthma、KidneyDisease、SkinCancer共13个）做OneHotEncoder独热编码，将每个类别值展开为一个二值列。",
+            "scikit-learn的ColumnTransformer将两路处理组合为Pipeline，保证训练和推理逻辑一致。数据按8:2划分训练集和验证集，分层抽样保持正负样本比例一致，随机种子42。",
+            "模型训练流程如图4-1所示。",
+            {
+              "type": "image",
+              "path": "heart-disease-model-pipeline.png",
+              "width": 155
+            },
+            "图4-1 模型训练流程",
+            "特征工程不仅影响模型精度，也影响线上预测接口的稳定性。训练阶段使用的ColumnTransformer会被整体保存到joblib文件中，线上预测时不重新编写编码逻辑，而是调用Pipeline.transform和predict_proba。该方式能够保证OneHotEncoder的类别顺序、StandardScaler的均值方差与训练阶段保持一致。",
+            "类别不均衡是心脏病预测数据中的主要问题。Indicators of Heart Disease（2020）数据中阳性样本占比约8.6%，若仅追求准确率，模型可能倾向于将多数样本判为阴性。本文在逻辑回归和SGD模型中设置class_weight='balanced'，使阳性样本在损失函数中获得更高权重，从而提升召回率。",
+            "模型评估时需要同时比较Accuracy、Precision、Recall、F1和AUC。心脏病风险筛查更强调尽可能发现潜在高风险人群，因此Recall和AUC比单纯准确率更具参考价值。"
+          ]
         },
-        "图4-7 模型训练流程",
-        "特征工程方面，数值型字段（BMI、PhysicalHealth、MentalHealth、SleepTime）做StandardScaler标准化；分类型字段（13个）做OneHotEncoder独热编码。scikit-learn的ColumnTransformer将两路处理组合为Pipeline，保证训练和推理逻辑一致。数据按8:2划分训练集和验证集，分层抽样，随机种子42。",
-        "训练了四种模型：逻辑回归（class_weight=balanced）、SGD线性分类器（loss=log_loss）、随机森林（250棵树）和Extra Trees（300棵树）。以AUC为首要选择标准。"
-      ],
-      "subsections": []
+        {
+          "title": "4.2.2 模型训练与评估",
+          "number": "4.2.2",
+          "content": [
+            "训练了四种模型：逻辑回归（class_weight=balanced）、SGD线性分类器（loss=log_loss）、随机森林（250棵树）和Extra Trees（300棵树）。以AUC为首要选择标准。",
+            "表4-3列出了Indicators of Heart Disease（2020）数据集上四种模型的评估结果。",
+            {
+              "type": "table",
+              "caption": "表4-3 Indicators 2020模型评估结果",
+              "headers": [
+                "模型",
+                "准确率",
+                "精确率",
+                "召回率",
+                "F1",
+                "AUC"
+              ],
+              "rows": [
+                [
+                  "逻辑回归",
+                  "0.704",
+                  "0.233",
+                  "0.783",
+                  "0.359",
+                  "0.821"
+                ],
+                [
+                  "SGD",
+                  "0.754",
+                  "0.259",
+                  "0.708",
+                  "0.379",
+                  "0.801"
+                ],
+                [
+                  "随机森林",
+                  "0.898",
+                  "0.591",
+                  "0.123",
+                  "0.203",
+                  "0.788"
+                ],
+                [
+                  "Extra Trees",
+                  "0.876",
+                  "0.350",
+                  "0.198",
+                  "0.253",
+                  "0.777"
+                ]
+              ]
+            },
+            {
+              "type": "image",
+              "path": "model_comparison.png",
+              "width": 148
+            },
+            "图4-2 Indicators 2020四种模型指标对比",
+            "逻辑回归模型AUC最高（0.821），召回率为78.3%，因此被选为最终模型。随机森林准确率较高（89.8%），但召回率较低（12.3%），说明在阳性率仅为8.6%的数据集中，该模型更倾向于将样本判为阴性。心脏病筛查场景更关注高风险人群识别能力，因此高召回率更为重要。",
+            "表4-4为UCI Cleveland数据集的结果，逻辑回归AUC达到0.967，准确率86.9%。临床指标的预测效果远好于自报告调查数据。",
+            {
+              "type": "table",
+              "caption": "表4-4 UCI Cleveland模型评估结果",
+              "headers": [
+                "模型",
+                "准确率",
+                "精确率",
+                "召回率",
+                "F1",
+                "AUC"
+              ],
+              "rows": [
+                [
+                  "逻辑回归",
+                  "0.869",
+                  "0.813",
+                  "0.929",
+                  "0.867",
+                  "0.967"
+                ],
+                [
+                  "随机森林",
+                  "0.885",
+                  "0.839",
+                  "0.929",
+                  "0.881",
+                  "0.950"
+                ],
+                [
+                  "SGD",
+                  "0.803",
+                  "0.700",
+                  "1.000",
+                  "0.824",
+                  "0.945"
+                ],
+                [
+                  "Extra Trees",
+                  "0.852",
+                  "0.806",
+                  "0.893",
+                  "0.847",
+                  "0.929"
+                ]
+              ]
+            },
+            {
+              "type": "image",
+              "path": "model_comparison_uci.png",
+              "width": 148
+            },
+            "图4-3 UCI Cleveland模型指标对比"
+          ]
+        },
+        {
+          "title": "4.2.3 特征重要性与模型选用",
+          "number": "4.2.3",
+          "content": [
+            "图4-4和图4-5分别展示了两个数据集上的特征重要性排名。BRFSS调查数据中年龄相关特征占据前几位；UCI数据集中主要血管数目（ca）和胸痛类型（cp）最重要。",
+            {
+              "type": "image",
+              "path": "feature_importance_kaggle.png",
+              "width": 148
+            },
+            "图4-4 Indicators 2020特征重要性排名",
+            {
+              "type": "image",
+              "path": "feature_importance_uci.png",
+              "width": 148
+            },
+            "图4-5 UCI Cleveland特征重要性排名",
+            "综合两个数据集的结果，本文选择基于Indicators of Heart Disease（2020）数据集训练的逻辑回归模型作为系统在线预测模型。该数据集的输入字段（BMI、年龄段、吸烟等）均为用户可自行填写的健康指标，无需依赖临床检查。模型评估指标和特征重要性通过Python脚本写入ADS层的ads_model_metrics和ads_model_feature_importance表，并在同步到MySQL后供前端展示。"
+          ]
+        }
+      ]
     },
     {
-      "title": "4.3 模型评估与选用",
+      "title": "4.3 多维数据分析",
       "number": "4.3",
       "content": [
-        "表4-1列出了Kaggle 2020数据集上四种模型的评估结果。",
-        {
-          "type": "table",
-          "caption": "表4-1 Kaggle 2020模型评估结果",
-          "headers": ["模型", "准确率", "精确率", "召回率", "F1", "AUC"],
-          "rows": [
-            ["逻辑回归", "0.704", "0.233", "0.783", "0.359", "0.821"],
-            ["SGD", "0.754", "0.259", "0.708", "0.379", "0.801"],
-            ["随机森林", "0.898", "0.591", "0.123", "0.203", "0.788"],
-            ["Extra Trees", "0.876", "0.350", "0.198", "0.253", "0.777"]
-          ]
-        },
+        "基于前文构建的ADS聚合表，本节从年龄、性别、生活习惯、BMI、共病史和睡眠六个维度对心脏病患病率分布进行分析。相关统计结果均由Hive执行GROUP BY聚合生成，并同步至MySQL后由前端通过ECharts进行可视化展示。",
+        "ads_heart_by_age表按照数据集和年龄段两个维度进行统计。Indicators of Heart Disease（2020）数据集的年龄分布结果如图4-6所示。18至24岁年龄组的患病率不足1%，55至59岁年龄组约为8%，80岁以上年龄组超过20%。结果表明，年龄与心脏病患病率之间存在明显正相关关系，且患病率随年龄增长呈现较快上升趋势。",
         {
           "type": "image",
-          "path": "model_comparison.png",
+          "path": "age_distribution.png",
           "width": 148
         },
-        "图4-8 Kaggle 2020四种模型指标对比",
-        "逻辑回归AUC最高（0.821），召回率78.3%，被选为最终模型。随机森林准确率高（89.8%）但召回率极低（12.3%），在8.6%阳性率的数据集上几乎把所有样本都判为阴性。心脏病筛查场景下高召回率更重要。",
-        "表4-2为UCI Cleveland数据集的结果，逻辑回归AUC达到0.967，准确率86.9%。临床指标的预测效果远好于自报告调查数据。",
-        {
-          "type": "table",
-          "caption": "表4-2 UCI Cleveland模型评估结果",
-          "headers": ["模型", "准确率", "精确率", "召回率", "F1", "AUC"],
-          "rows": [
-            ["逻辑回归", "0.869", "0.813", "0.929", "0.867", "0.967"],
-            ["随机森林", "0.885", "0.839", "0.929", "0.881", "0.950"],
-            ["SGD", "0.803", "0.700", "1.000", "0.824", "0.945"],
-            ["Extra Trees", "0.852", "0.806", "0.893", "0.847", "0.929"]
-          ]
-        },
+        "图4-6 各年龄段心脏病样本分布",
+        "ads_heart_by_sex表显示，男性患病率约为10.5%，女性患病率约为6.8%，男性患病率明显高于女性。该差异可能与雌激素的心血管保护作用、男性吸烟比例较高等因素有关。具体对比结果如图4-7所示。",
         {
           "type": "image",
-          "path": "model_comparison_uci.png",
-          "width": 148
+          "path": "gender_prevalence.png",
+          "width": 130
         },
-        "图4-9 UCI Cleveland模型指标对比",
-        "图4-10和图4-11分别展示了两个数据集上的特征重要性排名。Kaggle数据集中年龄相关特征占据前几位；UCI数据集中主要血管数目（ca）和胸痛类型（cp）最重要。",
+        "图4-7 性别与心脏病患病率",
+        "ads_heart_lifestyle表将吸烟、饮酒、运动三个因素统一为factor_name/factor_value格式输出。吸烟人群患病率为11.4%，非吸烟人群为7.0%；有运动习惯人群为7.7%，无运动习惯人群为11.7%。饮酒因素的统计结果显示，适量饮酒人群患病率低于不饮酒人群，该现象可能与健康人群更倾向适量饮酒的选择偏差有关。图4-8展示了各因素的对比结果。",
         {
           "type": "image",
-          "path": "feature_importance_kaggle.png",
+          "path": "lifestyle_factors.png",
           "width": 148
         },
-        "图4-10 Kaggle 2020特征重要性排名",
+        "图4-8 生活习惯因素与心脏病患病率",
+        "ads_heart_by_bmi表将BMI分为偏瘦(<18.5)、正常(18.5-24)、超重(24-28)和肥胖(≥28)四组。肥胖组患病率约10%，正常组约7%。图4-9展示了BMI的分布情况。",
         {
           "type": "image",
-          "path": "feature_importance_uci.png",
+          "path": "bmi_distribution.png",
           "width": 148
         },
-        "图4-11 UCI Cleveland特征重要性排名",
-        "综合两个数据集的结果，选择Kaggle 2020训练的逻辑回归模型作为系统的在线预测模型——该数据集的输入字段（BMI、年龄段、吸烟等）均为用户可自行填写的健康指标，不需要临床检查。模型的评估指标和特征重要性通过Python脚本写入ADS层的ads_model_metrics和ads_model_feature_importance表，同步到MySQL后供前端展示。"
+        "图4-9 BMI分布与心脏病",
+        "ads_heart_comorbidity表用于分析共病史与心脏病患病率之间的关系。统计结果显示，有中风史人群的患病率约为29%，无中风史人群约为7%，两者差异接近4倍。糖尿病人群患病率约为18%，肾病人群患病率约为23%。上述结果说明共病史与心脏病风险之间存在较强关联，具体对比见图4-10。",
+        {
+          "type": "image",
+          "path": "comorbidity_analysis.png",
+          "width": 148
+        },
+        "图4-10 共病史与心脏病患病率",
+        "sleep_metric字段的统计结果显示，睡眠时间不足6小时和超过8小时的人群患病率均高于睡眠时间为6至8小时的人群，整体呈现U形分布。该结果与既有流行病学研究中关于睡眠时长和心血管风险关系的结论基本一致，如图4-11所示。",
+        {
+          "type": "image",
+          "path": "sleep_analysis.png",
+          "width": 148
+        },
+        "图4-11 睡眠时长与心脏病患病率"
       ],
       "subsections": []
     },
     {
-      "title": "4.4 本章小结",
+      "title": "4.4 后端接口设计",
       "number": "4.4",
       "content": [
-        "本章分为两部分。前半部分基于ADS聚合表从六个维度展示了心脏病患病率的分布特征，所有数据均来自Hive数据仓库的GROUP BY聚合结果。后半部分在DWD明细数据上训练了四种分类模型，逻辑回归以AUC=0.821（Kaggle）和0.967（UCI）胜出。模型指标同样写入ADS层，形成了从数据仓库到分析结果的闭环。"
+        "后端采用Django REST Framework的ViewSet + Serializer分层架构，核心接口如表4-5所示。",
+        {
+          "type": "table",
+          "caption": "表4-5 主要API接口",
+          "headers": [
+            "接口路径",
+            "方法",
+            "功能描述"
+          ],
+          "rows": [
+            [
+              "/api/health",
+              "GET",
+              "服务健康检查"
+            ],
+            [
+              "/api/auth/login",
+              "POST",
+              "用户登录，返回JWT令牌"
+            ],
+            [
+              "/api/auth/register",
+              "POST",
+              "用户注册"
+            ],
+            [
+              "/api/dashboard/overview",
+              "GET",
+              "总览指标（样本数、患病率）"
+            ],
+            [
+              "/api/analysis/age",
+              "GET",
+              "年龄维度分析数据"
+            ],
+            [
+              "/api/analysis/lifestyle",
+              "GET",
+              "生活习惯和共病维度分析"
+            ],
+            [
+              "/api/analysis/clinical",
+              "GET",
+              "UCI临床指标分析"
+            ],
+            [
+              "/api/analysis/comparison",
+              "GET",
+              "数据集综合对比"
+            ],
+            [
+              "/api/model/metrics",
+              "GET",
+              "模型评估指标和特征重要性"
+            ],
+            [
+              "/api/predict",
+              "POST",
+              "在线心脏病风险预测"
+            ],
+            [
+              "/api/predict/history",
+              "GET",
+              "预测历史记录查询"
+            ],
+            [
+              "/api/admin/sync-log",
+              "GET",
+              "数据同步日志（管理员）"
+            ],
+            [
+              "/api/admin/users",
+              "GET",
+              "用户管理列表（管理员）"
+            ]
+          ]
+        },
+        "后端分层设计遵循Django REST Framework的标准模式。Model层通过Django ORM定义数据库表结构，每个ADS表和业务表对应一个Model类，Meta.db_table指定MySQL表名。Serializer层负责Model实例与JSON之间的序列化和反序列化，分析类接口使用ModelSerializer自动映射，预测接口使用自定义Serializer定义校验规则。ViewSet层每个功能模块对应一个类，分析类继承ReadOnlyModelViewSet只提供查询操作，预测ViewSet自定义create方法处理推理逻辑。权限控制通过permission_classes配置，管理员接口设置IsAdminUser权限。URL路由通过DRF的DefaultRouter自动注册。",
+        "预测接口的字段校验规则如表4-6所示。后端在Serializer层完成类型转换和范围校验，只有校验通过的数据才会进入模型推理流程。",
+        {
+          "type": "table",
+          "caption": "表4-6 预测接口字段校验规则",
+          "headers": [
+            "字段",
+            "校验规则",
+            "异常处理"
+          ],
+          "rows": [
+            [
+              "BMI",
+              "10≤BMI≤80，可为空",
+              "超出范围返回400"
+            ],
+            [
+              "AgeCategory",
+              "必须属于固定年龄段枚举",
+              "非法枚举返回400"
+            ],
+            [
+              "Sex",
+              "Male/Female二选一",
+              "缺失时使用训练默认值"
+            ],
+            [
+              "Smoking",
+              "Yes/No二选一",
+              "非法值返回400"
+            ],
+            [
+              "SleepTime",
+              "0≤SleepTime≤24",
+              "超出范围返回400"
+            ],
+            [
+              "PhysicalHealth",
+              "0≤天数≤30",
+              "超出范围返回400"
+            ],
+            [
+              "MentalHealth",
+              "0≤天数≤30",
+              "超出范围返回400"
+            ]
+          ]
+        },
+        "接口异常处理规则如表4-7所示。系统把可预期错误和系统错误区分处理，前者返回明确中文提示，后者记录日志后返回统一错误信息。",
+        {
+          "type": "table",
+          "caption": "表4-7 接口异常处理规则",
+          "headers": [
+            "异常类型",
+            "触发场景",
+            "处理方式"
+          ],
+          "rows": [
+            [
+              "参数错误",
+              "字段类型错误或枚举值非法",
+              "返回400和字段级错误信息"
+            ],
+            [
+              "未登录",
+              "请求头缺少JWT令牌",
+              "返回401并提示重新登录"
+            ],
+            [
+              "权限不足",
+              "普通用户访问管理员接口",
+              "返回403"
+            ],
+            [
+              "模型未加载",
+              "joblib文件缺失或损坏",
+              "返回500并写入系统日志"
+            ],
+            [
+              "数据为空",
+              "ADS表暂无同步数据",
+              "返回空数组并在页面提示暂无数据"
+            ],
+            [
+              "数据库异常",
+              "MySQL连接失败或SQL执行失败",
+              "捕获异常并记录error_msg"
+            ]
+          ]
+        },
+        "Django接口按模块划分路由：analysis负责分析图表数据，model负责模型指标和特征重要性，predict负责在线预测与历史记录，admin负责同步日志、用户管理和模型维护。这样的路由划分与前端菜单结构保持一致，便于定位接口问题。"
+      ],
+      "subsections": []
+    },
+    {
+      "title": "4.5 前端框架设计",
+      "number": "4.5",
+      "content": [
+        "前端基于Vue3 Composition API构建，主要技术组件包括：",
+        "Vue Router负责页面路由管理。配置了路由守卫（beforeEach），未登录用户自动跳转登录页；管理员页面通过meta.requiresAdmin标记，普通用户访问时重定向到首页。路由采用懒加载（dynamic import），减少首屏资源体积。",
+        "Pinia替代Vuex作为全局状态管理方案。定义了useUserStore（用户登录状态、角色信息）和useAnalysisStore（缓存分析数据，避免重复API请求）两个Store。分析页面切换时，如果Store中已有对应维度的数据则直接渲染，不再重复请求后端。",
+        "ECharts集成方面，封装了useChart组合式函数，统一管理图表实例的创建、更新和销毁。图表组件通过props接收数据和配置，内部使用watch监听数据变化自动重绘。柱状图、折线图、饼图、雷达图和ROC曲线图各封装为独立组件。",
+        "Axios封装方面，创建axios实例并配置baseURL、超时时间和拦截器。请求拦截器从Pinia的userStore中读取JWT令牌附加到Authorization头；响应拦截器统一处理401（令牌过期）、403（权限不足）和500（服务器错误）。",
+        "CSS布局方面，大屏模式使用CSS Grid定义多个网格区域，每个图表占据指定的grid-area。分页管理模式使用Naive UI的NLayout + NMenu组件构建侧边栏导航。",
+        "前端页面按业务域拆分为五组路由：dashboard用于可视化大屏，analysis用于年龄、生活习惯、临床指标和综合对比，model用于模型指标和特征重要性，predict用于在线预测，admin用于用户、日志和同步管理。每个页面只负责渲染自身业务数据，公共请求逻辑放在api目录中统一封装。",
+        "预测页面的交互流程为：用户填写表单后点击开始预测，页面先执行前端基础校验，再调用/api/predict接口。接口返回后，页面右侧展示风险概率、风险等级和影响因素Top3，下方预测历史表格自动刷新。若接口返回400错误，表单项附近显示具体错误；若返回401，路由守卫跳转到登录页。",
+        "为了提升图表页面体验，ECharts组件在mounted阶段初始化实例，在watch中监听数据变化，在beforeUnmount中销毁实例。窗口大小变化时触发resize，保证大屏模式和分页模式都能正常自适应。"
       ],
       "subsections": []
     }

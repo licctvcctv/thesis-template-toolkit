@@ -117,6 +117,7 @@
           "title": "3.4.2 逻辑结构设计",
           "content": [
             "根据概念结构设计的E-R图，将各实体转换为关系型数据库中的表结构。以下列出系统主要数据表的逻辑结构设计。",
+            "用户表用于保存前台订餐用户的基础资料和账户状态，是登录认证、个人中心、订单提交、积分累计和菜品评价等功能共同依赖的基础表。该表共包含14个字段，其中id为主键，username和password用于账号登录，yonghu_name、yonghu_phone、yonghu_id_number等字段记录用户身份信息，new_money、yonghu_sum_jifen、yonghu_new_jifen和huiyuandengji_types用于维护余额、积分和会员等级。",
             "表3-1 用户表（yonghu）",
             {
               "type": "table",
@@ -138,6 +139,7 @@
                 ["create_time", "DATETIME", "创建时间"]
               ]
             },
+            "菜品表用于保存社区老年食堂可售菜品的基础信息和销售状态，是菜品浏览、库存校验、订单生成和后台菜品维护的核心数据来源。该表共包含14个字段，其中caipin_uuid_number用于生成菜品编号，caipin_name、caipin_photo和caipin_content用于前台展示，caipin_types关联字典表实现菜品分类，caipin_kucun_number用于库存控制，shangxia_types和caipin_delete分别表示上下架状态和逻辑删除状态。",
             "表3-2 菜品表（caipin）",
             {
               "type": "table",
@@ -159,6 +161,7 @@
                 ["create_time", "DATETIME", "创建时间"]
               ]
             },
+            "订单表用于记录用户提交订餐后的交易信息，连接用户、菜品、库存扣减、支付和后续评价等业务环节。该表共包含11个字段，其中caipin_order_uuid_number为订单编号，caipin_id和yonghu_id分别关联菜品表和用户表，buy_number记录购买数量，caipin_order_true_price记录实付金额，caipin_order_types和caipin_order_payment_types用于区分订单状态和支付方式。",
             "表3-3 订单表（caipin_order）",
             {
               "type": "table",
@@ -177,6 +180,7 @@
                 ["create_time", "DATETIME", "创建时间"]
               ]
             },
+            "供应商表用于维护食堂采购相关的供应来源信息，为后台供应商管理和食材采购查询提供数据支持。该表共包含8个字段，其中gongyingshang_name记录供应商名称，gongyingshang_phone记录联系电话，gongyingshang_email在本系统中用于保存供应物品名称，gongyingshang_types标识供应物品类型，gongyingshang_money记录供应价格，gongyingshang_content用于补充供应商描述。",
             "表3-4 供应商表（gongyingshang）",
             {
               "type": "table",
@@ -192,6 +196,7 @@
                 ["create_time", "DATETIME", "创建时间"]
               ]
             },
+            "评价表用于保存用户对菜品或订单服务的反馈信息，是菜品评价展示和管理员回复功能的数据基础。该表共包含8个字段，其中caipin_id关联被评价菜品，yonghu_id关联评价用户，caipin_commentback_text记录评价内容，reply_text记录管理员回复内容，insert_time和update_time分别保存评价时间和回复时间。",
             "表3-5 评价表（caipin_commentback）",
             {
               "type": "table",
@@ -207,6 +212,7 @@
                 ["create_time", "DATETIME", "创建时间"]
               ]
             },
+            "论坛表用于保存系统论坛模块中的发帖和回复内容，为用户交流、员工回复和管理员审核提供数据支撑。该表共包含10个字段，其中forum_name为帖子标题，yonghu_id、yuangong_id和users_id用于区分发帖主体，forum_content保存帖子正文，super_ids用于表示父帖编号，forum_state_types用于标记帖子状态。",
             "表3-6 论坛表（forum）",
             {
               "type": "table",
@@ -224,6 +230,7 @@
                 ["create_time", "DATETIME", "创建时间"]
               ]
             },
+            "公告表用于保存系统通知、食堂活动和服务说明等公告信息，主要供前台公告浏览和后台公告发布维护使用。该表共包含7个字段，其中news_name为公告标题，news_types关联字典表区分公告类型，news_photo用于保存封面图片路径，insert_time为发布时间，news_content保存公告正文内容。",
             "表3-7 公告表（news）",
             {
               "type": "table",

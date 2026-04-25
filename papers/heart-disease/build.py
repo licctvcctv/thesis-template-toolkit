@@ -261,6 +261,8 @@ def _post_process(docx_path):
     from docx import Document
     from docx.shared import Pt
     from docx.enum.text import WD_ALIGN_PARAGRAPH
+    from docx.oxml import OxmlElement
+    from docx.oxml.ns import qn
     import re
 
     doc = Document(docx_path)
@@ -268,8 +270,61 @@ def _post_process(docx_path):
     tbl_cap_pat = re.compile(r'^表\d')
     placeholder_pat = re.compile(r'^__TABLE_PLACEHOLDER_(\d+)__$')
 
+    def _set_outline_level(paragraph, level):
+        p_pr = paragraph._p.pPr
+        if p_pr is None:
+            p_pr = OxmlElement('w:pPr')
+            paragraph._p.insert(0, p_pr)
+        old = p_pr.find(qn('w:outlineLvl'))
+        if old is not None:
+            p_pr.remove(old)
+        outline = OxmlElement('w:outlineLvl')
+        outline.set(qn('w:val'), str(level))
+        r_pr = p_pr.find(qn('w:rPr'))
+        if r_pr is not None:
+            p_pr.insert(list(p_pr).index(r_pr), outline)
+        else:
+            p_pr.append(outline)
+
+    def _toc_level(text):
+        compact = text.replace(" ", "").replace("　", "")
+        if compact in {"结论", "致谢", "参考文献"}:
+            return 0
+        if re.fullmatch(r'\d+\s+\S.*', text):
+            return 0
+        if re.fullmatch(r'\d+\.\d+\s+\S.*', text):
+            return 1
+        if re.fullmatch(r'\d+\.\d+\.\d+\s+\S.*', text):
+            return 2
+        return None
+
+    # 删除标题前后的多余空段落（Jinja 控制标签渲染残留）
+    paras_list = list(doc.paragraphs)
+    for i, p in enumerate(paras_list):
+        t = (p.text or "").strip()
+        has_break_or_section = bool(p._p.findall(
+            './/{http://schemas.openxmlformats.org/wordprocessingml/2006/main}br'
+        )) or bool(p._p.findall(
+            './/{http://schemas.openxmlformats.org/wordprocessingml/2006/main}sectPr'
+        ))
+        if has_break_or_section:
+            continue
+        if not t and i > 0 and i < len(paras_list) - 1:
+            prev_t = (paras_list[i - 1].text or "").strip()
+            next_t = (paras_list[i + 1].text or "").strip()
+            # 空段落夹在两个非空段落之间，且前后至少一个看起来是标题
+            is_after_title = bool(re.match(r'^\d+(\.\d+)*\s', prev_t))
+            is_before_title = bool(re.match(r'^\d+(\.\d+)*\s', next_t))
+            if is_after_title or is_before_title:
+                p._p.getparent().remove(p._p)
+                continue
+
     for p in list(doc.paragraphs):
         t = (p.text or "").strip()
+
+        toc_level = _toc_level(t)
+        if toc_level is not None:
+            _set_outline_level(p, toc_level)
 
         # Heading 1 → 每章前分页
         if p.style and p.style.name == 'Heading 1':
@@ -381,6 +436,22 @@ def _post_process(docx_path):
             ack_idx = list(body).index(ack_heading._p)
             for offset, el in enumerate(moving):
                 body.insert(ack_idx + offset, el)
+
+    # 清理模板残留的空参考文献编号，如单独一行的 [20]、[21]
+    ref_seen = False
+    for p in list(doc.paragraphs):
+        t = (p.text or "").strip()
+        compact_t = t.replace(" ", "").replace("　", "")
+        if compact_t == "参考文献":
+            ref_seen = True
+            continue
+        if re.fullmatch(r'\[\d+\]', t):
+            p._p.getparent().remove(p._p)
+            continue
+        ppr = p._p.pPr
+        num_pr = ppr.numPr if ppr is not None and ppr.numPr is not None else None
+        if ref_seen and not t and num_pr is not None:
+            p._p.getparent().remove(p._p)
 
     doc.save(docx_path)
     print(f"  后处理: 图片居中+{len(_pending_tables)}个表格")

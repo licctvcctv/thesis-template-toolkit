@@ -1,0 +1,14 @@
+{
+  "abstract_zh": [
+    "随着城市机动车保有量持续增长，商业区、交通枢纽、医院、学校和公共服务场所的停车供需矛盾逐渐突出。传统停车场主要依靠人工登记、现场找位、人工收费和事后汇总，容易出现空闲车位更新滞后、用户查找效率低、预约规则不清、订单状态难追踪、管理人员统计困难等问题。围绕停车资源在线查询、车位预约锁定、入场出场记录、订单计费支付和后台运营管理等需求，本文结合实际开发项目，设计并实现了一套城市智慧停车管理系统。",
+    "系统采用前后端分离架构，前端基于 Vue3、Vite、Naive UI、Pinia、Vue Router、Axios 和 ECharts 构建用户端与管理员端页面，后端基于 Spring Boot、Spring Security、JWT、MyBatis-Plus、MySQL、AOP 和定时任务完成接口服务、权限控制、业务处理、数据持久化与预约超时处理。系统主要包括用户登录注册、停车场查询、车位状态展示、车辆管理、预约停车、订单支付、停车场管理、车位管理、订单管理、用户管理、操作日志、系统配置、数据统计和用户个人中心等模块。",
+    "在实现过程中，系统通过停车订单状态流转保证预约、入场、出场和支付环节的业务一致性，通过车位状态控制避免重复预约，通过定时任务处理预约超时，通过操作日志记录后台关键行为，通过统计图表展示收入趋势、订单趋势、停车场利用率和订单状态分布。测试与运行结果表明，系统能够较好地完成智慧停车场景下的信息查询、预约办理、订单处理和后台管理工作，具有一定的实用价值和后续扩展空间。"
+  ],
+  "keywords_zh": "智慧停车；Spring Boot；Vue3；MySQL；预约管理；停车订单",
+  "abstract_en": [
+    "With the continuous growth of urban motor vehicles, the contradiction between parking supply and demand has become increasingly prominent in business districts, transportation hubs, hospitals, schools and public service areas. Traditional parking lots mainly rely on manual registration, on-site space searching, manual charging and post-event statistics, which often lead to delayed parking space updates, inefficient user searching, unclear reservation rules, difficult order tracking and weak operation statistics. Based on an actual development project, this thesis designs and implements an urban smart parking management system.",
+    "The system adopts a front-end and back-end separated architecture. The front end is developed with Vue3, Vite, Naive UI, Pinia, Vue Router, Axios and ECharts, while the back end is implemented with Spring Boot, Spring Security, JWT, MyBatis-Plus, MySQL, AOP and scheduled tasks. The system provides user login and registration, parking lot query, parking space display, vehicle management, reservation, order payment, parking lot management, parking space management, order management, user management, operation logs, system configuration, data statistics and user profile management.",
+    "During implementation, the system maintains business consistency through parking order state transitions, prevents repeated reservations through parking space status control, handles reservation timeout through scheduled tasks, records important administrative operations through logs, and visualizes revenue trends, order trends, parking lot utilization and order status distribution. The running results show that the system can effectively support information query, reservation processing, order handling and back-office management in smart parking scenarios."
+  ],
+  "keywords_en": "Smart parking; Spring Boot; Vue3; MySQL; Reservation management; Parking order"
+}
