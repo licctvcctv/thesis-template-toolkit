@@ -28,21 +28,64 @@
       "subsections": []
     },
     {
-      "title": "3.3 业务流程设计",
+      "title": "3.3 设计模型的建立",
       "content": [
-        "系统的核心业务流程是用户订餐流程。用户登录后进入菜品列表页面，选择菜品并指定数量后提交订单。系统在提交时检查菜品库存是否充足、用户余额是否足够，条件满足则创建订单、扣减库存和余额、累加积分并自动评估会员等级。订单创建后状态为已支付，管理员或员工将订单标记为已完成后用户可以确认收货，确认收货后可以提交评价。用户也可以在已支付状态下申请退款，退款时系统回退余额和库存并扣减对应积分。业务流程如图3-3所示。",
+        "系统设计阶段需要把核心业务从文字需求进一步转换为可观察的动态模型。结合社区老年食堂订餐系统的功能范围，本文选取注册、登录、菜品浏览、在线订餐、订单退款、菜品管理、论坛发帖和公告发布八个核心业务绘制活动图。活动图按照参与者、系统和数据库等泳道展开，能够体现用户操作、系统校验、数据写入和异常返回之间的先后关系。",
+        "用户注册是新用户进入系统前的基础流程。游客在注册页面填写账号、密码、姓名、手机号等信息，系统校验必填项并检查用户名是否重复，校验通过后写入用户表，同时初始化余额、积分和会员等级。用户注册活动图如图3-4所示。",
         {
           "type": "image",
-          "path": "business-flow.png",
-          "width": 105,
-          "caption": "图3-3　订餐业务流程图"
-        },
-        "为了进一步说明用户、系统和员工之间的职责分工，本文对订餐业务绘制活动图。活动图按参与者划分泳道，能够更清楚地体现用户提交订单、系统校验库存和余额、员工处理发货以及用户确认收货之间的先后关系。用户订餐活动图如图3-4所示。",
-        {
-          "type": "image",
-          "path": "order-activity.png",
+          "path": "activity-register.png",
           "width": 108,
-          "caption": "图3-4　用户订餐活动图"
+          "caption": "图3-4　用户注册活动图"
+        },
+        "用户登录流程用于完成身份认证和会话建立。用户提交账号密码后，系统查询用户表并验证密码，验证通过后生成Token并返回登录成功结果；验证失败时返回错误提示并要求用户重新输入。用户登录活动图如图3-5所示。",
+        {
+          "type": "image",
+          "path": "activity-login.png",
+          "width": 108,
+          "caption": "图3-5　用户登录活动图"
+        },
+        "菜品浏览与搜索流程用于说明用户端首页和菜品详情之间的数据流转。用户可以按菜品类型或名称提交查询条件，系统从菜品表和字典表读取列表数据；用户进入详情时系统更新浏览次数并返回完整菜品信息。菜品浏览与搜索活动图如图3-6所示。",
+        {
+          "type": "image",
+          "path": "activity-dish-browse.png",
+          "width": 108,
+          "caption": "图3-6　菜品浏览与搜索活动图"
+        },
+        "在线订餐是系统的核心业务流程。用户选择菜品和数量后提交订单，系统依次校验库存和账户余额，满足条件时生成订单、扣减库存、扣减余额并累计积分，随后员工或管理员处理订单发货，用户确认收货后可以进行评价。用户订餐活动图如图3-7所示。",
+        {
+          "type": "image",
+          "path": "activity-order-model.png",
+          "width": 110,
+          "caption": "图3-7　用户订餐活动图"
+        },
+        "订单退款流程用于处理用户取消已支付订单的情况。系统需要读取订单、菜品和用户数据，判断订单状态是否允许退款，并在退款成功时同步恢复库存、退还余额、扣减积分和更新订单状态。订单退款活动图如图3-8所示。",
+        {
+          "type": "image",
+          "path": "activity-refund.png",
+          "width": 108,
+          "caption": "图3-8　订单退款活动图"
+        },
+        "菜品管理流程主要发生在后台管理端。管理员填写或修改菜品资料后提交保存，系统校验必填项和菜品名称重复情况，校验通过后写入菜品表，并刷新后台菜品列表。菜品管理活动图如图3-9所示。",
+        {
+          "type": "image",
+          "path": "activity-dish-manage.png",
+          "width": 108,
+          "caption": "图3-9　菜品管理活动图"
+        },
+        "论坛发帖流程体现系统的信息交流功能。用户填写帖子标题和内容后提交，系统先判断登录状态，再校验标题和正文是否为空，校验通过后写入论坛表并刷新帖子列表。论坛发帖活动图如图3-10所示。",
+        {
+          "type": "image",
+          "path": "activity-forum.png",
+          "width": 108,
+          "caption": "图3-10　论坛发帖活动图"
+        },
+        "公告发布流程体现管理员对系统通知的维护能力。管理员填写公告标题、类型、封面和正文后提交，系统完成字段校验并写入公告表，发布成功后用户端可以浏览对应公告。公告发布活动图如图3-11所示。",
+        {
+          "type": "image",
+          "path": "activity-notice.png",
+          "width": 108,
+          "caption": "图3-11　公告发布活动图"
         }
       ],
       "subsections": []
@@ -55,61 +98,61 @@
           "title": "3.4.1 概念结构设计",
           "content": [
             "根据系统的功能需求，数据库的概念结构涉及用户、员工、菜品、订单、供应商、评价、收藏、论坛帖子和公告等核心实体。为了避免总E-R图信息过多导致图中文字过小，本文先分别给出核心实体属性图，再给出系统总体E-R图。实体属性图用于说明单个实体包含的主要字段，总体E-R图用于说明实体之间的业务关系。",
-            "用户实体保存前台就餐用户的账号、身份信息、联系方式、余额、积分和会员等级等数据，是用户登录、订餐、充值、评价和论坛交流等功能的基础。用户实体属性图如图3-5所示。",
+            "用户实体保存前台就餐用户的账号、身份信息、联系方式、余额、积分和会员等级等数据，是用户登录、订餐、充值、评价和论坛交流等功能的基础。用户实体属性图如图3-12所示。",
             {
               "type": "image",
               "path": "er-user.png",
               "width": 125,
-              "caption": "图3-5　用户实体属性图"
+              "caption": "图3-12　用户实体属性图"
             },
-            "菜品实体用于保存食堂可售菜品的编号、名称、图片、类型、价格、库存、浏览次数和上下架状态等信息。菜品实体属性图如图3-6所示。",
+            "菜品实体用于保存食堂可售菜品的编号、名称、图片、类型、价格、库存、浏览次数和上下架状态等信息。菜品实体属性图如图3-13所示。",
             {
               "type": "image",
               "path": "er-dish.png",
               "width": 125,
-              "caption": "图3-6　菜品实体属性图"
+              "caption": "图3-13　菜品实体属性图"
             },
-            "订单实体记录用户下单后的交易数据，主要包括订单编号、用户编号、菜品编号、购买数量、预定时间、实付金额、订单状态和支付方式等字段。订单实体属性图如图3-7所示。",
+            "订单实体记录用户下单后的交易数据，主要包括订单编号、用户编号、菜品编号、购买数量、预定时间、实付金额、订单状态和支付方式等字段。订单实体属性图如图3-14所示。",
             {
               "type": "image",
               "path": "er-order.png",
               "width": 125,
-              "caption": "图3-7　订单实体属性图"
+              "caption": "图3-14　订单实体属性图"
             },
-            "供应商实体用于维护食堂食材供应来源，包含供应商名称、联系电话、供应物品、物品类型、供应价格和供应商描述等字段。供应商实体属性图如图3-8所示。",
+            "供应商实体用于维护食堂食材供应来源，包含供应商名称、联系电话、供应物品、物品类型、供应价格和供应商描述等字段。供应商实体属性图如图3-15所示。",
             {
               "type": "image",
               "path": "er-supplier.png",
               "width": 125,
-              "caption": "图3-8　供应商实体属性图"
+              "caption": "图3-15　供应商实体属性图"
             },
-            "评价实体用于保存用户对菜品订单的评价内容和管理员回复内容，评价数据能够反映用户对菜品质量和服务体验的反馈。评价实体属性图如图3-9所示。",
+            "评价实体用于保存用户对菜品订单的评价内容和管理员回复内容，评价数据能够反映用户对菜品质量和服务体验的反馈。评价实体属性图如图3-16所示。",
             {
               "type": "image",
               "path": "er-comment.png",
               "width": 125,
-              "caption": "图3-9　评价实体属性图"
+              "caption": "图3-16　评价实体属性图"
             },
-            "论坛实体用于保存用户和管理人员在论坛模块中的发帖与回复数据，父帖编号字段用于维护主帖和回复帖之间的层级关系。论坛实体属性图如图3-10所示。",
+            "论坛实体用于保存用户和管理人员在论坛模块中的发帖与回复数据，父帖编号字段用于维护主帖和回复帖之间的层级关系。论坛实体属性图如图3-17所示。",
             {
               "type": "image",
               "path": "er-forum.png",
               "width": 125,
-              "caption": "图3-10　论坛实体属性图"
+              "caption": "图3-17　论坛实体属性图"
             },
-            "公告实体用于保存系统通知和活动公告的标题、类型、封面图片、发布时间和正文内容。公告实体属性图如图3-11所示。",
+            "公告实体用于保存系统通知和活动公告的标题、类型、封面图片、发布时间和正文内容。公告实体属性图如图3-18所示。",
             {
               "type": "image",
               "path": "er-news.png",
               "width": 125,
-              "caption": "图3-11　公告实体属性图"
+              "caption": "图3-18　公告实体属性图"
             },
-            "在实体关系方面，用户可以浏览菜品、收藏菜品、提交订单和发布论坛帖子；订单与菜品、用户保持关联；菜品可以被评价；管理员维护供应商、公告等后台数据。系统总体E-R图如图3-12所示。",
+            "在实体关系方面，用户可以浏览菜品、收藏菜品、提交订单和发布论坛帖子；订单与菜品、用户保持关联；菜品可以被评价；管理员维护供应商、公告等后台数据。系统总体E-R图如图3-19所示。",
             {
               "type": "image",
               "path": "er-diagram.png",
               "width": 145,
-              "caption": "图3-12　系统总体E-R图"
+              "caption": "图3-19　系统总体E-R图"
             }
           ]
         },
@@ -121,128 +164,444 @@
             "表3-1 用户表（yonghu）",
             {
               "type": "table",
-              "headers": ["字段名", "类型", "说明"],
+              "headers": [
+                "字段名",
+                "类型",
+                "说明"
+              ],
               "rows": [
-                ["id", "INT", "主键，自增"],
-                ["username", "VARCHAR(200)", "账户名"],
-                ["password", "VARCHAR(200)", "密码"],
-                ["yonghu_name", "VARCHAR(200)", "用户姓名"],
-                ["yonghu_phone", "VARCHAR(200)", "手机号"],
-                ["yonghu_id_number", "VARCHAR(200)", "身份证号"],
-                ["yonghu_photo", "VARCHAR(200)", "头像路径"],
-                ["sex_types", "INT", "性别，关联字典表"],
-                ["yonghu_email", "VARCHAR(200)", "电子邮箱"],
-                ["new_money", "DOUBLE", "账户余额"],
-                ["yonghu_sum_jifen", "DOUBLE", "累计积分"],
-                ["yonghu_new_jifen", "DOUBLE", "当前积分"],
-                ["huiyuandengji_types", "INT", "会员等级"],
-                ["create_time", "DATETIME", "创建时间"]
+                [
+                  "id",
+                  "INT",
+                  "主键，自增"
+                ],
+                [
+                  "username",
+                  "VARCHAR(200)",
+                  "账户名"
+                ],
+                [
+                  "password",
+                  "VARCHAR(200)",
+                  "密码"
+                ],
+                [
+                  "yonghu_name",
+                  "VARCHAR(200)",
+                  "用户姓名"
+                ],
+                [
+                  "yonghu_phone",
+                  "VARCHAR(200)",
+                  "手机号"
+                ],
+                [
+                  "yonghu_id_number",
+                  "VARCHAR(200)",
+                  "身份证号"
+                ],
+                [
+                  "yonghu_photo",
+                  "VARCHAR(200)",
+                  "头像路径"
+                ],
+                [
+                  "sex_types",
+                  "INT",
+                  "性别，关联字典表"
+                ],
+                [
+                  "yonghu_email",
+                  "VARCHAR(200)",
+                  "电子邮箱"
+                ],
+                [
+                  "new_money",
+                  "DOUBLE",
+                  "账户余额"
+                ],
+                [
+                  "yonghu_sum_jifen",
+                  "DOUBLE",
+                  "累计积分"
+                ],
+                [
+                  "yonghu_new_jifen",
+                  "DOUBLE",
+                  "当前积分"
+                ],
+                [
+                  "huiyuandengji_types",
+                  "INT",
+                  "会员等级"
+                ],
+                [
+                  "create_time",
+                  "DATETIME",
+                  "创建时间"
+                ]
               ]
             },
             "菜品表用于保存社区老年食堂可售菜品的基础信息和销售状态，是菜品浏览、库存校验、订单生成和后台菜品维护的核心数据来源。该表共包含14个字段，其中caipin_uuid_number用于生成菜品编号，caipin_name、caipin_photo和caipin_content用于前台展示，caipin_types关联字典表实现菜品分类，caipin_kucun_number用于库存控制，shangxia_types和caipin_delete分别表示上下架状态和逻辑删除状态。",
             "表3-2 菜品表（caipin）",
             {
               "type": "table",
-              "headers": ["字段名", "类型", "说明"],
+              "headers": [
+                "字段名",
+                "类型",
+                "说明"
+              ],
               "rows": [
-                ["id", "INT", "主键，自增"],
-                ["caipin_uuid_number", "VARCHAR(200)", "菜品编号"],
-                ["caipin_name", "VARCHAR(200)", "菜品名称"],
-                ["caipin_photo", "VARCHAR(200)", "菜品图片"],
-                ["caipin_types", "INT", "菜品类型，关联字典表"],
-                ["caipin_price", "INT", "积分单价"],
-                ["caipin_kucun_number", "INT", "库存数量"],
-                ["caipin_old_money", "DOUBLE", "原价"],
-                ["caipin_new_money", "DOUBLE", "现价"],
-                ["caipin_clicknum", "INT", "浏览次数"],
-                ["caipin_content", "TEXT", "菜品描述"],
-                ["shangxia_types", "INT", "上架状态"],
-                ["caipin_delete", "INT", "逻辑删除标记"],
-                ["create_time", "DATETIME", "创建时间"]
+                [
+                  "id",
+                  "INT",
+                  "主键，自增"
+                ],
+                [
+                  "caipin_uuid_number",
+                  "VARCHAR(200)",
+                  "菜品编号"
+                ],
+                [
+                  "caipin_name",
+                  "VARCHAR(200)",
+                  "菜品名称"
+                ],
+                [
+                  "caipin_photo",
+                  "VARCHAR(200)",
+                  "菜品图片"
+                ],
+                [
+                  "caipin_types",
+                  "INT",
+                  "菜品类型，关联字典表"
+                ],
+                [
+                  "caipin_price",
+                  "INT",
+                  "积分单价"
+                ],
+                [
+                  "caipin_kucun_number",
+                  "INT",
+                  "库存数量"
+                ],
+                [
+                  "caipin_old_money",
+                  "DOUBLE",
+                  "原价"
+                ],
+                [
+                  "caipin_new_money",
+                  "DOUBLE",
+                  "现价"
+                ],
+                [
+                  "caipin_clicknum",
+                  "INT",
+                  "浏览次数"
+                ],
+                [
+                  "caipin_content",
+                  "TEXT",
+                  "菜品描述"
+                ],
+                [
+                  "shangxia_types",
+                  "INT",
+                  "上架状态"
+                ],
+                [
+                  "caipin_delete",
+                  "INT",
+                  "逻辑删除标记"
+                ],
+                [
+                  "create_time",
+                  "DATETIME",
+                  "创建时间"
+                ]
               ]
             },
             "订单表用于记录用户提交订餐后的交易信息，连接用户、菜品、库存扣减、支付和后续评价等业务环节。该表共包含11个字段，其中caipin_order_uuid_number为订单编号，caipin_id和yonghu_id分别关联菜品表和用户表，buy_number记录购买数量，caipin_order_true_price记录实付金额，caipin_order_types和caipin_order_payment_types用于区分订单状态和支付方式。",
             "表3-3 订单表（caipin_order）",
             {
               "type": "table",
-              "headers": ["字段名", "类型", "说明"],
+              "headers": [
+                "字段名",
+                "类型",
+                "说明"
+              ],
               "rows": [
-                ["id", "INT", "主键，自增"],
-                ["caipin_order_uuid_number", "VARCHAR(200)", "订单编号"],
-                ["caipin_id", "INT", "菜品ID，外键"],
-                ["yonghu_id", "INT", "用户ID，外键"],
-                ["buy_number", "INT", "购买数量"],
-                ["caipin_order_time", "DATETIME", "预定时间"],
-                ["caipin_order_true_price", "DOUBLE", "实付金额"],
-                ["caipin_order_types", "INT", "订单状态"],
-                ["caipin_order_payment_types", "INT", "支付方式"],
-                ["insert_time", "DATETIME", "下单时间"],
-                ["create_time", "DATETIME", "创建时间"]
+                [
+                  "id",
+                  "INT",
+                  "主键，自增"
+                ],
+                [
+                  "caipin_order_uuid_number",
+                  "VARCHAR(200)",
+                  "订单编号"
+                ],
+                [
+                  "caipin_id",
+                  "INT",
+                  "菜品ID，外键"
+                ],
+                [
+                  "yonghu_id",
+                  "INT",
+                  "用户ID，外键"
+                ],
+                [
+                  "buy_number",
+                  "INT",
+                  "购买数量"
+                ],
+                [
+                  "caipin_order_time",
+                  "DATETIME",
+                  "预定时间"
+                ],
+                [
+                  "caipin_order_true_price",
+                  "DOUBLE",
+                  "实付金额"
+                ],
+                [
+                  "caipin_order_types",
+                  "INT",
+                  "订单状态"
+                ],
+                [
+                  "caipin_order_payment_types",
+                  "INT",
+                  "支付方式"
+                ],
+                [
+                  "insert_time",
+                  "DATETIME",
+                  "下单时间"
+                ],
+                [
+                  "create_time",
+                  "DATETIME",
+                  "创建时间"
+                ]
               ]
             },
             "供应商表用于维护食堂采购相关的供应来源信息，为后台供应商管理和食材采购查询提供数据支持。该表共包含8个字段，其中gongyingshang_name记录供应商名称，gongyingshang_phone记录联系电话，gongyingshang_email在本系统中用于保存供应物品名称，gongyingshang_types标识供应物品类型，gongyingshang_money记录供应价格，gongyingshang_content用于补充供应商描述。",
             "表3-4 供应商表（gongyingshang）",
             {
               "type": "table",
-              "headers": ["字段名", "类型", "说明"],
+              "headers": [
+                "字段名",
+                "类型",
+                "说明"
+              ],
               "rows": [
-                ["id", "INT", "主键，自增"],
-                ["gongyingshang_name", "VARCHAR(200)", "供应商名称"],
-                ["gongyingshang_phone", "VARCHAR(200)", "联系电话"],
-                ["gongyingshang_email", "VARCHAR(200)", "供应物品名称"],
-                ["gongyingshang_types", "INT", "物品类型"],
-                ["gongyingshang_money", "DOUBLE", "供应价格"],
-                ["gongyingshang_content", "TEXT", "供应商描述"],
-                ["create_time", "DATETIME", "创建时间"]
+                [
+                  "id",
+                  "INT",
+                  "主键，自增"
+                ],
+                [
+                  "gongyingshang_name",
+                  "VARCHAR(200)",
+                  "供应商名称"
+                ],
+                [
+                  "gongyingshang_phone",
+                  "VARCHAR(200)",
+                  "联系电话"
+                ],
+                [
+                  "gongyingshang_email",
+                  "VARCHAR(200)",
+                  "供应物品名称"
+                ],
+                [
+                  "gongyingshang_types",
+                  "INT",
+                  "物品类型"
+                ],
+                [
+                  "gongyingshang_money",
+                  "DOUBLE",
+                  "供应价格"
+                ],
+                [
+                  "gongyingshang_content",
+                  "TEXT",
+                  "供应商描述"
+                ],
+                [
+                  "create_time",
+                  "DATETIME",
+                  "创建时间"
+                ]
               ]
             },
             "评价表用于保存用户对菜品或订单服务的反馈信息，是菜品评价展示和管理员回复功能的数据基础。该表共包含8个字段，其中caipin_id关联被评价菜品，yonghu_id关联评价用户，caipin_commentback_text记录评价内容，reply_text记录管理员回复内容，insert_time和update_time分别保存评价时间和回复时间。",
             "表3-5 评价表（caipin_commentback）",
             {
               "type": "table",
-              "headers": ["字段名", "类型", "说明"],
+              "headers": [
+                "字段名",
+                "类型",
+                "说明"
+              ],
               "rows": [
-                ["id", "INT", "主键，自增"],
-                ["caipin_id", "INT", "菜品ID，外键"],
-                ["yonghu_id", "INT", "用户ID，外键"],
-                ["caipin_commentback_text", "TEXT", "评价内容"],
-                ["insert_time", "DATETIME", "评价时间"],
-                ["reply_text", "TEXT", "管理员回复"],
-                ["update_time", "DATETIME", "回复时间"],
-                ["create_time", "DATETIME", "创建时间"]
+                [
+                  "id",
+                  "INT",
+                  "主键，自增"
+                ],
+                [
+                  "caipin_id",
+                  "INT",
+                  "菜品ID，外键"
+                ],
+                [
+                  "yonghu_id",
+                  "INT",
+                  "用户ID，外键"
+                ],
+                [
+                  "caipin_commentback_text",
+                  "TEXT",
+                  "评价内容"
+                ],
+                [
+                  "insert_time",
+                  "DATETIME",
+                  "评价时间"
+                ],
+                [
+                  "reply_text",
+                  "TEXT",
+                  "管理员回复"
+                ],
+                [
+                  "update_time",
+                  "DATETIME",
+                  "回复时间"
+                ],
+                [
+                  "create_time",
+                  "DATETIME",
+                  "创建时间"
+                ]
               ]
             },
             "论坛表用于保存系统论坛模块中的发帖和回复内容，为用户交流、员工回复和管理员审核提供数据支撑。该表共包含10个字段，其中forum_name为帖子标题，yonghu_id、yuangong_id和users_id用于区分发帖主体，forum_content保存帖子正文，super_ids用于表示父帖编号，forum_state_types用于标记帖子状态。",
             "表3-6 论坛表（forum）",
             {
               "type": "table",
-              "headers": ["字段名", "类型", "说明"],
+              "headers": [
+                "字段名",
+                "类型",
+                "说明"
+              ],
               "rows": [
-                ["id", "INT", "主键，自增"],
-                ["forum_name", "VARCHAR(200)", "帖子标题"],
-                ["yonghu_id", "INT", "用户ID"],
-                ["yuangong_id", "INT", "员工ID"],
-                ["users_id", "INT", "管理员ID"],
-                ["forum_content", "TEXT", "帖子内容"],
-                ["super_ids", "INT", "父帖ID，0为主帖"],
-                ["forum_state_types", "INT", "帖子状态"],
-                ["insert_time", "DATETIME", "发帖时间"],
-                ["create_time", "DATETIME", "创建时间"]
+                [
+                  "id",
+                  "INT",
+                  "主键，自增"
+                ],
+                [
+                  "forum_name",
+                  "VARCHAR(200)",
+                  "帖子标题"
+                ],
+                [
+                  "yonghu_id",
+                  "INT",
+                  "用户ID"
+                ],
+                [
+                  "yuangong_id",
+                  "INT",
+                  "员工ID"
+                ],
+                [
+                  "users_id",
+                  "INT",
+                  "管理员ID"
+                ],
+                [
+                  "forum_content",
+                  "TEXT",
+                  "帖子内容"
+                ],
+                [
+                  "super_ids",
+                  "INT",
+                  "父帖ID，0为主帖"
+                ],
+                [
+                  "forum_state_types",
+                  "INT",
+                  "帖子状态"
+                ],
+                [
+                  "insert_time",
+                  "DATETIME",
+                  "发帖时间"
+                ],
+                [
+                  "create_time",
+                  "DATETIME",
+                  "创建时间"
+                ]
               ]
             },
             "公告表用于保存系统通知、食堂活动和服务说明等公告信息，主要供前台公告浏览和后台公告发布维护使用。该表共包含7个字段，其中news_name为公告标题，news_types关联字典表区分公告类型，news_photo用于保存封面图片路径，insert_time为发布时间，news_content保存公告正文内容。",
             "表3-7 公告表（news）",
             {
               "type": "table",
-              "headers": ["字段名", "类型", "说明"],
+              "headers": [
+                "字段名",
+                "类型",
+                "说明"
+              ],
               "rows": [
-                ["id", "INT", "主键，自增"],
-                ["news_name", "VARCHAR(200)", "公告标题"],
-                ["news_types", "INT", "公告类型"],
-                ["news_photo", "VARCHAR(200)", "封面图片"],
-                ["insert_time", "DATETIME", "发布时间"],
-                ["news_content", "TEXT", "公告内容"],
-                ["create_time", "DATETIME", "创建时间"]
+                [
+                  "id",
+                  "INT",
+                  "主键，自增"
+                ],
+                [
+                  "news_name",
+                  "VARCHAR(200)",
+                  "公告标题"
+                ],
+                [
+                  "news_types",
+                  "INT",
+                  "公告类型"
+                ],
+                [
+                  "news_photo",
+                  "VARCHAR(200)",
+                  "封面图片"
+                ],
+                [
+                  "insert_time",
+                  "DATETIME",
+                  "发布时间"
+                ],
+                [
+                  "news_content",
+                  "TEXT",
+                  "公告内容"
+                ],
+                [
+                  "create_time",
+                  "DATETIME",
+                  "创建时间"
+                ]
               ]
             }
           ]
@@ -252,7 +611,7 @@
     {
       "title": "3.5 本章小结",
       "content": [
-        "这一章完成了系统整体的设计工作。功能结构设计把系统分成了用户端和管理端两大模块，各模块包含的功能项已经明确。架构设计上选的是B/S架构的三层结构，表现层、业务逻辑层和数据访问层各负责各的工作。业务流程方面，梳理了订餐从下单到评价的整个过程，库存校验、余额扣减、积分累计和退款回退这几个关键节点都覆盖到了。数据库设计以E-R图为起点，把概念模型转成了7张核心业务表的逻辑结构，为后面编码阶段的数据操作提供了设计依据。"
+        "这一章完成了系统整体的设计工作。功能结构设计把系统分成了用户端和管理端两大模块，各模块包含的功能项已经明确。架构设计上选的是B/S架构的三层结构，表现层、业务逻辑层和数据访问层各负责各的工作。业务流程方面，本文补充了注册、登录、菜品浏览、在线订餐、订单退款、菜品管理、论坛发帖和公告发布八个活动图，使核心业务的用户操作、系统判断和数据库读写关系更加清楚。数据库设计以E-R图为起点，把概念模型转成了7张核心业务表的逻辑结构，为后面编码阶段的数据操作提供了设计依据。"
       ],
       "subsections": []
     }

@@ -201,6 +201,8 @@ def _post_process(docx_path):
         # 图表标注居中
         if (fig_cap_pat.match(t) or tbl_cap_pat.match(t)) and len(t) < 60:
             p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+            if t == "表2-2 注册用例描述":
+                p.paragraph_format.page_break_before = True
             for r in p.runs:
                 r.font.size = Pt(10.5)
 
@@ -344,6 +346,16 @@ def _insert_table(doc, after_para, tbl_data):
         return
 
     all_rows = [headers] + rows
+    col_count = len(headers)
+    page_width = 9638
+    raw_widths = tbl_data.get("widths")
+    if raw_widths and len(raw_widths) == col_count:
+        total = float(sum(raw_widths)) or 1.0
+        grid_widths = [str(int(page_width * float(w) / total)) for w in raw_widths]
+    else:
+        grid_widths = [str(int(page_width / col_count)) for _ in range(col_count)]
+    table_style = tbl_data.get("style", "three_line")
+    grid_table = table_style == "grid"
 
     tbl = OxmlElement('w:tbl')
     tblPr = OxmlElement('w:tblPr')
@@ -367,8 +379,8 @@ def _insert_table(doc, after_para, tbl_data):
         borders.append(el)
     for edge in ['left', 'right', 'insideH', 'insideV']:
         el = OxmlElement(f'w:{edge}')
-        el.set(qn('w:val'), 'none')
-        el.set(qn('w:sz'), '0')
+        el.set(qn('w:val'), 'single' if grid_table else 'none')
+        el.set(qn('w:sz'), '6' if grid_table else '0')
         el.set(qn('w:space'), '0')
         el.set(qn('w:color'), '000000')
         borders.append(el)
@@ -377,9 +389,7 @@ def _insert_table(doc, after_para, tbl_data):
 
     # Add tblGrid (required for valid table XML)
     tblGrid = OxmlElement('w:tblGrid')
-    col_count = len(headers)
-    col_width = str(int(9638 / col_count))  # distribute evenly across page width
-    for _ in range(col_count):
+    for col_width in grid_widths:
         gridCol = OxmlElement('w:gridCol')
         gridCol.set(qn('w:w'), col_width)
         tblGrid.append(gridCol)
@@ -387,23 +397,36 @@ def _insert_table(doc, after_para, tbl_data):
 
     for row_idx, cells in enumerate(all_rows):
         tr = OxmlElement('w:tr')
-        for cell_text in cells:
+        for cell_idx, cell_text in enumerate(cells):
             tc = OxmlElement('w:tc')
-            if row_idx == 0:
-                tcPr = OxmlElement('w:tcPr')
+            tcPr = OxmlElement('w:tcPr')
+            tcW = OxmlElement('w:tcW')
+            tcW.set(qn('w:w'), grid_widths[cell_idx])
+            tcW.set(qn('w:type'), 'dxa')
+            tcPr.append(tcW)
+            tcMar = OxmlElement('w:tcMar')
+            for side in ['top', 'left', 'bottom', 'right']:
+                mar = OxmlElement(f'w:{side}')
+                mar.set(qn('w:w'), '90' if grid_table else '60')
+                mar.set(qn('w:type'), 'dxa')
+                tcMar.append(mar)
+            tcPr.append(tcMar)
+            if row_idx == 0 or grid_table:
                 tcBorders = OxmlElement('w:tcBorders')
-                btm = OxmlElement('w:bottom')
-                btm.set(qn('w:val'), 'single')
-                btm.set(qn('w:sz'), '6')
-                btm.set(qn('w:space'), '0')
-                btm.set(qn('w:color'), '000000')
-                tcBorders.append(btm)
+                edges = ['bottom'] if not grid_table else ['top', 'left', 'bottom', 'right']
+                for edge in edges:
+                    border = OxmlElement(f'w:{edge}')
+                    border.set(qn('w:val'), 'single')
+                    border.set(qn('w:sz'), '6')
+                    border.set(qn('w:space'), '0')
+                    border.set(qn('w:color'), '000000')
+                    tcBorders.append(border)
                 tcPr.append(tcBorders)
-                tc.append(tcPr)
+            tc.append(tcPr)
             p = OxmlElement('w:p')
             pPr = OxmlElement('w:pPr')
             pJc = OxmlElement('w:jc')
-            pJc.set(qn('w:val'), 'center')
+            pJc.set(qn('w:val'), 'center' if row_idx == 0 or cell_idx == 0 else 'left')
             pPr.append(pJc)
             p.append(pPr)
             r = OxmlElement('w:r')
