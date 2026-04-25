@@ -8,6 +8,7 @@ import os
 import sys
 import json
 import re
+import zipfile
 
 ROOT = os.path.join(os.path.dirname(__file__), "../..")
 sys.path.insert(0, ROOT)
@@ -144,6 +145,7 @@ def main():
     doc.save(output)
 
     _post_process(output)
+    _patch_auto_toc(output)
     errors = _verify(output)
     if errors:
         print(f"  ⚠ {len(errors)} 个问题:")
@@ -474,6 +476,181 @@ def _verify(docx_path):
         if tag in full:
             errors.append(f"残留模板标记: {tag}")
     return errors
+
+
+def _patch_auto_toc(docx_path):
+    """Keep a real Word/WPS TOC field and prefill its visible result.
+
+    The source template already contains a TOC field, but desktop Word/WPS is
+    normally responsible for calculating the field result. Headless previews and
+    PDF conversion therefore show an empty TOC unless we cache visible entries.
+    The field remains updateable in Word/WPS.
+    """
+    W = "http://schemas.openxmlformats.org/wordprocessingml/2006/main"
+    NS = {"w": W}
+
+    from lxml import etree
+
+    def qn(tag):
+        prefix, name = tag.split(":")
+        return f"{{{W}}}{name}" if prefix == "w" else tag
+
+    page_numbers = {
+        "1 绪论": 1,
+        "1.1 课题背景": 1,
+        "1.2 国内外研究现状": 2,
+        "1.3 研究目标": 4,
+        "1.4 论文组织结构": 4,
+        "2 系统需求分析": 6,
+        "2.1 可行性分析": 6,
+        "2.1.1 技术可行性": 6,
+        "2.1.2 经济可行性": 7,
+        "2.2 功能需求分析": 7,
+        "2.2.1 确定业务参与者": 7,
+        "2.2.2 用例建模": 8,
+        "2.2.3 用例描述": 10,
+        "2.3 非功能性需求分析": 11,
+        "2.4 运行环境需求": 12,
+        "3 系统设计": 14,
+        "3.1 系统功能结构设计": 14,
+        "3.2 系统架构设计": 14,
+        "3.3 设计模型的建立": 16,
+        "3.4 数据库设计": 25,
+        "3.4.1 概念结构设计": 25,
+        "3.4.2 逻辑结构设计": 31,
+        "3.5 本章小结": 37,
+        "4 系统功能的实现": 39,
+        "4.1 用户端功能实现": 40,
+        "4.1.1 用户登录与注册": 40,
+        "4.1.2 菜品浏览与搜索": 42,
+        "4.1.3 在线订餐": 45,
+        "4.1.4 个人中心": 48,
+        "4.1.5 论坛交流": 48,
+        "4.1.6 公告浏览": 50,
+        "4.2 管理端功能实现": 51,
+        "4.2.1 管理员登录": 51,
+        "4.2.2 菜品管理": 52,
+        "4.2.3 订单管理": 54,
+        "4.2.4 供应商管理与公告管理": 57,
+        "4.3 本章小结": 59,
+        "5 系统测试": 60,
+        "5.1 测试概述": 60,
+        "5.2 测试方法": 61,
+        "5.2.1 功能测试方法": 61,
+        "5.2.2 性能测试方法": 61,
+        "5.3 功能测试": 62,
+        "5.3.1 用户端功能测试": 62,
+        "5.3.2 管理端功能测试": 63,
+        "5.4 测试结果与分析": 64,
+        "5.5 本章小结": 65,
+        "结  论": 67,
+        "参考文献": 69,
+        "致  谢": 71,
+    }
+    style_levels = {
+        "39": 1,  # 论-一级标题（章）
+        "42": 2,  # 论-二级标题（节）
+        "46": 3,  # 论-三级标题（条）
+        "50": 1,  # 论-结论、参考文献
+        "57": 1,  # 论-致谢标题
+    }
+    toc_styles = {1: "64", 2: "66", 3: "68"}
+
+    def text_of(p):
+        return "".join(p.xpath(".//w:t/text()", namespaces=NS)).strip()
+
+    def style_of(p):
+        st = p.find("w:pPr/w:pStyle", NS)
+        return st.get(qn("w:val")) if st is not None else None
+
+    def make_toc_para(title, level, page):
+        p = etree.Element(qn("w:p"), nsmap=None)
+        ppr = etree.SubElement(p, qn("w:pPr"))
+        pst = etree.SubElement(ppr, qn("w:pStyle"))
+        pst.set(qn("w:val"), toc_styles.get(level, "66"))
+        tabs = etree.SubElement(ppr, qn("w:tabs"))
+        tab = etree.SubElement(tabs, qn("w:tab"))
+        tab.set(qn("w:val"), "right")
+        tab.set(qn("w:leader"), "dot")
+        tab.set(qn("w:pos"), "9000")
+        if level > 1:
+            ind = etree.SubElement(ppr, qn("w:ind"))
+            ind.set(qn("w:left"), str(360 * (level - 1)))
+
+        r1 = etree.SubElement(p, qn("w:r"))
+        t1 = etree.SubElement(r1, qn("w:t"))
+        t1.text = title
+        rtab = etree.SubElement(p, qn("w:r"))
+        etree.SubElement(rtab, qn("w:tab"))
+        r2 = etree.SubElement(p, qn("w:r"))
+        t2 = etree.SubElement(r2, qn("w:t"))
+        t2.text = str(page)
+        return p
+
+    with zipfile.ZipFile(docx_path, "r") as zin:
+        files = {info.filename: zin.read(info.filename) for info in zin.infolist()}
+
+    root = etree.fromstring(files["word/document.xml"])
+    body = root.find("w:body", NS)
+    paras = body.findall("w:p", NS)
+
+    toc_start = toc_end = None
+    for i, p in enumerate(paras):
+        instr = "".join(p.xpath(".//w:instrText/text()", namespaces=NS))
+        if "TOC" in instr:
+            toc_start = i
+            break
+    if toc_start is None:
+        return
+    for j in range(toc_start + 1, len(paras)):
+        types = [x.get(qn("w:fldCharType")) for x in paras[j].findall(".//w:fldChar", NS)]
+        if "end" in types:
+            toc_end = j
+            break
+    if toc_end is None:
+        return
+
+    # Mark the field dirty so Word/WPS can update it on demand.
+    for fld in paras[toc_start].findall(".//w:fldChar", NS):
+        if fld.get(qn("w:fldCharType")) == "begin":
+            fld.set(qn("w:dirty"), "true")
+
+    for old in paras[toc_start + 1:toc_end]:
+        body.remove(old)
+    paras = body.findall("w:p", NS)
+    end_p = paras[toc_start + 1]
+
+    entries = []
+    for p in body.findall("w:p", NS)[toc_start + 2:]:
+        title = text_of(p)
+        if not title:
+            continue
+        level = style_levels.get(style_of(p))
+        if not level:
+            continue
+        if title.startswith("{") or title in {"目  录"}:
+            continue
+        page = page_numbers.get(title)
+        if page is None:
+            continue
+        entries.append((title, level, page))
+
+    for title, level, page in entries:
+        end_p.addprevious(make_toc_para(title, level, page))
+
+    settings = etree.fromstring(files["word/settings.xml"])
+    if settings.find("w:updateFields", NS) is None:
+        upd = etree.Element(qn("w:updateFields"))
+        upd.set(qn("w:val"), "true")
+        settings.append(upd)
+    files["word/document.xml"] = etree.tostring(root, xml_declaration=True, encoding="UTF-8", standalone="yes")
+    files["word/settings.xml"] = etree.tostring(settings, xml_declaration=True, encoding="UTF-8", standalone="yes")
+
+    tmp = docx_path + ".tmp"
+    with zipfile.ZipFile(tmp, "w", zipfile.ZIP_DEFLATED) as zout:
+        for name, data in files.items():
+            zout.writestr(name, data)
+    os.replace(tmp, docx_path)
 
 
 if __name__ == "__main__":
