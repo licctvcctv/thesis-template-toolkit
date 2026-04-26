@@ -1,0 +1,474 @@
+{
+  "title": "第4章 系统实现与测试",
+  "content": [],
+  "sections": [
+    {
+      "title": "4.1 系统开发环境",
+      "content": [
+        {
+          "text": "学习伴侣系统由 H5 学习端、微信小程序壳、Node.js 服务端、SQLite 数据库和后台管理端组成。开发与运行环境如表4-1所示。系统源码中已经包含 `server/package.json` 和 `h5-app/package.json`，分别用于安装后端依赖和前端依赖。服务端默认运行端口为 3900，H5 开发服务器可通过 Vite 启动。"
+        },
+        {
+          "table": {
+            "caption": "表4-1 系统开发与运行环境表",
+            "headers": [
+              "类别",
+              "环境或工具",
+              "说明"
+            ],
+            "rows": [
+              [
+                "开发语言",
+                "JavaScript、TypeScript",
+                "前端页面、服务端接口和测试脚本均以脚本语言实现"
+              ],
+              [
+                "运行环境",
+                "Node.js",
+                "运行 Express 服务、种子数据脚本和单元测试"
+              ],
+              [
+                "前端工具",
+                "Vite",
+                "提供 H5 端开发服务器、构建和资源打包能力"
+              ],
+              [
+                "数据库",
+                "SQLite",
+                "以本地数据库文件形式保存业务数据"
+              ],
+              [
+                "浏览器环境",
+                "微信开发者工具/Chrome",
+                "承载 H5 页面和小程序 WebView 页面调试"
+              ],
+              [
+                "测试工具",
+                "node:test",
+                "对登录、收藏、访问控制、日期、数据库路径等逻辑进行验证"
+              ]
+            ],
+            "col_widths": [
+              3.0,
+              4.5,
+              6.5
+            ]
+          }
+        },
+        {
+          "text": "在测试数据准备方面，项目提供 `server/seed.js` 脚本。该脚本能够写入张同学、李学姐、王小明等测试用户，生成学习笔记、评论、点赞、打卡任务、签到记录和学伴关系。通过种子数据可以避免页面空白，使运行截图更能展示系统真实业务效果。"
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "4.2 系统核心功能实现",
+      "content": [],
+      "subsections": [
+        {
+          "title": "4.2.1 登录鉴权实现",
+          "content": [
+            {
+              "text": "系统登录后端通过 `server/routes/user.js` 实现，鉴权逻辑封装在 `server/middleware/auth.js` 中。用户登录成功后，服务端生成 JWT 并返回给前端；前端在 `api/request.ts` 中拦截请求，将 Token 自动写入 Authorization 请求头。若接口返回 401，前端会清理本地 Token 并跳转登录页。该机制保证了用户在多个页面之间切换时能够保持登录状态。"
+            },
+            {
+              "code": "import axios from 'axios';\n\nconst http = axios.create({ baseURL: '/api', timeout: 10000 });\n\n// 防止多个 401 同时触发重复跳转\nlet isRedirecting = false;\n\nfunction forceLogout() {\n  if (isRedirecting) return;\n  isRedirecting = true;\n  localStorage.removeItem('token');\n  localStorage.removeItem('userInfo');\n  window.location.hash = '#/login';\n  setTimeout(() => { isRedirecting = false; }, 500);\n}\n\nhttp.interceptors.request.use((config) => {\n  const token = localStorage.getItem('token');\n  if (token) config.headers.Authorization = `Bearer ${token}`;\n  return config;\n});\n\nhttp.interceptors.response.use(\n  (res) => {\n    const body = res.data;\n    if (body.code === 401) {\n      forceLogout();\n      throw new Error('未登录');\n    }\n    if (body.code !== 200) throw new Error(body.msg || '请求失败');\n    return body.data;\n  },\n  (err) => { throw err; }\n);\n\nexport const api = {",
+              "caption": "程序4-1 前端请求封装关键代码"
+            },
+            {
+              "text": "登录页面运行效果如图4-1所示。页面采用移动端卡片布局，用户输入账号和密码后点击登录按钮即可进入系统。测试账号可使用种子数据中的 zhangsan、lixuejie、wangxm 等账号，密码统一为 123456。"
+            },
+            {
+              "image": "screenshots/runtime/login.png",
+              "caption": "图4-1 用户登录页面运行图",
+              "width_cm": 6.5
+            }
+          ]
+        },
+        {
+          "title": "4.2.2 首页与学习统计实现",
+          "content": [
+            {
+              "text": "首页是移动端学习入口。页面加载时并行请求签到统计、打卡任务、公开笔记、签到排行榜、当前学伴和未读消息数量，然后将结果组织到学习概览、快捷入口、精选笔记、今日打卡和排行榜等区域。该设计减少了用户进入系统后的操作层级，使常用学习任务能够在首页直接访问。"
+            },
+            {
+              "code": "const loadAll = async () => {\n    setLoading(true);\n    const [signR, checkinR, noteR, leaderR, currentPartnerR, unreadR] = await Promise.allSettled([\n      api.get('/sign/stats'),\n      api.get('/checkin/list', { page: 1, size: 10 }),\n      api.get('/note/public_list', { page: 1, size: 6, sort: 'recommend' }),\n      api.get('/sign/leaderboard', { limit: 5 }),\n      api.get('/partner/current'),\n      api.get('/message/unread_count'),\n    ]);\n    if (signR.status === 'fulfilled') {\n      const s: any = signR.value || {};\n      setSignStats({ streak: s.streak || 0, totalDays: s.totalDays || 0, totalDuration: s.totalDuration || 0, todaySigned: !!s.todaySigned });\n    }\n    if (checkinR.status === 'fulfilled') {\n      const list = (checkinR.value as any)?.list || [];\n      let doneIds: number[] = [];\n      if (list.length) { try { doneIds = await api.get('/checkin/today_done_ids') as any; } catch {} }\n      const mapped = list.map((t: any) => ({ ...t, _joined: (doneIds || []).includes(t.id) }));\n      setTasks(mapped);\n      setTodayDone(mapped.filter((t: any) => t._joined).length);\n    }\n    if (noteR.status === 'fulfilled') setNotes((noteR.value as any)?.list || []);",
+              "caption": "程序4-2 首页数据加载关键代码"
+            },
+            {
+              "text": "首页运行效果如图4-2所示。页面上方展示用户昵称、消息入口和签到状态，中部展示快捷功能和精选笔记，下方展示今日打卡和排行榜入口。该页面能够集中体现系统的移动端学习场景。"
+            },
+            {
+              "image": "screenshots/runtime/home.png",
+              "caption": "图4-2 学习首页运行图",
+              "width_cm": 6.5
+            }
+          ]
+        },
+        {
+          "title": "4.2.3 笔记与社区功能实现",
+          "content": [
+            {
+              "text": "笔记发布页面支持标题、正文、图片、标签和可见范围设置。用户可以选择公开、私密或学伴可见，系统会根据可见范围控制笔记在社区和个人页面中的展示。社区页面通过 `/api/note/public_list` 获取公开笔记，并支持推荐、热门、最新和关键词筛选。"
+            },
+            {
+              "text": "笔记详情页面支持点赞、收藏和评论。用户进入详情页后，系统读取笔记详情和评论列表，同时根据当前用户身份判断是否允许编辑或删除该笔记。点赞和收藏操作通过独立接口切换状态，评论提交后刷新评论列表并更新计数。"
+            },
+            {
+              "image": "screenshots/runtime/community.png",
+              "caption": "图4-3 社区广场运行图",
+              "width_cm": 6.5
+            },
+            {
+              "image": "screenshots/runtime/note.png",
+              "caption": "图4-4 笔记详情运行图",
+              "width_cm": 6.5
+            }
+          ]
+        },
+        {
+          "title": "4.2.4 签到与打卡任务实现",
+          "content": [
+            {
+              "text": "签到模块用于记录每日学习状态，打卡任务模块用于记录某个具体目标的持续完成情况。打卡任务详情页会显示任务标题、任务描述、个人是否已参与、监督人信息、打卡记录和底部提交按钮。用户提交打卡后，服务端会检查任务是否存在、当日是否已经提交，然后将记录写入 checkin_records 表。"
+            },
+            {
+              "code": "router.post('/join', authMiddleware, (req, res) => {\n\tconst { checkinId, content } = req.body;\n\tconst item = db.prepare('SELECT id FROM checkins WHERE id = ? AND status = 1').get(checkinId);\n\tif (!item) return res.json({ code: 404, msg: '不存在' });\n\tconst today = getLocalDateString();\n\tconst existing = db.prepare('SELECT id FROM checkin_records WHERE checkin_id = ? AND user_id = ? AND day = ?').get(checkinId, req.userId, today);\n\tif (existing) return res.json({ code: 200, msg: '今日已打卡', data: { alreadyDone: true } });\n\n\tdb.prepare('INSERT INTO checkin_records (checkin_id, user_id, day, content) VALUES (?, ?, ?, ?)').run(checkinId, req.userId, today, trimText(content, 2000));\n\tdb.prepare('UPDATE checkins SET join_cnt = join_cnt + 1 WHERE id = ?').run(checkinId);\n\tres.json({ code: 200, msg: '打卡成功' });\n});",
+              "caption": "程序4-3 打卡提交接口关键代码"
+            },
+            {
+              "text": "打卡任务页面运行效果如图4-5所示。页面展示任务记录列表和“今日打卡”按钮，用户可以快速查看其他同学的打卡内容，也可以完成自己的打卡提交。"
+            },
+            {
+              "image": "screenshots/runtime/checkin.png",
+              "caption": "图4-5 打卡任务页面运行图",
+              "width_cm": 6.5
+            }
+          ]
+        },
+        {
+          "title": "4.2.5 学伴关系与伙伴空间实现",
+          "content": [
+            {
+              "text": "学伴模块通过 partners 表记录用户之间的邀请与通过状态。用户在发现列表中选择目标用户后，服务端先检查双方是否已有有效学伴关系，若满足条件则写入待处理邀请并生成消息通知。对方接受邀请后，关系状态更新为通过，双方可以进入伙伴空间。"
+            },
+            {
+              "code": "router.post('/invite', authMiddleware, (req, res) => {\n\tconst { targetId } = req.body;\n\tconst target = db.prepare('SELECT id FROM users WHERE id = ?').get(targetId);\n\tif (!target) return res.json({ code: 404, msg: '用户不存在' });\n\tif (Number(targetId) === req.userId) return res.json({ code: 400, msg: '不能邀请自己' });\n\n\tconst partnerError = assertPartnerAvailability(db, req.userId, Number(targetId));\n\tif (partnerError) return res.json(partnerError);\n\n\tconst existing = db.prepare(\n\t\t`SELECT id, status FROM partners\n\t\t WHERE ((user_id = ? AND target_id = ?) OR (user_id = ? AND target_id = ?))\n\t\t AND status IN (0, 1)\n\t\t ORDER BY status DESC, updated_at DESC, created_at DESC\n\t\t LIMIT 1`\n\t).get(req.userId, targetId, targetId, req.userId);\n\tif (existing) {\n\t\tif (existing.status === 1) return res.json({ code: 200, msg: '已是学伴' });\n\t\treturn res.json({ code: 200, msg: '邀请已发送，等待对方确认' });\n\t}\n\n\t// 清除旧的拒绝记录，允许重新邀请\n\tdb.prepare(\n\t\t`DELETE FROM partners\n\t\t WHERE ((user_id = ? AND target_id = ?) OR (user_id = ? AND target_id = ?)) AND status NOT IN (0, 1)`\n\t).run(req.userId, targetId, targetId, req.userId);\n\n\tconst result = db.prepare('INSERT INTO partners (user_id, target_id, status) VALUES (?, ?, 0)').run(req.userId, targetId);\n\tnotifyPartnerInvite(req.userId, targetId);\n\tres.json({ code: 200, data: { id: result.lastInsertRowid } });\n});",
+              "caption": "程序4-4 学伴邀请接口关键代码"
+            },
+            {
+              "text": "伙伴空间运行效果如图4-6所示。页面上方展示当前学伴信息和学习统计，下方展示双方动态和打卡记录。该功能将普通社交关系转化为学习监督关系，是系统区别于普通笔记社区的重要设计。"
+            },
+            {
+              "image": "screenshots/runtime/partner.png",
+              "caption": "图4-6 伙伴空间运行图",
+              "width_cm": 6.5
+            }
+          ]
+        },
+        {
+          "title": "4.2.6 后台管理实现",
+          "content": [
+            {
+              "text": "后台管理端位于 `server/admin` 目录下，通过 Express 静态资源方式访问。管理员登录后可以对用户、笔记、评论、打卡任务、学伴关系和公告资讯进行管理。后台接口与普通用户接口分离，并通过 x-admin-token 完成管理员鉴权。"
+            },
+            {
+              "text": "后台用户管理和数据统计依赖 `routes/admin.js`。例如用户列表接口支持分页和关键词查询，删除用户时会同步处理该用户的消息、签到、打卡、学伴关系、笔记和评论等关联数据，避免删除后留下孤立记录。"
+            },
+            {
+              "code": "router.delete('/user_del/:id', adminAuth, (req, res) => {\n\tconst user = db.prepare('SELECT id FROM users WHERE id = ?').get(req.params.id);\n\tif (!user) return res.json({ code: 404, msg: '用户不存在' });\n\tconst deleteUser = db.transaction((userId) => {\n\t\tdb.prepare('DELETE FROM messages WHERE user_id = ? OR from_id = ?').run(userId, userId);\n\t\tdb.prepare('DELETE FROM plan_records WHERE user_id = ?').run(userId);\n\t\tdb.prepare('DELETE FROM plans WHERE creator_id = ? OR executor_id = ?').run(userId, userId);\n\t\tdb.prepare('UPDATE checkins SET supervisor_id = 0, supervisor_name = \"\" WHERE supervisor_id = ?').run(userId);\n\t\tdb.prepare('UPDATE checkins SET creator_id = 0 WHERE creator_id = ?').run(userId);\n\t\tdb.prepare('DELETE FROM comments WHERE user_id = ?').run(userId);\n\t\tdb.prepare('DELETE FROM likes WHERE user_id = ?').run(userId);\n\t\tdb.prepare('DELETE FROM favorites WHERE user_id = ?').run(userId);\n\t\tdb.prepare('DELETE FROM signs WHERE user_id = ?').run(userId);\n\t\tdb.prepare('DELETE FROM checkin_records WHERE user_id = ?').run(userId);\n\t\tdb.prepare('DELETE FROM partners WHERE user_id = ? OR target_id = ?').run(userId, userId);\n\t\tconst notes = db.prepare('SELECT id FROM notes WHERE user_id = ?').all(userId);\n\t\tnotes.forEach(n => deleteNoteCascade(db, n.id));\n\t\tdb.prepare('DELETE FROM users WHERE id = ?').run(userId);\n\t});\n\tdeleteUser(req.params.id);\n\tres.json({ code: 200, msg: '删除成功' });\n});",
+              "caption": "程序4-5 后台用户删除关键代码"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "4.3 系统测试",
+      "content": [],
+      "subsections": [
+        {
+          "title": "4.3.1 功能测试",
+          "content": [
+            {
+              "text": "系统测试以实际业务流程为基础，重点验证登录、笔记、签到、打卡、学伴、消息和后台管理等功能是否能够正常完成。测试时先运行服务端种子数据脚本，再分别使用普通用户账号和后台管理员账号进行操作。功能测试用例如表4-2所示。"
+            },
+            {
+              "table": {
+                "caption": "表4-2 系统功能测试用例表",
+                "headers": [
+                  "编号",
+                  "测试模块",
+                  "测试内容",
+                  "预期结果",
+                  "测试结果"
+                ],
+                "rows": [
+                  [
+                    "TC01",
+                    "登录模块",
+                    "使用 zhangsan/123456 登录",
+                    "返回 Token 并进入首页",
+                    "通过"
+                  ],
+                  [
+                    "TC02",
+                    "笔记模块",
+                    "发布公开学习笔记",
+                    "笔记进入我的笔记并可在社区查看",
+                    "通过"
+                  ],
+                  [
+                    "TC03",
+                    "互动模块",
+                    "对公开笔记点赞、评论、收藏",
+                    "互动计数更新，列表展示正常",
+                    "通过"
+                  ],
+                  [
+                    "TC04",
+                    "签到模块",
+                    "提交今日学习时长和内容",
+                    "写入 signs 表并刷新日历",
+                    "通过"
+                  ],
+                  [
+                    "TC05",
+                    "打卡模块",
+                    "加入打卡任务并提交内容",
+                    "生成 checkin_records 记录",
+                    "通过"
+                  ],
+                  [
+                    "TC06",
+                    "学伴模块",
+                    "发起并接受学伴邀请",
+                    "partners 状态变为通过",
+                    "通过"
+                  ],
+                  [
+                    "TC07",
+                    "伙伴空间",
+                    "进入伙伴空间并发布动态",
+                    "双方均可查看空间内容",
+                    "通过"
+                  ],
+                  [
+                    "TC08",
+                    "后台管理",
+                    "后台查看用户与笔记列表",
+                    "列表数据完整展示",
+                    "通过"
+                  ]
+                ],
+                "col_widths": [
+                  1.6,
+                  2.6,
+                  5.2,
+                  4.2,
+                  2.0
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "title": "4.3.2 接口与权限测试",
+          "content": [
+            {
+              "text": "接口测试主要验证服务端返回格式和权限控制。未携带 Token 访问需要登录的接口时，系统应返回 401；普通用户不能访问后台接口；管理员登录后才能进入后台数据接口。测试结果如表4-3所示。"
+            },
+            {
+              "table": {
+                "caption": "表4-3 接口与权限测试表",
+                "headers": [
+                  "编号",
+                  "测试项",
+                  "操作",
+                  "预期结果",
+                  "结果"
+                ],
+                "rows": [
+                  [
+                    "TP01",
+                    "普通接口鉴权",
+                    "未登录访问 /api/user/info",
+                    "返回未登录提示",
+                    "通过"
+                  ],
+                  [
+                    "TP02",
+                    "Token有效性",
+                    "登录后访问 /api/sign/stats",
+                    "返回签到统计",
+                    "通过"
+                  ],
+                  [
+                    "TP03",
+                    "笔记权限",
+                    "非作者访问私密笔记",
+                    "返回无权访问",
+                    "通过"
+                  ],
+                  [
+                    "TP04",
+                    "学伴可见",
+                    "非学伴访问学伴可见笔记",
+                    "拒绝访问",
+                    "通过"
+                  ],
+                  [
+                    "TP05",
+                    "后台鉴权",
+                    "普通用户访问后台用户接口",
+                    "返回未登录或无权限",
+                    "通过"
+                  ],
+                  [
+                    "TP06",
+                    "管理员鉴权",
+                    "管理员登录后访问用户列表",
+                    "返回用户分页数据",
+                    "通过"
+                  ]
+                ],
+                "col_widths": [
+                  1.6,
+                  3.0,
+                  5.2,
+                  4.0,
+                  2.0
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "title": "4.3.3 异常场景测试",
+          "content": [
+            {
+              "text": "异常场景测试用于验证系统在非法输入和重复操作时是否能够给出合理反馈。学习伴侣系统中较典型的异常包括重复签到、重复打卡、邀请非学伴作为监督人、没有学伴时进入伙伴空间等。异常测试结果如表4-4所示。"
+            },
+            {
+              "table": {
+                "caption": "表4-4 异常场景测试表",
+                "headers": [
+                  "编号",
+                  "异常场景",
+                  "输入或操作",
+                  "预期处理",
+                  "结果"
+                ],
+                "rows": [
+                  [
+                    "TE01",
+                    "重复签到",
+                    "同一用户同一天提交两次签到",
+                    "提示今日已签到或保持唯一记录",
+                    "通过"
+                  ],
+                  [
+                    "TE02",
+                    "重复打卡",
+                    "同一任务同一天重复提交",
+                    "提示今日已打卡",
+                    "通过"
+                  ],
+                  [
+                    "TE03",
+                    "非法监督",
+                    "邀请非学伴作为监督人",
+                    "返回只能邀请学伴",
+                    "通过"
+                  ],
+                  [
+                    "TE04",
+                    "空内容评论",
+                    "提交空评论",
+                    "返回请输入内容",
+                    "通过"
+                  ],
+                  [
+                    "TE05",
+                    "无伙伴空间",
+                    "未建立学伴关系进入伙伴空间",
+                    "提示先建立关系",
+                    "通过"
+                  ],
+                  [
+                    "TE06",
+                    "无效Token",
+                    "携带错误Token访问接口",
+                    "返回 token无效",
+                    "通过"
+                  ]
+                ],
+                "col_widths": [
+                  1.6,
+                  3.0,
+                  4.8,
+                  4.4,
+                  2.0
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "title": "4.3.4 自动化测试结果",
+          "content": [
+            {
+              "text": "项目提供了基于 node:test 的测试脚本，用于验证登录标识解析、收藏权限、评论删除级联、日期处理、数据库路径覆盖、用户与笔记数据格式化、学伴房间键生成、学习计划访问控制和标签提取等逻辑。实际执行全部测试时，服务端相关测试大部分通过，小程序旧目录相关两个测试因源码中已改为 webview-app 结构而找不到旧 miniprogram 目录。该问题不影响当前 H5 加 WebView 的运行方式，但在后续整理项目测试脚本时应同步更新测试路径。"
+            },
+            {
+              "table": {
+                "caption": "表4-5 自动化测试结果表",
+                "headers": [
+                  "测试范围",
+                  "通过数量",
+                  "失败数量",
+                  "说明"
+                ],
+                "rows": [
+                  [
+                    "服务端业务逻辑",
+                    "19",
+                    "0",
+                    "登录、收藏、访问控制、日期、数据库、标签等逻辑通过"
+                  ],
+                  [
+                    "旧小程序目录测试",
+                    "0",
+                    "2",
+                    "测试仍引用 miniprogram 目录，当前项目实际目录为 webview-app"
+                  ],
+                  [
+                    "合计",
+                    "19",
+                    "2",
+                    "失败项为目录迁移遗留问题，不影响服务端主流程"
+                  ]
+                ],
+                "col_widths": [
+                  4.0,
+                  2.8,
+                  2.8,
+                  5.0
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "4.4 本章小结",
+      "content": [
+        {
+          "text": "本章介绍了系统开发环境、核心功能实现和测试过程。通过源码分析和运行截图可以看出，学习伴侣系统已经实现移动端学习首页、社区笔记、签到打卡、学伴互动、伙伴空间和后台管理等功能。功能测试、权限测试和异常测试结果表明系统主要业务流程能够正常运行，自动化测试也验证了多项服务端基础逻辑。"
+        }
+      ],
+      "subsections": []
+    }
+  ]
+}

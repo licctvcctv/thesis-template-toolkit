@@ -1,0 +1,18 @@
+{
+  "title_zh": "基于微信小程序的学习伴侣系统设计与实现",
+  "title_en": "Design and Implementation of a Study Buddy System Based on WeChat Mini Program",
+  "abstract_zh": [
+    "随着移动互联网和在线学习方式的快速发展，学习者在课程复习、备考、技能训练与日常习惯养成过程中越来越依赖碎片化学习工具。然而，普通笔记软件、打卡工具和社区应用往往彼此独立，难以同时满足学习记录、持续监督、伙伴互动和学习成果沉淀等需求。针对学习者学习过程中存在的自律性不足、学习资料分散、同伴监督弱和过程数据难以统计等问题，本文设计并实现了一套基于微信小程序的学习伴侣系统。系统以移动端学习场景为核心，结合 H5 页面、小程序 WebView 容器、Node.js 后端服务和 SQLite 数据库存储，为用户提供学习笔记、每日签到、打卡任务、学习伙伴、伙伴空间、社区动态、消息通知和后台管理等功能。",
+    "系统采用前后端分离思想进行设计。学习端使用 React、TypeScript、Vite 和 Tailwind CSS 构建 H5 页面，并通过微信小程序 WebView 形式嵌入小程序壳中；服务端采用 Node.js 与 Express 框架实现 REST 接口，通过 JWT 完成登录鉴权，通过 better-sqlite3 访问 SQLite 数据库；后台管理端使用 Vue 3 与 Element Plus 构建，用于对用户、笔记、评论、打卡任务、学伴关系和签到数据进行维护。本文在分析项目源码和运行视频的基础上，对系统需求、总体架构、功能模块、数据库表结构、关键业务流程和运行效果进行了系统阐述，并绘制了用例图、体系结构图、功能结构图、包图、时序图、流程图、E-R 图和数据库逻辑关系图。",
+    "测试结果表明，系统能够完成用户注册登录、个人资料维护、笔记发布与浏览、点赞评论收藏、每日签到、打卡任务参与、学伴邀请与接受、伙伴空间互动、消息通知以及后台数据管理等功能。系统结构清晰，接口划分合理，业务数据能够在用户、笔记、签到、打卡、学伴和消息之间形成较完整的学习过程链路。该系统对提高学习者学习持续性、增强同伴监督和沉淀学习过程数据具有一定应用价值，也为后续扩展智能推荐、学习画像和小程序原生化改造提供了基础。"
+  ],
+  "abstract_en": [
+    "With the development of mobile Internet and online learning, learners need lightweight tools for recording notes, checking in, sharing learning progress and receiving peer support. Existing note applications, check-in tools and community platforms are often separated from each other, so they cannot fully support continuous learning supervision. To address these problems, this thesis designs and implements a study buddy system based on WeChat Mini Program.",
+    "The system adopts a front-end and back-end separated architecture. The mobile learning client is implemented as an H5 application and loaded through a WeChat Mini Program WebView shell. The server side uses Node.js and Express to provide RESTful APIs, uses JWT for authentication, and stores business data in SQLite. The main functions include user login, note publishing, community browsing, daily sign-in, check-in task management, partner invitation, partner room, message notification and background administration.",
+    "Based on source-code analysis and running tests, the system can complete the main learning workflows correctly. It has clear module division, practical interaction processes and a basic data chain among users, notes, sign-in records, check-in records and partner relationships. The system has certain practical value for improving learning continuity and peer supervision."
+  ],
+  "keywords_zh": "微信小程序；学习伴侣；Node.js；React；SQLite",
+  "keywords_en": "WeChat Mini Program; study buddy; Node.js; React; SQLite",
+  "name": "姓名",
+  "student_id": "学号"
+}
