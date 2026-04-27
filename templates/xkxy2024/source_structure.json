@@ -1,0 +1,1863 @@
+Document: /Users/a136/vs/45425/thesis_project/templates/xkxy2024/source.docx
+Sections: 6
+Body blocks: paragraphs and tables in source order
+[body]
+  P000 style='Normal' align=None runs=1 num=None text=''
+  P001 style='Normal' align=None runs=0 num=None text=''
+  P002 style='Normal' align=None runs=0 num=None text=''
+  P003 style='Normal' align=None runs=0 num=None text=''
+  P004 style='Normal' align=None runs=0 num=None text=''
+  P005 style='Normal' align=None runs=0 num=None text=''
+  P006 style='Normal' align=None runs=0 num=None text=''
+  P007 style='Normal' align=None runs=0 num=None text=''
+  P008 style='Normal' align=None runs=0 num=None text=''
+  P009 style='Normal' align=None runs=0 num=None text=''
+  P010 style='Normal' align=None runs=0 num=None text=''
+  P011 style='Normal' align=None runs=0 num=None text=''
+  P012 style='Normal' align=None runs=0 num=None text=''
+  P013 style='Normal' align=None runs=0 num=None text=''
+  P014 style='Normal' align=None runs=0 num=None text=''
+  P015 style='Normal' align=None runs=0 num=None text=''
+  P016 style='Normal' align=None runs=0 num=None text=''
+  P017 style='Normal' align='center' runs=1 num=None text='论劳动合同的解除'
+  P018 style='Normal' align='center' runs=1 num=None text='（一号黑体字）'
+  P019 style='Normal' align=None runs=0 num=None text=''
+  P020 style='Normal' align='justify' runs=1 num=None text='学 院：XXX（三号黑体字，下同）'
+  P021 style='Normal' align='justify' runs=1 num=None text='专业班级：XX XXXX班'
+  P022 style='Normal' align='justify' runs=1 num=None text='姓 名：XXX'
+  P023 style='Normal' align='justify' runs=1 num=None text='学 号：20XXXXXXXX'
+  P024 style='Normal' align='justify' runs=2 num=None text='指导教师：XXX讲师'
+  P025 style='Normal' align='justify' runs=0 num=None text=''
+  P026 style='Normal' align='justify' runs=1 num=None text='20XX年X月'
+  P027 style='Normal' align='justify' runs=0 num=None text=''
+  P028 style='Normal' align=None runs=0 num=None text=''
+  P029 style='Normal' align=None runs=0 num=None text=''
+  P030 style='Normal' align=None runs=0 num=None text=''
+  P031 style='Normal' align=None runs=0 num=None text=''
+  P032 style='Normal' align=None runs=0 num=None text=''
+  P033 style='Normal' align='center' runs=1 num=None text='论劳动合同的解除'
+  P034 style='Normal' align='center' runs=1 num=None text='（一号黑体字）'
+  P035 style='Normal' align='center' runs=5 num=None text='Dissolution of Labor Contract'
+  P036 style='Normal' align='center' runs=6 num=None text='（一号Times New Roman 字体，加粗）'
+  P037 style='Normal' align=None runs=0 num=None text=''
+  P038 style='Normal' align=None runs=0 num=None text=''
+  P039 style='Normal' align=None runs=12 num=None text='要求：题目应该简短、明确、有概括性。论文（设计）题目包括中文题目和外文题目，一般中文字数不超过25个字，不使用标点符号，中外文题名内容应一致。题目中若需使用英文缩写词时，应使用本行业通用英文缩写词。论文（设计）封面上题目用一号黑体字，其它…'
+  P040 style='Normal' align='center' runs=2 num=None text='摘 要（三号黑体字居中排写）'
+  P041 style='Normal' align='center' runs=1 num=None text='（空一行）'
+  P042 style='Normal' align=None runs=3 num=None text='劳动合同是劳动者与用人单位确立劳动关系……………………（小四号宋体字）…………………………………………………………………………………………………………'
+  P043 style='Normal' align='center' runs=1 num=None text='（空一行）'
+  P044 style='Normal' align=None runs=6 num=None text='关键词（顶格四号黑体字）：劳动合同 单方解除 即时解除（用小四号宋体书写词条，各词条间用一个汉字间格隔开）'
+  P045 style='Normal' align=None runs=0 num=None text=''
+  P046 style='Normal' align=None runs=5 num=None text='要求：中文摘要350字左右，特殊情况字数可以略多；外文摘要应与中文摘要内容一致；摘要中不宜使用公式、图表以及非共知公用的符号和术语，不标注引用文献编号；中、外文摘要与关键词单独成页置于目录前，编排上中文在前，外文在后；关键词应采用能覆盖论…'
+  P047 style='Normal' align=None runs=6 num=None text='中文题头摘要用三号黑体字居中排写，隔一行书写具体内容，内容文字用小四号宋体字。空一行后书写关键词。顶格用四号黑体字书写关键词，紧接着用小四号宋体字书写词条，各词条间空一个汉字间格隔开。外文摘要用小四号Times New Roman字体。题…'
+  P048 style='Normal' align='center' runs=2 num=None text='Abstract'
+  P049 style='Normal' align='center' runs=1 num=None text='（Times New Roman字体，小二号加粗，居中）'
+  P050 style='Normal' align=None runs=1 num=None text='（空一行）'
+  P051 style='Normal' align=None runs=5 num=None text='The dissolution of labour contract by employer………………………………（小四号Times New Roman字体）………………………………………………………………'
+  P052 style='Normal' align=None runs=0 num=None text=''
+  P053 style='Normal' align=None runs=13 num=None text='Key words（顶格四号Times New Roman字体，加粗）: labor contract dissolute by employer dissolute right away（用小四号Times New Roman书写词条，…'
+  P054 style='Normal' align='center' runs=3 num=None text='目 录（居中，三号黑体）'
+  P055 style='Normal' align=None runs=1 num=None text='（空一行）'
+  P056 style='toc 1' align=None runs=24 num=None text='摘要（小四号黑体,下同）……………………I(小四号Times New Roman字体,下同)'
+  P057 style='toc 1' align=None runs=9 num=None text='Abstract（小四号Times New Roman字体，加粗）…………………………………Ⅱ'
+  P058 style='toc 1' align=None runs=12 num=None text='1 绪论…………………………………………………………………………………1'
+  P059 style='toc 1' align=None runs=17 num=None text='2 我国劳动合同解除制度的发展状况及价值取向…………………………………2'
+  P060 style='toc 1' align=None runs=18 num=None text='2.1 我国劳动合同解除制度的发展状况（小四号宋体字,下同）…………………2'
+  P061 style='toc 1' align=None runs=14 num=None text='2.1.1 我国劳动合同解除制度的价值取向……………………………………………2'
+  P062 style='Normal' align=None runs=2 num=None text='3…'
+  P063 style='Normal' align=None runs=1 num=None text='5研究或成果与社会、环境、文化、经济、环保等关系………………………………3'
+  P064 style='toc 1' align=None runs=7 num=None text='结论…………………………………………………………………………………4'
+  P065 style='toc 1' align=None runs=9 num=None text='致谢…………………………………………………………………………………5'
+  P066 style='toc 1' align=None runs=10 num=None text='参考文献…………………………………………………………………………………6'
+  P067 style='toc 1' align=None runs=1 num=None text='附录1普通劳动者对签订劳动合同态度的调查表………………………………………7'
+  P068 style='Normal' align=None runs=0 num=None text=''
+  P069 style='Normal' align=None runs=0 num=None text=''
+  P070 style='Normal' align=None runs=13 num=None text='要求：1．三级目录全部顶格书写，排列整齐。应包括摘要与论文中全部章节的标题及页码，含摘要、Abstract、正文章、节、条题目（理、工类要求编写到第3级标题，即□.□.□。经、管、文、法类可视论文需要，编写到2～3级标题）、致谢、参考文献…'
+  P071 style='Normal' align=None runs=6 num=None text='2．目录题头用三号黑体字居中排写，隔行书写目录内容。目录中各章题序及标题用小四号黑体，节（条）题序及标题用小四号宋体字。页码一律用小四号Times New Roman字体。'
+  P072 style='Normal' align=None runs=0 num=None text=''
+  P073 style='Normal' align='distribute' runs=0 num=None text=''
+  P074 style='Heading 1' align=None runs=5 num=None text='1 绪 论（居中，三号黑体字）'
+  P075 style='Normal' align=None runs=1 num=None text='（空一行）'
+  P076 style='Normal' align=None runs=2 num=None text='劳动合同解除制度在劳动合同领域有及其重要的地位，在我国《劳动合同法》中，该制度也有较重的比例。…………………………………………（小四宋体）'
+  P077 style='Normal' align=None runs=0 num=None text=''
+  P078 style='Body text|1' align='justify' runs=30 num=None text='要求：绪论包括本论文（设计）课题研究背景、国内外研究现状、研究目的等基本内容。研究背景应明确地提出论文（设计）研究所针对的科学、生产和经济建设的问题，指出研究这些问题的意义。国内外研究现状主要回顾与所研究课题相关的学科背景，相关领域的研究…'
+  P079 style='Normal' align=None runs=0 num=None text=''
+  P080 style='Normal' align='center' runs=0 num=None text=''
+  P081 style='Normal' align='center' runs=2 num=None text='2 我国劳动合同解除制度的发展状况及价值取向'
+  P082 style='Normal' align='center' runs=1 num=None text='（居中，三号黑体字，下同）'
+  P083 style='Normal' align=None runs=1 num=None text='（空一行）'
+  P084 style='Normal' align=None runs=3 num=None text='2.1 我国劳动合同解除制度的发展状况（四号黑体字，下同）'
+  P085 style='Normal' align=None runs=2 num=None text='劳动合同，其理论和实践先后经历了租赁劳动时代、雇佣契约时代、劳动契约时代等阶段。…………………………（正文用小四号宋体字，下同）'
+  P086 style='Normal' align=None runs=3 num=None text='2.1.1 我国劳动合同解除制度的价值取向（小四号黑体字，下同）'
+  P087 style='Normal' align=None runs=1 num=None text='对劳动合同制度的价值取向的研究，不得不从劳动合同的性质出发。关于劳动合同的性质。'
+  P088 style='Normal' align=None runs=5 num=None text='（1） 个人本位观念认为劳动合同是当事人双方意思表示一致的合同。'
+  P089 style='Normal' align=None runs=4 num=None text='（2） 社会本位观念认为劳动合同重点强调其社会集体性，而不是当事人的平等协商性。'
+  P090 style='Normal' align=None runs=4 num=None text='（3） 国家本位观点认为劳动者与用人单位的关系应强调的是国家利益。'
+  P091 style='Normal' align=None runs=4 num=None text='古罗马法学家乌尔比安曾提出公法和私法的划分标准， “社会法以社会整体利益为价值本位，其核心思想有四个层次：……成的公共政策。”[1] ………………'
+  P092 style='Normal' align=None runs=0 num=None text=''
+  P093 style='Normal' align=None runs=7 num=None text='要求：1．论文（设计）主体是论文（设计）的主要部分，应该结构合理，层次清楚，重点突出，文字简练、通顺。例如工科类可包括方案论证（各种方案的分析与比较，所采用方案的特点）、过程论述（要求论理正确、论据确凿、逻辑性强、层次分明、表达确切）、结…'
+  P094 style='Normal' align=None runs=3 num=None text='2．章节标题应重点突出、简明扼要，独占一行，字数一般在15字以内且一般不使用标点符号。标题中尽量不采用外文缩写词，对必须采用者，应使用本行业的通用缩写词。'
+  P095 style='Normal' align=None runs=3 num=None text='3．每章标题应置于页首，其他层次标题不得置于页面的最后一行（孤行）。层次根据实际需要选择，以少为宜。'
+  P096 style='Normal' align=None runs=0 num=None text=''
+  P097 style='Normal' align='center' runs=0 num=None text=''
+  P098 style='Normal' align='center' runs=3 num=None text='3 研究或成果与社会、环境、文化、经济、环保等关系'
+  P099 style='Normal' align='center' runs=1 num=None text='（居中，三号黑体字）'
+  P100 style='Normal' align=None runs=1 num=None text='（空一行）'
+  P101 style='Normal' align='left' runs=0 num=None text=''
+  P102 style='Normal' align='left' runs=0 num=None text=''
+  P103 style='Normal' align='left' runs=0 num=None text=''
+  P104 style='Normal' align='left' runs=0 num=None text=''
+  P105 style='Normal' align='left' runs=4 num=None text='要求：以500字左右的篇幅，阐述论文（设计）的研究或成果与社会、环境、文化、经济、环保等（可结合实际选择一个或几个点进行阐述）的关系以及可持续发展的影响，并理解应承担的责任。此部分内容可以在结论中体现，也可以作为单独一章排列。'
+  P106 style='Normal' align=None runs=0 num=None text=''
+  P107 style='Normal' align=None runs=0 num=None text=''
+  P108 style='Normal' align=None runs=0 num=None text=''
+  P109 style='Normal' align=None runs=24 num=None text='论文（设计）要求统一使用Microsoft Word软件进行文字处理，统一采用本校特制的论文纸单面打印。其中上边距3.4厘米、下边距2.8厘米、左边距3.0厘米、右边距2.6厘米。字间距为标准，行距为固定值，设置值为23。除特别说明外，内…'
+  P110 style='Normal' align='center' runs=3 num=None text='结 论（居中，三号黑体字）'
+  P111 style='Normal' align=None runs=1 num=None text='（空一行）'
+  P112 style='Normal' align=None runs=3 num=None text='本文旨在对劳动合同的解除制度做简要分析。由于《劳动合同法》的颁布，其中有关劳动合同解除的制度规定与《劳动法》相比有所不同。………………（小四号宋体字）'
+  P113 style='Normal' align=None runs=0 num=None text=''
+  P114 style='Normal' align=None runs=25 num=None text='要求：论文（设计）的结论是最终的、总体的结论，以简练的文字对论文（设计）的主要工作进行总结评价，并突出论文（设计）的创新点。若不可能导出应有的结论，则进行必要的讨论。可以在结论或讨论中提出尚待解决的问题及进一步开展研究的设想、建议等。结论…'
+  P115 style='Normal' align=None runs=0 num=None text=''
+  P116 style='Normal' align='center' runs=3 num=None text='致 谢（居中，三号黑体字）'
+  P117 style='Normal' align=None runs=1 num=None text='（空一行）'
+  P118 style='Normal' align=None runs=1 num=None text='首先，我要感谢我的论文指导老师xxx。在毕业论文的写作过程中，x老师一直悉心指导和严格要求。……………………………………………………（小四号宋体字）'
+  P119 style='Normal' align=None runs=0 num=None text=''
+  P120 style='Normal' align=None runs=13 num=None text='要求：简述本人撰写论文（设计）的体会，向指导教师及给予指导、合作、支持及协助完成研究工作的单位、组织或个人致谢。内容应简洁明了、实事求是，避免俗套。致谢作为单独一章排列，不编序号。'
+  P121 style='Normal' align=None runs=0 num=None text=''
+  P122 style='Heading 1' align=None runs=3 num=None text='参考文献（居中，三号黑体字）'
+  P123 style='Normal' align=None runs=1 num=None text='（空一行）'
+  P124 style='Normal' align=None runs=3 num=None text='[1]余联庆, 枚元元, 李琳, 等. 闭链弓形五连杆越障能力分析与运动规划[J]. 机械工程学报, 2017, 53(7): 69-75.（小四号宋体字，下同）'
+  P125 style='Normal' align=None runs=2 num=None text='[2] …………………………………………………………'
+  P126 style='Normal (Web)' align='justify' runs=0 num=None text=''
+  P127 style='Normal' align=None runs=18 num=None text='文献标识要求：1．论文（设计）正文中引用文献的标识采用顺序编码制。须标识参考文献编号，按出现顺序用小五号Time New Roman字体标识，置于所引内容最末句的右上角（上标）。文献编号用阿拉伯数字置于方括号“[ ]”中，如：×××××[…'
+  P128 style='Normal' align=None runs=3 num=None text='2．论文（设计）中引用文献原文应加引号；若引用原意，文前用冒号或逗号，不用引号。较完整的长段引文应提行独立成段，即在冒号后另起一段。为区别正文，书写时整体缩进两格（首行相对正文缩进四格），采用楷体五号字书写，引文头尾处不必再加引号。'
+  P129 style='Normal (Web)' align='justify' runs=12 num=None text='书写格式要求：1．参考文献书写格式应符合GB/T7714—2015（参考中国知网析出文献规范）。按引用顺序编排，文献编号顶格书写，加括号“[ ]”，其后空一格写作者姓名等内容。版次第一版不著录，其他版本说明需著录。文字换行时与作者名第一个…'
+  P130 style='Normal (Web)' align='justify' runs=3 num=None text='2．文献作者为多人时，一般只列出前3名作者，不同作者姓名间用逗号相隔；外文姓名按国际惯例（作者姓、作者名的缩写）；“引用部分起止页”只适用于论文（设计）正文中进行标识的参考文献。'
+  P131 style='Normal (Web)' align='justify' runs=3 num=None text='3．常用参考文献的具体编写规定参见《武昌首义学院本科毕业论文（设计）撰写规范》1.6.3“书写格式”相关要求。'
+  P132 style='Normal (Web)' align='justify' runs=0 num=None text=''
+  P133 style='Normal' align=None runs=2 num=None text='附录1普通劳动者对签订劳动合同态度的调查表'
+  P134 style='Normal' align='center' runs=1 num=None text='（左起空两格排写，三号黑体字）'
+  P135 style='Normal' align=None runs=1 num=None text='（空一行）'
+  P136 style='Normal' align='left' runs=2 num=None text='为广泛了解一般劳动者对与用人单位签订劳动合同的……（小四号宋体,下同）'
+  P137 style='Normal' align='left' runs=4 num=None text='[附录内容正文各级标题字体字号参照毕业论文（设计）正文要求]'
+  P138 style='Normal' align='left' runs=0 num=None text=''
+  P139 style='Normal (Web)' align='justify' runs=1 num=None text='要求：1． 不宜放在正文中但有重要参考价值的内容（如公式的推导、程序流程图、图纸、数据表格、调查表等）可编入论文的附录中。'
+  P140 style='Normal (Web)' align='justify' runs=3 num=None text='2． 附录序号采用“附录1”、“附录2”或“附录一”、“附录二”等，用三号黑体字左起空两格排写，其后不加标点符号，空一行书写附录内容。附录内容文字字体字号参照毕业论文（设计）正文要求。'
+  P141 style='Normal' align=None runs=0 num=None text=''
+  P142 style='Normal' align=None runs=0 num=None text=''
+  P143 style='Normal' align=None runs=0 num=None text=''
+  P144 style='Normal' align=None runs=0 num=None text=''
+  P145 style='Normal' align=None runs=0 num=None text=''
+  P146 style='Normal' align=None runs=0 num=None text=''
+  P147 style='Normal' align=None runs=0 num=None text=''
+  P148 style='Normal' align=None runs=0 num=None text=''
+  P149 style='Normal' align=None runs=0 num=None text=''
+  P150 style='Normal' align=None runs=1 num=None text='注：此版本仅供参考，详细要求可参看《武昌首义学院本科毕业论文（设计）工作管理办法》（院教〔2022〕49号）附件4。'
+[section[0].header]
+[section[0].footer]
+[section[1].header]
+[section[1].footer]
+[section[2].header]
+[section[2].footer]
+[section[3].header]
+[section[3].footer]
+[section[4].header]
+[section[4].footer]
+[section[5].header]
+[section[5].footer]
+[xml markers]
+  w:txbxContent: 20
+  w:fldSimple: 0
+  w:instrText: 50
+  w:numPr: 0
+  w:bookmarkStart: 14
+  w:drawing: 11
+{
+  "docx": "/Users/a136/vs/45425/thesis_project/templates/xkxy2024/source.docx",
+  "sections": 6,
+  "body_blocks": [
+    {
+      "kind": "paragraph",
+      "index": 0,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 1,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 2,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 3,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 4,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 5,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 6,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 7,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 8,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 9,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 10,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 11,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 12,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 13,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 14,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 15,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 16,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 17,
+      "text": "论劳动合同的解除",
+      "style": "Normal",
+      "alignment": "center",
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 18,
+      "text": "（一号黑体字）",
+      "style": "Normal",
+      "alignment": "center",
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 19,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 20,
+      "text": "学 院：XXX（三号黑体字，下同）",
+      "style": "Normal",
+      "alignment": "justify",
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 21,
+      "text": "专业班级：XX XXXX班",
+      "style": "Normal",
+      "alignment": "justify",
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 22,
+      "text": "姓 名：XXX",
+      "style": "Normal",
+      "alignment": "justify",
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 23,
+      "text": "学 号：20XXXXXXXX",
+      "style": "Normal",
+      "alignment": "justify",
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 24,
+      "text": "指导教师：XXX讲师",
+      "style": "Normal",
+      "alignment": "justify",
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 25,
+      "text": "",
+      "style": "Normal",
+      "alignment": "justify",
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 26,
+      "text": "20XX年X月",
+      "style": "Normal",
+      "alignment": "justify",
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 27,
+      "text": "",
+      "style": "Normal",
+      "alignment": "justify",
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 28,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 29,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 30,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 31,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 32,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 33,
+      "text": "论劳动合同的解除",
+      "style": "Normal",
+      "alignment": "center",
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 34,
+      "text": "（一号黑体字）",
+      "style": "Normal",
+      "alignment": "center",
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 35,
+      "text": "Dissolution of Labor Contract",
+      "style": "Normal",
+      "alignment": "center",
+      "numbering": null,
+      "run_count": 5,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 36,
+      "text": "（一号Times New Roman 字体，加粗）",
+      "style": "Normal",
+      "alignment": "center",
+      "numbering": null,
+      "run_count": 6,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 37,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 38,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 39,
+      "text": "要求：题目应该简短、明确、有概括性。论文（设计）题目包括中文题目和外文题目，一般中文字数不超过25个字，不使用标点符号，中外文题名内容应一致。题目中若需使用英文缩写词时，应使用本行业通用英文缩写词。论文（设计）封面上题目用一号黑体字，其它…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 12,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 40,
+      "text": "摘 要（三号黑体字居中排写）",
+      "style": "Normal",
+      "alignment": "center",
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 41,
+      "text": "（空一行）",
+      "style": "Normal",
+      "alignment": "center",
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 42,
+      "text": "劳动合同是劳动者与用人单位确立劳动关系……………………（小四号宋体字）…………………………………………………………………………………………………………",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 43,
+      "text": "（空一行）",
+      "style": "Normal",
+      "alignment": "center",
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 44,
+      "text": "关键词（顶格四号黑体字）：劳动合同 单方解除 即时解除（用小四号宋体书写词条，各词条间用一个汉字间格隔开）",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 6,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 45,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 46,
+      "text": "要求：中文摘要350字左右，特殊情况字数可以略多；外文摘要应与中文摘要内容一致；摘要中不宜使用公式、图表以及非共知公用的符号和术语，不标注引用文献编号；中、外文摘要与关键词单独成页置于目录前，编排上中文在前，外文在后；关键词应采用能覆盖论…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 5,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 47,
+      "text": "中文题头摘要用三号黑体字居中排写，隔一行书写具体内容，内容文字用小四号宋体字。空一行后书写关键词。顶格用四号黑体字书写关键词，紧接着用小四号宋体字书写词条，各词条间空一个汉字间格隔开。外文摘要用小四号Times New Roman字体。题…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 6,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 48,
+      "text": "Abstract",
+      "style": "Normal",
+      "alignment": "center",
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 49,
+      "text": "（Times New Roman字体，小二号加粗，居中）",
+      "style": "Normal",
+      "alignment": "center",
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 50,
+      "text": "（空一行）",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 51,
+      "text": "The dissolution of labour contract by employer………………………………（小四号Times New Roman字体）………………………………………………………………",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 5,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 52,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 53,
+      "text": "Key words（顶格四号Times New Roman字体，加粗）: labor contract dissolute by employer dissolute right away（用小四号Times New Roman书写词条，…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 13,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 54,
+      "text": "目 录（居中，三号黑体）",
+      "style": "Normal",
+      "alignment": "center",
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 55,
+      "text": "（空一行）",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 56,
+      "text": "摘要（小四号黑体,下同）……………………I(小四号Times New Roman字体,下同)",
+      "style": "toc 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 24,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 57,
+      "text": "Abstract（小四号Times New Roman字体，加粗）…………………………………Ⅱ",
+      "style": "toc 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 9,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 58,
+      "text": "1 绪论…………………………………………………………………………………1",
+      "style": "toc 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 12,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 59,
+      "text": "2 我国劳动合同解除制度的发展状况及价值取向…………………………………2",
+      "style": "toc 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 17,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 60,
+      "text": "2.1 我国劳动合同解除制度的发展状况（小四号宋体字,下同）…………………2",
+      "style": "toc 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 18,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 61,
+      "text": "2.1.1 我国劳动合同解除制度的价值取向……………………………………………2",
+      "style": "toc 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 14,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 62,
+      "text": "3…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 63,
+      "text": "5研究或成果与社会、环境、文化、经济、环保等关系………………………………3",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 64,
+      "text": "结论…………………………………………………………………………………4",
+      "style": "toc 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 7,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 65,
+      "text": "致谢…………………………………………………………………………………5",
+      "style": "toc 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 9,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 66,
+      "text": "参考文献…………………………………………………………………………………6",
+      "style": "toc 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 10,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 67,
+      "text": "附录1普通劳动者对签订劳动合同态度的调查表………………………………………7",
+      "style": "toc 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 68,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 69,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 70,
+      "text": "要求：1．三级目录全部顶格书写，排列整齐。应包括摘要与论文中全部章节的标题及页码，含摘要、Abstract、正文章、节、条题目（理、工类要求编写到第3级标题，即□.□.□。经、管、文、法类可视论文需要，编写到2～3级标题）、致谢、参考文献…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 13,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 71,
+      "text": "2．目录题头用三号黑体字居中排写，隔行书写目录内容。目录中各章题序及标题用小四号黑体，节（条）题序及标题用小四号宋体字。页码一律用小四号Times New Roman字体。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 6,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 72,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 73,
+      "text": "",
+      "style": "Normal",
+      "alignment": "distribute",
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 74,
+      "text": "1 绪 论（居中，三号黑体字）",
+      "style": "Heading 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 5,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 75,
+      "text": "（空一行）",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 76,
+      "text": "劳动合同解除制度在劳动合同领域有及其重要的地位，在我国《劳动合同法》中，该制度也有较重的比例。…………………………………………（小四宋体）",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 77,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 78,
+      "text": "要求：绪论包括本论文（设计）课题研究背景、国内外研究现状、研究目的等基本内容。研究背景应明确地提出论文（设计）研究所针对的科学、生产和经济建设的问题，指出研究这些问题的意义。国内外研究现状主要回顾与所研究课题相关的学科背景，相关领域的研究…",
+      "style": "Body text|1",
+      "alignment": "justify",
+      "numbering": null,
+      "run_count": 30,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 79,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 80,
+      "text": "",
+      "style": "Normal",
+      "alignment": "center",
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 81,
+      "text": "2 我国劳动合同解除制度的发展状况及价值取向",
+      "style": "Normal",
+      "alignment": "center",
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 82,
+      "text": "（居中，三号黑体字，下同）",
+      "style": "Normal",
+      "alignment": "center",
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 83,
+      "text": "（空一行）",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 84,
+      "text": "2.1 我国劳动合同解除制度的发展状况（四号黑体字，下同）",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 85,
+      "text": "劳动合同，其理论和实践先后经历了租赁劳动时代、雇佣契约时代、劳动契约时代等阶段。…………………………（正文用小四号宋体字，下同）",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 86,
+      "text": "2.1.1 我国劳动合同解除制度的价值取向（小四号黑体字，下同）",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 87,
+      "text": "对劳动合同制度的价值取向的研究，不得不从劳动合同的性质出发。关于劳动合同的性质。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 88,
+      "text": "（1） 个人本位观念认为劳动合同是当事人双方意思表示一致的合同。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 5,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 89,
+      "text": "（2） 社会本位观念认为劳动合同重点强调其社会集体性，而不是当事人的平等协商性。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 4,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 90,
+      "text": "（3） 国家本位观点认为劳动者与用人单位的关系应强调的是国家利益。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 4,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 91,
+      "text": "古罗马法学家乌尔比安曾提出公法和私法的划分标准， “社会法以社会整体利益为价值本位，其核心思想有四个层次：……成的公共政策。”[1] ………………",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 4,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 92,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 93,
+      "text": "要求：1．论文（设计）主体是论文（设计）的主要部分，应该结构合理，层次清楚，重点突出，文字简练、通顺。例如工科类可包括方案论证（各种方案的分析与比较，所采用方案的特点）、过程论述（要求论理正确、论据确凿、逻辑性强、层次分明、表达确切）、结…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 7,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 94,
+      "text": "2．章节标题应重点突出、简明扼要，独占一行，字数一般在15字以内且一般不使用标点符号。标题中尽量不采用外文缩写词，对必须采用者，应使用本行业的通用缩写词。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 95,
+      "text": "3．每章标题应置于页首，其他层次标题不得置于页面的最后一行（孤行）。层次根据实际需要选择，以少为宜。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 96,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 97,
+      "text": "",
+      "style": "Normal",
+      "alignment": "center",
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 98,
+      "text": "3 研究或成果与社会、环境、文化、经济、环保等关系",
+      "style": "Normal",
+      "alignment": "center",
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 99,
+      "text": "（居中，三号黑体字）",
+      "style": "Normal",
+      "alignment": "center",
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 100,
+      "text": "（空一行）",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 101,
+      "text": "",
+      "style": "Normal",
+      "alignment": "left",
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 102,
+      "text": "",
+      "style": "Normal",
+      "alignment": "left",
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 103,
+      "text": "",
+      "style": "Normal",
+      "alignment": "left",
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 104,
+      "text": "",
+      "style": "Normal",
+      "alignment": "left",
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 105,
+      "text": "要求：以500字左右的篇幅，阐述论文（设计）的研究或成果与社会、环境、文化、经济、环保等（可结合实际选择一个或几个点进行阐述）的关系以及可持续发展的影响，并理解应承担的责任。此部分内容可以在结论中体现，也可以作为单独一章排列。",
+      "style": "Normal",
+      "alignment": "left",
+      "numbering": null,
+      "run_count": 4,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 106,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 107,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 108,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 109,
+      "text": "论文（设计）要求统一使用Microsoft Word软件进行文字处理，统一采用本校特制的论文纸单面打印。其中上边距3.4厘米、下边距2.8厘米、左边距3.0厘米、右边距2.6厘米。字间距为标准，行距为固定值，设置值为23。除特别说明外，内…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 24,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 110,
+      "text": "结 论（居中，三号黑体字）",
+      "style": "Normal",
+      "alignment": "center",
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 111,
+      "text": "（空一行）",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 112,
+      "text": "本文旨在对劳动合同的解除制度做简要分析。由于《劳动合同法》的颁布，其中有关劳动合同解除的制度规定与《劳动法》相比有所不同。………………（小四号宋体字）",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 113,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 114,
+      "text": "要求：论文（设计）的结论是最终的、总体的结论，以简练的文字对论文（设计）的主要工作进行总结评价，并突出论文（设计）的创新点。若不可能导出应有的结论，则进行必要的讨论。可以在结论或讨论中提出尚待解决的问题及进一步开展研究的设想、建议等。结论…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 25,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 115,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 116,
+      "text": "致 谢（居中，三号黑体字）",
+      "style": "Normal",
+      "alignment": "center",
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 117,
+      "text": "（空一行）",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 118,
+      "text": "首先，我要感谢我的论文指导老师xxx。在毕业论文的写作过程中，x老师一直悉心指导和严格要求。……………………………………………………（小四号宋体字）",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 119,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 120,
+      "text": "要求：简述本人撰写论文（设计）的体会，向指导教师及给予指导、合作、支持及协助完成研究工作的单位、组织或个人致谢。内容应简洁明了、实事求是，避免俗套。致谢作为单独一章排列，不编序号。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 13,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 121,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 122,
+      "text": "参考文献（居中，三号黑体字）",
+      "style": "Heading 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 123,
+      "text": "（空一行）",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 124,
+      "text": "[1]余联庆, 枚元元, 李琳, 等. 闭链弓形五连杆越障能力分析与运动规划[J]. 机械工程学报, 2017, 53(7): 69-75.（小四号宋体字，下同）",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 125,
+      "text": "[2] …………………………………………………………",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 126,
+      "text": "",
+      "style": "Normal (Web)",
+      "alignment": "justify",
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 127,
+      "text": "文献标识要求：1．论文（设计）正文中引用文献的标识采用顺序编码制。须标识参考文献编号，按出现顺序用小五号Time New Roman字体标识，置于所引内容最末句的右上角（上标）。文献编号用阿拉伯数字置于方括号“[ ]”中，如：×××××[…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 18,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 128,
+      "text": "2．论文（设计）中引用文献原文应加引号；若引用原意，文前用冒号或逗号，不用引号。较完整的长段引文应提行独立成段，即在冒号后另起一段。为区别正文，书写时整体缩进两格（首行相对正文缩进四格），采用楷体五号字书写，引文头尾处不必再加引号。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 129,
+      "text": "书写格式要求：1．参考文献书写格式应符合GB/T7714—2015（参考中国知网析出文献规范）。按引用顺序编排，文献编号顶格书写，加括号“[ ]”，其后空一格写作者姓名等内容。版次第一版不著录，其他版本说明需著录。文字换行时与作者名第一个…",
+      "style": "Normal (Web)",
+      "alignment": "justify",
+      "numbering": null,
+      "run_count": 12,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 130,
+      "text": "2．文献作者为多人时，一般只列出前3名作者，不同作者姓名间用逗号相隔；外文姓名按国际惯例（作者姓、作者名的缩写）；“引用部分起止页”只适用于论文（设计）正文中进行标识的参考文献。",
+      "style": "Normal (Web)",
+      "alignment": "justify",
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 131,
+      "text": "3．常用参考文献的具体编写规定参见《武昌首义学院本科毕业论文（设计）撰写规范》1.6.3“书写格式”相关要求。",
+      "style": "Normal (Web)",
+      "alignment": "justify",
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 132,
+      "text": "",
+      "style": "Normal (Web)",
+      "alignment": "justify",
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 133,
+      "text": "附录1普通劳动者对签订劳动合同态度的调查表",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 134,
+      "text": "（左起空两格排写，三号黑体字）",
+      "style": "Normal",
+      "alignment": "center",
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 135,
+      "text": "（空一行）",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 136,
+      "text": "为广泛了解一般劳动者对与用人单位签订劳动合同的……（小四号宋体,下同）",
+      "style": "Normal",
+      "alignment": "left",
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 137,
+      "text": "[附录内容正文各级标题字体字号参照毕业论文（设计）正文要求]",
+      "style": "Normal",
+      "alignment": "left",
+      "numbering": null,
+      "run_count": 4,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 138,
+      "text": "",
+      "style": "Normal",
+      "alignment": "left",
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 139,
+      "text": "要求：1． 不宜放在正文中但有重要参考价值的内容（如公式的推导、程序流程图、图纸、数据表格、调查表等）可编入论文的附录中。",
+      "style": "Normal (Web)",
+      "alignment": "justify",
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 140,
+      "text": "2． 附录序号采用“附录1”、“附录2”或“附录一”、“附录二”等，用三号黑体字左起空两格排写，其后不加标点符号，空一行书写附录内容。附录内容文字字体字号参照毕业论文（设计）正文要求。",
+      "style": "Normal (Web)",
+      "alignment": "justify",
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 141,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 142,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 143,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 144,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 145,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 146,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 147,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 148,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 149,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 150,
+      "text": "注：此版本仅供参考，详细要求可参看《武昌首义学院本科毕业论文（设计）工作管理办法》（院教〔2022〕49号）附件4。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    }
+  ],
+  "headers_footers": {
+    "section_0_header": [],
+    "section_0_footer": [],
+    "section_1_header": [],
+    "section_1_footer": [],
+    "section_2_header": [],
+    "section_2_footer": [],
+    "section_3_header": [],
+    "section_3_footer": [],
+    "section_4_header": [],
+    "section_4_footer": [],
+    "section_5_header": [],
+    "section_5_footer": []
+  },
+  "xml_markers": {
+    "w:txbxContent": 20,
+    "w:fldSimple": 0,
+    "w:instrText": 50,
+    "w:numPr": 0,
+    "w:bookmarkStart": 14,
+    "w:drawing": 11
+  }
+}

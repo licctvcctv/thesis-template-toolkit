@@ -284,9 +284,42 @@ def _post_process(docx_path):
             p._p.getparent().remove(p._p)
 
     _fix_keyword_runs(doc)
+    _superscript_citations(doc)
 
     doc.save(docx_path)
     print(f"  后处理: {len(_pending_tables)} 个表格, {len(_pending_code_blocks)} 个代码块, 清理{removed_blank}个空白段")
+
+
+def _superscript_citations(doc):
+    """Convert in-text [N] citations to superscript, excluding references."""
+    from docx.shared import Pt
+
+    citation_pat = re.compile(r'(\[(?:\d+)(?:,\s*\d+)*\])')
+    ref_started = False
+    for p in doc.paragraphs:
+        text = p.text or ""
+        compact = text.replace(" ", "").replace("　", "")
+        if compact == "参考文献":
+            ref_started = True
+            continue
+        if ref_started or not citation_pat.search(text):
+            continue
+
+        style = p.style
+        alignment = p.alignment
+        parts = citation_pat.split(text)
+        for r in list(p.runs):
+            r.text = ""
+
+        for part in parts:
+            if not part:
+                continue
+            run = p.add_run(part)
+            if citation_pat.fullmatch(part):
+                run.font.superscript = True
+                run.font.size = Pt(9)
+        p.style = style
+        p.alignment = alignment
 
 
 def _fix_keyword_runs(doc):
