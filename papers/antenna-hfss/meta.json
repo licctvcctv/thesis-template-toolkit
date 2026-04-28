@@ -1,0 +1,25 @@
+{
+  "title_zh": "多频段手机天线的仿真研究与设计",
+  "title_en": "Simulation Research and Design of Multiband Mobile Phone Antenna",
+  "author": "王艺微",
+  "student_id": "3222607247",
+  "college": "物理与电子信息工程学院",
+  "grade": "2022级",
+  "major": "海洋信息工程",
+  "advisor": "程敏",
+  "advisor_title": "教授",
+  "finish_date": "2026.4.28",
+  "finish_date_cn": "2026年4月28日",
+  "keywords_zh": "手机天线；PIFA；多频段；HFSS；n78",
+  "keywords_en": "mobile phone antenna; PIFA; multiband; HFSS; n78",
+  "abstract_zh": [
+    "随着第五代移动通信系统在智能终端中的持续部署，手机天线需要在有限净空、复杂金属边框和人体手持环境下实现稳定的阻抗匹配与辐射性能。针对n78频段3.3至3.8吉赫兹的覆盖需求，本文以平面倒F天线（PIFA）为基础，结合手机整机地板和耦合寄生枝节，开展多频段手机天线的仿真研究与结构优化。",
+    "论文首先梳理手机天线的发展背景、PIFA天线基本原理及主要性能指标，然后在HFSS仿真环境中建立手机地板、馈电点、短路点、辐射枝节和寄生枝节模型。根据回波损耗、驻波比、输入阻抗和辐射增益等结果，对馈电位置、枝节长度、缝隙间距和手机地板耦合方式进行对比分析，并保留教师给定旧模型作为基准样例进行横向比较。",
+    "仿真结果表明，最终选取的手机地板右侧寄生枝节方案在3.3至3.8吉赫兹范围内均满足回波损耗小于负10分贝的要求，最差点位于3.8吉赫兹，S11为-10.77分贝，最大VSWR为1.81，最大失配损耗约0.38分贝。该结果说明在保持手机形态特征的条件下，引入扩展地板和右侧寄生枝节能够有效改善n78频段匹配，具有一定工程参考价值。"
+  ],
+  "abstract_en": [
+    "With the continuous deployment of fifth-generation mobile communication systems in smart terminals, mobile phone antennas must provide stable impedance matching and radiation performance within limited clearance, metallic frames, and practical handset environments. Focusing on the n78 band from 3.3 to 3.8 GHz, this thesis studies and optimizes a multiband mobile phone antenna based on a planar inverted-F antenna structure with an extended handset ground and a coupled parasitic branch.",
+    "The thesis first reviews the development background of mobile phone antennas, the operating principle of PIFA antennas, and the main antenna performance indicators. A complete HFSS model including the handset ground, feed point, shorting point, radiating strip, and parasitic branch is then established. The feed position, branch length, gap spacing, and ground coupling method are compared according to return loss, VSWR, input impedance, and radiation gain, while the teacher-provided reference model is retained as a baseline.",
+    "The simulated results show that the selected handset-ground design with a right-side parasitic branch satisfies S11 below -10 dB over the whole 3.3-3.8 GHz n78 band. The worst S11 is -10.77 dB at 3.8 GHz, the maximum VSWR is 1.81, and the maximum mismatch loss is approximately 0.38 dB. These results indicate that the extended handset ground and coupled parasitic branch can effectively improve n78-band matching while maintaining a realistic mobile-phone antenna configuration."
+  ]
+}

@@ -1,0 +1,13 @@
+metric,value
+design,HFSSDesign_n78_phone_pifa_enhanced
+setup,Setup_n78_mp_converged
+s11_csv,C:\Users\Administrator\Documents\New project\hfss_scratch_monopole\paper_final_phone_pifa_S11.csv
+zin_csv,C:\Users\Administrator\Documents\New project\hfss_scratch_monopole\paper_final_phone_pifa_Zin.csv
+vswr_hfss_exported,True
+vswr_calculated_csv,C:\Users\Administrator\Documents\New project\hfss_scratch_monopole\paper_final_phone_pifa_VSWR_calculated.csv
+worst_s11_db,-10.7677807288241
+worst_s11_freq_ghz,3.8
+min_s11_db,-12.7667292777427
+max_vswr,1.8148197659118377
+max_mismatch_loss_db,0.3800769202143621
+min_return_loss_db,10.7677807288241
