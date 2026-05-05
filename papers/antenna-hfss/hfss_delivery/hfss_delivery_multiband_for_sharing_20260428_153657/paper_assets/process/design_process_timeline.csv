@@ -1,0 +1,4 @@
+stage,design,main_action,best_or_final_result,kept_files
+0_teacher_reference,HFSSDesign1 / HFSSDesign1_tuned,Analyzed and tuned the teacher reference model,"Worst S11 = -4.47 dB, not meeting -10 dB full-band target",hfss_tuning/final_summary_n78_tuned.csv; hfss_stage4_rebuild_results_20260427_235005
+1_clean_redesign,HFSSDesign_n78_scratch_mp,Built a microstrip-fed printed monopole with partial ground from scratch,Converged worst S11 = -12.65 dB across 3.3-3.8 GHz,final_scratch_monopole_converged_S11.csv; HFSS_n78_from_scratch_report.md
+2_phone_pifa_enhancement,HFSSDesign_n78_phone_pifa_enhanced,Added handset ground and coupled parasitic branch; tested side frame and PIFA shorting wall,"Balanced phone-like final worst S11 = -10.77 dB, full n78 coverage",final_phone_pifa_balanced_S11.csv; phone_pifa_enhance_log.csv; HFSS_n78_phone_pifa_enhanced_report.md

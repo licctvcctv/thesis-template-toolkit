@@ -19,8 +19,8 @@
       "title": "4.2 系统总体功能设计",
       "number": "4.2",
       "content": [
-        "根据前文需求分析，系统功能可以分为四个部分：员工报销端、财务审批端、系统管理端和OCR辅助模块。题目主线主要落在报销填报、票据识别、重复检测和审批处理几个环节。",
-        "员工报销端面向普通员工，承担报销申请、票据上传、识别结果确认和进度查询等任务。员工上传发票图片后，系统调用OCR服务提取关键字段，再把结果回填到报销表单。",
+        "根据前文需求分析，基于OCR的智能财务报销系统功能可以分为四个部分：员工报销端、财务审批端、系统管理端和OCR辅助模块。题目主线主要落在报销填报、票据识别、重复检测和审批处理几个环节。",
+        "员工报销端面向员工，承担报销申请、票据上传、识别结果确认和进度查询等任务。员工上传发票图片后，系统调用OCR服务提取关键字段，再把结果回填到报销表单。",
         "财务审批端主要服务于财务人员，负责待审批记录查看、票据核验和审核处理。处理完成的数据可进入台账查询模块。系统管理端承担用户、角色和基础信息维护，公告、留言、薪资、收支等模块则保留为辅助管理功能。",
         "OCR辅助模块贯穿报销申请提交流程。该模块采用百度增值税发票识别API（vatInvoice）和通用文字高精度识别API（basicAccurateGeneral）的双通道方案。专用接口优先返回结构化字段；当专用接口无法识别时，系统再从通用识别文本中提取金额、发票代码、发票号码和开票日期等信息。报销单提交前还会执行发票号码查重。",
         "各部分之间按照业务顺序协同运行。员工端提交报销单时调用OCR识别和重复检测，财务审批端在审核阶段读取识别结果作为参考依据。",
@@ -87,7 +87,7 @@
           "number": "4.3.5",
           "content": [
             "重复发票检测是系统的一项重要辅助功能，目的是防止同一张发票被多次用于报销。该功能在员工提交报销单时自动触发，无需用户手动操作。",
-            "OCR识别完成后，系统会先提取发票号码字段，再以该字段为条件检索报销表。如果数据库中已经存在相同记录，系统会阻止本次提交。发票号码具有唯一性，基于该字段的查重能够覆盖系统内的历史报销记录。"
+            "OCR识别完成后，基于OCR的智能财务报销系统会先提取发票号码字段，再以该字段为条件检索报销信息表。如果数据库中已经存在相同记录，系统会阻止本次提交。发票号码具有唯一性，基于该字段的查重能够覆盖系统内的历史报销记录。重复发票检测流程已经在图4-6的提交阶段展示，识别结果返回后，后端继续查询MySQL并根据是否重复向前端返回提交成功或重复提示。"
           ]
         }
       ]
@@ -103,11 +103,11 @@
           "title": "4.4.1 数据库概念结构设计",
           "number": "4.4.1",
           "content": [
-            "数据库概念设计的任务，是把报销业务中的对象和关系整理为可描述的数据模型。本文采用E-R方法梳理实体、属性和实体间联系，底层数据库选用MySQL，库名为t171。",
-            "根据前文的需求分析和系统功能设计，与题目主线直接相关的实体主要包括报销信息、员工和财务人员。薪资实体用于辅助展示员工端财务信息。各实体拥有各自的属性集合，并通过业务行为形成关联。",
-            "报销信息实体是系统的核心业务对象，记录了每一笔报销申请的完整信息，包括报销编号、关联员工、报销名称、报销类型、报销金额、报销内容、审核状态、上传附件、发票代码、发票号码、发票日期、录入时间和创建时间等属性。其中发票代码、发票号码和发票日期三个字段由OCR识别模块自动提取并填入，是本系统区别于传统报销系统的关键数据项。",
+            "数据库概念设计的任务，是把报销业务中的对象和关系整理为可描述的数据模型。本文采用E-R方法梳理实体、属性和实体间联系，底层数据库选用MySQL，数据库名称设置为qiyecaiwuguanli。",
+            "实体设计主要围绕报销业务展开，核心实体包括报销信息、员工、财务人员、管理员和薪资信息。报销信息实体用于保存员工提交的报销申请；员工实体与报销记录、薪资记录存在关联；财务人员实体与审批处理相关；管理员实体用于后台维护。各实体拥有各自的属性集合，并通过业务行为形成联系。",
+            "报销信息实体是系统的核心业务对象，记录了每一笔报销申请的完整信息，包括报销编号、关联员工、报销名称、报销类型、报销金额、报销内容、审核状态、上传附件、发票代码、发票号码、发票日期、录入时间和创建时间等属性。其中发票代码、发票号码和发票日期三个字段由OCR识别模块自动提取并填入，是基于OCR的智能财务报销系统区别于传统报销系统的关键数据项。",
             "员工实体包含编号、用户名、密码、姓名、电话、身份证号、头像、性别、邮箱和创建时间等属性。财务人员实体包含编号、用户名、密码、姓名、电话、身份证号、头像、性别、邮箱和创建时间等属性。薪资实体记录员工的月度薪资发放情况，包含编号、关联员工、薪资月份、金额、薪资说明、录入时间和创建时间等属性。",
-            "报销信息实体属性图如图4-7所示。",
+            "报销信息实体属性图如图4-10所示。",
             {"type": "image", "path": "entity-baoxiao.png", "width": 130, "caption": "图4-10 报销信息实体属性图"},
             "财务人员实体属性图如图4-11所示。",
             {"type": "image", "path": "entity-caiwu.png", "width": 120, "caption": "图4-11 财务人员实体属性图"},
@@ -124,29 +124,37 @@
           "title": "4.4.2 数据库逻辑结构设计",
           "number": "4.4.2",
           "content": [
-            "概念模型确定后，还需要把各实体进一步落实为关系表结构。本文基于MySQL对前述实体进行逻辑化展开，并结合业务需要整理出系统中的核心数据表。",
-            "报销信息表是系统的核心业务表，存储员工提交的每一条报销申请记录。发票相关字段由OCR模块自动识别并回填。",
-            "表4-1 报销信息表（baoxiao）",
-            {"type": "table", "headers": ["字段名", "类型", "说明"], "rows": [["id", "int", "主键，自增编号"], ["yuangong_id", "int", "员工编号，关联员工表"], ["baoxiao_name", "varchar(200)", "报销名称"], ["baoxiao_types", "int", "报销类型"], ["baoxiao_money", "decimal(10,2)", "报销金额"], ["baoxiao_content", "text", "报销内容说明"], ["baoxiao_yesno_types", "int", "审核状态"], ["baoxiao_file", "varchar(200)", "上传的发票附件路径"], ["invoice_code", "varchar(50)", "发票代码，OCR识别"], ["invoice_number", "varchar(50)", "发票号码，OCR识别"], ["invoice_date", "varchar(50)", "发票日期，OCR识别"], ["insert_time", "timestamp", "数据录入时间"], ["create_time", "timestamp", "记录创建时间"]]},
-            "员工表记录系统中所有员工用户的基本信息。",
-            "表4-2 员工表（yuangong）",
-            {"type": "table", "headers": ["字段名", "类型", "说明"], "rows": [["id", "int", "主键，自增编号"], ["username", "varchar(100)", "登录用户名"], ["password", "varchar(100)", "登录密码"], ["yuangong_name", "varchar(200)", "员工姓名"], ["yuangong_phone", "varchar(20)", "联系电话"], ["yuangong_id_number", "varchar(50)", "身份证号"], ["yuangong_photo", "varchar(200)", "头像图片路径"], ["sex_types", "int", "性别，1男2女"], ["yuangong_email", "varchar(100)", "电子邮箱"], ["create_time", "timestamp", "创建时间"]]},
-            "财务人员表用于存储负责审核报销申请的财务人员信息。",
-            "表4-3 财务人员表（caiwurenyuan）",
-            {"type": "table", "headers": ["字段名", "类型", "说明"], "rows": [["id", "int", "主键，自增编号"], ["username", "varchar(100)", "登录用户名"], ["password", "varchar(100)", "登录密码"], ["caiwurenyuan_name", "varchar(200)", "财务人员姓名"], ["caiwurenyuan_phone", "varchar(20)", "联系电话"], ["caiwurenyuan_id_number", "varchar(50)", "身份证号"], ["caiwurenyuan_photo", "varchar(200)", "头像图片路径"], ["sex_types", "int", "性别，1男2女"], ["caiwurenyuan_email", "varchar(100)", "电子邮箱"], ["create_time", "timestamp", "创建时间"]]},
-            "管理员表用于存储系统后台管理员的登录信息和角色标识。",
-            "表4-4 管理员表（users）",
-            {"type": "table", "headers": ["字段名", "类型", "说明"], "rows": [["id", "int", "主键，自增编号"], ["username", "varchar(100)", "管理员用户名"], ["password", "varchar(100)", "管理员密码"], ["role", "varchar(50)", "角色标识"], ["addtime", "timestamp", "账号创建时间"]]},
-            "薪资表记录员工的月度薪资发放信息。",
-            "表4-5 薪资表（xinzi）",
-            {"type": "table", "headers": ["字段名", "类型", "说明"], "rows": [["id", "int", "主键，自增编号"], ["yuangong_id", "int", "员工编号，关联员工表"], ["xinzi_month", "varchar(20)", "薪资月份"], ["jine", "decimal(10,2)", "薪资金额"], ["xinzi_content", "text", "薪资说明"], ["insert_time", "timestamp", "数据录入时间"], ["create_time", "timestamp", "记录创建时间"]]},
-            "收费信息表用于记录系统中的辅助管理数据。",
-            "表4-6 收费信息表（shoufeixinxi）",
-            {"type": "table", "headers": ["字段名", "类型", "说明"], "rows": [["id", "int", "主键，自增编号"], ["shoufeixinxi_name", "varchar(200)", "收费名称"], ["shoufeixinxi_types", "int", "收费类型"], ["shoufeixinxi_money", "decimal(10,2)", "收费金额"], ["shoufeixinxi_content", "text", "收费内容说明"], ["shoufeixinxi_file", "varchar(200)", "相关附件路径"], ["insert_time", "timestamp", "数据录入时间"], ["create_time", "timestamp", "记录创建时间"]]},
-            "上述各表共同组成系统的数据存储结构。其中，报销信息表、员工表和财务人员表直接支撑OCR报销主线；薪资表和收费信息表主要服务于辅助管理。发票字段的设置，也为识别结果写入数据库提供了明确位置。"
+            "概念模型确定后，还需要把各实体进一步落实为关系表结构。本文基于MySQL对前述实体进行逻辑化展开，并结合业务需要整理出基于OCR的智能财务报销系统中的核心数据表。",
+            "报销信息表是系统的核心业务表，存储员工提交的每一条报销申请记录。该表既保存报销名称、类型、金额和审核状态等基础业务字段，也保存票据附件路径和OCR识别出的发票字段。财务人员审批时会读取该表中的申请数据和识别结果，因此其字段设计直接影响报销提交、查重和审核流程，具体结构如表4-1所示。",
+            "表4-1 baoxiao表",
+            {"type": "table", "headers": ["列名", "数据类型", "长度", "约束"], "rows": [["id", "int", "11", "PRIMARY KEY"], ["yuangong_id", "int", "11", "NOT NULL"], ["baoxiao_name", "varchar", "200", "NOT NULL"], ["baoxiao_types", "int", "11", "NOT NULL"], ["baoxiao_money", "decimal", "10,2", "NOT NULL"], ["baoxiao_content", "text", "0", "NULL"], ["baoxiao_yesno_types", "int", "11", "NOT NULL"], ["baoxiao_file", "varchar", "200", "NULL"], ["invoice_code", "varchar", "50", "NULL"], ["invoice_number", "varchar", "50", "NULL"], ["invoice_date", "varchar", "50", "NULL"], ["insert_time", "timestamp", "0", "NOT NULL"], ["create_time", "timestamp", "0", "NOT NULL"]]},
+            "员工表用于记录系统中所有员工用户的基本信息，是员工登录、提交报销申请和查询个人数据的基础。员工编号会被报销信息表和薪资表引用，用于区分不同员工的业务记录。该表同时保存联系方式、性别、邮箱等资料，便于后台维护和业务查询，具体结构如表4-2所示。",
+            "表4-2 yuangong表",
+            {"type": "table", "headers": ["列名", "数据类型", "长度", "约束"], "rows": [["id", "int", "11", "PRIMARY KEY"], ["username", "varchar", "100", "NOT NULL"], ["password", "varchar", "100", "NOT NULL"], ["yuangong_name", "varchar", "200", "NOT NULL"], ["yuangong_phone", "varchar", "20", "NOT NULL"], ["yuangong_id_number", "varchar", "50", "NOT NULL"], ["yuangong_photo", "varchar", "200", "NULL"], ["sex_types", "int", "11", "NULL"], ["yuangong_email", "varchar", "100", "NULL"], ["create_time", "timestamp", "0", "NOT NULL"]]},
+            "财务人员表用于存储负责审核报销申请的财务岗位账号。财务人员登录后可查看待审批报销记录，并对申请执行通过或驳回操作。该表的字段与员工表类似，但在业务权限上对应审批与台账查询功能，具体结构如表4-3所示。",
+            "表4-3 caiwurenyuan表",
+            {"type": "table", "headers": ["列名", "数据类型", "长度", "约束"], "rows": [["id", "int", "11", "PRIMARY KEY"], ["username", "varchar", "100", "NOT NULL"], ["password", "varchar", "100", "NOT NULL"], ["caiwurenyuan_name", "varchar", "200", "NOT NULL"], ["caiwurenyuan_phone", "varchar", "20", "NOT NULL"], ["caiwurenyuan_id_number", "varchar", "50", "NOT NULL"], ["caiwurenyuan_photo", "varchar", "200", "NULL"], ["sex_types", "int", "11", "NULL"], ["caiwurenyuan_email", "varchar", "100", "NULL"], ["create_time", "timestamp", "0", "NOT NULL"]]},
+            "管理员表用于存储系统后台管理员的登录信息和角色标识。管理员主要承担账号维护、基础数据维护和系统配置工作，其账号信息需要与普通业务用户区分保存。该表字段较少，重点保存用户名、密码、角色和创建时间，具体结构如表4-4所示。",
+            "表4-4 users表",
+            {"type": "table", "headers": ["列名", "数据类型", "长度", "约束"], "rows": [["id", "bigint", "20", "PRIMARY KEY"], ["username", "varchar", "100", "NOT NULL"], ["password", "varchar", "100", "NOT NULL"], ["role", "varchar", "50", "NOT NULL"], ["addtime", "timestamp", "0", "NOT NULL"]]},
+            "薪资表记录员工的月度薪资发放信息，属于基于OCR的智能财务报销系统中的辅助管理数据。员工可以在个人端查看薪资记录，管理员可在后台进行新增、修改和删除。该表通过员工编号与员工表关联，便于按人员和月份查询，具体结构如表4-5所示。",
+            "表4-5 xinzi表",
+            {"type": "table", "headers": ["列名", "数据类型", "长度", "约束"], "rows": [["id", "int", "11", "PRIMARY KEY"], ["yuangong_id", "int", "11", "NOT NULL"], ["xinzi_month", "varchar", "20", "NOT NULL"], ["jine", "decimal", "10,2", "NOT NULL"], ["xinzi_content", "text", "0", "NULL"], ["insert_time", "timestamp", "0", "NOT NULL"], ["create_time", "timestamp", "0", "NOT NULL"]]},
+            "收费信息表用于记录系统中的辅助管理数据，主要保存收费名称、类型、金额、说明和附件等内容。该表不直接参与OCR识别流程，但与后台财务信息维护相关，可为系统扩展收支管理提供数据基础，具体结构如表4-6所示。",
+            "表4-6 shoufeixinxi表",
+            {"type": "table", "headers": ["列名", "数据类型", "长度", "约束"], "rows": [["id", "int", "11", "PRIMARY KEY"], ["shoufeixinxi_name", "varchar", "200", "NOT NULL"], ["shoufeixinxi_types", "int", "11", "NOT NULL"], ["shoufeixinxi_money", "decimal", "10,2", "NOT NULL"], ["shoufeixinxi_content", "text", "0", "NULL"], ["shoufeixinxi_file", "varchar", "200", "NULL"], ["insert_time", "timestamp", "0", "NOT NULL"], ["create_time", "timestamp", "0", "NOT NULL"]]},
+            "上述各表共同组成基于OCR的智能财务报销系统的数据存储结构。其中，报销信息表、员工表和财务人员表直接支撑OCR报销主线；管理员表、薪资表和收费信息表主要服务于后台管理和辅助查询。发票字段的设置，也为识别结果写入数据库提供了明确位置。"
           ]
         }
       ]
+    },
+    {
+      "title": "4.5 本章小结",
+      "number": "4.5",
+      "content": [
+        "本章完成了基于OCR的智能财务报销系统的总体设计工作。首先从三层架构角度说明了前端页面、后端接口、OCR服务和数据库之间的关系；随后对员工报销端、财务审批端、系统管理端和OCR辅助模块进行了功能结构设计；接着给出了登录注册、报销提交、OCR识别、审批流转和重复发票检测等关键流程；最后完成数据库概念结构和逻辑表结构设计。上述设计为第五章系统实现提供了依据。"
+      ],
+      "subsections": []
     }
   ]
 }

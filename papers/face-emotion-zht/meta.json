@@ -1,0 +1,20 @@
+{
+  "title_zh": "基于深度学习的人脸面部情绪识别系统设计与实现",
+  "title_en": "Design and Implementation of a Facial Emotion Recognition System Based on Deep Learning",
+  "college": "信息工程学院",
+  "major": "数据科学与大数据技术",
+  "class_name": "数据科学与大数据技术本科K2201班",
+  "name": "张会涛",
+  "student_id": "220529090103",
+  "advisor": "",
+  "class_year": "2026届",
+  "date": "2026年4月20日",
+  "abstract_zh": "随着人工智能和计算机视觉技术的发展，人脸面部情绪识别在人机交互、在线教育、智能客服和公共安全等场景中具有较高应用价值。针对传统表情识别方法依赖人工特征、复杂环境下泛化能力不足等问题，本文设计并实现了一套基于深度学习的人脸面部情绪识别系统。研究使用包含愤怒、厌恶、恐惧、高兴、中性、悲伤和惊讶七类表情的数据集，并按照训练集、验证集和测试集组织模型实验。模型部分以YOLOv5和YOLOv8-cls为对比对象，在相同数据集和训练轮次下比较训练损失、验证损失、Top-1准确率、Top-5准确率和混淆矩阵等结果。实验结果显示，YOLOv8-cls最终Top-1准确率为57.95%，Top-5准确率为98.03%，整体表现优于YOLOv5，因此本文选择YOLOv8-cls作为系统主要识别模型。系统采用Vue 3实现前端交互，采用Django实现后端接口和数据库管理，完成用户注册登录、图片识别、识别历史和后台管理等功能。",
+  "abstract_en": "With the development of artificial intelligence and computer vision, facial emotion recognition has high application value in human-computer interaction, online education, intelligent customer service, and public safety. To address the dependence on handcrafted features and weak generalization of traditional methods, this thesis designs and implements a facial emotion recognition system based on deep learning. The experiment uses seven emotion categories and organizes the data into training, validation, and test sets. YOLOv5 and YOLOv8-cls are compared under the same training protocol in terms of training loss, validation loss, Top-1 accuracy, Top-5 accuracy, and confusion matrix. The final Top-1 and Top-5 accuracies of YOLOv8-cls are 57.95% and 98.03%, respectively, and YOLOv8-cls is selected as the main model. The system uses Vue 3 for frontend interaction and Django for backend APIs and database management.",
+  "keywords_zh": "人脸面部情绪识别；YOLOv8-cls；YOLOv5；深度学习；Django",
+  "keywords_en": "facial emotion recognition; YOLOv8-cls; YOLOv5; deep learning; Django",
+  "conclusion": "本文围绕人脸面部情绪识别任务，完成了数据集整理、图像预处理、模型结构分析、实验对比、系统设计实现和系统测试等工作。第3章对数据集样本、类别分布、输入组织、预处理流程、数据增强以及YOLOv5和YOLOv8-cls模型结构进行了说明；第4章在Kaggle GPU环境下对两个模型进行同数据集对比训练，并从损失曲线、准确率曲线、最终指标、混淆矩阵和预测样本等角度分析模型效果。\n实验结果表明，YOLOv8-cls最终Top-1准确率为57.95%，Top-5准确率为98.03%，最佳Top-1准确率出现在第51轮，达到59.33%。相比之下，YOLOv5最终Top-1准确率为51.64%，Top-5准确率为93.43%。综合收敛稳定性和验证集准确率，本文选择YOLOv8-cls作为系统主要识别模型。\n在系统实现方面，本文采用Vue 3和Django完成前后端分离式开发，实现了用户注册、登录、图片识别、识别历史查询、用户管理和识别历史管理等功能。系统围绕图片上传、模型推理、结果展示和记录保存形成完整流程，能够满足毕业设计场景下的使用需求。\n本研究仍存在一定不足。当前模型主要在公开表情数据集上训练和测试，对于复杂光照、遮挡、多人图像和弱表情边界场景仍可能出现误判。后续研究可继续扩充真实场景样本，引入人脸关键区域注意力机制，并探索模型轻量化部署方案。",
+  "acknowledgement": "在本次毕业设计完成过程中，指导教师在选题确定、论文结构调整和系统实现思路方面给予了认真指导，使我能够顺利完成论文写作和系统整理。感谢信息工程学院各位老师在大学期间的培养，课程学习为本课题中的深度学习、计算机视觉和Web系统开发奠定了基础。\n感谢同学和朋友在系统测试过程中提供帮助，对页面交互和功能展示提出建议。最后，感谢家人在学习和生活中给予的理解、支持和鼓励。谨向所有帮助过我的老师、同学、朋友和家人表示诚挚感谢。",
+  "appendix_title": "附录A 系统核心代码",
+  "appendix_content": "（1）图片识别接口核心逻辑\nimage = request.FILES.get('file')\nresult = yolo_model.predict(image_path, imgsz=224)\nrecord = DetectionRecord.objects.create(user=user, image=image, result=result)\n\n（2）前端上传逻辑\nconst formData = new FormData()\nformData.append('file', file)\nconst res = await api.post('/yolo/detect/', formData)"
+}

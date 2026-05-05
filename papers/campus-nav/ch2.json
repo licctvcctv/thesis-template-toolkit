@@ -40,14 +40,14 @@
           "title": "2.2.1 Vue3框架",
           "number": "2.2.1",
           "content": [
-            "选择Vue3而非React或Angular的原因有三个。第一，Vue3的组合式API允许把地图初始化、标记管理、路径规划等逻辑分别封装为独立的composable模块（useMap、useMarkers、useRoute等），每个模块只关注一个功能领域，代码组织比选项式API更清晰。第二，Vue3配合TypeScript可以在编码阶段发现地图坐标、兴趣点数据等结构的类型错误，减少运行时bug。第三，Naive UI组件库专为Vue3设计，提供了数据表格、表单、对话框、通知等后台管理常用组件，不需要额外引入其他UI库。构建工具使用Vite，开发阶段的热更新速度很快。"
+            "选择Vue3而非React或Angular的原因有三个。第一，Vue3的组合式API允许把地图初始化、标记管理、路径规划等逻辑分别封装为独立的composable模块（useMap、useMarkers、useRoute等），每个模块只关注一个功能领域，代码组织比选项式API更清晰。第二，Vue3配合TypeScript可以在编码阶段发现地图坐标、兴趣点数据等结构的类型错误，减少运行时bug。第三，Naive UI组件库专为Vue3设计，提供了数据表格、表单、对话框、通知等后台管理常用组件，不需要额外引入其他UI库。已有基于Vue的信息融合界面和WebAPP开发研究也说明，该框架适合构建交互式Web系统[15][16]。构建工具使用Vite，开发阶段的热更新速度很快。"
           ]
         },
         {
           "title": "2.2.2 Express框架与SQLite数据库",
           "number": "2.2.2",
           "content": [
-            "选择Express而非Spring Boot的原因是：校园导航系统的后端逻辑相对简单（用户认证、CRUD接口、统计查询），Express的轻量级特性和JavaScript全栈开发的便利性更适合这个场景。Express的中间件机制可以方便地插入JWT认证和角色校验逻辑，路由模块按功能拆分为auth、pois、users、announcements和navLogs五个文件，结构清晰。",
+            "选择Express而非Spring Boot的原因是：校园导航系统的后端逻辑相对简单（用户认证、CRUD接口、统计查询），Express的轻量级特性和JavaScript全栈开发的便利性更适合这个场景。Node.js在高性能网络程序构建方面具有事件驱动和非阻塞I/O等特点，为Express接口服务提供了运行基础[17]。Express的中间件机制可以方便地插入JWT认证和角色校验逻辑，路由模块按功能拆分为auth、pois、users、announcements和navLogs五个文件，结构清晰。",
             "选择SQLite而非MySQL的原因是：校园导航系统的数据量有限（几十个兴趣点、几百条导航日志），不需要MySQL的高并发和复杂查询能力。SQLite的嵌入式特性让部署变得极其简单——整个数据库就是一个文件，不需要在服务器上安装和配置数据库服务。本项目通过sql.js库在Node.js中操作SQLite，数据定期持久化到磁盘文件。"
           ]
         },
@@ -70,7 +70,7 @@
           "title": "2.2.5 JWT认证",
           "number": "2.2.5",
           "content": [
-            "选择JWT而非Session的原因是：前后端分离架构下，前端和后端部署在不同的端口（5173和3456），Session方案需要额外处理跨域Cookie和服务端Session存储的问题。JWT方案中Token存储在前端localStorage里，每次请求在HTTP头中携带，服务端只需验证签名即可，不需要维护Session记录。本项目使用jsonwebtoken库签发Token，设置7天过期，密码使用bcrypt库做10轮盐值哈希存储。"
+            "选择JWT而非Session的原因是：前后端分离架构下，前端和后端部署在不同的端口（5173和3456），Session方案需要额外处理跨域Cookie和服务端Session存储的问题。JWT方案中Token存储在前端localStorage里，每次请求在HTTP头中携带，服务端只需验证签名即可，不需要维护Session记录。相关研究表明，JWT适合在Web应用中承担身份认证和授权信息传递任务[18]。本项目使用jsonwebtoken库签发Token，设置7天过期，密码使用bcrypt库做10轮盐值哈希存储。"
           ]
         }
       ]
@@ -80,8 +80,8 @@
       "number": "2.3",
       "content": [
         "系统划分为用户和管理员两种角色。用户角色用例图如图2-1所示，管理员角色用例图如图2-2所示。",
-        {"type": "image", "path": "usecase-user.png", "width": 130, "caption": "图2-1　用户角色用例图"},
-        {"type": "image", "path": "usecase-admin.png", "width": 130, "caption": "图2-2　管理员角色用例图"}
+        {"type": "image", "path": "usecase-user.png", "width": 125, "caption": "图2-1　用户角色用例图"},
+        {"type": "image", "path": "usecase-admin.png", "width": 125, "caption": "图2-2　管理员角色用例图"}
       ],
       "subsections": [
         {

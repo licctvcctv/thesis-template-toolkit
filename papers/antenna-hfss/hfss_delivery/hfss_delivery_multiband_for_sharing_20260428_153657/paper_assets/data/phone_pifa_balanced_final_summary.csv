@@ -1,0 +1,19 @@
+metric,value
+design,HFSSDesign_n78_phone_pifa_enhanced
+selected_case,phone_ground_right_parasitic
+features,"{'phone_ground': True, 'parasitic': ('right', '1.2mm', '24mm', '0.9mm', '19mm')}"
+selection_reason,keeps a visible phone-ground and coupled parasitic antenna branch while preserving n78 -10 dB coverage
+points,21
+max_s11_db,-10.7677807288241
+max_s11_freq_ghz,3.8
+min_s11_db,-12.7667292777427
+min_s11_freq_ghz,3.3
+s11_3p30_db,-12.7667292777427
+s11_3p40_db,-12.2012392872749
+s11_3p50_db,-11.721994627279
+s11_3p60_db,-11.3226220133004
+s11_3p70_db,-11.0031216997881
+s11_3p80_db,-10.7677807288241
+below10_start_ghz,3.3
+below10_stop_ghz,3.8
+below10_span_ghz,0.5

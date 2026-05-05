@@ -1,0 +1,4 @@
+﻿band,start_ghz,stop_ghz,worst_s11_db,worst_freq_ghz,best_s11_db,best_freq_ghz,below_minus10_full_band
+WLAN_2p4,2.4,2.5,-15.4049030755718,2.4,-16.5083314094527,2.5,True
+n78,3.3,3.8,-7.12992171853914,3.8,-9.61257376798495,3.5,False
+WLAN_5p8,5.725,5.85,-17.6146554482238,5.85,-25.08992149593,5.75,True

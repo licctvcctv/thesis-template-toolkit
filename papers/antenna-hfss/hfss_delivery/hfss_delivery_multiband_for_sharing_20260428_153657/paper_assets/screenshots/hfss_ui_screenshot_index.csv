@@ -1,0 +1,14 @@
+﻿file,test_or_view,source,notes
+hfss_ui_01_final_geometry_full_window.png,Final geometry and project tree,AEDT 3D Modeler,Phone/PIFA-style final design with handset ground and coupled parasitic branch.
+hfss_ui_02_s11_rectangular_plot.png,S11 / return loss matching,AEDT ReportSetup,Final dB(S11) over the n78 band.
+hfss_ui_03_vswr_rectangular_plot.png,VSWR,AEDT ReportSetup,Voltage standing wave ratio over the n78 band.
+hfss_ui_04_input_impedance_plot.png,Input impedance,AEDT ReportSetup,"Real, imaginary and magnitude of input impedance."
+hfss_ui_05_smith_chart.png,Smith chart,AEDT ReportSetup,S11 trajectory on Smith chart.
+hfss_ui_06_result_data_table.png,Result data table,AEDT ReportSetup,"HFSS table view for S11, VSWR and input impedance."
+hfss_ui_07_radiation_gain_phi0.png,Radiation gain Phi=0deg,AEDT ReportSetup,"Far-field gain cut at 3.55 GHz, Phi=0deg."
+hfss_ui_08_radiation_gain_phi90.png,Radiation gain Phi=90deg,AEDT ReportSetup,"Far-field gain cut at 3.55 GHz, Phi=90deg."
+hfss_ui_09_3d_gain_total.png,3D gain pattern,AEDT ReportSetup,3D total gain pattern at 3.55 GHz.
+hfss_ui_10_radiation_polar_phi0.png,Polar radiation pattern Phi=0deg,AEDT ReportSetup,HFSS polar radiation pattern at 3.55 GHz.
+hfss_ui_11_radiation_data_table.png,Radiation data table,AEDT ReportSetup,HFSS table view for gain and directivity at Phi=0deg.
+hfss_ui_12_theta_phi_gain_surface.png,Theta/Phi gain surface,AEDT ReportSetup,3D rectangular gain surface over Theta and Phi.
+hfss_ui_13_theta_phi_gain_contour.png,Theta/Phi gain contour,AEDT ReportSetup,Contour map of total gain over Theta and Phi.

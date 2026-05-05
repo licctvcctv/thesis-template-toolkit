@@ -14,11 +14,14 @@ from __future__ import annotations
 
 import json
 import hashlib
+import os
 import re
 import shutil
+import socket
 import subprocess
 import sys
 import tempfile
+import time
 import zipfile
 from pathlib import Path
 
@@ -113,9 +116,13 @@ def add_toc_line(sd, title, page, level=1):
     p.paragraph_format.line_spacing_rule = WD_LINE_SPACING.EXACTLY
     r = p.add_run(f"{title}\t{page}")
     fmt_run(r, 10.5, bold=(level == 1), east="宋体")
+    return p
 
 
 def iter_toc_titles(chapters):
+    has_chapter5_conclusion = any(
+        normalize_text(ch.get("title", "")).startswith("5结论") for ch in chapters
+    )
     for ch in chapters:
         yield ch["title"], 1
         for sec in ch.get("sections", []):
@@ -124,7 +131,8 @@ def iter_toc_titles(chapters):
             for sub in sec.get("subsections", []):
                 if sub.get("title"):
                     yield sub["title"], 3
-    yield "结论", 1
+    if not has_chapter5_conclusion:
+        yield "结论", 1
     yield "致谢", 1
     yield "参考文献", 1
 
@@ -134,7 +142,11 @@ def default_page_for(title, order):
         "1 绪论": 1,
         "2 手机天线基本理论与仿真方法": 6,
         "3 n78手机PIFA天线设计与建模": 11,
+        "3 多频段手机PIFA天线设计与建模": 11,
         "4 仿真结果与优化分析": 16,
+        "4 仿真结果、参数对比与多频段验证": 16,
+        "4 多频段仿真结果与参数分析": 16,
+        "5 结论与展望": 29,
         "结论": 23,
         "致谢": 24,
         "参考文献": 25,
@@ -145,11 +157,27 @@ def default_page_for(title, order):
 def build_toc(doc, chapters, toc_pages=None):
     toc_pages = toc_pages or {}
     sd = doc.new_subdoc()
-    add_toc_line(sd, "摘 要", "I", 1)
-    add_toc_line(sd, "Abstract", "II", 1)
+    first = add_toc_line(sd, "摘 要", "I", 1)
+    last = add_toc_line(sd, "Abstract", "II", 1)
     for order, (title, level) in enumerate(iter_toc_titles(chapters), 1):
         page = toc_pages.get(title, default_page_for(title, order))
-        add_toc_line(sd, title, page, level)
+        last = add_toc_line(sd, title, page, level)
+
+    r = first.runs[0]
+    fld_begin = OxmlElement("w:fldChar")
+    fld_begin.set(qn("w:fldCharType"), "begin")
+    fld_begin.set(qn("w:dirty"), "true")
+    instr = OxmlElement("w:instrText")
+    instr.set(qn("xml:space"), "preserve")
+    instr.text = ' TOC \\o "1-3" \\h \\z \\u '
+    fld_sep = OxmlElement("w:fldChar")
+    fld_sep.set(qn("w:fldCharType"), "separate")
+    fld_end = OxmlElement("w:fldChar")
+    fld_end.set(qn("w:fldCharType"), "end")
+    r._r.insert(0, fld_sep)
+    r._r.insert(0, instr)
+    r._r.insert(0, fld_begin)
+    last.runs[-1]._r.append(fld_end)
     return sd
 
 
@@ -260,6 +288,7 @@ def add_table(sd, data):
         p.paragraph_format.line_spacing_rule = WD_LINE_SPACING.EXACTLY
         p.paragraph_format.space_before = Pt(0)
         p.paragraph_format.space_after = Pt(3)
+        p.paragraph_format.keep_with_next = True
         r = p.add_run(caption)
         fmt_run(r, 10.5, False, east="宋体")
 
@@ -269,6 +298,7 @@ def add_table(sd, data):
     p.paragraph_format.line_spacing = 1.0
     p.paragraph_format.space_before = Pt(0)
     p.paragraph_format.space_after = Pt(3)
+    p.paragraph_format.keep_together = True
     run = p.add_run()
     run.add_picture(str(image_path), width=Cm(13.2))
     sd.add_paragraph()
@@ -492,6 +522,9 @@ def build_blocks(sd, blocks):
                 add_table(sd, block["table"])
             elif "image" in block:
                 add_image(sd, block["image"], block.get("caption", ""), block.get("width_cm", 13.0))
+            elif block.get("page_break"):
+                p = sd.add_paragraph()
+                p.add_run().add_break(WD_BREAK.PAGE)
 
 
 def build_body(doc, chapters):
@@ -633,6 +666,7 @@ def fix_front_matter(doc):
 
     p = paragraphs[zh_idx]
     set_para_rule(p, line_pt=22, first_line=Cm(0), align=WD_ALIGN_PARAGRAPH.CENTER)
+    ensure_outline(p, 0)
     replace_runs(p, [("摘 要", 15, False, "黑体", "黑体")])
 
     for p in paragraphs[zh_idx + 1:en_idx]:
@@ -653,6 +687,7 @@ def fix_front_matter(doc):
 
     p = paragraphs[en_idx]
     set_para_rule(p, line_pt=22, first_line=Cm(0), align=WD_ALIGN_PARAGRAPH.CENTER, page_break_before=True)
+    ensure_outline(p, 0)
     replace_runs(p, [("Abstract", 15, False, "楷体", "Arial Black")])
 
     end = toc_idx if toc_idx is not None else len(paragraphs)
@@ -751,10 +786,41 @@ def fix_table_fonts(doc):
                                 east="宋体", ascii_font="宋体")
 
 
+def remove_paragraphs(paragraphs):
+    for p in paragraphs:
+        parent = p._element.getparent()
+        if parent is not None:
+            parent.remove(p._element)
+
+
+def remove_template_conclusion_if_chapter5(doc):
+    has_chapter5 = any(normalize_text(p.text).startswith("5结论") for p in doc.paragraphs)
+    if not has_chapter5:
+        return
+    paras = doc.paragraphs
+    ch5_idx = next((i for i, p in enumerate(paras) if normalize_text(p.text).startswith("5结论")), None)
+    if ch5_idx is None:
+        return
+    start = None
+    end = None
+    for i in range(ch5_idx + 1, len(paras)):
+        text = normalize_text(paras[i].text)
+        if text == "结论":
+            start = i
+            continue
+        if start is not None and text == "致谢":
+            end = i
+            break
+    if start is None or end is None or start >= end:
+        return
+    remove_paragraphs(paras[start:end])
+
+
 def post_process_docx(docx_path: Path):
     from docx import Document
 
     doc = Document(str(docx_path))
+    remove_template_conclusion_if_chapter5(doc)
     fix_front_matter(doc)
     fix_generated_body(doc)
     fix_table_fonts(doc)
@@ -827,6 +893,98 @@ def infer_toc_pages(docx_path: Path, chapters):
     return toc_pages
 
 
+def refresh_toc_with_libreoffice(docx_path: Path):
+    """Use LibreOffice's document-index updater so the TOC remains a real field."""
+    soffice = shutil.which("soffice") or "/Applications/LibreOffice.app/Contents/MacOS/soffice"
+    lo_python_candidates = [
+        "/Applications/LibreOffice.app/Contents/Resources/python",
+        shutil.which("python3"),
+    ]
+    lo_python = next((p for p in lo_python_candidates if p and os.path.exists(p)), None)
+    if not soffice or not os.path.exists(soffice) or not lo_python:
+        return False
+
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        s.bind(("127.0.0.1", 0))
+        port = s.getsockname()[1]
+
+    profile = tempfile.mkdtemp(prefix="lo_toc_profile_")
+    proc = subprocess.Popen(
+        [
+            soffice,
+            f"-env:UserInstallation=file://{profile}",
+            "--headless",
+            "--invisible",
+            "--norestore",
+            f"--accept=socket,host=127.0.0.1,port={port};urp;StarOffice.ComponentContext",
+        ],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+    )
+
+    try:
+        time.sleep(1.5)
+        script = f"""
+import time
+import uno
+from com.sun.star.beans import PropertyValue
+from com.sun.star.connection import NoConnectException
+
+def prop(name, value):
+    p = PropertyValue()
+    p.Name = name
+    p.Value = value
+    return p
+
+local_ctx = uno.getComponentContext()
+resolver = local_ctx.ServiceManager.createInstanceWithContext(
+    'com.sun.star.bridge.UnoUrlResolver', local_ctx
+)
+for _ in range(30):
+    try:
+        ctx = resolver.resolve(
+            'uno:socket,host=127.0.0.1,port={port};urp;StarOffice.ComponentContext'
+        )
+        break
+    except NoConnectException:
+        time.sleep(0.5)
+else:
+    raise RuntimeError('LibreOffice UNO connection failed')
+
+smgr = ctx.ServiceManager
+desktop = smgr.createInstanceWithContext('com.sun.star.frame.Desktop', ctx)
+url = uno.systemPathToFileUrl({os.path.abspath(docx_path)!r})
+doc = desktop.loadComponentFromURL(url, '_blank', 0, (
+    prop('Hidden', True),
+    prop('ReadOnly', False),
+))
+indexes = doc.getDocumentIndexes()
+for i in range(indexes.getCount()):
+    indexes.getByIndex(i).update()
+doc.getTextFields().refresh()
+doc.refresh()
+doc.store()
+doc.close(True)
+"""
+        run = subprocess.run(
+            [lo_python, "-c", script],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            timeout=90,
+            check=False,
+        )
+        return run.returncode == 0
+    finally:
+        proc.terminate()
+        try:
+            proc.wait(timeout=5)
+        except subprocess.TimeoutExpired:
+            proc.kill()
+        shutil.rmtree(profile, ignore_errors=True)
+
+
 def verify_docx(docx_path: Path):
     from docx import Document
 
@@ -839,8 +997,10 @@ def verify_docx(docx_path: Path):
     for old in ("购物商城", "学习伴侣", "停车场管理系统", "校园导航系统"):
         if old in text:
             errors.append(f"残留旧项目文本：{old}")
-    if "n78" not in text or "PIFA" not in text or "-10.77" not in text:
+    if "n78" not in text or "PIFA" not in text or "-10.77" not in text or "-10.37" not in text:
         errors.append("未检测到关键仿真主题或结果数据")
+    if "5 结论与展望" not in text:
+        errors.append("结论未作为第五章进入正文")
     missing = [p.text for p in doc.paragraphs if "图片缺失" in p.text]
     errors.extend(missing)
     return errors
@@ -855,10 +1015,11 @@ def main():
     chapters = render(output)
     toc_pages = infer_toc_pages(output, chapters)
     if toc_pages:
-        print(f"回扫到 {len(toc_pages)} 个目录页码，二次渲染目录...")
+        print(f"回扫到 {len(toc_pages)} 个目录页码，二次渲染自动目录缓存...")
         render(output, toc_pages=toc_pages)
     else:
-        print("未能自动回扫目录页码，保留预估目录。")
+        print("未能自动回扫目录页码，目录保留自动域和预估页码。")
+    print("目录保留为 Word TOC 域；显示页码使用二次回扫后的论文页码缓存。")
 
     errors = verify_docx(output)
     if errors:

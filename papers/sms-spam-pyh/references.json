@@ -1,0 +1,20 @@
+[
+  "[1] 郝婷, 王薇. 融合Bert和BiLSTM的中文短文本分类研究[J]. 软件工程, 2023: 5.",
+  "[2] 王玉玲, 刘晓鸣, 王尧永. 基于多维数字化方法的智能垃圾短信检测与实现[J]. 邮电设计技术, 2023: 6.",
+  "[3] 李铁飞, 生龙, 吴迪. BERT-TECNN模型的文本分类方法研究[J]. 计算机工程与应用, 2021: 8.",
+  "[4] 夏林中, 叶剑锋, 罗德安, 等. 基于BERT-BiLSTM模型的短文本自动评分系统[J]. 深圳大学学报(理工版), 2022: 6.",
+  "[5] Oswald C, Simon S E, Bhattacharya A. SpotSpam: Intention Analysis-driven SMS Spam Detection Using BERT Embeddings[J]. ACM Transactions on the Web, 2022, 16(3): 1-27.",
+  "[6] Liu X, Lu H, Nayak A. A Spam Transformer Model for SMS Spam Detection[J]. IEEE Access, 2021, 9: 80253-80263.",
+  "[7] Maheshwari S, Aggarwal S, Kaushal R. A novel SMS spam dataset and bi-directional transformer based short-text representations for SMS spam detection[J]. International Journal of Information and Decision Sciences, 2024, 16(4): 341-359.",
+  "[8] He S. Addressing data imbalance in neural network spam detection with insights from SMS spam collection[J]. Theoretical and Natural Science, 2024, 39(1): 195-201.",
+  "[9] Shen L, Wang Y, Li Z, et al. SMS spam detection using BERT and multi-graph convolutional networks[J]. International Journal of Intelligent Networks, 2025, 6: 79-88.",
+  "[10] Kandula S. Spam or Ham? A Hybrid Deep Learning Approach for SMS Spam Detection[J]. International Journal for Research in Applied Science and Engineering Technology, 2025, 13(3): 104-108.",
+  "[11] Jaya Saputra N. Analysis of SMS Spam Detection using Tf-Idf: A Study On SMS Spam Collection Dataset[J]. Jurnal Sosial Teknologi, 2024, 4(4): 213-217.",
+  "[12] Devlin J, Chang M W, Lee K, et al. BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding[C]//NAACL. 2019: 4171-4186.",
+  "[13] Hochreiter S, Schmidhuber J. Long Short-Term Memory[J]. Neural Computation, 1997, 9(8): 1735-1780.",
+  "[14] Vaswani A, Shazeer N, Parmar N, et al. Attention Is All You Need[C]//NIPS. 2017: 5998-6008.",
+  "[15] Paszke A, Gross S, Massa F, et al. PyTorch: An Imperative Style, High-Performance Deep Learning Library[C]//NeurIPS. 2019: 8024-8035.",
+  "[16] Django Software Foundation. Django Documentation[EB/OL]. https://docs.djangoproject.com/.",
+  "[17] Vue.js Team. Vue.js Documentation[EB/OL]. https://vuejs.org/.",
+  "[18] Pedregosa F, Varoquaux G, Gramfort A, et al. Scikit-learn: Machine Learning in Python[J]. Journal of Machine Learning Research, 2011, 12: 2825-2830."
+]

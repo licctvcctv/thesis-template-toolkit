@@ -1,0 +1,406 @@
+[{"stream_name":"stderr","time":4.211730902,"data":"2026-05-01 03:51:32.736476: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:467] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered\n"}
+,{"stream_name":"stderr","time":4.409046727,"data":"WARNING: All log messages before absl::InitializeLog() is called are written to STDERR\n"}
+,{"stream_name":"stderr","time":4.409084168,"data":"E0000 00:00:1777607492.933839       7 cuda_dnn.cc:8579] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered\n"}
+,{"stream_name":"stderr","time":4.465684744,"data":"E0000 00:00:1777607492.990602       7 cuda_blas.cc:1407] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered\n"}
+,{"stream_name":"stderr","time":4.897784075,"data":"W0000 00:00:1777607493.422615       7 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.\n"}
+,{"stream_name":"stderr","time":4.897805435,"data":"W0000 00:00:1777607493.422657       7 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.\n"}
+,{"stream_name":"stderr","time":4.89780903,"data":"W0000 00:00:1777607493.422660       7 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.\n"}
+,{"stream_name":"stderr","time":4.897812031,"data":"W0000 00:00:1777607493.422663       7 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.\n"}
+,{"stream_name":"stdout","time":25.501089981,"data":"dataset=/kaggle/input/datasets/bobaaayoung/message/message80W1.csv\n"}
+,{"stream_name":"stdout","time":25.501225336,"data":"tensorflow=2.19.0 gpu_count=1 gpu_devices=[\"PhysicalDevice(name='/physical_device:GPU:0', device_type='GPU')\"]\n"}
+,{"stream_name":"stdout","time":30.927362478,"data":"loaded rows=799,953, ham=719,953, spam=80,000\n"}
+,{"stream_name":"stdout","time":33.545171961,"data":"split train=559,967, test=239,986, vocab=6,000\n"}
+,{"stream_name":"stderr","time":37.335864916,"data":"I0000 00:00:1777607525.860732       7 gpu_device.cc:2019] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 15511 MB memory:  -\u003e device: 0, name: Tesla P100-PCIE-16GB, pci bus id: 0000:00:04.0, compute capability: 6.0\n"}
+,{"stream_name":"stdout","time":38.706639754,"data":"Model: \"functional\"\n"}
+,{"stream_name":"stdout","time":38.706671093,"data":"┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━┓\n"}
+,{"stream_name":"stdout","time":38.706680586,"data":"┃ Layer (type)        ┃ Output Shape      ┃    Param # ┃ Connected to      ┃\n"}
+,{"stream_name":"stdout","time":38.706685794,"data":"┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━┩\n"}
+,{"stream_name":"stdout","time":38.706691168,"data":"│ input_layer         │ (None, 80)        │          0 │ -                 │\n"}
+,{"stream_name":"stdout","time":38.706696002,"data":"│ (InputLayer)        │                   │            │                   │\n"}
+,{"stream_name":"stdout","time":38.706700778,"data":"├─────────────────────┼───────────────────┼────────────┼───────────────────┤\n"}
+,{"stream_name":"stdout","time":38.706723879,"data":"│ embedding           │ (None, 80, 64)    │    384,000 │ input_layer[0][0] │\n"}
+,{"stream_name":"stdout","time":38.706726959,"data":"│ (Embedding)         │                   │            │                   │\n"}
+,{"stream_name":"stdout","time":38.706729444,"data":"├─────────────────────┼───────────────────┼────────────┼───────────────────┤\n"}
+,{"stream_name":"stdout","time":38.70673218,"data":"│ not_equal           │ (None, 80)        │          0 │ input_layer[0][0] │\n"}
+,{"stream_name":"stdout","time":38.706734471,"data":"│ (NotEqual)          │                   │            │                   │\n"}
+,{"stream_name":"stdout","time":38.706736775,"data":"├─────────────────────┼───────────────────┼────────────┼───────────────────┤\n"}
+,{"stream_name":"stdout","time":38.706739356,"data":"│ bidirectional       │ (None, 128)       │     66,048 │ embedding[0][0],  │\n"}
+,{"stream_name":"stdout","time":38.706741835,"data":"│ (Bidirectional)     │                   │            │ not_equal[0][0]   │\n"}
+,{"stream_name":"stdout","time":38.706747241,"data":"├─────────────────────┼───────────────────┼────────────┼───────────────────┤\n"}
+,{"stream_name":"stdout","time":38.706766461,"data":"│ dropout (Dropout)   │ (None, 128)       │          0 │ bidirectional[0]… │\n"}
+,{"stream_name":"stdout","time":38.70677079,"data":"├─────────────────────┼───────────────────┼────────────┼───────────────────┤\n"}
+,{"stream_name":"stdout","time":38.706775671,"data":"│ dense (Dense)       │ (None, 1)         │        129 │ dropout[0][0]     │\n"}
+,{"stream_name":"stdout","time":38.706779488,"data":"└─────────────────────┴───────────────────┴────────────┴───────────────────┘\n"}
+,{"stream_name":"stdout","time":38.706784756,"data":" Total params: 450,177 (1.72 MB)\n"}
+,{"stream_name":"stdout","time":38.706788514,"data":" Trainable params: 450,177 (1.72 MB)\n"}
+,{"stream_name":"stdout","time":38.706791889,"data":" Non-trainable params: 0 (0.00 B)\n"}
+,{"stream_name":"stdout","time":38.706795318,"data":"\n"}
+,{"stream_name":"stdout","time":38.707825335,"data":"class_weight={0: 1.0, 1: 8.999410714285714}\n"}
+,{"stream_name":"stdout","time":39.132042191,"data":"epoch=1 begin\n"}
+,{"stream_name":"stdout","time":39.132078893,"data":"Epoch 1/5\n"}
+,{"stream_name":"stderr","time":42.620261723,"data":"I0000 00:00:1777607531.144973      42 cuda_dnn.cc:529] Loaded cuDNN version 91002\n"}
+,{"stream_name":"stdout","time":63.070816617,"data":"epoch=1 done loss=0.14471 acc=0.97953 val_loss=0.03442 val_acc=0.98942 val_recall=0.98596 val_f1=pending seconds=23.9\n"}
+,{"stream_name":"stdout","time":63.081144743,"data":"274/274 - 24s - 87ms/step - accuracy: 0.9795 - average_precision: 0.9727 - loss: 0.1447 - precision: 0.8454 - recall: 0.9733 - roc_auc: 0.9962 - val_accuracy: 0.9894 - val_average_precision: 0.9903 - val_loss: 0.0344 - val_precision: 0.9149 - val_recall: 0.9860 - val_roc_auc: 0.9989\n"}
+,{"stream_name":"stdout","time":63.08600169,"data":"epoch=2 begin\n"}
+,{"stream_name":"stdout","time":63.086176633,"data":"Epoch 2/5\n"}
+,{"stream_name":"stdout","time":80.142093203,"data":"epoch=2 done loss=0.04885 acc=0.99184 val_loss=0.02393 val_acc=0.99189 val_recall=0.98588 val_f1=pending seconds=17.1\n"}
+,{"stream_name":"stdout","time":80.15010431,"data":"274/274 - 17s - 62ms/step - accuracy: 0.9918 - average_precision: 0.9929 - loss: 0.0489 - precision: 0.9339 - recall: 0.9884 - roc_auc: 0.9992 - val_accuracy: 0.9919 - val_average_precision: 0.9928 - val_loss: 0.0239 - val_precision: 0.9364 - val_recall: 0.9859 - val_roc_auc: 0.9990\n"}
+,{"stream_name":"stdout","time":80.155083248,"data":"epoch=3 begin\n"}
+,{"stream_name":"stdout","time":80.155228328,"data":"Epoch 3/5\n"}
+,{"stream_name":"stdout","time":97.234792194,"data":"epoch=3 done loss=0.03964 acc=0.99322 val_loss=0.02192 val_acc=0.99304 val_recall=0.98438 val_f1=pending seconds=17.1\n"}
+,{"stream_name":"stdout","time":97.243647355,"data":"274/274 - 17s - 62ms/step - accuracy: 0.9932 - average_precision: 0.9936 - loss: 0.0396 - precision: 0.9437 - recall: 0.9913 - roc_auc: 0.9994 - val_accuracy: 0.9930 - val_average_precision: 0.9924 - val_loss: 0.0219 - val_precision: 0.9480 - val_recall: 0.9844 - val_roc_auc: 0.9989\n"}
+,{"stream_name":"stdout","time":97.248501148,"data":"epoch=4 begin\n"}
+,{"stream_name":"stdout","time":97.248688762,"data":"Epoch 4/5\n"}
+,{"stream_name":"stdout","time":114.317876819,"data":"epoch=4 done loss=0.03405 acc=0.99389 val_loss=0.02156 val_acc=0.99265 val_recall=0.98612 val_f1=pending seconds=17.1\n"}
+,{"stream_name":"stdout","time":114.326044741,"data":"274/274 - 17s - 62ms/step - accuracy: 0.9939 - average_precision: 0.9944 - loss: 0.0341 - precision: 0.9486 - recall: 0.9927 - roc_auc: 0.9995 - val_accuracy: 0.9927 - val_average_precision: 0.9927 - val_loss: 0.0216 - val_precision: 0.9430 - val_recall: 0.9861 - val_roc_auc: 0.9988\n"}
+,{"stream_name":"stdout","time":114.330434175,"data":"epoch=5 begin\n"}
+,{"stream_name":"stdout","time":114.330542476,"data":"Epoch 5/5\n"}
+,{"stream_name":"stdout","time":131.407720085,"data":"epoch=5 done loss=0.02927 acc=0.99467 val_loss=0.01995 val_acc=0.99346 val_recall=0.98471 val_f1=pending seconds=17.1\n"}
+,{"stream_name":"stdout","time":131.415624031,"data":"274/274 - 17s - 62ms/step - accuracy: 0.9947 - average_precision: 0.9949 - loss: 0.0293 - precision: 0.9544 - recall: 0.9942 - roc_auc: 0.9996 - val_accuracy: 0.9935 - val_average_precision: 0.9925 - val_loss: 0.0199 - val_precision: 0.9516 - val_recall: 0.9847 - val_roc_auc: 0.9987\n"}
+,{"stream_name":"stdout","time":133.560731738,"data":"\r\u001b[1m  1/118\u001b[0m \u001b[37m━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m22s\u001b[0m 193ms/step\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m  5/118\u001b[0m \u001b[37m━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m1s\u001b[0m 14ms/step  \b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m  9/118\u001b[0m \u001b[32m━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m1s\u001b[0m 14ms/step\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m 13/118\u001b[0m \u001b[32m━━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m1s\u001b[0m 14ms/step\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m 17/118\u001b[0m \u001b[32m━━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m1s\u001b[0m 14ms/step\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m 21/118\u001b[0m \u001b[32m━━━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m1s\u001b[0m 14ms/step\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m 25/118\u001b[0m \u001b[32m━━━━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m1s\u001b[0m 14ms/step\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m 29/118\u001b[0m \u001b[32m━━━━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m1s\u001b[0m 14ms/step\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m 33/118\u001b[0m \u001b[32m━━━━━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━\u001b[0m \u001b[1m1s\u001b[0m 14ms/step\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m 37/118\u001b[0m \u001b[32m━━━━━━\u001b[0m\u001b[37m━━━━━━━━━━━━━━\u001b[0m \u001b[1m1s\u001b[0m 14ms/step\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m 41/118\u001b[0m \u001b[32m━━━━━━\u001b[0m\u001b[37m━━━━━━━━━━━━━━\u001b[0m \u001b[1m1s\u001b[0m 14ms/step\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m 45/118\u001b[0m \u001b[32m━━━━━━━\u001b[0m\u001b[37m━━━━━━━━━━━━━\u001b[0m \u001b[1m1s\u001b[0m 14ms/step\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m 49/118\u001b[0m \u001b[32m━━━━━━━━\u001b[0m\u001b[37m━━━━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 14ms/step\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m 53/118\u001b[0m \u001b[32m━━━━━━━━\u001b[0m\u001b[37m━━━━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 14ms/step\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m 57/118\u001b[0m \u001b[32m━━━━━━━━━\u001b[0m\u001b[37m━━━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 14ms/step\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m 61/118\u001b[0m \u001b[32m━━━━━━━━━━\u001b[0m\u001b[37m━━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 14ms/step\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m 65/118\u001b[0m \u001b[32m━━━━━━━━━━━\u001b[0m\u001b[37m━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 14ms/step\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m 69/118\u001b[0m \u001b[32m━━━━━━━━━━━\u001b[0m\u001b[37m━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 14ms/step\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m 73/118\u001b[0m \u001b[32m━━━━━━━━━━━━\u001b[0m\u001b[37m━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 14ms/step\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m 77/118\u001b[0m \u001b[32m━━━━━━━━━━━━━\u001b[0m\u001b[37m━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 14ms/step\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m 81/118\u001b[0m \u001b[32m━━━━━━━━━━━━━\u001b[0m\u001b[37m━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 14ms/step\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m 85/118\u001b[0m \u001b[32m━━━━━━━━━━━━━━\u001b[0m\u001b[37m━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 14ms/step\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m 89/118\u001b[0m \u001b[32m━━━━━━━━━━━━━━━\u001b[0m\u001b[37m━━━━━\u001b[0m \u001b[1m0s\u001b[0m 14ms/step\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m 93/118\u001b[0m \u001b[32m━━━━━━━━━━━━━━━\u001b[0m\u001b[37m━━━━━\u001b[0m \u001b[1m0s\u001b[0m 14ms/step\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m 97/118\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m━━━━\u001b[0m \u001b[1m0s\u001b[0m 14ms/step\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m101/118\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m━━━\u001b[0m \u001b[1m0s\u001b[0m 14ms/step\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m105/118\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m━━━\u001b[0m \u001b[1m0s\u001b[0m 14ms/step\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m109/118\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m━━\u001b[0m \u001b[1m0s\u001b[0m 14ms/step\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m113/118\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m━\u001b[0m \u001b[1m0s\u001b[0m 14ms/step\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m117/118\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m━\u001b[0m \u001b[1m0s\u001b[0m 14ms/step\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m118/118\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m0s\u001b[0m 15ms/step\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m118/118\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m2s\u001b[0m 15ms/step\n"}
+,{"stream_name":"stderr","time":133.89926735,"data":"/kaggle/src/script.py:156: UserWarning: Glyph 20840 (\\N{CJK UNIFIED IDEOGRAPH-5168}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":133.899295141,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":133.899299596,"data":"/kaggle/src/script.py:156: UserWarning: Glyph 37327 (\\N{CJK UNIFIED IDEOGRAPH-91CF}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":133.899303503,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":133.899427748,"data":"/kaggle/src/script.py:156: UserWarning: Glyph 35757 (\\N{CJK UNIFIED IDEOGRAPH-8BAD}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":133.899448153,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":133.899614526,"data":"/kaggle/src/script.py:156: UserWarning: Glyph 32451 (\\N{CJK UNIFIED IDEOGRAPH-7EC3}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":133.899625828,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":133.899781453,"data":"/kaggle/src/script.py:156: UserWarning: Glyph 25439 (\\N{CJK UNIFIED IDEOGRAPH-635F}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":133.899787837,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":133.899923858,"data":"/kaggle/src/script.py:156: UserWarning: Glyph 22833 (\\N{CJK UNIFIED IDEOGRAPH-5931}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":133.899930007,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":133.903424589,"data":"/kaggle/src/script.py:156: UserWarning: Glyph 39564 (\\N{CJK UNIFIED IDEOGRAPH-9A8C}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":133.903437281,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":133.903639368,"data":"/kaggle/src/script.py:156: UserWarning: Glyph 35777 (\\N{CJK UNIFIED IDEOGRAPH-8BC1}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":133.903650442,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":133.936838446,"data":"/kaggle/src/script.py:156: UserWarning: Glyph 20934 (\\N{CJK UNIFIED IDEOGRAPH-51C6}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":133.936855867,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":133.936860837,"data":"/kaggle/src/script.py:156: UserWarning: Glyph 30830 (\\N{CJK UNIFIED IDEOGRAPH-786E}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":133.936865279,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":133.936881799,"data":"/kaggle/src/script.py:156: UserWarning: Glyph 29575 (\\N{CJK UNIFIED IDEOGRAPH-7387}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":133.93688688,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":133.94233935,"data":"/kaggle/src/script.py:156: UserWarning: Glyph 30495 (\\N{CJK UNIFIED IDEOGRAPH-771F}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":133.942360258,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":133.942500036,"data":"/kaggle/src/script.py:156: UserWarning: Glyph 23454 (\\N{CJK UNIFIED IDEOGRAPH-5B9E}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":133.942512038,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":133.942709795,"data":"/kaggle/src/script.py:156: UserWarning: Glyph 36816 (\\N{CJK UNIFIED IDEOGRAPH-8FD0}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":133.942717167,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":133.942865626,"data":"/kaggle/src/script.py:156: UserWarning: Glyph 34892 (\\N{CJK UNIFIED IDEOGRAPH-884C}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":133.942872053,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":133.943016756,"data":"/kaggle/src/script.py:156: UserWarning: Glyph 65306 (\\N{FULLWIDTH COLON}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":133.943022935,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":133.943224398,"data":"/kaggle/src/script.py:156: UserWarning: Glyph 19975 (\\N{CJK UNIFIED IDEOGRAPH-4E07}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":133.943230572,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":133.943371803,"data":"/kaggle/src/script.py:156: UserWarning: Glyph 26465 (\\N{CJK UNIFIED IDEOGRAPH-6761}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":133.943386535,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":133.943497502,"data":"/kaggle/src/script.py:156: UserWarning: Glyph 30701 (\\N{CJK UNIFIED IDEOGRAPH-77ED}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":133.943507605,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":133.943638089,"data":"/kaggle/src/script.py:156: UserWarning: Glyph 20449 (\\N{CJK UNIFIED IDEOGRAPH-4FE1}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":133.943644274,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":133.943970537,"data":"/kaggle/src/script.py:156: UserWarning: Glyph 23436 (\\N{CJK UNIFIED IDEOGRAPH-5B8C}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":133.943978092,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":133.94412888,"data":"/kaggle/src/script.py:156: UserWarning: Glyph 25972 (\\N{CJK UNIFIED IDEOGRAPH-6574}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":133.944135669,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":133.944436479,"data":"/kaggle/src/script.py:156: UserWarning: Glyph 26354 (\\N{CJK UNIFIED IDEOGRAPH-66F2}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":133.94444341,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":133.944573201,"data":"/kaggle/src/script.py:156: UserWarning: Glyph 32447 (\\N{CJK UNIFIED IDEOGRAPH-7EBF}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":133.944583168,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":134.045690733,"data":"/kaggle/src/script.py:157: UserWarning: Glyph 20840 (\\N{CJK UNIFIED IDEOGRAPH-5168}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.045717397,"data":"  fig.savefig(IMG_DIR / \"fig4-9-kaggle-gpu-full-training-curves.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.045747113,"data":"/kaggle/src/script.py:157: UserWarning: Glyph 37327 (\\N{CJK UNIFIED IDEOGRAPH-91CF}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.045768393,"data":"  fig.savefig(IMG_DIR / \"fig4-9-kaggle-gpu-full-training-curves.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.045949975,"data":"/kaggle/src/script.py:157: UserWarning: Glyph 35757 (\\N{CJK UNIFIED IDEOGRAPH-8BAD}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.04596467,"data":"  fig.savefig(IMG_DIR / \"fig4-9-kaggle-gpu-full-training-curves.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.04606954,"data":"/kaggle/src/script.py:157: UserWarning: Glyph 32451 (\\N{CJK UNIFIED IDEOGRAPH-7EC3}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.046077346,"data":"  fig.savefig(IMG_DIR / \"fig4-9-kaggle-gpu-full-training-curves.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.04624507,"data":"/kaggle/src/script.py:157: UserWarning: Glyph 25439 (\\N{CJK UNIFIED IDEOGRAPH-635F}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.046263859,"data":"  fig.savefig(IMG_DIR / \"fig4-9-kaggle-gpu-full-training-curves.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.046424635,"data":"/kaggle/src/script.py:157: UserWarning: Glyph 22833 (\\N{CJK UNIFIED IDEOGRAPH-5931}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.046430672,"data":"  fig.savefig(IMG_DIR / \"fig4-9-kaggle-gpu-full-training-curves.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.075341054,"data":"/kaggle/src/script.py:157: UserWarning: Glyph 39564 (\\N{CJK UNIFIED IDEOGRAPH-9A8C}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.075382295,"data":"  fig.savefig(IMG_DIR / \"fig4-9-kaggle-gpu-full-training-curves.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.075412151,"data":"/kaggle/src/script.py:157: UserWarning: Glyph 35777 (\\N{CJK UNIFIED IDEOGRAPH-8BC1}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.075420204,"data":"  fig.savefig(IMG_DIR / \"fig4-9-kaggle-gpu-full-training-curves.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.088071626,"data":"/kaggle/src/script.py:157: UserWarning: Glyph 20934 (\\N{CJK UNIFIED IDEOGRAPH-51C6}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.08808974,"data":"  fig.savefig(IMG_DIR / \"fig4-9-kaggle-gpu-full-training-curves.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.088106422,"data":"/kaggle/src/script.py:157: UserWarning: Glyph 30830 (\\N{CJK UNIFIED IDEOGRAPH-786E}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.08812661,"data":"  fig.savefig(IMG_DIR / \"fig4-9-kaggle-gpu-full-training-curves.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.088299385,"data":"/kaggle/src/script.py:157: UserWarning: Glyph 29575 (\\N{CJK UNIFIED IDEOGRAPH-7387}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.088307382,"data":"  fig.savefig(IMG_DIR / \"fig4-9-kaggle-gpu-full-training-curves.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.123962593,"data":"/kaggle/src/script.py:157: UserWarning: Glyph 30495 (\\N{CJK UNIFIED IDEOGRAPH-771F}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.12398116,"data":"  fig.savefig(IMG_DIR / \"fig4-9-kaggle-gpu-full-training-curves.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.124012063,"data":"/kaggle/src/script.py:157: UserWarning: Glyph 23454 (\\N{CJK UNIFIED IDEOGRAPH-5B9E}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.124025503,"data":"  fig.savefig(IMG_DIR / \"fig4-9-kaggle-gpu-full-training-curves.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.124199791,"data":"/kaggle/src/script.py:157: UserWarning: Glyph 36816 (\\N{CJK UNIFIED IDEOGRAPH-8FD0}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.124208145,"data":"  fig.savefig(IMG_DIR / \"fig4-9-kaggle-gpu-full-training-curves.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.124371901,"data":"/kaggle/src/script.py:157: UserWarning: Glyph 34892 (\\N{CJK UNIFIED IDEOGRAPH-884C}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.124378531,"data":"  fig.savefig(IMG_DIR / \"fig4-9-kaggle-gpu-full-training-curves.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.124529889,"data":"/kaggle/src/script.py:157: UserWarning: Glyph 65306 (\\N{FULLWIDTH COLON}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.124541781,"data":"  fig.savefig(IMG_DIR / \"fig4-9-kaggle-gpu-full-training-curves.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.124800742,"data":"/kaggle/src/script.py:157: UserWarning: Glyph 19975 (\\N{CJK UNIFIED IDEOGRAPH-4E07}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.124807665,"data":"  fig.savefig(IMG_DIR / \"fig4-9-kaggle-gpu-full-training-curves.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.124945128,"data":"/kaggle/src/script.py:157: UserWarning: Glyph 26465 (\\N{CJK UNIFIED IDEOGRAPH-6761}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.124951411,"data":"  fig.savefig(IMG_DIR / \"fig4-9-kaggle-gpu-full-training-curves.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.125086954,"data":"/kaggle/src/script.py:157: UserWarning: Glyph 30701 (\\N{CJK UNIFIED IDEOGRAPH-77ED}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.125093229,"data":"  fig.savefig(IMG_DIR / \"fig4-9-kaggle-gpu-full-training-curves.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.125223163,"data":"/kaggle/src/script.py:157: UserWarning: Glyph 20449 (\\N{CJK UNIFIED IDEOGRAPH-4FE1}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.125229239,"data":"  fig.savefig(IMG_DIR / \"fig4-9-kaggle-gpu-full-training-curves.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.125593518,"data":"/kaggle/src/script.py:157: UserWarning: Glyph 23436 (\\N{CJK UNIFIED IDEOGRAPH-5B8C}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.125604816,"data":"  fig.savefig(IMG_DIR / \"fig4-9-kaggle-gpu-full-training-curves.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.125792546,"data":"/kaggle/src/script.py:157: UserWarning: Glyph 25972 (\\N{CJK UNIFIED IDEOGRAPH-6574}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.125798837,"data":"  fig.savefig(IMG_DIR / \"fig4-9-kaggle-gpu-full-training-curves.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.126080765,"data":"/kaggle/src/script.py:157: UserWarning: Glyph 26354 (\\N{CJK UNIFIED IDEOGRAPH-66F2}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.126087368,"data":"  fig.savefig(IMG_DIR / \"fig4-9-kaggle-gpu-full-training-curves.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.126236791,"data":"/kaggle/src/script.py:157: UserWarning: Glyph 32447 (\\N{CJK UNIFIED IDEOGRAPH-7EBF}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.126242933,"data":"  fig.savefig(IMG_DIR / \"fig4-9-kaggle-gpu-full-training-curves.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.331690147,"data":"/kaggle/src/script.py:172: UserWarning: Glyph 27491 (\\N{CJK UNIFIED IDEOGRAPH-6B63}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.331716033,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":134.331848875,"data":"/kaggle/src/script.py:172: UserWarning: Glyph 24120 (\\N{CJK UNIFIED IDEOGRAPH-5E38}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.331857745,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":134.332062886,"data":"/kaggle/src/script.py:172: UserWarning: Glyph 30701 (\\N{CJK UNIFIED IDEOGRAPH-77ED}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.332071297,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":134.332256134,"data":"/kaggle/src/script.py:172: UserWarning: Glyph 20449 (\\N{CJK UNIFIED IDEOGRAPH-4FE1}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.332264297,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":134.332918066,"data":"/kaggle/src/script.py:172: UserWarning: Glyph 22403 (\\N{CJK UNIFIED IDEOGRAPH-5783}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.332931321,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":134.333134976,"data":"/kaggle/src/script.py:172: UserWarning: Glyph 22334 (\\N{CJK UNIFIED IDEOGRAPH-573E}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.333141554,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":134.334670493,"data":"/kaggle/src/script.py:172: UserWarning: Glyph 39044 (\\N{CJK UNIFIED IDEOGRAPH-9884}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.334697685,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":134.33489553,"data":"/kaggle/src/script.py:172: UserWarning: Glyph 27979 (\\N{CJK UNIFIED IDEOGRAPH-6D4B}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.334902224,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":134.335048702,"data":"/kaggle/src/script.py:172: UserWarning: Glyph 31867 (\\N{CJK UNIFIED IDEOGRAPH-7C7B}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.335055125,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":134.335202064,"data":"/kaggle/src/script.py:172: UserWarning: Glyph 21035 (\\N{CJK UNIFIED IDEOGRAPH-522B}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.335209455,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":134.33738837,"data":"/kaggle/src/script.py:172: UserWarning: Glyph 30495 (\\N{CJK UNIFIED IDEOGRAPH-771F}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.337402241,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":134.337634324,"data":"/kaggle/src/script.py:172: UserWarning: Glyph 23454 (\\N{CJK UNIFIED IDEOGRAPH-5B9E}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.33764505,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":134.340331408,"data":"/kaggle/src/script.py:172: UserWarning: Glyph 20840 (\\N{CJK UNIFIED IDEOGRAPH-5168}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.340341853,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":134.340507573,"data":"/kaggle/src/script.py:172: UserWarning: Glyph 37327 (\\N{CJK UNIFIED IDEOGRAPH-91CF}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.340517451,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":134.340740738,"data":"/kaggle/src/script.py:172: UserWarning: Glyph 35757 (\\N{CJK UNIFIED IDEOGRAPH-8BAD}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.340747799,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":134.340893515,"data":"/kaggle/src/script.py:172: UserWarning: Glyph 32451 (\\N{CJK UNIFIED IDEOGRAPH-7EC3}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.340899861,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":134.341137458,"data":"/kaggle/src/script.py:172: UserWarning: Glyph 35797 (\\N{CJK UNIFIED IDEOGRAPH-8BD5}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.341144545,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":134.34127699,"data":"/kaggle/src/script.py:172: UserWarning: Glyph 38598 (\\N{CJK UNIFIED IDEOGRAPH-96C6}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.341283656,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":134.341410069,"data":"/kaggle/src/script.py:172: UserWarning: Glyph 28151 (\\N{CJK UNIFIED IDEOGRAPH-6DF7}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.341416412,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":134.341586625,"data":"/kaggle/src/script.py:172: UserWarning: Glyph 28102 (\\N{CJK UNIFIED IDEOGRAPH-6DC6}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.341596914,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":134.341739795,"data":"/kaggle/src/script.py:172: UserWarning: Glyph 30697 (\\N{CJK UNIFIED IDEOGRAPH-77E9}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.341746414,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":134.341894424,"data":"/kaggle/src/script.py:172: UserWarning: Glyph 38453 (\\N{CJK UNIFIED IDEOGRAPH-9635}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.341910354,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":134.420081221,"data":"/kaggle/src/script.py:173: UserWarning: Glyph 27491 (\\N{CJK UNIFIED IDEOGRAPH-6B63}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.420111909,"data":"  fig.savefig(IMG_DIR / \"fig4-10-kaggle-gpu-full-confusion-matrix.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.420117208,"data":"/kaggle/src/script.py:173: UserWarning: Glyph 24120 (\\N{CJK UNIFIED IDEOGRAPH-5E38}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.420122835,"data":"  fig.savefig(IMG_DIR / \"fig4-10-kaggle-gpu-full-confusion-matrix.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.420171882,"data":"/kaggle/src/script.py:173: UserWarning: Glyph 30701 (\\N{CJK UNIFIED IDEOGRAPH-77ED}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.420181722,"data":"  fig.savefig(IMG_DIR / \"fig4-10-kaggle-gpu-full-confusion-matrix.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.42035867,"data":"/kaggle/src/script.py:173: UserWarning: Glyph 20449 (\\N{CJK UNIFIED IDEOGRAPH-4FE1}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.420366066,"data":"  fig.savefig(IMG_DIR / \"fig4-10-kaggle-gpu-full-confusion-matrix.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.420906886,"data":"/kaggle/src/script.py:173: UserWarning: Glyph 22403 (\\N{CJK UNIFIED IDEOGRAPH-5783}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.42091975,"data":"  fig.savefig(IMG_DIR / \"fig4-10-kaggle-gpu-full-confusion-matrix.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.421082997,"data":"/kaggle/src/script.py:173: UserWarning: Glyph 22334 (\\N{CJK UNIFIED IDEOGRAPH-573E}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.421089476,"data":"  fig.savefig(IMG_DIR / \"fig4-10-kaggle-gpu-full-confusion-matrix.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.422444608,"data":"/kaggle/src/script.py:173: UserWarning: Glyph 30495 (\\N{CJK UNIFIED IDEOGRAPH-771F}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.422455457,"data":"  fig.savefig(IMG_DIR / \"fig4-10-kaggle-gpu-full-confusion-matrix.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.422654046,"data":"/kaggle/src/script.py:173: UserWarning: Glyph 23454 (\\N{CJK UNIFIED IDEOGRAPH-5B9E}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.422663324,"data":"  fig.savefig(IMG_DIR / \"fig4-10-kaggle-gpu-full-confusion-matrix.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.422828475,"data":"/kaggle/src/script.py:173: UserWarning: Glyph 31867 (\\N{CJK UNIFIED IDEOGRAPH-7C7B}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.422834643,"data":"  fig.savefig(IMG_DIR / \"fig4-10-kaggle-gpu-full-confusion-matrix.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.422999402,"data":"/kaggle/src/script.py:173: UserWarning: Glyph 21035 (\\N{CJK UNIFIED IDEOGRAPH-522B}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.423005484,"data":"  fig.savefig(IMG_DIR / \"fig4-10-kaggle-gpu-full-confusion-matrix.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.423946811,"data":"/kaggle/src/script.py:173: UserWarning: Glyph 20840 (\\N{CJK UNIFIED IDEOGRAPH-5168}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.423956496,"data":"  fig.savefig(IMG_DIR / \"fig4-10-kaggle-gpu-full-confusion-matrix.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.424129262,"data":"/kaggle/src/script.py:173: UserWarning: Glyph 37327 (\\N{CJK UNIFIED IDEOGRAPH-91CF}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.424135522,"data":"  fig.savefig(IMG_DIR / \"fig4-10-kaggle-gpu-full-confusion-matrix.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.424297137,"data":"/kaggle/src/script.py:173: UserWarning: Glyph 35757 (\\N{CJK UNIFIED IDEOGRAPH-8BAD}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.424303355,"data":"  fig.savefig(IMG_DIR / \"fig4-10-kaggle-gpu-full-confusion-matrix.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.424487367,"data":"/kaggle/src/script.py:173: UserWarning: Glyph 32451 (\\N{CJK UNIFIED IDEOGRAPH-7EC3}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.424496796,"data":"  fig.savefig(IMG_DIR / \"fig4-10-kaggle-gpu-full-confusion-matrix.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.424647589,"data":"/kaggle/src/script.py:173: UserWarning: Glyph 27979 (\\N{CJK UNIFIED IDEOGRAPH-6D4B}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.424653757,"data":"  fig.savefig(IMG_DIR / \"fig4-10-kaggle-gpu-full-confusion-matrix.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.424812879,"data":"/kaggle/src/script.py:173: UserWarning: Glyph 35797 (\\N{CJK UNIFIED IDEOGRAPH-8BD5}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.424818937,"data":"  fig.savefig(IMG_DIR / \"fig4-10-kaggle-gpu-full-confusion-matrix.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.424955706,"data":"/kaggle/src/script.py:173: UserWarning: Glyph 38598 (\\N{CJK UNIFIED IDEOGRAPH-96C6}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.424961044,"data":"  fig.savefig(IMG_DIR / \"fig4-10-kaggle-gpu-full-confusion-matrix.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.425068797,"data":"/kaggle/src/script.py:173: UserWarning: Glyph 28151 (\\N{CJK UNIFIED IDEOGRAPH-6DF7}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.425073755,"data":"  fig.savefig(IMG_DIR / \"fig4-10-kaggle-gpu-full-confusion-matrix.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.425236515,"data":"/kaggle/src/script.py:173: UserWarning: Glyph 28102 (\\N{CJK UNIFIED IDEOGRAPH-6DC6}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.425242294,"data":"  fig.savefig(IMG_DIR / \"fig4-10-kaggle-gpu-full-confusion-matrix.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.425370421,"data":"/kaggle/src/script.py:173: UserWarning: Glyph 30697 (\\N{CJK UNIFIED IDEOGRAPH-77E9}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.425375395,"data":"  fig.savefig(IMG_DIR / \"fig4-10-kaggle-gpu-full-confusion-matrix.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.425515853,"data":"/kaggle/src/script.py:173: UserWarning: Glyph 38453 (\\N{CJK UNIFIED IDEOGRAPH-9635}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.425524395,"data":"  fig.savefig(IMG_DIR / \"fig4-10-kaggle-gpu-full-confusion-matrix.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.453375673,"data":"/kaggle/src/script.py:173: UserWarning: Glyph 39044 (\\N{CJK UNIFIED IDEOGRAPH-9884}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.453398675,"data":"  fig.savefig(IMG_DIR / \"fig4-10-kaggle-gpu-full-confusion-matrix.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.64712767,"data":"/kaggle/src/script.py:193: UserWarning: Glyph 26354 (\\N{CJK UNIFIED IDEOGRAPH-66F2}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.647186527,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":134.647201224,"data":"/kaggle/src/script.py:193: UserWarning: Glyph 32447 (\\N{CJK UNIFIED IDEOGRAPH-7EBF}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.647204834,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":134.679933224,"data":"/kaggle/src/script.py:193: UserWarning: Glyph 30495 (\\N{CJK UNIFIED IDEOGRAPH-771F}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.679960264,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":134.680099576,"data":"/kaggle/src/script.py:193: UserWarning: Glyph 23454 (\\N{CJK UNIFIED IDEOGRAPH-5B9E}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.680114399,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":134.680264734,"data":"/kaggle/src/script.py:193: UserWarning: Glyph 36816 (\\N{CJK UNIFIED IDEOGRAPH-8FD0}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.680273859,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":134.680453542,"data":"/kaggle/src/script.py:193: UserWarning: Glyph 34892 (\\N{CJK UNIFIED IDEOGRAPH-884C}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.680460934,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":134.680630697,"data":"/kaggle/src/script.py:193: UserWarning: Glyph 65306 (\\N{FULLWIDTH COLON}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.680638076,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":134.681150355,"data":"/kaggle/src/script.py:193: UserWarning: Glyph 20840 (\\N{CJK UNIFIED IDEOGRAPH-5168}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.681158062,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":134.68131656,"data":"/kaggle/src/script.py:193: UserWarning: Glyph 37327 (\\N{CJK UNIFIED IDEOGRAPH-91CF}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.681323508,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":134.681524295,"data":"/kaggle/src/script.py:193: UserWarning: Glyph 35757 (\\N{CJK UNIFIED IDEOGRAPH-8BAD}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.681546471,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":134.681714745,"data":"/kaggle/src/script.py:193: UserWarning: Glyph 32451 (\\N{CJK UNIFIED IDEOGRAPH-7EC3}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.681723688,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":134.681912827,"data":"/kaggle/src/script.py:193: UserWarning: Glyph 27169 (\\N{CJK UNIFIED IDEOGRAPH-6A21}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.681924711,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":134.682071083,"data":"/kaggle/src/script.py:193: UserWarning: Glyph 22411 (\\N{CJK UNIFIED IDEOGRAPH-578B}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.682079247,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":134.682238118,"data":"/kaggle/src/script.py:193: UserWarning: Glyph 27010 (\\N{CJK UNIFIED IDEOGRAPH-6982}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.682247218,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":134.682417096,"data":"/kaggle/src/script.py:193: UserWarning: Glyph 29575 (\\N{CJK UNIFIED IDEOGRAPH-7387}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.68242606,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":134.682546381,"data":"/kaggle/src/script.py:193: UserWarning: Glyph 36755 (\\N{CJK UNIFIED IDEOGRAPH-8F93}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.68257174,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":134.682767566,"data":"/kaggle/src/script.py:193: UserWarning: Glyph 20986 (\\N{CJK UNIFIED IDEOGRAPH-51FA}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.682775803,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":134.764376272,"data":"/kaggle/src/script.py:194: UserWarning: Glyph 26354 (\\N{CJK UNIFIED IDEOGRAPH-66F2}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.764396089,"data":"  fig.savefig(IMG_DIR / \"fig4-11-kaggle-gpu-full-pr-roc.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.764401078,"data":"/kaggle/src/script.py:194: UserWarning: Glyph 32447 (\\N{CJK UNIFIED IDEOGRAPH-7EBF}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.764407868,"data":"  fig.savefig(IMG_DIR / \"fig4-11-kaggle-gpu-full-pr-roc.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.825495802,"data":"/kaggle/src/script.py:194: UserWarning: Glyph 30495 (\\N{CJK UNIFIED IDEOGRAPH-771F}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.825514732,"data":"  fig.savefig(IMG_DIR / \"fig4-11-kaggle-gpu-full-pr-roc.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.825519764,"data":"/kaggle/src/script.py:194: UserWarning: Glyph 23454 (\\N{CJK UNIFIED IDEOGRAPH-5B9E}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.825524029,"data":"  fig.savefig(IMG_DIR / \"fig4-11-kaggle-gpu-full-pr-roc.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.825528228,"data":"/kaggle/src/script.py:194: UserWarning: Glyph 36816 (\\N{CJK UNIFIED IDEOGRAPH-8FD0}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.825532563,"data":"  fig.savefig(IMG_DIR / \"fig4-11-kaggle-gpu-full-pr-roc.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.825753756,"data":"/kaggle/src/script.py:194: UserWarning: Glyph 34892 (\\N{CJK UNIFIED IDEOGRAPH-884C}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.825763789,"data":"  fig.savefig(IMG_DIR / \"fig4-11-kaggle-gpu-full-pr-roc.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.825807532,"data":"/kaggle/src/script.py:194: UserWarning: Glyph 65306 (\\N{FULLWIDTH COLON}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.825813193,"data":"  fig.savefig(IMG_DIR / \"fig4-11-kaggle-gpu-full-pr-roc.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.826242947,"data":"/kaggle/src/script.py:194: UserWarning: Glyph 20840 (\\N{CJK UNIFIED IDEOGRAPH-5168}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.826253154,"data":"  fig.savefig(IMG_DIR / \"fig4-11-kaggle-gpu-full-pr-roc.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.826310624,"data":"/kaggle/src/script.py:194: UserWarning: Glyph 37327 (\\N{CJK UNIFIED IDEOGRAPH-91CF}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.82631696,"data":"  fig.savefig(IMG_DIR / \"fig4-11-kaggle-gpu-full-pr-roc.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.826507156,"data":"/kaggle/src/script.py:194: UserWarning: Glyph 35757 (\\N{CJK UNIFIED IDEOGRAPH-8BAD}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.826521332,"data":"  fig.savefig(IMG_DIR / \"fig4-11-kaggle-gpu-full-pr-roc.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.826674312,"data":"/kaggle/src/script.py:194: UserWarning: Glyph 32451 (\\N{CJK UNIFIED IDEOGRAPH-7EC3}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.826695141,"data":"  fig.savefig(IMG_DIR / \"fig4-11-kaggle-gpu-full-pr-roc.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.826807433,"data":"/kaggle/src/script.py:194: UserWarning: Glyph 27169 (\\N{CJK UNIFIED IDEOGRAPH-6A21}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.826814936,"data":"  fig.savefig(IMG_DIR / \"fig4-11-kaggle-gpu-full-pr-roc.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.826992309,"data":"/kaggle/src/script.py:194: UserWarning: Glyph 22411 (\\N{CJK UNIFIED IDEOGRAPH-578B}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.827000519,"data":"  fig.savefig(IMG_DIR / \"fig4-11-kaggle-gpu-full-pr-roc.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.82712747,"data":"/kaggle/src/script.py:194: UserWarning: Glyph 27010 (\\N{CJK UNIFIED IDEOGRAPH-6982}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.827134521,"data":"  fig.savefig(IMG_DIR / \"fig4-11-kaggle-gpu-full-pr-roc.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.827309206,"data":"/kaggle/src/script.py:194: UserWarning: Glyph 29575 (\\N{CJK UNIFIED IDEOGRAPH-7387}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.827317363,"data":"  fig.savefig(IMG_DIR / \"fig4-11-kaggle-gpu-full-pr-roc.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.827440571,"data":"/kaggle/src/script.py:194: UserWarning: Glyph 36755 (\\N{CJK UNIFIED IDEOGRAPH-8F93}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.827448096,"data":"  fig.savefig(IMG_DIR / \"fig4-11-kaggle-gpu-full-pr-roc.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.827636348,"data":"/kaggle/src/script.py:194: UserWarning: Glyph 20986 (\\N{CJK UNIFIED IDEOGRAPH-51FA}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.82764989,"data":"  fig.savefig(IMG_DIR / \"fig4-11-kaggle-gpu-full-pr-roc.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":134.963413206,"data":"/kaggle/src/script.py:210: UserWarning: Glyph 24635 (\\N{CJK UNIFIED IDEOGRAPH-603B}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.963432154,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":134.963437327,"data":"/kaggle/src/script.py:210: UserWarning: Glyph 26679 (\\N{CJK UNIFIED IDEOGRAPH-6837}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.963442137,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":134.963515206,"data":"/kaggle/src/script.py:210: UserWarning: Glyph 26412 (\\N{CJK UNIFIED IDEOGRAPH-672C}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.963525748,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":134.964150859,"data":"/kaggle/src/script.py:210: UserWarning: Glyph 35757 (\\N{CJK UNIFIED IDEOGRAPH-8BAD}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.964179591,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":134.964369298,"data":"/kaggle/src/script.py:210: UserWarning: Glyph 32451 (\\N{CJK UNIFIED IDEOGRAPH-7EC3}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.964379133,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":134.964507685,"data":"/kaggle/src/script.py:210: UserWarning: Glyph 38598 (\\N{CJK UNIFIED IDEOGRAPH-96C6}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.964522552,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":134.965003894,"data":"/kaggle/src/script.py:210: UserWarning: Glyph 27979 (\\N{CJK UNIFIED IDEOGRAPH-6D4B}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.965025422,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":134.965189154,"data":"/kaggle/src/script.py:210: UserWarning: Glyph 35797 (\\N{CJK UNIFIED IDEOGRAPH-8BD5}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.965199184,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":134.965773173,"data":"/kaggle/src/script.py:210: UserWarning: Glyph 27491 (\\N{CJK UNIFIED IDEOGRAPH-6B63}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.96578992,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":134.9659301,"data":"/kaggle/src/script.py:210: UserWarning: Glyph 24120 (\\N{CJK UNIFIED IDEOGRAPH-5E38}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.965942165,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":134.966081053,"data":"/kaggle/src/script.py:210: UserWarning: Glyph 30701 (\\N{CJK UNIFIED IDEOGRAPH-77ED}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.966087885,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":134.966264365,"data":"/kaggle/src/script.py:210: UserWarning: Glyph 20449 (\\N{CJK UNIFIED IDEOGRAPH-4FE1}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.966270921,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":134.966775054,"data":"/kaggle/src/script.py:210: UserWarning: Glyph 22403 (\\N{CJK UNIFIED IDEOGRAPH-5783}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.966788381,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":134.96698351,"data":"/kaggle/src/script.py:210: UserWarning: Glyph 22334 (\\N{CJK UNIFIED IDEOGRAPH-573E}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.966990238,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":134.983499463,"data":"/kaggle/src/script.py:210: UserWarning: Glyph 25968 (\\N{CJK UNIFIED IDEOGRAPH-6570}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.983521857,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":134.983525452,"data":"/kaggle/src/script.py:210: UserWarning: Glyph 37327 (\\N{CJK UNIFIED IDEOGRAPH-91CF}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.983528111,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":134.989388628,"data":"/kaggle/src/script.py:210: UserWarning: Glyph 23436 (\\N{CJK UNIFIED IDEOGRAPH-5B8C}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.989405856,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":134.989410118,"data":"/kaggle/src/script.py:210: UserWarning: Glyph 25972 (\\N{CJK UNIFIED IDEOGRAPH-6574}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.989414127,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":134.989685968,"data":"/kaggle/src/script.py:210: UserWarning: Glyph 25454 (\\N{CJK UNIFIED IDEOGRAPH-636E}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.989696931,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":134.990167973,"data":"/kaggle/src/script.py:210: UserWarning: Glyph 35268 (\\N{CJK UNIFIED IDEOGRAPH-89C4}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.990174945,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":134.990299957,"data":"/kaggle/src/script.py:210: UserWarning: Glyph 27169 (\\N{CJK UNIFIED IDEOGRAPH-6A21}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":134.990312347,"data":"  fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":135.050819166,"data":"/kaggle/src/script.py:211: UserWarning: Glyph 26679 (\\N{CJK UNIFIED IDEOGRAPH-6837}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":135.050839408,"data":"  fig.savefig(IMG_DIR / \"fig4-12-kaggle-gpu-full-data-scale.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":135.050918165,"data":"/kaggle/src/script.py:211: UserWarning: Glyph 26412 (\\N{CJK UNIFIED IDEOGRAPH-672C}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":135.050925834,"data":"  fig.savefig(IMG_DIR / \"fig4-12-kaggle-gpu-full-data-scale.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":135.05108789,"data":"/kaggle/src/script.py:211: UserWarning: Glyph 25968 (\\N{CJK UNIFIED IDEOGRAPH-6570}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":135.051095618,"data":"  fig.savefig(IMG_DIR / \"fig4-12-kaggle-gpu-full-data-scale.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":135.051245934,"data":"/kaggle/src/script.py:211: UserWarning: Glyph 37327 (\\N{CJK UNIFIED IDEOGRAPH-91CF}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":135.051252994,"data":"  fig.savefig(IMG_DIR / \"fig4-12-kaggle-gpu-full-data-scale.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":135.052293099,"data":"/kaggle/src/script.py:211: UserWarning: Glyph 23436 (\\N{CJK UNIFIED IDEOGRAPH-5B8C}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":135.052305324,"data":"  fig.savefig(IMG_DIR / \"fig4-12-kaggle-gpu-full-data-scale.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":135.052481546,"data":"/kaggle/src/script.py:211: UserWarning: Glyph 25972 (\\N{CJK UNIFIED IDEOGRAPH-6574}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":135.052491601,"data":"  fig.savefig(IMG_DIR / \"fig4-12-kaggle-gpu-full-data-scale.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":135.052833041,"data":"/kaggle/src/script.py:211: UserWarning: Glyph 25454 (\\N{CJK UNIFIED IDEOGRAPH-636E}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":135.052840084,"data":"  fig.savefig(IMG_DIR / \"fig4-12-kaggle-gpu-full-data-scale.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":135.052991383,"data":"/kaggle/src/script.py:211: UserWarning: Glyph 35757 (\\N{CJK UNIFIED IDEOGRAPH-8BAD}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":135.052998903,"data":"  fig.savefig(IMG_DIR / \"fig4-12-kaggle-gpu-full-data-scale.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":135.053135961,"data":"/kaggle/src/script.py:211: UserWarning: Glyph 32451 (\\N{CJK UNIFIED IDEOGRAPH-7EC3}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":135.053143315,"data":"  fig.savefig(IMG_DIR / \"fig4-12-kaggle-gpu-full-data-scale.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":135.053439723,"data":"/kaggle/src/script.py:211: UserWarning: Glyph 35268 (\\N{CJK UNIFIED IDEOGRAPH-89C4}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":135.053447397,"data":"  fig.savefig(IMG_DIR / \"fig4-12-kaggle-gpu-full-data-scale.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":135.053537531,"data":"/kaggle/src/script.py:211: UserWarning: Glyph 27169 (\\N{CJK UNIFIED IDEOGRAPH-6A21}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":135.053547829,"data":"  fig.savefig(IMG_DIR / \"fig4-12-kaggle-gpu-full-data-scale.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":135.056672339,"data":"/kaggle/src/script.py:211: UserWarning: Glyph 24635 (\\N{CJK UNIFIED IDEOGRAPH-603B}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":135.05668311,"data":"  fig.savefig(IMG_DIR / \"fig4-12-kaggle-gpu-full-data-scale.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":135.057409842,"data":"/kaggle/src/script.py:211: UserWarning: Glyph 38598 (\\N{CJK UNIFIED IDEOGRAPH-96C6}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":135.05741759,"data":"  fig.savefig(IMG_DIR / \"fig4-12-kaggle-gpu-full-data-scale.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":135.057854193,"data":"/kaggle/src/script.py:211: UserWarning: Glyph 27979 (\\N{CJK UNIFIED IDEOGRAPH-6D4B}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":135.057870707,"data":"  fig.savefig(IMG_DIR / \"fig4-12-kaggle-gpu-full-data-scale.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":135.058080699,"data":"/kaggle/src/script.py:211: UserWarning: Glyph 35797 (\\N{CJK UNIFIED IDEOGRAPH-8BD5}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":135.058087503,"data":"  fig.savefig(IMG_DIR / \"fig4-12-kaggle-gpu-full-data-scale.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":135.058662747,"data":"/kaggle/src/script.py:211: UserWarning: Glyph 27491 (\\N{CJK UNIFIED IDEOGRAPH-6B63}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":135.058673536,"data":"  fig.savefig(IMG_DIR / \"fig4-12-kaggle-gpu-full-data-scale.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":135.058871536,"data":"/kaggle/src/script.py:211: UserWarning: Glyph 24120 (\\N{CJK UNIFIED IDEOGRAPH-5E38}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":135.058879017,"data":"  fig.savefig(IMG_DIR / \"fig4-12-kaggle-gpu-full-data-scale.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":135.059028139,"data":"/kaggle/src/script.py:211: UserWarning: Glyph 30701 (\\N{CJK UNIFIED IDEOGRAPH-77ED}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":135.059034547,"data":"  fig.savefig(IMG_DIR / \"fig4-12-kaggle-gpu-full-data-scale.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":135.059164461,"data":"/kaggle/src/script.py:211: UserWarning: Glyph 20449 (\\N{CJK UNIFIED IDEOGRAPH-4FE1}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":135.05917064,"data":"  fig.savefig(IMG_DIR / \"fig4-12-kaggle-gpu-full-data-scale.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":135.059624883,"data":"/kaggle/src/script.py:211: UserWarning: Glyph 22403 (\\N{CJK UNIFIED IDEOGRAPH-5783}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":135.059634917,"data":"  fig.savefig(IMG_DIR / \"fig4-12-kaggle-gpu-full-data-scale.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stderr","time":135.059809157,"data":"/kaggle/src/script.py:211: UserWarning: Glyph 22334 (\\N{CJK UNIFIED IDEOGRAPH-573E}) missing from font(s) DejaVu Sans.\n"}
+,{"stream_name":"stderr","time":135.059815716,"data":"  fig.savefig(IMG_DIR / \"fig4-12-kaggle-gpu-full-data-scale.png\", bbox_inches=\"tight\")\n"}
+,{"stream_name":"stdout","time":135.351008323,"data":"final accuracy=0.99346 precision=0.95160 recall=0.98471 f1=0.96787 ap=0.99599 roc_auc=0.99929\n"}
+,{"stream_name":"stdout","time":135.351139506,"data":"training_seconds=109.1\n"}
+,{"stream_name":"stdout","time":135.351147906,"data":"run_dir=/kaggle/working/training_runs/kaggle_gpu_full_bilstm_20260501_035153\n"}
+,{"stream_name":"stderr","time":139.204454269,"data":"/usr/local/lib/python3.12/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":139.204513064,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":139.412846608,"data":"/usr/local/lib/python3.12/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":139.412887928,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":140.106812972,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":140.947021458,"data":"[NbConvertApp] Writing 362294 bytes to __results__.html\n"}
+]

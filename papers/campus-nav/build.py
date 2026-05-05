@@ -85,7 +85,7 @@ def build_data(doc=None):
         chapters = process_chapters(chapters, doc)
 
     refs = load_json("references.json") or []
-    refs = [f"[{i+1}]{ref}" if not ref.startswith("[") else ref
+    refs = [f"[{i+1}] {ref}" if not ref.startswith("[") else ref
             for i, ref in enumerate(refs)]
 
     # 摘要拆段
@@ -168,6 +168,8 @@ def _post_process(docx_path):
             './/{http://schemas.openxmlformats.org/wordprocessingml/2006/main}drawing'))
         if has_drawing:
             p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+            p.paragraph_format.space_before = Pt(0)
+            p.paragraph_format.space_after = Pt(0)
             pPr = p._p.pPr
             if pPr is None:
                 pPr = OxmlElement('w:pPr')
@@ -186,7 +188,7 @@ def _post_process(docx_path):
         if (fig_cap_pat.match(t) or tbl_cap_pat.match(t)) and len(t) < 60:
             p.alignment = WD_ALIGN_PARAGRAPH.CENTER
             for r in p.runs:
-                r.font.size = Pt(10.5)
+                _set_run_font(r, 10.5)
 
         # 表格占位符
         m = placeholder_pat.match(t)
@@ -194,8 +196,8 @@ def _post_process(docx_path):
             tid = int(m.group(1))
             if tid < len(_pending_tables):
                 _insert_table(doc, p, _pending_tables[tid])
-                for r in p.runs:
-                    r.text = ""
+                _remove_paragraph(p)
+                continue
 
     # ---- 清理空白页：合并连续SECT段，删除多余空段 ----
     _NS = {'w': 'http://schemas.openxmlformats.org/wordprocessingml/2006/main'}
@@ -230,8 +232,186 @@ def _post_process(docx_path):
         if elem.getparent() is not None:
             elem.getparent().remove(elem)
 
+    _replace_static_toc(doc)
+    _keep_figures_with_captions(doc, fig_cap_pat)
+    _format_references(doc)
+    _superscript_citations(doc)
+
     doc.save(docx_path)
     print(f"  后处理: {len(_pending_tables)} 个表格, {len(_pending_code_blocks)} 个代码块, 清理{removed_blank}个空白段")
+
+
+def _remove_paragraph(p):
+    parent = p._p.getparent()
+    if parent is not None:
+        parent.remove(p._p)
+
+
+def _set_run_font(run, size_pt=None, bold=None):
+    from docx.shared import Pt
+    from docx.oxml.ns import qn
+
+    run.font.name = 'Times New Roman'
+    run._element.rPr.rFonts.set(qn('w:ascii'), 'Times New Roman')
+    run._element.rPr.rFonts.set(qn('w:hAnsi'), 'Times New Roman')
+    run._element.rPr.rFonts.set(qn('w:eastAsia'), '宋体')
+    run._element.rPr.rFonts.set(qn('w:cs'), 'Times New Roman')
+    if size_pt is not None:
+        run.font.size = Pt(size_pt)
+    if bold is not None:
+        run.font.bold = bold
+
+
+def _append_rpr_fonts(rPr):
+    from docx.oxml import OxmlElement
+    from docx.oxml.ns import qn
+
+    rFonts = OxmlElement('w:rFonts')
+    rFonts.set(qn('w:ascii'), 'Times New Roman')
+    rFonts.set(qn('w:hAnsi'), 'Times New Roman')
+    rFonts.set(qn('w:eastAsia'), '宋体')
+    rFonts.set(qn('w:cs'), 'Times New Roman')
+    rPr.append(rFonts)
+
+
+def _keep_figures_with_captions(doc, fig_cap_pat):
+    from docx.shared import Pt
+
+    drawing_xpath = './/{http://schemas.openxmlformats.org/wordprocessingml/2006/main}drawing'
+    paragraphs = doc.paragraphs
+    for idx, p in enumerate(paragraphs[:-1]):
+        has_drawing = bool(p._p.findall(drawing_xpath))
+        if not has_drawing:
+            continue
+        caption = (paragraphs[idx + 1].text or "").strip()
+        if fig_cap_pat.match(caption):
+            p.paragraph_format.keep_with_next = True
+            p.paragraph_format.keep_together = True
+            p.paragraph_format.space_before = Pt(0)
+            p.paragraph_format.space_after = Pt(0)
+            paragraphs[idx + 1].paragraph_format.keep_together = True
+            paragraphs[idx + 1].paragraph_format.space_before = Pt(0)
+
+
+def _replace_static_toc(doc):
+    from docx.enum.text import WD_TAB_ALIGNMENT, WD_TAB_LEADER, WD_LINE_SPACING
+    from docx.shared import Cm, Pt
+
+    toc_entries = [
+        (1, "摘  要", "I"),
+        (1, "Abstract", "II"),
+        (1, "1 绪论", "1"),
+        (2, "1.1 课题背景与意义", "1"),
+        (2, "1.2 国内外研究现状", "1"),
+        (2, "1.3 研究目标", "2"),
+        (2, "1.4 论文组织结构", "3"),
+        (1, "2 系统需求分析与关键技术", "4"),
+        (2, "2.1 可行性分析", "4"),
+        (3, "2.1.1 技术可行性", "4"),
+        (3, "2.1.2 经济可行性", "4"),
+        (3, "2.1.3 操作可行性", "4"),
+        (2, "2.2 关键技术介绍", "4"),
+        (3, "2.2.1 Vue3框架", "4"),
+        (3, "2.2.2 Express框架与SQLite数据库", "5"),
+        (3, "2.2.3 MapLibre GL地图库", "5"),
+        (3, "2.2.4 可视图算法与Dijkstra算法", "5"),
+        (3, "2.2.5 JWT认证", "6"),
+        (2, "2.3 功能需求分析", "6"),
+        (3, "2.3.1 用户端功能需求", "7"),
+        (3, "2.3.2 管理端功能需求", "7"),
+        (2, "2.4 本章小结", "7"),
+        (1, "3 系统设计", "8"),
+        (2, "3.1 系统功能设计", "8"),
+        (2, "3.2 系统架构设计", "8"),
+        (2, "3.3 业务流程设计", "9"),
+        (2, "3.4 数据库设计", "10"),
+        (3, "3.4.1 概念结构设计", "10"),
+        (3, "3.4.2 逻辑结构设计", "14"),
+        (2, "3.5 本章小结", "17"),
+        (1, "4 系统功能的实现", "18"),
+        (2, "4.1 用户功能模块实现", "18"),
+        (3, "4.1.1 登录与注册实现", "18"),
+        (3, "4.1.2 地图浏览与视角切换", "19"),
+        (3, "4.1.3 兴趣点搜索与标记交互", "20"),
+        (3, "4.1.4 路径规划实现", "21"),
+        (3, "4.1.5 统计图表页面", "23"),
+        (3, "4.1.6 游客浏览模式", "24"),
+        (2, "4.2 管理员功能模块实现", "24"),
+        (3, "4.2.1 管理员统计仪表盘", "25"),
+        (3, "4.2.2 用户管理实现", "25"),
+        (3, "4.2.3 兴趣点管理实现", "26"),
+        (3, "4.2.4 公告管理实现", "27"),
+        (2, "4.3 本章小结", "28"),
+        (1, "5 系统测试", "29"),
+        (2, "5.1 测试概述", "29"),
+        (2, "5.2 测试方法", "29"),
+        (3, "5.2.1 功能测试方法", "29"),
+        (3, "5.2.2 性能测试方法", "29"),
+        (3, "5.2.3 安全测试方法", "29"),
+        (2, "5.3 功能测试", "29"),
+        (3, "5.3.1 用户端功能测试", "30"),
+        (3, "5.3.2 管理端功能测试", "30"),
+        (2, "5.4 测试结果与分析", "31"),
+        (3, "5.4.1 功能测试结果", "31"),
+        (3, "5.4.2 性能测试结果", "31"),
+        (3, "5.4.3 安全测试结果", "32"),
+        (2, "5.5 本章小结", "32"),
+        (1, "结  论", "33"),
+        (1, "参考文献", "34"),
+        (1, "致  谢", "36"),
+        (1, "附  录", "37"),
+    ]
+
+    paragraphs = doc.paragraphs
+    toc_title_idx = None
+    for idx, p in enumerate(paragraphs):
+        if (p.text or "").strip() == "目  录":
+            toc_title_idx = idx
+            break
+    if toc_title_idx is None:
+        return
+
+    body_idx = None
+    for idx in range(toc_title_idx + 1, len(paragraphs)):
+        p = paragraphs[idx]
+        if (p.text or "").strip() == "1 绪论" and p.style and "Heading" in p.style.name:
+            body_idx = idx
+            break
+    if body_idx is None:
+        return
+
+    sect_break = None
+    for p in paragraphs[toc_title_idx + 1:body_idx]:
+        if p._p.find('.//w:sectPr', {'w': 'http://schemas.openxmlformats.org/wordprocessingml/2006/main'}) is not None:
+            sect_break = p
+    if sect_break is None:
+        return
+
+    for p in reversed(paragraphs[toc_title_idx + 1:body_idx]):
+        if p is sect_break:
+            continue
+        _remove_paragraph(p)
+
+    for level, title, page in toc_entries:
+        p = sect_break.insert_paragraph_before()
+        try:
+            p.style = f"toc {level}"
+        except KeyError:
+            pass
+        p.paragraph_format.left_indent = Cm(0.56 * (level - 1))
+        p.paragraph_format.first_line_indent = Cm(0)
+        p.paragraph_format.space_before = Pt(0)
+        p.paragraph_format.space_after = Pt(0)
+        p.paragraph_format.line_spacing_rule = WD_LINE_SPACING.SINGLE
+        p.paragraph_format.keep_with_next = False
+        p.paragraph_format.tab_stops.clear_all()
+        p.paragraph_format.tab_stops.add_tab_stop(
+            Cm(14.7),
+            WD_TAB_ALIGNMENT.RIGHT,
+            WD_TAB_LEADER.DOTS,
+        )
+        run = p.add_run(f"{title}\t{page}")
+        _set_run_font(run, 10.5, bold=(level == 1))
 
 
 def _insert_code_block(doc, after_para, code_data):
@@ -299,7 +479,7 @@ def _insert_table(doc, after_para, tbl_data):
     tblLayout.set(qn('w:type'), 'autofit')
     tblPr.append(tblLayout)
     borders = OxmlElement('w:tblBorders')
-    for edge, sz in [('top', '12'), ('bottom', '12')]:
+    for edge, sz in [('top', '6'), ('bottom', '6')]:
         el = OxmlElement(f'w:{edge}')
         el.set(qn('w:val'), 'single')
         el.set(qn('w:sz'), sz)
@@ -339,6 +519,7 @@ def _insert_table(doc, after_para, tbl_data):
             p.append(pPr)
             r = OxmlElement('w:r')
             rPr = OxmlElement('w:rPr')
+            _append_rpr_fonts(rPr)
             sz = OxmlElement('w:sz')
             sz.set(qn('w:val'), '21')
             rPr.append(sz)
@@ -359,6 +540,52 @@ def _insert_table(doc, after_para, tbl_data):
         tbl.append(tr)
 
     after_para._p.addnext(tbl)
+
+
+def _format_references(doc):
+    from docx.shared import Cm
+
+    ref_started = False
+    for p in doc.paragraphs:
+        text = (p.text or "").strip()
+        if text == "参考文献":
+            ref_started = True
+            continue
+        if not ref_started:
+            continue
+        if re.match(r'^\[\d+\]', text):
+            p.paragraph_format.first_line_indent = Cm(-0.74)
+            p.paragraph_format.left_indent = Cm(0.74)
+
+
+def _superscript_citations(doc):
+    from docx.shared import Pt
+
+    citation_pat = re.compile(r'(\[\d+(?:,\s*\d+)*\](?:\[\d+(?:,\s*\d+)*\])*)')
+    ref_started = False
+    for p in doc.paragraphs:
+        text = p.text or ""
+        if text.strip() == "参考文献":
+            ref_started = True
+            continue
+        if ref_started or not citation_pat.search(text):
+            continue
+
+        style = p.style
+        alignment = p.alignment
+        parts = citation_pat.split(text)
+        for r in list(p.runs):
+            r.text = ""
+        for part in parts:
+            if not part:
+                continue
+            run = p.add_run(part)
+            _set_run_font(run, 12)
+            if citation_pat.fullmatch(part):
+                run.font.superscript = True
+                run.font.size = Pt(9)
+        p.style = style
+        p.alignment = alignment
 
 
 def _verify(docx_path):

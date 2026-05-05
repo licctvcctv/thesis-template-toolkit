@@ -1,0 +1,37 @@
+{
+  "angry": {
+    "train": 600,
+    "val": 160,
+    "test": 220
+  },
+  "disgust": {
+    "train": 383,
+    "val": 53,
+    "test": 111
+  },
+  "fear": {
+    "train": 600,
+    "val": 160,
+    "test": 220
+  },
+  "happy": {
+    "train": 600,
+    "val": 160,
+    "test": 220
+  },
+  "neutral": {
+    "train": 600,
+    "val": 160,
+    "test": 220
+  },
+  "sad": {
+    "train": 600,
+    "val": 160,
+    "test": 220
+  },
+  "surprise": {
+    "train": 600,
+    "val": 160,
+    "test": 220
+  }
+}

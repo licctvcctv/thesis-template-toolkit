@@ -6,3 +6,19 @@ __pycache__/
 # excluded
 papers/helmet-detection/
 tmp_format_check/
+
+# large model files
+*.safetensors
+*.bin
+*.pth
+*.pt
+*.ckpt
+*.h5
+*.keras
+*.pkl
+
+# training outputs
+**/training_runs/
+
+# large datasets
+**/kaggle_data/*.csv

@@ -1,0 +1,118 @@
+[{"stream_name":"stderr","time":4.8331897569999995,"data":"2026-05-01 03:42:25.810161: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:467] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered\n"}
+,{"stream_name":"stderr","time":5.043467916,"data":"WARNING: All log messages before absl::InitializeLog() is called are written to STDERR\n"}
+,{"stream_name":"stderr","time":5.043509014,"data":"E0000 00:00:1777606946.020396       7 cuda_dnn.cc:8579] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered\n"}
+,{"stream_name":"stderr","time":5.100857682,"data":"E0000 00:00:1777606946.077830       7 cuda_blas.cc:1407] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered\n"}
+,{"stream_name":"stderr","time":5.585609944,"data":"W0000 00:00:1777606946.562539       7 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.\n"}
+,{"stream_name":"stderr","time":5.585645875,"data":"W0000 00:00:1777606946.562625       7 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.\n"}
+,{"stream_name":"stderr","time":5.585654224,"data":"W0000 00:00:1777606946.562634       7 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.\n"}
+,{"stream_name":"stderr","time":5.585663006,"data":"W0000 00:00:1777606946.562639       7 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.\n"}
+,{"stream_name":"stdout","time":29.365881815,"data":"dataset=/kaggle/input/datasets/bobaaayoung/message/message80W1.csv\n"}
+,{"stream_name":"stdout","time":29.366533708,"data":"tensorflow=2.19.0 gpu_count=1 gpu_devices=[\"PhysicalDevice(name='/physical_device:GPU:0', device_type='GPU')\"]\n"}
+,{"stream_name":"stdout","time":35.994570956,"data":"loaded rows=799,953, ham=719,953, spam=80,000\n"}
+,{"stream_name":"stdout","time":38.885086393,"data":"split train=559,967, test=239,986, vocab=6,000\n"}
+,{"stream_name":"stderr","time":43.776795971,"data":"I0000 00:00:1777606984.753786       7 gpu_device.cc:2019] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 15511 MB memory:  -\u003e device: 0, name: Tesla P100-PCIE-16GB, pci bus id: 0000:00:04.0, compute capability: 6.0\n"}
+,{"stream_name":"stdout","time":45.337493218,"data":"Model: \"functional\"\n"}
+,{"stream_name":"stdout","time":45.337530829,"data":"┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━┓\n"}
+,{"stream_name":"stdout","time":45.337542885,"data":"┃ Layer (type)        ┃ Output Shape      ┃    Param # ┃ Connected to      ┃\n"}
+,{"stream_name":"stdout","time":45.33755177,"data":"┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━┩\n"}
+,{"stream_name":"stdout","time":45.337556072,"data":"│ input_layer         │ (None, 80)        │          0 │ -                 │\n"}
+,{"stream_name":"stdout","time":45.337560006,"data":"│ (InputLayer)        │                   │            │                   │\n"}
+,{"stream_name":"stdout","time":45.337563893,"data":"├─────────────────────┼───────────────────┼────────────┼───────────────────┤\n"}
+,{"stream_name":"stdout","time":45.337582602,"data":"│ embedding           │ (None, 80, 64)    │    384,000 │ input_layer[0][0] │\n"}
+,{"stream_name":"stdout","time":45.337585707,"data":"│ (Embedding)         │                   │            │                   │\n"}
+,{"stream_name":"stdout","time":45.337588547,"data":"├─────────────────────┼───────────────────┼────────────┼───────────────────┤\n"}
+,{"stream_name":"stdout","time":45.337591714,"data":"│ not_equal           │ (None, 80)        │          0 │ input_layer[0][0] │\n"}
+,{"stream_name":"stdout","time":45.337594444,"data":"│ (NotEqual)          │                   │            │                   │\n"}
+,{"stream_name":"stdout","time":45.3375972,"data":"├─────────────────────┼───────────────────┼────────────┼───────────────────┤\n"}
+,{"stream_name":"stdout","time":45.33760027,"data":"│ bidirectional       │ (None, 128)       │     66,048 │ embedding[0][0],  │\n"}
+,{"stream_name":"stdout","time":45.337603037,"data":"│ (Bidirectional)     │                   │            │ not_equal[0][0]   │\n"}
+,{"stream_name":"stdout","time":45.337607031,"data":"├─────────────────────┼───────────────────┼────────────┼───────────────────┤\n"}
+,{"stream_name":"stdout","time":45.33761018,"data":"│ dropout (Dropout)   │ (None, 128)       │          0 │ bidirectional[0]… │\n"}
+,{"stream_name":"stdout","time":45.337612985,"data":"├─────────────────────┼───────────────────┼────────────┼───────────────────┤\n"}
+,{"stream_name":"stdout","time":45.337616145,"data":"│ dense (Dense)       │ (None, 1)         │        129 │ dropout[0][0]     │\n"}
+,{"stream_name":"stdout","time":45.337618919,"data":"└─────────────────────┴───────────────────┴────────────┴───────────────────┘\n"}
+,{"stream_name":"stdout","time":45.337622017,"data":" Total params: 450,177 (1.72 MB)\n"}
+,{"stream_name":"stdout","time":45.337624685,"data":" Trainable params: 450,177 (1.72 MB)\n"}
+,{"stream_name":"stdout","time":45.337627631,"data":" Non-trainable params: 0 (0.00 B)\n"}
+,{"stream_name":"stdout","time":45.337630294,"data":"\n"}
+,{"stream_name":"stdout","time":45.339010046,"data":"class_weight={0: 1.0, 1: 8.999410714285714}\n"}
+,{"stream_name":"stdout","time":45.779846308,"data":"epoch=1 begin\n"}
+,{"stream_name":"stdout","time":45.779930351,"data":"Epoch 1/5\n"}
+,{"stream_name":"stderr","time":49.826839559,"data":"I0000 00:00:1777606990.803584      44 cuda_dnn.cc:529] Loaded cuDNN version 91002\n"}
+,{"stream_name":"stdout","time":71.31139194,"data":"epoch=1 done loss=0.15862 acc=0.97576 val_loss=0.02956 val_acc=0.99026 val_recall=0.98421 val_f1=pending seconds=25.5\n"}
+,{"stream_name":"stdout","time":71.32427542,"data":"274/274 - 26s - 93ms/step - accuracy: 0.9758 - average_precision: 0.9687 - loss: 0.1586 - precision: 0.8172 - recall: 0.9759 - roc_auc: 0.9956 - val_accuracy: 0.9903 - val_average_precision: 0.9921 - val_loss: 0.0296 - val_precision: 0.9234 - val_recall: 0.9842 - val_roc_auc: 0.9988\n"}
+,{"stream_name":"stdout","time":71.330029401,"data":"epoch=2 begin\n"}
+,{"stream_name":"stdout","time":71.330236285,"data":"Epoch 2/5\n"}
+,{"stream_name":"stdout","time":88.924886292,"data":"epoch=2 done loss=0.05150 acc=0.99167 val_loss=0.02316 val_acc=0.99254 val_recall=0.98508 val_f1=pending seconds=17.6\n"}
+,{"stream_name":"stdout","time":88.934576638,"data":"274/274 - 18s - 64ms/step - accuracy: 0.9917 - average_precision: 0.9925 - loss: 0.0515 - precision: 0.9330 - recall: 0.9876 - roc_auc: 0.9992 - val_accuracy: 0.9925 - val_average_precision: 0.9920 - val_loss: 0.0232 - val_precision: 0.9429 - val_recall: 0.9851 - val_roc_auc: 0.9989\n"}
+,{"stream_name":"stdout","time":88.940394955,"data":"epoch=3 begin\n"}
+,{"stream_name":"stdout","time":88.94056625,"data":"Epoch 3/5\n"}
+,{"stream_name":"stdout","time":106.490986428,"data":"epoch=3 done loss=0.04038 acc=0.99312 val_loss=0.02618 val_acc=0.99120 val_recall=0.98712 val_f1=pending seconds=17.6\n"}
+,{"stream_name":"stdout","time":106.501205406,"data":"274/274 - 18s - 64ms/step - accuracy: 0.9931 - average_precision: 0.9937 - loss: 0.0404 - precision: 0.9433 - recall: 0.9908 - roc_auc: 0.9994 - val_accuracy: 0.9912 - val_average_precision: 0.9922 - val_loss: 0.0262 - val_precision: 0.9293 - val_recall: 0.9871 - val_roc_auc: 0.9990\n"}
+,{"stream_name":"stdout","time":106.507237845,"data":"epoch=4 begin\n"}
+,{"stream_name":"stdout","time":106.50728479,"data":"Epoch 4/5\n"}
+,{"stream_name":"stdout","time":124.047558893,"data":"epoch=4 done loss=0.03554 acc=0.99368 val_loss=0.03739 val_acc=0.98740 val_recall=0.98900 val_f1=pending seconds=17.5\n"}
+,{"stream_name":"stdout","time":124.057988278,"data":"274/274 - 18s - 64ms/step - accuracy: 0.9937 - average_precision: 0.9942 - loss: 0.0355 - precision: 0.9469 - recall: 0.9925 - roc_auc: 0.9994 - val_accuracy: 0.9874 - val_average_precision: 0.9864 - val_loss: 0.0374 - val_precision: 0.8959 - val_recall: 0.9890 - val_roc_auc: 0.9986\n"}
+,{"stream_name":"stdout","time":124.063258416,"data":"epoch=5 begin\n"}
+,{"stream_name":"stdout","time":124.063408695,"data":"Epoch 5/5\n"}
+,{"stream_name":"stdout","time":141.596485854,"data":"epoch=5 done loss=0.03045 acc=0.99437 val_loss=0.01969 val_acc=0.99317 val_recall=0.98413 val_f1=pending seconds=17.5\n"}
+,{"stream_name":"stdout","time":141.604780669,"data":"274/274 - 18s - 64ms/step - accuracy: 0.9944 - average_precision: 0.9952 - loss: 0.0305 - precision: 0.9518 - recall: 0.9941 - roc_auc: 0.9996 - val_accuracy: 0.9932 - val_average_precision: 0.9937 - val_loss: 0.0197 - val_precision: 0.9494 - val_recall: 0.9841 - val_roc_auc: 0.9987\n"}
+,{"stream_name":"stdout","time":143.840096825,"data":"\r\u001b[1m  1/118\u001b[0m \u001b[37m━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m27s\u001b[0m 233ms/step\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m  5/118\u001b[0m \u001b[37m━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m1s\u001b[0m 14ms/step  \b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m  9/118\u001b[0m \u001b[32m━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m1s\u001b[0m 14ms/step\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m 13/118\u001b[0m \u001b[32m━━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m1s\u001b[0m 14ms/step\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m 17/118\u001b[0m \u001b[32m━━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m1s\u001b[0m 14ms/step\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m 21/118\u001b[0m \u001b[32m━━━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m1s\u001b[0m 14ms/step\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m 25/118\u001b[0m \u001b[32m━━━━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m1s\u001b[0m 14ms/step\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m 29/118\u001b[0m \u001b[32m━━━━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━━\u001b[0m \u001b[1m1s\u001b[0m 14ms/step\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m 33/118\u001b[0m \u001b[32m━━━━━\u001b[0m\u001b[37m━━━━━━━━━━━━━━━\u001b[0m \u001b[1m1s\u001b[0m 14ms/step\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m 37/118\u001b[0m \u001b[32m━━━━━━\u001b[0m\u001b[37m━━━━━━━━━━━━━━\u001b[0m \u001b[1m1s\u001b[0m 14ms/step\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m 41/118\u001b[0m \u001b[32m━━━━━━\u001b[0m\u001b[37m━━━━━━━━━━━━━━\u001b[0m \u001b[1m1s\u001b[0m 14ms/step\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m 45/118\u001b[0m \u001b[32m━━━━━━━\u001b[0m\u001b[37m━━━━━━━━━━━━━\u001b[0m \u001b[1m1s\u001b[0m 14ms/step\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m 49/118\u001b[0m \u001b[32m━━━━━━━━\u001b[0m\u001b[37m━━━━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 14ms/step\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m 53/118\u001b[0m \u001b[32m━━━━━━━━\u001b[0m\u001b[37m━━━━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 14ms/step\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m 57/118\u001b[0m \u001b[32m━━━━━━━━━\u001b[0m\u001b[37m━━━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 14ms/step\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m 61/118\u001b[0m \u001b[32m━━━━━━━━━━\u001b[0m\u001b[37m━━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 14ms/step\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m 65/118\u001b[0m \u001b[32m━━━━━━━━━━━\u001b[0m\u001b[37m━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 14ms/step\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m 69/118\u001b[0m \u001b[32m━━━━━━━━━━━\u001b[0m\u001b[37m━━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 14ms/step\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m 73/118\u001b[0m \u001b[32m━━━━━━━━━━━━\u001b[0m\u001b[37m━━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 14ms/step\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m 77/118\u001b[0m \u001b[32m━━━━━━━━━━━━━\u001b[0m\u001b[37m━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 14ms/step\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m 81/118\u001b[0m \u001b[32m━━━━━━━━━━━━━\u001b[0m\u001b[37m━━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 14ms/step\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m 85/118\u001b[0m \u001b[32m━━━━━━━━━━━━━━\u001b[0m\u001b[37m━━━━━━\u001b[0m \u001b[1m0s\u001b[0m 14ms/step\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m 89/118\u001b[0m \u001b[32m━━━━━━━━━━━━━━━\u001b[0m\u001b[37m━━━━━\u001b[0m \u001b[1m0s\u001b[0m 14ms/step\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m 93/118\u001b[0m \u001b[32m━━━━━━━━━━━━━━━\u001b[0m\u001b[37m━━━━━\u001b[0m \u001b[1m0s\u001b[0m 14ms/step\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m 97/118\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m━━━━\u001b[0m \u001b[1m0s\u001b[0m 14ms/step\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m101/118\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m━━━\u001b[0m \u001b[1m0s\u001b[0m 14ms/step\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m105/118\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m━━━\u001b[0m \u001b[1m0s\u001b[0m 14ms/step\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m109/118\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m━━\u001b[0m \u001b[1m0s\u001b[0m 14ms/step\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m113/118\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m━\u001b[0m \u001b[1m0s\u001b[0m 14ms/step\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m117/118\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m━\u001b[0m \u001b[1m0s\u001b[0m 14ms/step\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m118/118\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m0s\u001b[0m 16ms/step\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\r\u001b[1m118/118\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m2s\u001b[0m 16ms/step\n"}
+,{"stream_name":"stderr","time":144.232973609,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":144.233010502,"data":"  File \"/kaggle/src/script.py\", line 341, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":144.233150198,"data":"    main()\n"}
+,{"stream_name":"stderr","time":144.233161048,"data":"  File \"/kaggle/src/script.py\", line 317, in main\n"}
+,{"stream_name":"stderr","time":144.233442851,"data":"    plot_outputs(\n"}
+,{"stream_name":"stderr","time":144.233453715,"data":"  File \"/kaggle/src/script.py\", line 154, in plot_outputs\n"}
+,{"stream_name":"stderr","time":144.233563502,"data":"    fig.tight_layout()\n"}
+,{"stream_name":"stderr","time":144.23362158,"data":"  File \"/usr/local/lib/python3.12/dist-packages/matplotlib/figure.py\", line 3640, in tight_layout\n"}
+,{"stream_name":"stderr","time":144.236558448,"data":"    engine.execute(self)\n"}
+,{"stream_name":"stderr","time":144.236593092,"data":"  File \"/usr/local/lib/python3.12/dist-packages/matplotlib/layout_engine.py\", line 183, in execute\n"}
+,{"stream_name":"stderr","time":144.237497319,"data":"    kwargs = get_tight_layout_figure(\n"}
+,{"stream_name":"stderr","time":144.237582786,"data":"             ^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":144.23759506,"data":"  File \"/usr/local/lib/python3.12/dist-packages/matplotlib/_tight_layout.py\", line 266, in get_tight_layout_figure\n"}
+,{"stream_name":"stderr","time":144.238362559,"data":"    kwargs = _auto_adjust_subplotpars(fig, renderer,\n"}
+,{"stream_name":"stderr","time":144.238459784,"data":"             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":144.238513443,"data":"  File \"/usr/local/lib/python3.12/dist-packages/matplotlib/_tight_layout.py\", line 82, in _auto_adjust_subplotpars\n"}
+,{"stream_name":"stderr","time":144.238712379,"data":"    bb += [martist._get_tightbbox_for_layout_only(ax, renderer)]\n"}
+,{"stream_name":"stderr","time":144.238846326,"data":"           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":144.238864299,"data":"  File \"/usr/local/lib/python3.12/dist-packages/matplotlib/artist.py\", line 1402, in _get_tightbbox_for_layout_only\n"}
+,{"stream_name":"stderr","time":144.24051401,"data":"    return obj.get_tightbbox(*args, **{**kwargs, \"for_layout_only\": True})\n"}
+,{"stream_name":"stderr","time":144.240704281,"data":"           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":144.24074878,"data":"  File \"/usr/local/lib/python3.12/dist-packages/matplotlib/axes/_base.py\", line 4522, in get_tightbbox\n"}
+,{"stream_name":"stderr","time":144.243773182,"data":"    self._update_title_position(renderer)\n"}
+,{"stream_name":"stderr","time":144.24378995,"data":"  File \"/usr/local/lib/python3.12/dist-packages/matplotlib/axes/_base.py\", line 3099, in _update_title_position\n"}
+,{"stream_name":"stderr","time":144.244513103,"data":"    if title.get_window_extent(renderer).ymin \u003c top:\n"}
+,{"stream_name":"stderr","time":144.244619657,"data":"       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":144.244715686,"data":"  File \"/usr/local/lib/python3.12/dist-packages/matplotlib/text.py\", line 969, in get_window_extent\n"}
+,{"stream_name":"stderr","time":144.246197603,"data":"    bbox, info, descent = self._get_layout(self._renderer)\n"}
+,{"stream_name":"stderr","time":144.246344132,"data":"                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":144.246353188,"data":"  File \"/usr/local/lib/python3.12/dist-packages/matplotlib/text.py\", line 373, in _get_layout\n"}
+,{"stream_name":"stderr","time":144.246588935,"data":"    _, lp_h, lp_d = _get_text_metrics_with_cache(\n"}
+,{"stream_name":"stderr","time":144.246681508,"data":"                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":144.246695241,"data":"  File \"/usr/local/lib/python3.12/dist-packages/matplotlib/text.py\", line 69, in _get_text_metrics_with_cache\n"}
+,{"stream_name":"stderr","time":144.246841599,"data":"    return _get_text_metrics_with_cache_impl(\n"}
+,{"stream_name":"stderr","time":144.246932128,"data":"           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":144.246956689,"data":"  File \"/usr/local/lib/python3.12/dist-packages/matplotlib/text.py\", line 77, in _get_text_metrics_with_cache_impl\n"}
+,{"stream_name":"stderr","time":144.247120918,"data":"    return renderer_ref().get_text_width_height_descent(text, fontprop, ismath)\n"}
+,{"stream_name":"stderr","time":144.247323201,"data":"           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":144.24748787,"data":"  File \"/usr/local/lib/python3.12/dist-packages/matplotlib/backends/backend_agg.py\", line 218, in get_text_width_height_descent\n"}
+,{"stream_name":"stderr","time":144.248224742,"data":"    font = self._prepare_font(prop)\n"}
+,{"stream_name":"stderr","time":144.248370819,"data":"           ^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":144.248385715,"data":"  File \"/usr/local/lib/python3.12/dist-packages/matplotlib/backends/backend_agg.py\", line 252, in _prepare_font\n"}
+,{"stream_name":"stderr","time":144.248699886,"data":"    font = get_font(_fontManager._find_fonts_by_props(font_prop))\n"}
+,{"stream_name":"stderr","time":144.248968567,"data":"           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":144.248986905,"data":"  File \"/usr/local/lib/python3.12/dist-packages/matplotlib/font_manager.py\", line 1615, in get_font\n"}
+,{"stream_name":"stderr","time":144.250624064,"data":"    return _get_font(\n"}
+,{"stream_name":"stderr","time":144.250645829,"data":"           ^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":144.250658204,"data":"  File \"/usr/local/lib/python3.12/dist-packages/matplotlib/font_manager.py\", line 1557, in _get_font\n"}
+,{"stream_name":"stderr","time":144.251126968,"data":"    return ft2font.FT2Font(\n"}
+,{"stream_name":"stderr","time":144.25114565,"data":"           ^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":144.251200336,"data":"FileNotFoundError: [Errno 2] No such file or directory: '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf'\n"}
+,{"stream_name":"stderr","time":148.71140598,"data":"/usr/local/lib/python3.12/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":148.7114351,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":148.95205982,"data":"/usr/local/lib/python3.12/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":148.952090124,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":149.77211806,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":150.751014859,"data":"[NbConvertApp] Writing 361997 bytes to __results__.html\n"}
+]

@@ -1,0 +1,18 @@
+[
+  "[1] 马红. 基于深度学习的人脸表情识别方法研究[D]. 沈阳工业大学, 2024.",
+  "[2] 许秋阳. 基于神经网络的驾驶员情绪识别研究[D]. 吉林大学, 2023.",
+  "[3] 祝凯, 谢文策, 高诗茹, 等. 基于罪犯情感分析的人脸情绪识别技术的研究[J]. 中国新通信, 2022, 24(21): 113-115.",
+  "[4] Yang J, Shi R, Wei D, et al. MedMNIST v2: A large-scale lightweight benchmark for biomedical image classification[J]. Scientific Data, 2023, 10: 41.",
+  "[5] Redmon J, Farhadi A. YOLOv3: An Incremental Improvement[EB/OL]. arXiv:1804.02767, 2018.",
+  "[6] Jocher G, Chaurasia A, Qiu J. Ultralytics YOLOv8[EB/OL]. https://github.com/ultralytics/ultralytics, 2023.",
+  "[7] Goodfellow I, Bengio Y, Courville A. Deep Learning[M]. Cambridge: MIT Press, 2016.",
+  "[8] He K, Zhang X, Ren S, et al. Deep Residual Learning for Image Recognition[C]//CVPR. 2016: 770-778.",
+  "[9] 王昕宇. 基于卷积神经网络的人脸情绪识别技术研究[D]. 大连交通大学, 2024.",
+  "[10] 高宏涛. 基于深度学习的人脸情绪识别方法[D]. 武汉轻工大学, 2024.",
+  "[11] 颜焕. 基于深度学习的面部表情识别研究[D]. 合肥工业大学, 2023.",
+  "[12] 李增辉. 基于深度学习的遮挡面部情绪识别方法研究[D]. 安徽大学, 2024.",
+  "[13] Django Software Foundation. Django Documentation[EB/OL]. https://docs.djangoproject.com/.",
+  "[14] Vue.js Team. Vue.js Documentation[EB/OL]. https://vuejs.org/.",
+  "[15] Paszke A, Gross S, Massa F, et al. PyTorch: An Imperative Style, High-Performance Deep Learning Library[C]//NeurIPS. 2019: 8024-8035.",
+  "[16] Ultralytics. YOLOv5 Documentation[EB/OL]. https://docs.ultralytics.com/models/yolov5/, 2024."
+]

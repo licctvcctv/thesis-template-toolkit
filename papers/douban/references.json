@@ -1,4 +1,10 @@
 [
+  "Manning C D, Raghavan P, Schütze H. Introduction to Information Retrieval[M]. Cambridge: Cambridge University Press, 2008.",
+  "Joachims T. Text categorization with support vector machines: Learning with many relevant features[C]//European Conference on Machine Learning. Berlin: Springer, 1998: 137-142.",
+  "Quinlan J R. Induction of decision trees[J]. Machine Learning, 1986, 1(1): 81-106.",
+  "Breiman L. Random forests[J]. Machine Learning, 2001, 45(1): 5-32.",
+  "Cortes C, Vapnik V. Support-vector networks[J]. Machine Learning, 1995, 20(3): 273-297.",
+  "Chawla N V, Bowyer K W, Hall L O, Kegelmeyer W P. SMOTE: Synthetic Minority Over-sampling Technique[J]. Journal of Artificial Intelligence Research, 2002, 16: 321-357.",
   "张伟;石倩;何霄;王晨;李禾香;李骥然.改进的TF-IDF算法在文本分类中的研究[J].信息技术与网络安全,2021:6.",
   "孙德华;孙晨.一种面向财务文本分类的TF-IDF改进算法[J].现代信息科技,2020:5.",
   "王国桥;牛少彰.基于TF-IDF的社交电商文本信息分类研究[J].网络空间安全,2020:7.",
@@ -22,7 +28,5 @@
   "王彬;司杨涛;付军涛.基于改进的TF-IDF和贝叶斯算法的新闻分类[J].科技风,2020:3.",
   "朱小虎;周艳平;姜涛;陈显利.一种基于主题划分及TF-IDF的文本摘要提取方法[J].计算机与数字工程,2022:6.",
   "王曜;郑列.一种新的基于聚类的试探性SMOTE算法[J].重庆理工大学学报(自然科学),2021:12.",
-  "王曜;郑列.一种新的基于聚类的试探性SMOTE算法[J].重庆理工大学学报(自然科学),2022:9.",
-  "HaoyueLiu,MengChuZhou,QingLiu.An Embedded Feature Selection Method for Imbalanced Data Classification[J].自动化学报:英文版,2019:703-715.",
-  "ShilianZheng,ShichuanChen,PeihanQi.Spectrum Sensing Based on Deep Learning Classification for Cognitive Radios[J].中国通信:英文版,2020:138-148."
+  "王曜;郑列.一种新的基于聚类的试探性SMOTE算法[J].重庆理工大学学报(自然科学),2022:9."
 ]

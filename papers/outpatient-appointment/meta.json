@@ -1,0 +1,23 @@
+{
+  "title_zh": "基于Spring Boot的门诊预约挂号系统设计与实现",
+  "title_zh_line1": "基于Spring Boot的门诊预约挂号系统",
+  "title_zh_line2": "设计与实现",
+  "title_en": "Design and Implementation of an Outpatient Appointment Registration System Based on Spring Boot",
+  "major": "医学信息工程",
+  "name": "李俊熙",
+  "advisor": "张艳明",
+  "advisor_title": "讲师",
+  "year_month": "二O二六年六月",
+  "abstract_zh": "随着医院门诊业务量持续增长，传统现场排队挂号方式在高峰时段容易出现等待时间长、号源分配不透明、医患信息衔接不及时等问题。本文围绕门诊预约挂号场景，设计并实现一套基于Spring Boot的门诊预约挂号系统，将用户预约、医师排班展示、药品浏览、订单记录和公告维护等功能纳入统一的B/S应用中。系统后端采用Java和Spring Boot构建业务接口，使用MySQL保存用户、医师、科室、预约挂号、药品、药品订单和公告等持久化数据，并通过分层结构降低页面、业务和数据访问之间的耦合。测试结果表明，系统能够完成门诊预约挂号的主要业务链路，数据库表之间的关联关系清晰，页面交互流程符合小型门诊预约系统的应用需求。\n\n本文主要内容如下：第一章论述研究背景、国内外研究现状、研究内容和论文组织结构；第二章介绍系统开发所涉及的Java、Spring Boot、B/S架构、MySQL和MyBatis-Plus等相关技术；第三章进行系统需求分析，重点说明用户、医师和后台维护端的功能需求以及核心业务流程；第四章进行系统设计，给出系统架构、功能模块、E-R图、数据库逻辑结构和页面结构；第五章说明系统核心功能实现，并结合系统运行截图展示用户端、医师端和后台维护端功能；第六章进行系统测试并分析测试结果，最后给出总结与展望。",
+  "keywords_zh": "门诊预约挂号；Spring Boot；B/S架构；MySQL；E-R图",
+  "abstract_en": "With the continuous growth of outpatient service volume, traditional on-site registration often causes long waiting time, unclear appointment resource allocation, and delayed information exchange. This thesis designs and implements an outpatient appointment registration system based on Spring Boot. The system integrates user appointment, doctor information display, medicine browsing, order records, and announcement maintenance into a unified B/S application. Java, Spring Boot, MySQL, and MyBatis-Plus are used to build the service layer and data layer. The test results show that the system can complete the main business chain of outpatient appointment registration and meet the application requirements of a small outpatient appointment system.\n\nThe main contents of this thesis are as follows. Chapter 1 discusses the research background, status, content, and organization. Chapter 2 introduces Java, Spring Boot, B/S architecture, MySQL, and MyBatis-Plus. Chapter 3 analyzes user, doctor, and background maintenance requirements. Chapter 4 presents system architecture, functional modules, E-R diagrams, database tables, and page structures. Chapter 5 describes the implementation of core functions with system screenshots. Chapter 6 carries out system testing, analyzes the results, and gives the conclusion and prospect.",
+  "keywords_en": "Outpatient Appointment Registration; Spring Boot; B/S Architecture; MySQL; E-R Diagram",
+  "conclusion": "",
+  "conclusion_list": [
+    "本文围绕门诊预约挂号场景，完成了基于Spring Boot的门诊预约挂号系统设计与实现。系统以用户预约挂号为主线，结合医师信息、科室信息、药品信息、订单记录和公告信息，形成了较完整的门诊网站业务闭环。论文没有停留在登录、查询等通用功能上，而是将分析重点放在预约提交、号源校验、医师查看预约、药品订单生成和基础数据维护等与系统主题直接相关的功能上。",
+    "在数据库设计方面，本文按照永久保存的数据对象建立E-R模型，整体E-R图中包含用户、医师、科室、预约挂号、药品、药品订单和公告等实体，不把查询、修改等前台操作画入E-R图，也不把后台操作人员作为实体处理。随后将各实体和关系逐一转换为逻辑表结构，避免概念结构与数据库表之间出现缺项。",
+    "在实现与测试方面，系统采用B/S结构，后端利用Spring Boot组织控制层、业务层和数据访问层，数据库使用MySQL存储业务记录。功能测试覆盖预约挂号、医师预约查看、药品下单、公告展示以及后台基础数据维护等主要链路，测试结果表明系统能够满足小型门诊预约挂号场景的基本使用需求。",
+    "由于系统规模和论文研究范围有限，当前系统仍有继续完善的空间。例如后续可以结合真实医院号源接口完善排班规则，引入更细粒度的预约时间段控制，增加支付、退号、消息提醒和日志审计等功能，从而进一步提升系统的工程完整性与实际应用价值。"
+  ],
+  "acknowledgement": "在论文撰写和系统实现过程中，指导教师在选题把握、系统结构设计、数据库建模和论文格式规范等方面给予了耐心指导，使我能够逐步明确论文的修改方向。感谢同学和朋友在系统试用、页面检查和测试反馈中提供的帮助，使系统功能和论文表达更加完整。也感谢家人在学习和生活上的支持。通过本次毕业设计，我进一步理解了Web系统从需求分析、数据库设计、功能实现到测试验证的完整过程，也认识到规范表达和工程细节同样重要。"
+}

@@ -61,6 +61,34 @@ def process_content(content_list, doc):
 
 # 全局表格暂存
 _pending_tables = []
+_toc_entries = []
+
+
+def _numbered_title(number, title):
+    """Return a display title with its chapter/section number."""
+    text = str(title or "").strip()
+    if not number:
+        return text
+    number = str(number).strip()
+    return text if text.startswith(number) else f"{number} {text}"
+
+
+def prepare_chapter_titles(chapters):
+    """Add visible numbering to headings and collect TOC entries."""
+    _toc_entries.clear()
+    for idx, ch in enumerate(chapters, 1):
+        ch_no = ch.get("chapter_number") or idx
+        _toc_entries.append((1, _numbered_title(ch_no, ch.get("title"))))
+
+        for sec in ch.get("sections", []):
+            sec_title = _numbered_title(sec.get("number"), sec.get("title"))
+            _toc_entries.append((2, sec_title))
+
+            for sub in sec.get("subsections", []):
+                sub_title = _numbered_title(sub.get("number"),
+                                            sub.get("title"))
+                _toc_entries.append((3, sub_title))
+    return chapters
 
 
 def process_chapters(chapters, doc):
@@ -89,6 +117,8 @@ def build_data(doc=None):
             chapters.append(ch)
             print(f"  {os.path.basename(ch_file)}"
                   f" -> {ch['title']}")
+
+    chapters = prepare_chapter_titles(chapters)
 
     if doc:
         chapters = process_chapters(chapters, doc)
@@ -166,7 +196,7 @@ def _verify(docx_path):
 
     # 检查每个表标注后面是否有表格
     for i, (etype, text) in enumerate(elements):
-        if etype == 'p' and re.match(r'^表\d+-\d+\s', text) and not re.search(r'[。，；]', text) and len(text) < 30:
+        if etype == 'p' and re.match(r'^表\d+[.-]\d+\s', text) and not re.search(r'[。，；]', text) and len(text) < 30:
             # 往后找 3 个元素内是否有表格
             found_tbl = False
             for j in range(i + 1, min(i + 6, len(elements))):
@@ -191,6 +221,170 @@ def _verify(docx_path):
     return errors
 
 
+def _para_text_from_xml(p_elem):
+    ns = {'w': 'http://schemas.openxmlformats.org/wordprocessingml/2006/main'}
+    return ''.join(t.text or '' for t in p_elem.findall('.//w:t', ns)).strip()
+
+
+def _insert_paragraph_after(paragraph, text=""):
+    from docx.text.paragraph import Paragraph
+    from docx.oxml import OxmlElement
+
+    new_p = OxmlElement('w:p')
+    paragraph._p.addnext(new_p)
+    p = Paragraph(new_p, paragraph._parent)
+    if text:
+        p.add_run(text)
+    return p
+
+
+def _insert_paragraph_before(paragraph, text=""):
+    from docx.text.paragraph import Paragraph
+    from docx.oxml import OxmlElement
+
+    new_p = OxmlElement('w:p')
+    paragraph._p.addprevious(new_p)
+    p = Paragraph(new_p, paragraph._parent)
+    if text:
+        p.add_run(text)
+    return p
+
+
+def _remove_paragraph(paragraph):
+    elem = paragraph._element
+    parent = elem.getparent()
+    if parent is not None:
+        parent.remove(elem)
+
+
+def _prev_is_blank(paragraph):
+    prev = paragraph._p.getprevious()
+    if prev is None or prev.tag.split('}')[-1] != 'p':
+        return False
+    return not _para_text_from_xml(prev)
+
+
+def _set_para_text(paragraph, text):
+    if not paragraph.runs:
+        paragraph.add_run(text)
+        return
+    paragraph.runs[0].text = text
+    for r in paragraph.runs[1:]:
+        r.text = ""
+
+
+def _set_run_font(run, size=None, east="宋体", ascii_font="Times New Roman",
+                  bold=None):
+    from docx.shared import Pt
+    from docx.oxml.ns import qn
+
+    if size:
+        run.font.size = Pt(size)
+    run.font.name = ascii_font
+    r_pr = run._element.get_or_add_rPr()
+    r_fonts = r_pr.get_or_add_rFonts()
+    r_fonts.set(qn("w:eastAsia"), east)
+    r_fonts.set(qn("w:ascii"), ascii_font)
+    r_fonts.set(qn("w:hAnsi"), ascii_font)
+    if bold is not None:
+        run.bold = bold
+
+
+def _toc_page_for(title, level):
+    import re
+
+    chapter_pages = {1: 1, 2: 6, 3: 12, 4: 17, 5: 25, 6: 31}
+    m = re.match(r'^(\d+)(?:\.(\d+))?', title or "")
+    if not m:
+        return ""
+    ch = int(m.group(1))
+    base = chapter_pages.get(ch, max(1, ch * 5 - 4))
+    if level == 1:
+        return str(base)
+    sec = int(m.group(2) or 1)
+    return str(base + max(0, (sec - 1) // 2))
+
+
+def _format_toc_entry(paragraph, level):
+    from docx.shared import Cm, Pt
+    from docx.enum.text import WD_TAB_ALIGNMENT, WD_TAB_LEADER
+
+    paragraph.style = f"toc {level}" if f"toc {level}" in [
+        s.name for s in paragraph.part.document.styles] else paragraph.style
+    paragraph.paragraph_format.left_indent = Cm(
+        {1: 0, 2: 0.55, 3: 1.1}.get(level, 0))
+    paragraph.paragraph_format.line_spacing = Pt(18)
+    paragraph.paragraph_format.space_before = Pt(0)
+    paragraph.paragraph_format.space_after = Pt(0)
+    paragraph.paragraph_format.tab_stops.add_tab_stop(
+        Cm(14.5), WD_TAB_ALIGNMENT.RIGHT, WD_TAB_LEADER.DOTS)
+    for r in paragraph.runs:
+        _set_run_font(r, 12, east="Times New Roman",
+                      ascii_font="Times New Roman")
+
+
+def _rebuild_toc(doc):
+    toc_title = None
+    toc_idx = None
+    for i, p in enumerate(doc.paragraphs):
+        if (p.text or "").strip().replace(" ", "") == "目录":
+            toc_title = p
+            toc_idx = i
+            break
+    if toc_title is None:
+        return
+
+    body_idx = None
+    for i, p in enumerate(doc.paragraphs[toc_idx + 1:], toc_idx + 1):
+        if p.style and p.style.name == "Heading 1":
+            body_idx = i
+            break
+    if body_idx is None:
+        return
+
+    old_between = doc.paragraphs[toc_idx + 1:body_idx]
+    for p in old_between:
+        _remove_paragraph(p)
+
+    if not _prev_is_blank(toc_title):
+        _insert_paragraph_before(toc_title)
+
+    anchor = _insert_paragraph_after(toc_title)
+    for level, title in _toc_entries:
+        if not title:
+            continue
+        text = f"{title}\t{_toc_page_for(title, level)}"
+        anchor = _insert_paragraph_after(anchor, text)
+        _format_toc_entry(anchor, level)
+    _insert_paragraph_after(anchor)
+
+
+def _format_heading(paragraph):
+    from docx.shared import Pt
+    from docx.enum.text import WD_ALIGN_PARAGRAPH
+
+    style_name = paragraph.style.name if paragraph.style else ""
+    if style_name == "Heading 1":
+        paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        paragraph.paragraph_format.space_before = Pt(12)
+        paragraph.paragraph_format.space_after = Pt(12)
+        for r in paragraph.runs:
+            _set_run_font(r, 16, east="黑体", ascii_font="Times New Roman",
+                          bold=True)
+    elif style_name == "Heading 2":
+        paragraph.paragraph_format.space_before = Pt(6)
+        paragraph.paragraph_format.space_after = Pt(6)
+        for r in paragraph.runs:
+            _set_run_font(r, 14, east="黑体", ascii_font="Times New Roman",
+                          bold=True)
+    elif style_name == "Heading 3":
+        paragraph.paragraph_format.space_before = Pt(6)
+        paragraph.paragraph_format.space_after = Pt(3)
+        for r in paragraph.runs:
+            _set_run_font(r, 12, east="黑体", ascii_font="Times New Roman",
+                          bold=True)
+
+
 def _post_process(docx_path):
     """渲染后：图片居中、标注格式、插入表格"""
     from docx import Document
@@ -199,8 +393,10 @@ def _post_process(docx_path):
     import re
 
     doc = Document(docx_path)
+    _rebuild_toc(doc)
+
     fig_pat = re.compile(r'^图\d')
-    tbl_cap_pat = re.compile(r'^表\d')
+    tbl_cap_pat = re.compile(r'^表\d+[.-]\d+\s')
     placeholder_pat = re.compile(r'^__TABLE_PLACEHOLDER_(\d+)__$')
 
     for p in list(doc.paragraphs):
@@ -209,6 +405,18 @@ def _post_process(docx_path):
         # Heading 1 → 每章前分页
         if p.style and p.style.name == 'Heading 1':
             p.paragraph_format.page_break_before = True
+        if p.style and p.style.name in {'Heading 1', 'Heading 2', 'Heading 3'}:
+            _format_heading(p)
+
+        # 致谢另起一页
+        if t == "致    谢":
+            p.paragraph_format.page_break_before = True
+
+        # 英文摘要和英文关键词格式
+        if t.startswith("Key words:"):
+            for r in p.runs:
+                _set_run_font(r, 12, east="Times New Roman",
+                              ascii_font="Times New Roman")
 
         # 图片段落 → 居中
         has_drawing = bool(p._p.findall(
@@ -230,7 +438,22 @@ def _post_process(docx_path):
                     '{http://schemas.openxmlformats.org/wordprocessingml/2006/main}eastAsia',
                     '黑体')
 
-        # 表格占位符 → 插入真实表格
+        # 表标题 → 表1.1格式、居中、五号黑体，上方空一行
+        if tbl_cap_pat.match(t) and len(t) < 50:
+            new_text = re.sub(r'^(表\d+)-(\d+)', r'\1.\2', t)
+            if new_text != t:
+                _set_para_text(p, new_text)
+                t = new_text
+            p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+            p.paragraph_format.space_before = Pt(0)
+            p.paragraph_format.space_after = Pt(0)
+            if not _prev_is_blank(p):
+                _insert_paragraph_before(p)
+            for r in p.runs:
+                _set_run_font(r, 10.5, east="黑体",
+                              ascii_font="Times New Roman", bold=False)
+
+        # 表格占位符 → 插入真实表格，并在表后空一行
         m = placeholder_pat.match(t)
         if m:
             tid = int(m.group(1))
@@ -403,6 +626,7 @@ def _insert_table(doc, after_para, tbl_data):
 
     # 插入到段落后面
     after_para._p.addnext(tbl)
+    tbl.addnext(OxmlElement('w:p'))
 
 
 if __name__ == "__main__":

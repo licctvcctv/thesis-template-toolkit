@@ -1,0 +1,20 @@
+{
+  "title_zh": "基于深度学习的中文垃圾短信识别系统设计与实现",
+  "title_en": "Design and Implementation of a Chinese Spam SMS Recognition System Based on Deep Learning",
+  "college": "信息工程学院",
+  "major": "数据科学与大数据技术",
+  "class_name": "数据科学与大数据技术本科K2201班",
+  "name": "潘宇航",
+  "student_id": "220529090143",
+  "advisor": "",
+  "class_year": "2026届",
+  "date": "2026年4月20日",
+  "abstract_zh": "随着移动通信和互联网服务的发展，短信仍然被广泛用于通知、验证和业务提醒，但广告推广、诈骗诱导、虚假中奖等垃圾短信也随之增加。中文垃圾短信具有文本短、表达灵活、口语化明显和类别不均衡等特点，单纯依靠关键词规则容易出现漏判和误判。本文围绕中文垃圾短信识别任务，设计并实现了一套基于深度学习的识别系统。研究以约80万条中文短信数据为基础，完成文本清洗、中文分词、停用词过滤、同义词增强、分层采样和类别权重设置等预处理工作，并分别构建BERT和LSTM两种模型进行对比。实验结果表明，BERT和LSTM均可完成短信识别任务，其中BERT在中文短文本语义建模和系统部署稳定性方面更适合作为主要识别模型。系统采用Django作为后端框架，Vue作为前端框架，实现了短信单条识别、批量识别、模型训练、模型对比和识别历史管理等功能。测试结果表明，系统能够较稳定地完成中文短信分类任务，具有一定的实用价值。",
+  "abstract_en": "With the development of mobile communication and Internet services, SMS is still widely used for notifications, verification, and service reminders. However, spam messages such as advertisements, fraud messages, and false prize notices have also increased. Chinese spam SMS is short, flexible, colloquial, and imbalanced in category distribution, which makes rule-based methods prone to false detection and missed detection. This thesis designs and implements a Chinese spam SMS recognition system based on deep learning. Based on about 800,000 Chinese SMS records, text cleaning, Chinese word segmentation, stop-word filtering, synonym augmentation, stratified sampling, and class weighting are performed. BERT and LSTM models are constructed and compared. The experimental results show that both BERT and LSTM can complete spam SMS recognition, while BERT is more suitable as the main model in terms of Chinese short-text semantic modeling and deployment stability. The system uses Django as the backend framework and Vue as the frontend framework, implementing single-message recognition, batch recognition, model training, model comparison, and recognition history management. The test results show that the system can complete Chinese SMS classification tasks stably and has practical value.",
+  "keywords_zh": "深度学习；BERT模型；LSTM模型；自然语言处理；垃圾短信识别",
+  "keywords_en": "deep learning; BERT model; LSTM model; natural language processing; spam SMS recognition",
+  "conclusion": "本文围绕中文垃圾短信识别任务，完成了数据处理、模型构建、实验对比、系统设计与测试等工作。研究首先对中文短信数据进行了清洗、分词、停用词过滤和同义词增强处理，并结合分层采样与类别权重缓解样本不均衡问题。随后构建BERT和LSTM两种模型进行对比实验。实验结果表明，BERT模型能够较好地捕捉中文短文本中的上下文语义信息，LSTM模型在抽样复现实验中也具有较快收敛能力。综合语义建模能力、完整项目训练记录和系统部署需求，本文最终选取BERT模型作为系统主要分类模型。\n在系统实现方面，本文采用Django和Vue完成前后端分离式开发，系统能够支持单条短信识别、批量短信识别、模型训练、模型对比分析以及历史识别记录管理。系统测试结果表明，主要功能可以正常运行，识别结果能够保存并查询，满足毕业设计对模型应用和系统实现的基本要求。\n本研究仍存在不足。一方面，数据集虽然规模较大，但短信语义变化较快，模型对新型诈骗话术的适应能力仍需持续更新；另一方面，系统当前主要面向文本内容识别，尚未充分结合发送号码、链接域名和用户行为等多源特征。后续可继续引入多模态特征、模型增量学习和异常链接检测机制，以进一步提高系统在真实通信环境中的应用能力。",
+  "acknowledgement": "在本次毕业设计完成过程中，指导教师在选题、系统设计、论文结构和实验分析等方面给予了耐心指导，使我能够逐步明确研究思路并完成论文写作。感谢信息工程学院各位老师在大学期间的培养，相关课程为本课题中的深度学习、自然语言处理和Web系统开发提供了重要基础。\n同时，感谢同学和朋友在系统测试阶段给予的帮助，他们对页面交互、识别流程和功能细节提出了建议，使系统得到进一步完善。最后，感谢家人在学习和生活上的理解与支持。谨向所有关心和帮助过我的老师、同学、朋友和家人表示诚挚感谢。",
+  "appendix_title": "附录A 系统核心代码",
+  "appendix_content": "（1）文本预处理函数\ncleaned = ''.join(c for c in text if c.isalnum() or c.isspace())\nwords = jieba.cut(cleaned)\nwords = [word for word in words if word not in stopwords and word.strip()]\n\n（2）BERT推理过程\ninputs = tokenizer(text, max_length=128, padding='max_length', truncation=True, return_tensors='pt')\noutputs = model(**inputs)\nprobability = torch.softmax(outputs.logits, dim=1)[0][1].item()"
+}

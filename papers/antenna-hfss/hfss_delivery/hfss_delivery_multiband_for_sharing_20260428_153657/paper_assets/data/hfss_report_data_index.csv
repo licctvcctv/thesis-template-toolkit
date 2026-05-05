@@ -1,0 +1,13 @@
+file,source_report,description
+hfss_report_01_s11_from_aedt.csv,Paper_01_Final_S11_n78,Final HFSS dB(S11) sweep over 3.3-3.8 GHz.
+hfss_report_02_vswr_from_aedt.csv,Paper_02_Final_VSWR_n78,Final HFSS VSWR sweep over 3.3-3.8 GHz.
+hfss_report_03_input_impedance_from_aedt.csv,Paper_03_Final_Input_Impedance,Final input impedance with real imaginary and magnitude columns.
+hfss_report_04_smith_chart_from_aedt.csv,Paper_04_Final_Smith_Chart,Smith chart source S11 data exported from HFSS.
+hfss_report_05_modal_data_table_from_aedt.csv,Paper_05_Final_Data_Table,HFSS modal data table containing S11 VSWR and input impedance.
+hfss_report_06_radiation_gain_phi0_from_aedt.csv,Paper_06_Radiation_Gain_Phi0,Far-field total gain cut at 3.55 GHz and Phi=0 deg.
+hfss_report_07_radiation_gain_phi90_from_aedt.csv,Paper_07_Radiation_Gain_Phi90,Far-field total gain cut at 3.55 GHz and Phi=90 deg.
+hfss_report_08_3d_gain_total_from_aedt.csv,Paper_08_3D_Gain_Total,3D total gain data over Theta/Phi at 3.55 GHz.
+hfss_report_09_radiation_polar_phi0_from_aedt.csv,Paper_09_Radiation_Polar_Phi0,Polar radiation pattern source data at 3.55 GHz and Phi=0 deg.
+hfss_report_10_radiation_data_table_from_aedt.csv,Paper_10_Radiation_Data_Table,HFSS radiation data table for total gain at Phi=0 deg.
+hfss_report_11_theta_phi_gain_surface_from_aedt.csv,Paper_11_Theta_Phi_Gain_Surface,Theta/Phi gain surface data at 3.55 GHz.
+hfss_report_12_theta_phi_gain_contour_from_aedt.csv,Paper_12_Theta_Phi_Gain_Contour,Theta/Phi gain contour data at 3.55 GHz.

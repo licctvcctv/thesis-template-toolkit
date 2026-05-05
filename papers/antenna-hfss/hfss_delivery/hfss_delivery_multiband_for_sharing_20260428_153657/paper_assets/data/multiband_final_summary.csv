@@ -1,0 +1,25 @@
+﻿metric,value
+design,HFSSDesign_phone_multiband_enhanced
+selected_case,pg_para_Lg17_Lp28_Wf48
+variables,"{'Lg': '17mm', 'Wp': '30mm', 'Lp': '28mm', 'Wf': '4.8mm'}"
+features,"{'phone_ground': True, 'parasitic': ('right', '1.2mm', '22mm', '0.9mm', '21mm')}"
+csv,C:\Users\Administrator\Documents\New project\hfss_multiband\final_phone_multiband_S11.csv
+overall_min_s11_db,-35.256215936361
+overall_min_freq_ghz,2.55
+wlan_2p4_worst_s11_db,-30.55666466874
+wlan_2p4_worst_freq_ghz,2.4
+wlan_2p4_best_s11_db,-35.1045302846971
+wlan_2p4_best_freq_ghz,2.5
+wlan_2p4_pass,True
+n78_worst_s11_db,-10.3695032343957
+n78_worst_freq_ghz,3.8
+n78_best_s11_db,-15.1042877197716
+n78_best_freq_ghz,3.3
+n78_pass,True
+wlan_5p8_worst_s11_db,-16.4141156436884
+wlan_5p8_worst_freq_ghz,5.85
+wlan_5p8_best_s11_db,-18.9074013029636
+wlan_5p8_best_freq_ghz,5.75
+wlan_5p8_pass,True
+pass_count,3
+penalty,0.0

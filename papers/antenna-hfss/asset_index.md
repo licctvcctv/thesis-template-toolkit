@@ -13,19 +13,34 @@ Date: 2026-04-28
 - Max VSWR: 1.8148197659118377
 - Max mismatch loss: 0.3800769202143621 dB
 
+## Multiband Extension
+
+- Added delivery package: `hfss_delivery/hfss_delivery_multiband_for_sharing_20260428_153657`
+- Multiband HFSS design: `HFSSDesign_phone_multiband_enhanced`
+- Selected candidate: `pg_para_Lg17_Lp28_Wf48`
+- Variables: `Lg=17mm`, `Wp=30mm`, `Lp=28mm`, `Wf=4.8mm`
+- Right parasitic branch: width `1.2mm`, length `22mm`, gap `0.9mm`, offset `21mm`
+- WLAN 2.4 GHz band, 2.4-2.5 GHz: worst S11 `-30.56 dB`
+- 5G n78 band, 3.3-3.8 GHz: worst S11 `-10.37 dB`
+- WLAN 5.8 GHz band, 5.725-5.85 GHz: worst S11 `-16.41 dB`
+- Source summary data: `multiband_data/multiband_final_summary.csv`
+
 ## Recommended Figures for Paper
 
 1. `figures/fig_01_final_phone_pifa_s11.png`: final S11 curve.
 2. `figures/fig_02_final_phone_pifa_zin.png`: input impedance.
 3. `figures/fig_03_final_phone_pifa_vswr.png`: VSWR.
-4. `figures/scratch_result_07_phone_pifa_vs_base_old.png`: old model vs clean redesign vs phone/PIFA enhanced.
-5. `figures/scratch_result_08_phone_pifa_candidate_ranking.png`: tested phone/PIFA enhancement candidates.
+4. `figures/scratch_result_08_phone_pifa_candidate_ranking.png`: tested phone/PIFA enhancement candidates.
 6. `screenshots/05_hfss_phone_pifa_enhanced_geometry.png`: HFSS final geometry screenshot.
 7. `screenshots/hfss_ui_02_s11_rectangular_plot.png`: HFSS software S11 report screenshot.
 8. `screenshots/hfss_ui_03_vswr_rectangular_plot.png`: HFSS software VSWR report screenshot.
 9. `screenshots/hfss_ui_05_smith_chart.png`: HFSS software Smith chart screenshot.
 10. `screenshots/hfss_ui_09_3d_gain_total.png`: HFSS software 3D gain pattern screenshot.
 11. `screenshots/hfss_ui_13_theta_phi_gain_contour.png`: HFSS software Theta/Phi gain contour screenshot.
+12. `figures/fig_05_final_multiband_s11.png`: final multiband S11 curve.
+13. `figures/fig_06_multiband_candidate_comparison.png`: multiband candidate comparison.
+14. `screenshots/hfss_ui_14_multiband_geometry.png`: HFSS multiband model geometry screenshot.
+15. `screenshots/hfss_ui_15_multiband_s11_report.png`: HFSS multiband S11 report screenshot.
 
 ## HFSS Software Screenshots
 
@@ -74,4 +89,4 @@ Use `data/hfss_report_data_index.csv` to match each CSV to the corresponding HFS
 
 ## Process Notes
 
-The teacher reference model was preserved and used as a comparison baseline. The clean redesigned antenna met the n78 S11 target with stronger margin, but looked too simple for a handset antenna. The final selected version therefore adds handset ground and a coupled parasitic branch. Direct shorting-wall PIFA and side-frame variants were tested but rejected because they degraded matching.
+The final selected version adds handset ground and a coupled parasitic branch. Direct shorting-wall PIFA and side-frame variants were tested but rejected because they degraded matching. The multiband extension keeps the same handset/PIFA design direction and tunes the main radiating path, feed width, and right-side parasitic branch for 2.4 GHz, n78, and 5.8 GHz operation.

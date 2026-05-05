@@ -8,6 +8,12 @@ import os
 import sys
 import json
 import re
+import copy
+import shutil
+import socket
+import subprocess
+import tempfile
+import time
 
 ROOT = os.path.join(os.path.dirname(__file__), "../..")
 sys.path.insert(0, ROOT)
@@ -17,6 +23,7 @@ IMG_DIR = os.path.join(HERE, "images")
 TPL = os.path.join(ROOT, "templates/dslg/template.docx")
 
 _pending_tables = []
+_citation_pat = re.compile(r'\[(\d+(?:\s*[-,]\s*\d+)*)\]')
 
 
 def load_json(filename):
@@ -64,6 +71,42 @@ def process_chapters(chapters, doc):
             for sub in sec.get("subsections", []):
                 sub["content"] = process_content(sub.get("content", []), doc)
     return chapters
+
+
+def _normalize_citation_marks(doc):
+    from docx.shared import Pt
+    from docx.oxml import OxmlElement
+    from docx.oxml.ns import qn as _qn
+
+    ns = {'w': 'http://schemas.openxmlformats.org/wordprocessingml/2006/main'}
+    for p in doc.paragraphs:
+        text = p.text or ""
+        if not _citation_pat.search(text):
+            continue
+        if p._p.findall('.//w:drawing', ns):
+            continue
+
+        # 只处理纯正文段落的引用标记，正文文本重新拆分为多个 run，
+        # 引用标记单独设置成右上角小号上标。
+        for child in list(p._p):
+            if child.tag != _qn('w:pPr'):
+                p._p.remove(child)
+
+        last = 0
+        changed = False
+        for m in _citation_pat.finditer(text):
+            changed = True
+            if m.start() > last:
+                p.add_run(text[last:m.start()])
+            cite_run = p.add_run(m.group(0))
+            cite_run.font.size = Pt(8)
+            rPr = cite_run._r.get_or_add_rPr()
+            vertAlign = OxmlElement('w:vertAlign')
+            vertAlign.set(_qn('w:val'), 'superscript')
+            rPr.append(vertAlign)
+            last = m.end()
+        if changed and last < len(text):
+            p.add_run(text[last:])
 
 
 def build_data(doc=None):
@@ -169,6 +212,69 @@ def _post_process(docx_path):
     fig_cap_pat = re.compile(r'^图\d')
     placeholder_pat = re.compile(r'^__TABLE_PLACEHOLDER_(\d+)__$')
 
+    def _set_para_text(p, text, font_name=None, east_asia=None, size=None, bold=None):
+        pPr = p._p.pPr
+        for child in list(p._p):
+            if pPr is not None and child is pPr:
+                continue
+            p._p.remove(child)
+        run = p.add_run(text)
+        if font_name:
+            run.font.name = font_name
+        if size is not None:
+            run.font.size = size
+        if bold is not None:
+            run.bold = bold
+        rPr = run._r.get_or_add_rPr()
+        rFonts = rPr.find(_qn('w:rFonts'))
+        if rFonts is None:
+            rFonts = OxmlElement('w:rFonts')
+            rPr.insert(0, rFonts)
+        if font_name:
+            rFonts.set(_qn('w:ascii'), font_name)
+            rFonts.set(_qn('w:hAnsi'), font_name)
+            rFonts.set(_qn('w:cs'), font_name)
+        if east_asia:
+            rFonts.set(_qn('w:eastAsia'), east_asia)
+
+    def _is_blank_para(p):
+        if (p.text or "").strip():
+            return False
+        if p._p.find('.//w:drawing', _ns) is not None:
+            return False
+        if p._p.find('.//w:sectPr', _ns) is not None:
+            return False
+        return True
+
+    def _ensure_body_page_number_restart():
+        body = doc.element.body
+        sectPr = body.find(_qn('w:sectPr'))
+        if sectPr is None:
+            sectPr = OxmlElement('w:sectPr')
+            body.append(sectPr)
+
+        for old in list(sectPr.findall(_qn('w:footerReference'))):
+            sectPr.remove(old)
+
+        footer_rid = None
+        for rid, rel in doc.part.rels.items():
+            if rel.reltype.endswith('/footer') and rel.target_ref.endswith('footer5.xml'):
+                footer_rid = rid
+                break
+        if footer_rid:
+            footer_ref = OxmlElement('w:footerReference')
+            footer_ref.set(_qn('w:type'), 'default')
+            footer_ref.set(_qn('r:id'), footer_rid)
+            sectPr.insert(0, footer_ref)
+
+        pg_num = sectPr.find(_qn('w:pgNumType'))
+        if pg_num is None:
+            pg_num = OxmlElement('w:pgNumType')
+            sectPr.append(pg_num)
+        if _qn('w:fmt') in pg_num.attrib:
+            del pg_num.attrib[_qn('w:fmt')]
+        pg_num.set(_qn('w:start'), '1')
+
     for p in list(doc.paragraphs):
         t = (p.text or "").strip()
 
@@ -196,9 +302,27 @@ def _post_process(docx_path):
 
         # 图表标注居中
         if (fig_cap_pat.match(t) or tbl_cap_pat.match(t)) and len(t) < 60:
+            if tbl_cap_pat.match(t):
+                try:
+                    p.style = doc.styles["Caption"]
+                except Exception:
+                    pass
             p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+            if tbl_cap_pat.match(t):
+                p.paragraph_format.keep_with_next = True
             for r in p.runs:
                 r.font.size = Pt(10.5)
+                if tbl_cap_pat.match(t):
+                    r.font.name = "黑体"
+                    rPr = r._r.get_or_add_rPr()
+                    rFonts = rPr.find(_qn('w:rFonts'))
+                    if rFonts is None:
+                        rFonts = OxmlElement('w:rFonts')
+                        rPr.insert(0, rFonts)
+                    rFonts.set(_qn('w:ascii'), '黑体')
+                    rFonts.set(_qn('w:hAnsi'), '黑体')
+                    rFonts.set(_qn('w:eastAsia'), '黑体')
+                    rFonts.set(_qn('w:cs'), '黑体')
 
         # 表格占位符
         m = placeholder_pat.match(t)
@@ -206,8 +330,9 @@ def _post_process(docx_path):
             tid = int(m.group(1))
             if tid < len(_pending_tables):
                 _insert_table(doc, p, _pending_tables[tid])
-                for r in p.runs:
-                    r.text = ""
+                parent = p._p.getparent()
+                if parent is not None:
+                    parent.remove(p._p)
 
     # 英文摘要字体 → Times New Roman
     en_abs_started = False
@@ -251,6 +376,47 @@ def _post_process(docx_path):
     to_remove = []
     paras = doc.paragraphs
 
+    # 封面调整：删掉标题后多余的一个空段落，并把第二页开头改成
+    # “中文题名 + 英文题名”的结构，以贴近参考 Word 的扉页排版。
+    if len(paras) > 37:
+        src_title = paras[17]
+        src_en1 = paras[35]
+        dst_title = paras[35]
+        dst_en1 = paras[36]
+        if len(paras) > 19 and (paras[19].text or "").strip() == "":
+            parent = paras[19]._p.getparent()
+            if parent is not None:
+                parent.remove(paras[19]._p)
+        # 第二页首个标题段：中文题名
+        paras = doc.paragraphs
+        if len(paras) > 35:
+            dst_title = paras[35]
+            dst_title._p.getparent().replace(dst_title._p, copy.deepcopy(src_title._p))
+        # 第二页英文题名第一行
+        paras = doc.paragraphs
+        if len(paras) > 36:
+            dst_en1 = paras[36]
+            dst_en1._p.getparent().replace(dst_en1._p, copy.deepcopy(src_en1._p))
+            paras = doc.paragraphs
+
+    meta = load_json("meta.json") or {}
+    en_title_lines = [
+        meta.get("title_en_line1", "").strip(),
+        meta.get("title_en_line2", "").strip(),
+        meta.get("title_en_line3", "").strip(),
+    ]
+    en_title_lines = [line for line in en_title_lines if line]
+    if len(paras) > 39 and en_title_lines:
+        for offset, line in enumerate(en_title_lines[:3], start=37):
+            paras[offset].alignment = WD_ALIGN_PARAGRAPH.CENTER
+            _set_para_text(
+                paras[offset],
+                line,
+                font_name="Times New Roman",
+                size=Pt(26),
+                bold=True,
+            )
+
     # 第一遍：定位关键位置
     keywords_zh_idx = None
     abstract_idx = None
@@ -292,6 +458,60 @@ def _post_process(docx_path):
     if to_remove:
         print(f"  清理: {len(to_remove)} 个空段落")
 
+    # 删除多余的空分页段落，避免摘要和正文之间出现单独空白页。
+    extra_breaks = []
+    for p in doc.paragraphs:
+        t = (p.text or "").strip()
+        if t:
+            continue
+        has_pb = p._p.find('./w:pPr/w:pageBreakBefore', _ns) is not None
+        has_sect = p._p.find('./w:pPr/w:sectPr', _ns) is not None or p._p.find('.//w:sectPr', _ns) is not None
+        has_drawing = p._p.find('.//w:drawing', _ns) is not None
+        if has_pb and not has_sect and not has_drawing and not p.runs:
+            extra_breaks.append(p)
+    for p in extra_breaks:
+        parent = p._p.getparent()
+        if parent is not None:
+            parent.remove(p._p)
+    if extra_breaks:
+        print(f"  清理: {len(extra_breaks)} 个空分页段落")
+
+    # 英文摘要末尾与 Key words 之间只保留一个空段，避免关键词被压到页底。
+    paras = doc.paragraphs
+    key_en_idx = None
+    for i, p in enumerate(paras):
+        if (p.text or "").strip().startswith("Key words"):
+            key_en_idx = i
+            break
+    if key_en_idx is not None:
+        blanks = []
+        j = key_en_idx - 1
+        while j >= 0 and _is_blank_para(paras[j]):
+            blanks.append(paras[j])
+            j -= 1
+        for p in blanks[1:]:
+            parent = p._p.getparent()
+            if parent is not None:
+                parent.remove(p._p)
+
+    # 删除结论、致谢、参考文献等分页标题前的模板空段落，避免生成只剩页码的空白页。
+    for p in list(doc.paragraphs):
+        t = (p.text or "").strip()
+        style = p.style.name if p.style else ""
+        if style == "Heading 1" and t in ("结 论", "致 谢", "参考文献"):
+            prev = p._p.getprevious()
+            while prev is not None:
+                texts = [tx.text for tx in prev.findall('.//w:t', _ns) if tx.text]
+                has_drawing = prev.find('.//w:drawing', _ns) is not None
+                if ''.join(texts).strip() or has_drawing:
+                    break
+                old = prev
+                prev = prev.getprevious()
+                old.getparent().remove(old)
+
+    _normalize_citation_marks(doc)
+    _ensure_body_page_number_restart()
+
     # 确保目录(TOC sdt)前有分页符
     body = doc.element.body
     _wns = 'http://schemas.openxmlformats.org/wordprocessingml/2006/main'
@@ -322,6 +542,105 @@ def _post_process(docx_path):
 
     doc.save(docx_path)
     print(f"  后处理: {len(_pending_tables)} 个表格")
+    _refresh_toc_with_libreoffice(docx_path)
+
+
+def _refresh_toc_with_libreoffice(docx_path):
+    soffice = shutil.which("soffice") or "/Applications/LibreOffice.app/Contents/MacOS/soffice"
+    lo_python_candidates = [
+        "/Applications/LibreOffice.app/Contents/Resources/python",
+        shutil.which("python3"),
+    ]
+    lo_python = next((p for p in lo_python_candidates if p and os.path.exists(p)), None)
+    if not soffice or not os.path.exists(soffice) or not lo_python:
+        print("  目录已生成，但未找到 LibreOffice 字段刷新环境")
+        return False
+
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        s.bind(("127.0.0.1", 0))
+        port = s.getsockname()[1]
+
+    profile = tempfile.mkdtemp(prefix="lo_toc_profile_")
+    proc = subprocess.Popen(
+        [
+            soffice,
+            f"-env:UserInstallation=file://{profile}",
+            "--headless",
+            "--invisible",
+            "--norestore",
+            f"--accept=socket,host=127.0.0.1,port={port};urp;StarOffice.ComponentContext",
+        ],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+    )
+
+    try:
+        time.sleep(1.5)
+        script = f"""
+import time
+import uno
+from com.sun.star.beans import PropertyValue
+from com.sun.star.connection import NoConnectException
+
+def prop(name, value):
+    p = PropertyValue()
+    p.Name = name
+    p.Value = value
+    return p
+
+local_ctx = uno.getComponentContext()
+resolver = local_ctx.ServiceManager.createInstanceWithContext(
+    'com.sun.star.bridge.UnoUrlResolver', local_ctx
+)
+for _ in range(40):
+    try:
+        ctx = resolver.resolve(
+            'uno:socket,host=127.0.0.1,port={port};urp;StarOffice.ComponentContext'
+        )
+        break
+    except NoConnectException:
+        time.sleep(0.5)
+else:
+    raise RuntimeError('LibreOffice UNO connection failed')
+
+smgr = ctx.ServiceManager
+desktop = smgr.createInstanceWithContext('com.sun.star.frame.Desktop', ctx)
+url = uno.systemPathToFileUrl({os.path.abspath(docx_path)!r})
+doc = desktop.loadComponentFromURL(url, '_blank', 0, (
+    prop('Hidden', True),
+    prop('ReadOnly', False),
+))
+indexes = doc.getDocumentIndexes()
+for i in range(indexes.getCount()):
+    indexes.getByIndex(i).update()
+doc.getTextFields().refresh()
+doc.refresh()
+doc.store()
+doc.close(True)
+"""
+        run = subprocess.run(
+            [lo_python, "-c", script],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            timeout=120,
+            check=False,
+        )
+        if run.returncode != 0:
+            print("  目录已生成，但 LibreOffice 刷新失败")
+            if run.stderr.strip():
+                print(run.stderr.strip())
+            return False
+        print("  目录已通过 LibreOffice 刷新")
+        return True
+    finally:
+        proc.terminate()
+        try:
+            proc.wait(timeout=5)
+        except subprocess.TimeoutExpired:
+            proc.kill()
+        shutil.rmtree(profile, ignore_errors=True)
 
 
 def _insert_table(doc, after_para, tbl_data):
@@ -335,18 +654,23 @@ def _insert_table(doc, after_para, tbl_data):
 
     ncols = len(headers)
     all_rows = [headers] + rows
+    is_db_table = headers == ["列名", "数据类型", "长度", "约束"]
 
     tbl = OxmlElement('w:tbl')
     tblPr = OxmlElement('w:tblPr')
+    tblStyle = OxmlElement('w:tblStyle')
+    tblStyle.set(qn('w:val'), '11')
+    tblPr.append(tblStyle)
     jc = OxmlElement('w:jc')
     jc.set(qn('w:val'), 'center')
     tblPr.append(jc)
+    total_width = 8742 if is_db_table else 9000
     tblW = OxmlElement('w:tblW')
-    tblW.set(qn('w:w'), '5000')
-    tblW.set(qn('w:type'), 'pct')
+    tblW.set(qn('w:w'), str(total_width))
+    tblW.set(qn('w:type'), 'dxa')
     tblPr.append(tblW)
     tblLayout = OxmlElement('w:tblLayout')
-    tblLayout.set(qn('w:type'), 'autofit')
+    tblLayout.set(qn('w:type'), 'fixed')
     tblPr.append(tblLayout)
     borders = OxmlElement('w:tblBorders')
     for edge, sz in [('top', '12'), ('bottom', '12')]:
@@ -356,7 +680,14 @@ def _insert_table(doc, after_para, tbl_data):
         el.set(qn('w:space'), '0')
         el.set(qn('w:color'), '000000')
         borders.append(el)
-    for edge in ['left', 'right', 'insideH', 'insideV']:
+    for edge in ['insideH', 'insideV']:
+        el = OxmlElement(f'w:{edge}')
+        el.set(qn('w:val'), 'single')
+        el.set(qn('w:sz'), '4')
+        el.set(qn('w:space'), '0')
+        el.set(qn('w:color'), '000000')
+        borders.append(el)
+    for edge in ['left', 'right']:
         el = OxmlElement(f'w:{edge}')
         el.set(qn('w:val'), 'none')
         el.set(qn('w:sz'), '0')
@@ -365,20 +696,22 @@ def _insert_table(doc, after_para, tbl_data):
     tblPr.append(borders)
     tbl.append(tblPr)
 
-    total_width = 9000
-    col_max_len = [0] * ncols
-    for row_data in all_rows:
-        for ci in range(ncols):
-            cell_text = str(row_data[ci]) if ci < len(row_data) else ""
-            w = sum(2 if ord(c) > 127 else 1 for c in cell_text)
-            col_max_len[ci] = max(col_max_len[ci], w)
-    min_w = 1200
-    total_len = sum(max(l, 4) for l in col_max_len) or 1
-    col_widths = [max(min_w, int(total_width * max(l, 4) / total_len))
-                  for l in col_max_len]
-    diff = total_width - sum(col_widths)
-    widest = col_widths.index(max(col_widths))
-    col_widths[widest] += diff
+    if is_db_table:
+        col_widths = [3200, 2100, 1300, 2142]
+    else:
+        col_max_len = [0] * ncols
+        for row_data in all_rows:
+            for ci in range(ncols):
+                cell_text = str(row_data[ci]) if ci < len(row_data) else ""
+                w = sum(2 if ord(c) > 127 else 1 for c in cell_text)
+                col_max_len[ci] = max(col_max_len[ci], w)
+        min_w = 1200
+        total_len = sum(max(l, 4) for l in col_max_len) or 1
+        col_widths = [max(min_w, int(total_width * max(l, 4) / total_len))
+                      for l in col_max_len]
+        diff = total_width - sum(col_widths)
+        widest = col_widths.index(max(col_widths))
+        col_widths[widest] += diff
 
     tblGrid = OxmlElement('w:tblGrid')
     for w in col_widths:
@@ -389,6 +722,18 @@ def _insert_table(doc, after_para, tbl_data):
 
     for ri, row_data in enumerate(all_rows):
         tr = OxmlElement('w:tr')
+        trPr = OxmlElement('w:trPr')
+        if is_db_table:
+            trHeight = OxmlElement('w:trHeight')
+            trHeight.set(qn('w:val'), '425')
+            trHeight.set(qn('w:hRule'), 'exact')
+            trPr.append(trHeight)
+        if ri == 0:
+            tblHeader = OxmlElement('w:tblHeader')
+            tblHeader.set(qn('w:val'), 'true')
+            trPr.append(tblHeader)
+        if len(trPr):
+            tr.append(trPr)
         for ci in range(ncols):
             tc = OxmlElement('w:tc')
             tcPr = OxmlElement('w:tcPr')
@@ -399,15 +744,6 @@ def _insert_table(doc, after_para, tbl_data):
             vAlign = OxmlElement('w:vAlign')
             vAlign.set(qn('w:val'), 'center')
             tcPr.append(vAlign)
-            if ri == 0:
-                tcBorders = OxmlElement('w:tcBorders')
-                btm = OxmlElement('w:bottom')
-                btm.set(qn('w:val'), 'single')
-                btm.set(qn('w:sz'), '6')
-                btm.set(qn('w:space'), '0')
-                btm.set(qn('w:color'), '000000')
-                tcBorders.append(btm)
-                tcPr.append(tcBorders)
             tc.append(tcPr)
             p = OxmlElement('w:p')
             pPr = OxmlElement('w:pPr')
@@ -433,12 +769,12 @@ def _insert_table(doc, after_para, tbl_data):
             rFonts.set(qn('w:hAnsi'), 'Times New Roman')
             rPr.append(rFonts)
             sz = OxmlElement('w:sz')
-            sz.set(qn('w:val'), '21')
+            sz.set(qn('w:val'), '24')
             rPr.append(sz)
             szCs = OxmlElement('w:szCs')
-            szCs.set(qn('w:val'), '21')
+            szCs.set(qn('w:val'), '24')
             rPr.append(szCs)
-            if ri == 0:
+            if ri == 0 and not is_db_table:
                 b = OxmlElement('w:b')
                 rPr.append(b)
             r.append(rPr)
