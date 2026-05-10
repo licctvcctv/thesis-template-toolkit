@@ -1,0 +1,135 @@
+[
+  {
+    "id": "system_architecture",
+    "path": "images/imagegen/diagram_system_architecture.png",
+    "caption": "图3.1 无人机精准投放系统总体架构",
+    "width_inches": 5.9,
+    "source_type": "imagegen"
+  },
+  {
+    "id": "parameter_flow",
+    "path": "images/imagegen/diagram_parameter_optimization_flow.png",
+    "caption": "图3.4 投放参数优化流程图",
+    "width_inches": 5.2,
+    "source_type": "imagegen"
+  },
+  {
+    "id": "release_geometry",
+    "path": "images/imagegen/diagram_release_geometry.png",
+    "caption": "图3.2 无人机投放点预测几何关系",
+    "width_inches": 5.7,
+    "source_type": "imagegen"
+  },
+  {
+    "id": "closed_loop_control",
+    "path": "images/imagegen/diagram_closed_loop_control.png",
+    "caption": "图3.3 无人机精准投放闭环控制流程",
+    "width_inches": 5.7,
+    "source_type": "imagegen"
+  },
+  {
+    "id": "sim_trajectory",
+    "path": "images/simulation/sim_trajectory_wind.png",
+    "caption": "图4.1 风场条件下无人机投放轨迹仿真",
+    "width_inches": 5.7,
+    "source_type": "python_simulation"
+  },
+  {
+    "id": "sim_height_error",
+    "path": "images/simulation/sim_height_error.png",
+    "caption": "图4.2 不同投放高度下落点误差变化",
+    "width_inches": 5.5,
+    "source_type": "python_simulation"
+  },
+  {
+    "id": "sim_wind_error",
+    "path": "images/simulation/sim_wind_error.png",
+    "caption": "图4.3 风速扰动对落点误差的影响",
+    "width_inches": 5.5,
+    "source_type": "python_simulation"
+  },
+  {
+    "id": "sim_drop_scatter",
+    "path": "images/simulation/sim_drop_scatter.png",
+    "caption": "图4.4 参数优化前后落点分布对比",
+    "width_inches": 5.5,
+    "source_type": "python_simulation"
+  },
+  {
+    "id": "sim_multi_scenario",
+    "path": "images/simulation/sim_multi_scenario.png",
+    "caption": "图4.5 多场景投放精度对比",
+    "width_inches": 5.5,
+    "source_type": "python_simulation"
+  },
+  {
+    "id": "sim_speed_error",
+    "path": "images/simulation/sim_speed_error.png",
+    "caption": "图4.6 飞行速度对落点误差的影响",
+    "width_inches": 5.5,
+    "source_type": "python_simulation"
+  },
+  {
+    "id": "sim_release_delay",
+    "path": "images/simulation/sim_release_delay.png",
+    "caption": "图4.7 执行延迟对投放精度的影响",
+    "width_inches": 5.5,
+    "source_type": "python_simulation"
+  },
+  {
+    "id": "sim_compensation_convergence",
+    "path": "images/simulation/sim_compensation_convergence.png",
+    "caption": "图4.8 补偿系数迭代收敛过程",
+    "width_inches": 5.5,
+    "source_type": "python_simulation"
+  },
+  {
+    "id": "sim_obstacle_scenario",
+    "path": "images/simulation/sim_obstacle_scenario.png",
+    "caption": "图4.9 复杂环境下投放航迹与障碍区域",
+    "width_inches": 5.5,
+    "source_type": "python_simulation"
+  },
+  {
+    "id": "sim_target_feedback",
+    "path": "images/simulation/sim_target_feedback.png",
+    "caption": "图4.10 目标覆盖状态反馈",
+    "width_inches": 5.5,
+    "source_type": "python_simulation"
+  },
+  {
+    "id": "sim_collision_feedback",
+    "path": "images/simulation/sim_collision_feedback.png",
+    "caption": "图4.11 障碍物安全距离反馈",
+    "width_inches": 5.5,
+    "source_type": "python_simulation"
+  },
+  {
+    "id": "sim_error_cdf",
+    "path": "images/simulation/sim_error_cdf.png",
+    "caption": "图4.12 落点误差累计分布函数",
+    "width_inches": 5.5,
+    "source_type": "python_simulation"
+  },
+  {
+    "id": "sim_height_wind_heatmap",
+    "path": "images/simulation/sim_height_wind_heatmap.png",
+    "caption": "图4.13 高度-风速组合下优化后平均误差矩阵",
+    "width_inches": 5.5,
+    "source_type": "python_simulation"
+  },
+  {
+    "id": "sim_release_window",
+    "path": "images/simulation/sim_release_window.png",
+    "caption": "图4.14 释放时刻偏差对落点误差的影响",
+    "width_inches": 5.5,
+    "source_type": "python_simulation"
+  },
+  {
+    "id": "sim_noise_robustness",
+    "path": "images/simulation/sim_noise_robustness.png",
+    "caption": "图4.15 随机扰动强度下的鲁棒性对比",
+    "width_inches": 5.5,
+    "source_type": "python_simulation"
+  }
+]

@@ -1,0 +1,43 @@
+{
+  "title_zh": "无人机精准投放技术",
+  "title_en": "Research on Precision Delivery Technology for Unmanned Aerial Vehicles",
+  "college": "电子信息学院",
+  "major": "通信工程",
+  "student_name": "游忠锦",
+  "student_id": "2022141450010",
+  "grade": "2022",
+  "advisor": "杨鑫松",
+  "year_cn": "二〇二六",
+  "month_day_cn": "五月一日",
+  "date_full_cn": "二〇二六年五月一日",
+  "abstract_zh": "无人机精准投放技术是无人机在农业植保、应急救援、末端物流和特种作业等场景中实现任务闭环的重要支撑。针对复杂环境下投放点预测不准、风速扰动影响显著、投放高度与飞行速度耦合关系难以量化等问题，本文以开题报告提出的复杂环境精准投放需求为基础，构建由感知层、决策层和执行层组成的无人机精准投放系统框架。论文首先分析无人机精准投放的研究背景、国内外研究现状与关键技术瓶颈；其次建立载荷下落时间、水平漂移和风偏补偿模型，给出投放点预测与参数优化方法；随后从传感器配置、通信链路、投放执行机构和闭环修正流程等方面完成系统方案设计；最后采用 Python 搭建数值仿真模型，分别分析投放高度、飞行速度、风速扰动和参数优化策略对落点误差的影响。仿真结果表明，在加入风偏预测与释放点补偿后，系统在典型复杂环境中的平均落点误差明显降低，满足开题报告中提出的三米级精度目标，为后续开展实物平台验证与多机协同投放研究提供了可复用的模型基础。",
+  "keywords_zh": [
+    "无人机",
+    "精准投放",
+    "风偏补偿",
+    "参数优化",
+    "Python仿真"
+  ],
+  "abstract_en": "Precision delivery is a key technology that enables unmanned aerial vehicles (UAVs) to complete closed-loop missions in agricultural plant protection, emergency rescue, last-mile logistics, and special operations. Focusing on the problems of inaccurate release-point prediction, significant wind disturbance, and the coupled influence of flight height and velocity, this thesis develops a UAV precision delivery framework based on the research plan. The framework consists of a perception layer, a decision layer, and an execution layer. The thesis first reviews the background, research status, and major technical bottlenecks of UAV precision delivery. It then establishes models for payload falling time, horizontal drift, wind compensation, release-point prediction, and parameter optimization. Based on these models, the system scheme is designed from the perspectives of sensor configuration, communication link, delivery actuator, and closed-loop correction. Finally, a Python-based numerical simulation platform is built to analyze the influence of release height, flight velocity, wind speed, and optimization strategy on landing error. The simulation results show that the proposed wind-drift prediction and release-point compensation method can significantly reduce the mean landing error in typical complex environments and achieve the three-meter-level accuracy target proposed in the research plan. The work provides a reusable modeling basis for subsequent physical platform validation and cooperative multi-UAV delivery research.",
+  "keywords_en": [
+    "UAV",
+    "precision delivery",
+    "wind-drift compensation",
+    "parameter optimization",
+    "Python simulation"
+  ],
+  "acknowledgement": [
+    "大学四年的学习生活即将结束，在论文完成之际，谨向在毕业设计过程中给予帮助和支持的老师、同学和家人表示诚挚感谢。",
+    "首先感谢指导教师杨鑫松老师在论文选题、研究思路、技术路线和论文撰写等方面给予的指导。老师严谨的治学态度和认真负责的工作方式，使我在查阅文献、建立模型、分析仿真结果和完善论文结构的过程中受益良多。",
+    "其次感谢电子信息学院各位任课教师在本科阶段给予的培养。通信工程专业课程为本文开展无人机通信、传感、控制和仿真分析提供了重要基础。",
+    "最后感谢家人和同学在学习生活中的理解、鼓励与帮助。由于本人水平有限，论文仍存在不足之处，恳请各位老师批评指正。"
+  ],
+  "ai_statement": {
+    "used": true,
+    "tools": [
+      "ChatGPT/Codex"
+    ],
+    "purpose": "辅助梳理论文结构、润色语言、生成可复现实验脚本与格式化文档",
+    "human_review": "论文中的研究主题、开题报告材料、仿真模型设定和最终内容均经过人工核对与修改。"
+  }
+}

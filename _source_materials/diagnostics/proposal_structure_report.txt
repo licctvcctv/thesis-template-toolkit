@@ -1,0 +1,43 @@
+Document: /Users/a136/vs/45425/5-9/副本无人机精准投放技术开题报告(1.22提交)— 游忠锦20221141450010.docx
+Sections: 2
+Body blocks: paragraphs and tables in source order
+[body]
+  P000 style='Normal' align=None runs=1 num=None text='表3'
+  P001 style='Normal' align='center' runs=1 num=None text=''
+  P002 style='Normal' align='center' runs=0 num=None text=''
+  P003 style='Normal' align='center' runs=1 num=None text='本科毕业论文（设计）开题报告'
+  P004 style='Normal' align=None runs=0 num=None text=''
+  P005 style='Normal' align=None runs=1 num=None text=''
+  P006 style='Normal' align=None runs=0 num=None text=''
+  P007 style='Normal' align=None runs=0 num=None text=''
+  P008 style='Normal' align=None runs=0 num=None text=''
+  P009 style='Normal' align=None runs=0 num=None text=''
+  P010 style='Normal' align=None runs=0 num=None text=''
+  P011 style='Normal' align=None runs=0 num=None text=''
+  P012 style='Normal' align=None runs=2 num=None text='题 目 无人机精准投放技术'
+  P013 style='Normal' align=None runs=4 num=None text='学 院 电子信息学院'
+  P014 style='Normal' align=None runs=9 num=None text='专 业 通信工程'
+  P015 style='Normal' align=None runs=10 num=None text='学生姓名 游忠锦'
+  P016 style='Normal' align=None runs=10 num=None text='学 号 2022141450010 年级 2022'
+  P017 style='Normal' align=None runs=4 num=None text='指导教师 杨鑫松'
+  P018 style='Normal' align=None runs=0 num=None text=''
+  P019 style='Normal' align=None runs=0 num=None text=''
+  P020 style='Normal' align=None runs=0 num=None text=''
+  P021 style='Normal' align='center' runs=1 num=None text='教务处制表'
+  P022 style='Normal' align='center' runs=5 num=None text='二〇二六年五月一日'
+  T023 rows=6 cols=2 first_cell='选 题 意 义'
+  P024 style='Normal' align='center' runs=0 num=None text=''
+  T025 rows=9 cols=6 first_cell='开 题 报 告 会 议 纪 要'
+  P026 style='Normal' align=None runs=0 num=None text=''
+  P027 style='Normal' align=None runs=0 num=None text=''
+[section[0].header]
+[section[0].footer]
+[section[1].header]
+[section[1].footer]
+[xml markers]
+  w:txbxContent: 0
+  w:fldSimple: 0
+  w:instrText: 20
+  w:numPr: 58
+  w:bookmarkStart: 12
+  w:drawing: 5

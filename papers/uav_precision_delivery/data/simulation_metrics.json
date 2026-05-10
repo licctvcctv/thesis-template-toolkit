@@ -1,0 +1,31 @@
+{
+  "seed": 20260509,
+  "model": "2D projectile drop with horizontal UAV velocity, mean wind drift, and random disturbance",
+  "target_accuracy_m": 3.0,
+  "scenario_results": [
+    {
+      "scenario": "低空低风",
+      "before_m": 2.42,
+      "after_m": 0.94,
+      "improvement": "61.2%"
+    },
+    {
+      "scenario": "中空中风",
+      "before_m": 5.86,
+      "after_m": 1.68,
+      "improvement": "71.3%"
+    },
+    {
+      "scenario": "高空侧风",
+      "before_m": 9.64,
+      "after_m": 2.57,
+      "improvement": "73.3%"
+    },
+    {
+      "scenario": "速度变化",
+      "before_m": 6.91,
+      "after_m": 2.15,
+      "improvement": "68.9%"
+    }
+  ]
+}
