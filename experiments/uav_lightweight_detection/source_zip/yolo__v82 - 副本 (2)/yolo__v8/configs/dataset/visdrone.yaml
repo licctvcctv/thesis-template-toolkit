@@ -1,0 +1,23 @@
+# VisDrone2019-DET Dataset Configuration
+# https://github.com/VisDrone/VisDrone-Dataset
+
+# Resolved by Ultralytics as: settings["datasets_dir"] / path
+# With datasets_dir = E:\Projects\ocr_label\datasets  →  E:\Projects\ocr_label\datasets\VisDrone
+path: VisDrone
+train: images/train
+val:   images/val
+test:  images/test
+
+# Classes (10 categories, VisDrone category 1-10 mapped to 0-9)
+nc: 10
+names:
+  0: pedestrian
+  1: people
+  2: bicycle
+  3: car
+  4: van
+  5: truck
+  6: tricycle
+  7: awning-tricycle
+  8: bus
+  9: motor

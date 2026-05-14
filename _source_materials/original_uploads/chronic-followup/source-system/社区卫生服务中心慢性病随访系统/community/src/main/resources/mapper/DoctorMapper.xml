@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.heath.community.mapper.DoctorMapper">
+
+    <resultMap id="DoctorDTOResultMap" type="com.heath.community.dto.DoctorDTO">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="username" property="username"/>
+        <result column="name" property="name"/>
+        <result column="employee_id" property="employeeId"/>
+        <result column="phone" property="phone"/>
+        <result column="email" property="email"/>
+        <result column="department" property="department"/>
+        <result column="title" property="title"/>
+        <result column="specialty" property="specialty"/>
+        <result column="status" property="status"/>
+    </resultMap>
+
+    <resultMap id="DoctorResultMap" type="com.heath.community.entity.Doctor">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="employee_id" property="employeeId"/>
+        <result column="phone" property="phone"/>
+        <result column="email" property="email"/>
+        <result column="department" property="department"/>
+        <result column="title" property="title"/>
+        <result column="specialty" property="specialty"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <select id="findPage" resultMap="DoctorDTOResultMap">
+        SELECT d.id, d.user_id, u.username, u.name, d.employee_id, d.phone, d.email,
+               d.department, d.title, d.specialty, u.status
+        FROM doctor d
+        LEFT JOIN user u ON d.user_id = u.id
+        WHERE u.role = 'doctor'
+        <if test="name != null and name != ''">
+            AND u.name LIKE CONCAT('%', #{name}, '%')
+        </if>
+        <if test="employeeId != null and employeeId != ''">
+            AND d.employee_id LIKE CONCAT('%', #{employeeId}, '%')
+        </if>
+        <if test="department != null and department != ''">
+            AND d.department = #{department}
+        </if>
+        ORDER BY d.create_time DESC
+        LIMIT #{offset}, #{limit}
+    </select>
+
+    <select id="count" resultType="Long">
+        SELECT COUNT(*)
+        FROM doctor d
+        LEFT JOIN user u ON d.user_id = u.id
+        WHERE u.role = 'doctor'
+        <if test="name != null and name != ''">
+            AND u.name LIKE CONCAT('%', #{name}, '%')
+        </if>
+        <if test="employeeId != null and employeeId != ''">
+            AND d.employee_id LIKE CONCAT('%', #{employeeId}, '%')
+        </if>
+        <if test="department != null and department != ''">
+            AND d.department = #{department}
+        </if>
+    </select>
+
+    <select id="findById" resultMap="DoctorDTOResultMap">
+        SELECT d.id, d.user_id, u.username, u.name, d.employee_id, d.phone, d.email,
+               d.department, d.title, d.specialty, u.status
+        FROM doctor d
+        LEFT JOIN user u ON d.user_id = u.id
+        WHERE d.id = #{id}
+    </select>
+
+    <select id="findByUserId" resultMap="DoctorResultMap">
+        SELECT * FROM doctor WHERE user_id = #{userId}
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO doctor (user_id, employee_id, phone, email, department, title, specialty)
+        VALUES (#{userId}, #{employeeId}, #{phone}, #{email}, #{department}, #{title}, #{specialty})
+    </insert>
+
+    <update id="update">
+        UPDATE doctor
+        <set>
+            <if test="employeeId != null">employee_id = #{employeeId},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="department != null">department = #{department},</if>
+            <if test="title != null">title = #{title},</if>
+            <if test="specialty != null">specialty = #{specialty},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM doctor WHERE id = #{id}
+    </delete>
+
+</mapper>

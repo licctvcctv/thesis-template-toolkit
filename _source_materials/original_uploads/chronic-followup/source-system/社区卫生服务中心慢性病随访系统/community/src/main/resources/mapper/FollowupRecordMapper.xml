@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.heath.community.mapper.FollowupRecordMapper">
+
+    <resultMap id="FollowupRecordDTOResultMap" type="com.heath.community.dto.FollowupRecordDTO">
+        <id column="id" property="id"/>
+        <result column="task_id" property="taskId"/>
+        <result column="task_no" property="taskNo"/>
+        <result column="patient_id" property="patientId"/>
+        <result column="patient_name" property="patientName"/>
+        <result column="doctor_id" property="doctorId"/>
+        <result column="doctor_name" property="doctorName"/>
+        <result column="followup_date" property="followupDate"/>
+        <result column="followup_type" property="followupType"/>
+        <result column="symptoms" property="symptoms"/>
+        <result column="blood_pressure" property="bloodPressure"/>
+        <result column="blood_sugar" property="bloodSugar"/>
+        <result column="weight" property="weight"/>
+        <result column="medication_compliance" property="medicationCompliance"/>
+        <result column="adverse_reactions" property="adverseReactions"/>
+        <result column="lifestyle_guidance" property="lifestyleGuidance"/>
+        <result column="next_followup_date" property="nextFollowupDate"/>
+        <result column="followup_result" property="followupResult"/>
+        <result column="remarks" property="remarks"/>
+    </resultMap>
+
+    <select id="findPage" resultMap="FollowupRecordDTOResultMap">
+        SELECT fr.id, fr.task_id, ft.task_no, fr.patient_id, p.name AS patient_name,
+               fr.doctor_id, u.name AS doctor_name, fr.followup_date, fr.followup_type,
+               fr.symptoms, fr.blood_pressure, fr.blood_sugar, fr.weight,
+               fr.medication_compliance, fr.adverse_reactions, fr.lifestyle_guidance,
+               fr.next_followup_date, fr.followup_result, fr.remarks
+        FROM followup_record fr
+        LEFT JOIN followup_task ft ON fr.task_id = ft.id
+        LEFT JOIN patient p ON fr.patient_id = p.id
+        LEFT JOIN doctor d ON fr.doctor_id = d.id
+        LEFT JOIN user u ON d.user_id = u.id
+        <where>
+            <if test="patientId != null">
+                AND fr.patient_id = #{patientId}
+            </if>
+            <if test="doctorId != null">
+                AND fr.doctor_id = #{doctorId}
+            </if>
+            <if test="taskId != null">
+                AND fr.task_id = #{taskId}
+            </if>
+            <if test="startDate != null">
+                AND fr.followup_date >= #{startDate}
+            </if>
+            <if test="endDate != null">
+                AND fr.followup_date &lt;= #{endDate}
+            </if>
+        </where>
+        ORDER BY fr.followup_date DESC, fr.create_time DESC
+        LIMIT #{offset}, #{limit}
+    </select>
+
+    <select id="count" resultType="Long">
+        SELECT COUNT(*)
+        FROM followup_record fr
+        <where>
+            <if test="patientId != null">
+                AND fr.patient_id = #{patientId}
+            </if>
+            <if test="doctorId != null">
+                AND fr.doctor_id = #{doctorId}
+            </if>
+            <if test="taskId != null">
+                AND fr.task_id = #{taskId}
+            </if>
+            <if test="startDate != null">
+                AND fr.followup_date >= #{startDate}
+            </if>
+            <if test="endDate != null">
+                AND fr.followup_date &lt;= #{endDate}
+            </if>
+        </where>
+    </select>
+
+    <select id="findById" resultMap="FollowupRecordDTOResultMap">
+        SELECT fr.id, fr.task_id, ft.task_no, fr.patient_id, p.name AS patient_name,
+               fr.doctor_id, u.name AS doctor_name, fr.followup_date, fr.followup_type,
+               fr.symptoms, fr.blood_pressure, fr.blood_sugar, fr.weight,
+               fr.medication_compliance, fr.adverse_reactions, fr.lifestyle_guidance,
+               fr.next_followup_date, fr.followup_result, fr.remarks
+        FROM followup_record fr
+        LEFT JOIN followup_task ft ON fr.task_id = ft.id
+        LEFT JOIN patient p ON fr.patient_id = p.id
+        LEFT JOIN doctor d ON fr.doctor_id = d.id
+        LEFT JOIN user u ON d.user_id = u.id
+        WHERE fr.id = #{id}
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO followup_record (task_id, patient_id, doctor_id, followup_date, followup_type,
+                                    symptoms, blood_pressure, blood_sugar, weight, medication_compliance,
+                                    adverse_reactions, lifestyle_guidance, next_followup_date, followup_result, remarks)
+        VALUES (#{taskId}, #{patientId}, #{doctorId}, #{followupDate}, #{followupType},
+                #{symptoms}, #{bloodPressure}, #{bloodSugar}, #{weight}, #{medicationCompliance},
+                #{adverseReactions}, #{lifestyleGuidance}, #{nextFollowupDate}, #{followupResult}, #{remarks})
+    </insert>
+
+    <update id="update">
+        UPDATE followup_record
+        <set>
+            <if test="taskId != null">task_id = #{taskId},</if>
+            <if test="patientId != null">patient_id = #{patientId},</if>
+            <if test="doctorId != null">doctor_id = #{doctorId},</if>
+            <if test="followupDate != null">followup_date = #{followupDate},</if>
+            <if test="followupType != null">followup_type = #{followupType},</if>
+            <if test="symptoms != null">symptoms = #{symptoms},</if>
+            <if test="bloodPressure != null">blood_pressure = #{bloodPressure},</if>
+            <if test="bloodSugar != null">blood_sugar = #{bloodSugar},</if>
+            <if test="weight != null">weight = #{weight},</if>
+            <if test="medicationCompliance != null">medication_compliance = #{medicationCompliance},</if>
+            <if test="adverseReactions != null">adverse_reactions = #{adverseReactions},</if>
+            <if test="lifestyleGuidance != null">lifestyle_guidance = #{lifestyleGuidance},</if>
+            <if test="nextFollowupDate != null">next_followup_date = #{nextFollowupDate},</if>
+            <if test="followupResult != null">followup_result = #{followupResult},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM followup_record WHERE id = #{id}
+    </delete>
+
+</mapper>

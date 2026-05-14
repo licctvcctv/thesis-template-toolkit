@@ -1,0 +1,240 @@
+{
+  "app": {
+    "title": "期货智能体模拟系统",
+    "subtitle": "智能体记忆 · 决策 · 策略演化",
+    "connecting": "连接中...",
+    "worldEditor": "世界编辑器"
+  },
+  "connection": {
+    "live": "在线",
+    "reconnecting": "重新连接中...",
+    "error": "连接错误"
+  },
+  "help": {
+    "title": "键盘快捷键",
+    "subtitle": "按 ? 切换显示。悬停查看智能体预览；点击打开详情。",
+    "footer": "智能体世界 · 期货策略会话可视化",
+    "closeHint": "按 Esc 或 ? 关闭",
+    "sections": {
+      "global": "全局",
+      "agentPanel": "智能体面板",
+      "editor": "编辑器"
+    },
+    "shortcuts": {
+      "showHelp": "显示/隐藏帮助",
+      "focusAgent": "聚焦第 N 个智能体",
+      "closePanel": "关闭会话面板",
+      "closePanels": "关闭面板和模态框",
+      "toggleNames": "切换名称标签",
+      "toggleMinimal": "切换最小化精灵预览",
+      "toggleEditor": "切换世界编辑器（需要资源包）",
+      "scrubTimeline": "拖动时间轴（底部栏）",
+      "playPause": "播放/暂停时间轴",
+      "clickSprite": "打开会话详情",
+      "openTranscript": "打开对话查看器",
+      "switchLive": "切换到实时 PTY",
+      "focusTerminal": "将主机终端置于前台",
+      "undo": "撤销",
+      "redo": "重做",
+      "save": "保存布局",
+      "remove": "删除选中项",
+      "nudge": "微调 ±1 格",
+      "flip": "水平/垂直翻转"
+    }
+  },
+  "roster": {
+    "title": "智能体",
+    "tradingTitle": "交易智能体",
+    "count": "{count} 个智能体",
+    "empty": "暂无活跃智能体"
+  },
+  "session": {
+    "status": {
+      "working": "工作中",
+      "waiting": "等待中",
+      "errored": "出错",
+      "idle": "空闲",
+      "idleStale": "过期",
+      "finished": "已完成"
+    },
+    "labels": {
+      "repo": "仓库",
+      "branch": "分支",
+      "model": "模型",
+      "tool": "工具",
+      "pid": "进程ID",
+      "noLongerActive": "会话 {id}… 已不再活跃。"
+    },
+    "cost": {
+      "title": "会话成本",
+      "input": "输入",
+      "output": "输出",
+      "cacheWrite": "缓存写",
+      "cacheRead": "缓存读",
+      "messages": "消息"
+    },
+    "flow": {
+      "title": "流量 / 60秒",
+      "peak": "峰值 {rate}"
+    },
+    "actions": {
+      "viewConversation": "查看对话",
+      "noConversation": "暂无对话",
+      "focusTerminal": "聚焦终端",
+      "close": "关闭",
+      "noTranscript": "暂无对话记录"
+    },
+    "footer": "Esc · 关闭 · T 对话记录 · L 实时"
+  },
+  "trading": {
+    "decision": "决策",
+    "memory": "检索记忆",
+    "strategy": "策略补丁",
+    "noDecision": "暂无决策。",
+    "confidence": "置信度 {value}%",
+    "pnl": "盈亏 {value}",
+    "drawdown": "回撤 {value}",
+    "promptVersion": "提示词版本 v{version}",
+    "actions": {
+      "BUY": "买入",
+      "SELL": "卖出",
+      "HOLD": "观望"
+    },
+    "source": {
+      "llm": "真实模型 · {model}",
+      "pending": "等待真实模型",
+      "simulated": "模拟回退"
+    }
+  },
+  "tradingHud": {
+    "aria": "期货智能体模拟系统简报",
+    "scoreAria": "策略得分面板",
+    "reportAria": "预测结果统计分析",
+    "flowAria": "智能体决策流程",
+    "unknown": "未知阶段",
+    "trainingSlice": "训练切片：{regime} · 按交易日做长线决策",
+    "marketBoard": "行情面板",
+    "newsMemory": "进入记忆库的资讯",
+    "scoreTitle": "策略得分",
+    "scoreSubtitle": "多智能体累计评分 · 训练修正 · 固定测试验证",
+    "scoreMethod": "评分口径",
+    "trainingWindow": "训练段",
+    "testWindow": "测试段",
+    "strategyPool": "策略池",
+    "poolAdopt": "采纳进入下一轮",
+    "poolWatch": "继续观察",
+    "poolRemove": "降低权重/移除",
+    "agentScores": "智能体排名",
+    "score": "总分",
+    "trainingScore": "训练",
+    "testScore": "测试",
+    "hitRate": "胜率",
+    "drawdown": "回撤 {value}",
+    "lastTrade": "最近：{action} {symbol} / {score}",
+    "noTrade": "暂无完成交易",
+    "noScores": "暂无评分数据",
+    "reportTitle": "预测结果统计分析",
+    "reportSubtitle": "{date} · 累计 {rounds}/{total} 轮 · {decisions} 条决策",
+    "reportCached": "刷新恢复快照",
+    "reportCollapse": "收起",
+    "reportExpand": "展开",
+    "reportKpi": "关键指标",
+    "bestAgent": "最佳智能体",
+    "sampleCount": "已评估交易",
+    "cumulativeRounds": "累计回合",
+    "agentDecisionCount": "智能体决策",
+    "avgHitRate": "平均胜率",
+    "avgDrawdown": "平均回撤",
+    "alphaSpread": "Alpha 差距",
+    "scoreChart": "训练/测试得分对比",
+    "equityChart": "最佳策略权益曲线",
+    "actionDistribution": "动作分布",
+    "equityAxis": "权益范围 {min} 到 {max}",
+    "reportScope": "累计统计至第 {rounds} 轮，共 {decisions} 条智能体交易决策。",
+    "agentBreakdownTitle": "每个智能体的累计表现",
+    "agentBreakdownHint": "累计 {rounds} 轮 · {decisions} 条决策",
+    "tradeCount": "{count} 轮交易",
+    "winsLosses": "胜/负",
+    "failureRate": "失分率",
+    "bestTrade": "最好",
+    "worstTrade": "最差",
+    "failurePoints": "失败点",
+    "repairPlan": "修正策略",
+    "noFailures": "当前没有亏损交易，继续观察后续轮次稳定性。",
+    "defaultRepairPlan": "保留当前策略骨架，继续累计样本后再调整 prompt。",
+    "steps": {
+      "news": "资讯",
+      "memory": "记忆",
+      "debate": "辩论",
+      "trade": "交易",
+      "patch": "修正"
+    }
+  },
+  "eventLog": {
+    "title": "事件",
+    "aria": "事件日志",
+    "empty": "暂无事件",
+    "toolFallback": "工具",
+    "kinds": {
+      "sessionStarted": "会话已启动",
+      "sessionEnded": "会话已结束",
+      "statusChanged": "状态已改变",
+      "toolInvoked": "工具已调用"
+    },
+    "labels": {
+      "sessionStarted": "{name} 已启动",
+      "sessionEnded": "{name} 已离线",
+      "statusChanged": "{name} · {from} → {to}",
+      "toolInvoked": "{name} · {icon} {tool}"
+    },
+    "time": {
+      "now": "刚刚",
+      "seconds": "{n}秒前",
+      "minutes": "{n}分钟前",
+      "hours": "{n}小时前"
+    }
+  },
+  "permission": {
+    "title": "请求权限",
+    "actions": {
+      "allow": "允许",
+      "deny": "拒绝",
+      "focus": "聚焦终端"
+    },
+    "hint": "决策将发送到等待中的 claude 钩子。超时后将回退到 CLI 提示。",
+    "fallbackHint": "安装 PreToolUse 钩子以在此页面允许/拒绝。在此之前，请在主机终端中响应。",
+    "fallbackTitle": "等待权限",
+    "noInput": "（无输入预览）"
+  },
+  "timeline": {
+    "title": "时间线",
+    "live": "实时",
+    "paused": "已暂停",
+    "returnLive": "回到实时（空格）"
+  },
+  "budget": {
+    "title": "世界预算",
+    "total": "总计",
+    "perSession": "每个会话",
+    "titleAttr": "所有实时会话的 token 流 · 点击查看明细",
+    "tokens": "tok",
+    "messages": "条消息",
+    "popoverTitle": "各会话 token",
+    "totalFlow": "总流量",
+    "hint": "输入 ↓ / 输出 ↑ / 缓存来自对话尾部"
+  },
+  "assets": {
+    "dismiss": "关闭提示",
+    "minimalMode": "◇ 最小化模式",
+    "minimalPreview": "◇ 最小化预览（M）",
+    "forcedBody": "正在不加载精灵资源的预览模式下运行。按 <kbd>M</kbd> 恢复完整像素画风。这个选择会被记住。",
+    "missingBody": "当前未加载完整精灵资源，页面已自动切到轻量像素预览。补齐素材后刷新即可恢复完整画风；也可以按 <kbd>M</kbd> 手动切换预览模式。"
+  },
+  "editor": {
+    "toggle": "编辑"
+  },
+  "language": {
+    "selector": "语言选择",
+    "select": "选择语言"
+  }
+}

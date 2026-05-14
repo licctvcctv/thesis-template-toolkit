@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.heath.community.mapper.RiskLevelConfigMapper">
+
+    <resultMap id="BaseResultMap" type="com.heath.community.entity.RiskLevelConfig">
+        <id column="id" property="id"/>
+        <result column="level_code" property="levelCode"/>
+        <result column="level_name" property="levelName"/>
+        <result column="description" property="description"/>
+        <result column="sort_order" property="sortOrder"/>
+        <result column="status" property="status"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <select id="findAllEnabled" resultMap="BaseResultMap">
+        SELECT * FROM risk_level_config WHERE status = 1 ORDER BY sort_order
+    </select>
+
+    <select id="findByCode" resultMap="BaseResultMap">
+        SELECT * FROM risk_level_config WHERE level_code = #{code}
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO risk_level_config (level_code, level_name, description, sort_order, status)
+        VALUES (#{levelCode}, #{levelName}, #{description}, #{sortOrder}, #{status})
+    </insert>
+
+    <update id="update">
+        UPDATE risk_level_config
+        <set>
+            <if test="levelName != null">level_name = #{levelName},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="sortOrder != null">sort_order = #{sortOrder},</if>
+            <if test="status != null">status = #{status},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+</mapper>

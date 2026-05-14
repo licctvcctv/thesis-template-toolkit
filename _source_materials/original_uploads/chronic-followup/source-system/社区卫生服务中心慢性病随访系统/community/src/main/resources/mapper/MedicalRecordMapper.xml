@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.heath.community.mapper.MedicalRecordMapper">
+
+    <resultMap id="MedicalRecordDTOResultMap" type="com.heath.community.dto.MedicalRecordDTO">
+        <id column="id" property="id"/>
+        <result column="patient_id" property="patientId"/>
+        <result column="patient_name" property="patientName"/>
+        <result column="doctor_id" property="doctorId"/>
+        <result column="doctor_name" property="doctorName"/>
+        <result column="record_date" property="recordDate"/>
+        <result column="chief_complaint" property="chiefComplaint"/>
+        <result column="present_illness" property="presentIllness"/>
+        <result column="physical_examination" property="physicalExamination"/>
+        <result column="diagnosis" property="diagnosis"/>
+        <result column="treatment_plan" property="treatmentPlan"/>
+        <result column="medication" property="medication"/>
+        <result column="remarks" property="remarks"/>
+    </resultMap>
+
+    <select id="findPage" resultMap="MedicalRecordDTOResultMap">
+        SELECT mr.id, mr.patient_id, p.name AS patient_name, mr.doctor_id, u.name AS doctor_name,
+               mr.record_date, mr.chief_complaint, mr.present_illness, mr.physical_examination,
+               mr.diagnosis, mr.treatment_plan, mr.medication, mr.remarks
+        FROM medical_record mr
+        LEFT JOIN patient p ON mr.patient_id = p.id
+        LEFT JOIN doctor d ON mr.doctor_id = d.id
+        LEFT JOIN user u ON d.user_id = u.id
+        <where>
+            <if test="patientId != null">
+                AND mr.patient_id = #{patientId}
+            </if>
+            <if test="doctorId != null">
+                AND mr.doctor_id = #{doctorId}
+            </if>
+            <if test="startDate != null">
+                AND mr.record_date >= #{startDate}
+            </if>
+            <if test="endDate != null">
+                AND mr.record_date &lt;= #{endDate}
+            </if>
+        </where>
+        ORDER BY mr.record_date DESC, mr.create_time DESC
+        LIMIT #{offset}, #{limit}
+    </select>
+
+    <select id="count" resultType="Long">
+        SELECT COUNT(*)
+        FROM medical_record mr
+        <where>
+            <if test="patientId != null">
+                AND mr.patient_id = #{patientId}
+            </if>
+            <if test="doctorId != null">
+                AND mr.doctor_id = #{doctorId}
+            </if>
+            <if test="startDate != null">
+                AND mr.record_date >= #{startDate}
+            </if>
+            <if test="endDate != null">
+                AND mr.record_date &lt;= #{endDate}
+            </if>
+        </where>
+    </select>
+
+    <select id="findById" resultMap="MedicalRecordDTOResultMap">
+        SELECT mr.id, mr.patient_id, p.name AS patient_name, mr.doctor_id, u.name AS doctor_name,
+               mr.record_date, mr.chief_complaint, mr.present_illness, mr.physical_examination,
+               mr.diagnosis, mr.treatment_plan, mr.medication, mr.remarks
+        FROM medical_record mr
+        LEFT JOIN patient p ON mr.patient_id = p.id
+        LEFT JOIN doctor d ON mr.doctor_id = d.id
+        LEFT JOIN user u ON d.user_id = u.id
+        WHERE mr.id = #{id}
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO medical_record (patient_id, doctor_id, record_date, chief_complaint, present_illness,
+                                   physical_examination, diagnosis, treatment_plan, medication, remarks)
+        VALUES (#{patientId}, #{doctorId}, #{recordDate}, #{chiefComplaint}, #{presentIllness},
+                #{physicalExamination}, #{diagnosis}, #{treatmentPlan}, #{medication}, #{remarks})
+    </insert>
+
+    <update id="update">
+        UPDATE medical_record
+        <set>
+            <if test="patientId != null">patient_id = #{patientId},</if>
+            <if test="doctorId != null">doctor_id = #{doctorId},</if>
+            <if test="recordDate != null">record_date = #{recordDate},</if>
+            <if test="chiefComplaint != null">chief_complaint = #{chiefComplaint},</if>
+            <if test="presentIllness != null">present_illness = #{presentIllness},</if>
+            <if test="physicalExamination != null">physical_examination = #{physicalExamination},</if>
+            <if test="diagnosis != null">diagnosis = #{diagnosis},</if>
+            <if test="treatmentPlan != null">treatment_plan = #{treatmentPlan},</if>
+            <if test="medication != null">medication = #{medication},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM medical_record WHERE id = #{id}
+    </delete>
+
+    <select id="countTotal" resultType="Long">
+        SELECT COUNT(*) FROM medical_record
+    </select>
+
+    <select id="countByDate" resultType="Long">
+        SELECT COUNT(*) FROM medical_record WHERE record_date = #{date}
+    </select>
+
+    <select id="countByMonth" resultType="Long">
+        SELECT COUNT(*) FROM medical_record
+        WHERE YEAR(record_date) = #{year} AND MONTH(record_date) = #{month}
+    </select>
+
+    <select id="countByPatient" resultType="Long">
+        SELECT COUNT(*) FROM medical_record WHERE patient_id = #{patientId}
+    </select>
+
+    <select id="countByDoctor" resultType="Long">
+        SELECT COUNT(*) FROM medical_record WHERE doctor_id = #{doctorId}
+    </select>
+
+</mapper>

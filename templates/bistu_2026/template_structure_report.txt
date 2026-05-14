@@ -1,0 +1,128 @@
+Document: /Users/a136/vs/45425/thesis_project/templates/bistu_2026/template.docx
+Sections: 12
+Body blocks: paragraphs and tables in source order
+[body]
+  P000 style='Normal' align='center' runs=0 num=None text=''
+  P001 style='Normal' align='center' runs=0 num=None text=''
+  P002 style='Normal' align='center' runs=1 num=None text='北京信息科技大学'
+  P003 style='Normal' align='center' runs=0 num=None text=''
+  P004 style='Normal' align='center' runs=1 num=None text='毕 业 设 计（论 文）'
+  P005 style='Normal' align=None runs=0 num=None text=''
+  P006 style='Normal' align=None runs=0 num=None text=''
+  P007 style='Normal' align=None runs=0 num=None text=''
+  P008 style='Normal' align=None runs=0 num=None text=''
+  P009 style='Normal' align=None runs=0 num=None text=''
+  P010 style='Normal' align=None runs=0 num=None text=''
+  P011 style='Normal' align=None runs=0 num=None text=''
+  P012 style='Normal' align=None runs=0 num=None text=''
+  P013 style='Normal' align=None runs=1 num=None text='题 目： {{ title_zh }}'
+  P014 style='Normal' align=None runs=0 num=None text=''
+  P015 style='Normal' align=None runs=0 num=None text=''
+  P016 style='Normal' align=None runs=1 num=None text='学 院： {{ college }}'
+  P017 style='Normal' align=None runs=1 num=None text=''
+  P018 style='Normal' align=None runs=0 num=None text=''
+  P019 style='Normal' align=None runs=1 num=None text='专 业： {{ major }}'
+  P020 style='Normal' align=None runs=0 num=None text=''
+  P021 style='Normal' align=None runs=0 num=None text=''
+  P022 style='Normal' align=None runs=1 num=None text='学生姓名： {{ name }} {{ class_name }}/{{ student_id }}'
+  P023 style='Normal' align=None runs=1 num=None text=''
+  P024 style='Normal' align=None runs=0 num=None text=''
+  P025 style='Normal' align=None runs=1 num=None text='指导老师/督导老师： {{ advisor }}'
+  P026 style='Normal' align=None runs=0 num=None text=''
+  P027 style='Normal' align=None runs=0 num=None text=''
+  P028 style='Normal' align=None runs=1 num=None text='起止时间： {{ start_date }} 至 {{ end_date }}'
+  P029 style='Normal' align='center' runs=0 num=None text=''
+  P030 style='Normal' align='center' runs=0 num=None text=''
+  P031 style='Normal' align='center' runs=0 num=None text=''
+  P032 style='Normal' align='center' runs=0 num=None text=''
+  P033 style='Normal' align='center' runs=0 num=None text=''
+  P034 style='Normal' align='center' runs=0 num=None text=''
+  P035 style='Normal' align='center' runs=0 num=None text=''
+  P036 style='Normal' align='center' runs=0 num=None text=''
+  P037 style='Normal' align=None runs=1 num=None text='毕业设计(论文)任务书'
+  P038 style='Normal' align='left' runs=1 num=None text='学院 ：{{ college }} 专业：{{ major }} 班级：{{ class_name }}'
+  T039 rows=17 cols=10 first_cell='学生情况'
+  P040 style='Normal' align=None runs=0 num=None text=''
+  P041 style='Normal' align='center' runs=0 num=None text=''
+  P042 style='Normal' align=None runs=1 num=None text='毕业设计（论文）原创性声明'
+  P043 style='Normal' align='left' runs=1 num=None text='本人郑重声明：所呈交的毕业设计（论文），题目为《{{ title_zh }}》，是本人在导师指导下，进行研究工作所取得的成果。尽我所知，除了文中特别加以标注的内容外，本毕业设计（论文）的研究成果不包含任何他人创作的、已公开发表或者没有公开…'
+  P044 style='Normal' align='left' runs=1 num=None text='意。本毕业设计（论文）原创性声明的法律责任由本人承担。'
+  P045 style='Normal' align='left' runs=0 num=None text=''
+  P046 style='Normal' align=None runs=1 num=None text='作者签名：'
+  P047 style='Normal' align=None runs=0 num=None text=''
+  P048 style='Normal' align='left' runs=5 num=None text='年 月 日'
+  P049 style='Normal' align='center' runs=0 num=None text=''
+  P050 style='Normal' align=None runs=0 num=None text=''
+  P051 style='Normal' align=None runs=0 num=None text=''
+  P052 style='Normal' align='center' runs=1 num=None text='毕业设计（论文）版权授权声明'
+  P053 style='Normal' align='left' runs=0 num=None text=''
+  P054 style='Normal' align='left' runs=1 num=None text='本人完全了解北京信息科技大学关于收集、保存、使用本科生毕业设计（论文）的要求，按照学校要求提交毕业设计（论文）的印刷本和电子版本。学校有权保留毕业设计（论文）并向相关机构送交论文的电子版和纸质版，允许论文被查阅和借阅，可以采用影印、缩印或…'
+  P055 style='Normal' align='left' runs=1 num=None text='制、公布论文的全部或部分内容。'
+  P056 style='Normal' align='left' runs=0 num=None text=''
+  P057 style='Normal' align='left' runs=0 num=None text=''
+  P058 style='Normal' align='left' runs=2 num=None text='指导教师签名： 作者签名：'
+  P059 style='Normal' align='left' runs=0 num=None text=''
+  P060 style='Normal' align='left' runs=11 num=None text='年 月 日 年 月 日'
+  P061 style='Normal' align='center' runs=0 num=None text=''
+  P062 style='Normal' align='center' runs=0 num=None text=''
+  P063 style='摘要标题' align=None runs=1 num=None text='摘要'
+  P064 style='Normal' align=None runs=0 num=None text=''
+  P065 style='摘要正文' align=None runs=1 num=None text='{{ abstract_zh_1 }}'
+  P066 style='摘要正文' align=None runs=1 num=None text='{{ abstract_zh_2 }}'
+  P067 style='摘要正文' align=None runs=1 num=None text='{{ abstract_zh_3 }}'
+  P068 style='摘要正文' align=None runs=1 num=None text='{{ abstract_zh_4 }}'
+  P069 style='关键词正文' align=None runs=0 num=None text=''
+  P070 style='关键词正文' align=None runs=1 num=None text='关键词：{{ keywords_zh }}'
+  P071 style='英文摘要标题' align=None runs=1 num=None text='Abstract'
+  P072 style='Normal' align=None runs=0 num=None text=''
+  P073 style='英文摘要正文' align=None runs=1 num=None text='{{ abstract_en_1 }}'
+  P074 style='英文摘要正文' align=None runs=1 num=None text='{{ abstract_en_2 }}'
+  P075 style='英文摘要正文' align=None runs=1 num=None text='{{ abstract_en_3 }}'
+  P076 style='英文摘要正文' align=None runs=1 num=None text='{{ abstract_en_4 }}'
+  P077 style='英文关键词正文' align=None runs=0 num=None text=''
+  P078 style='英文关键词正文' align=None runs=1 num=None text='Key words: {{ keywords_en }}'
+  P079 style='Normal' align=None runs=0 num=None text=''
+  P080 style='Normal' align=None runs=0 num=None text=''
+  P081 style='目录标题' align=None runs=0 num=None text=''
+  P082 style='目录标题' align=None runs=1 num=None text='目录'
+  P083 style='Normal' align=None runs=0 num=None text=''
+  P084 style='toc 1' align=None runs=1 num=None text='{{ toc }}'
+  P085 style='Normal' align=None runs=1 num=None text=''
+  P086 style='Normal' align=None runs=0 num=None text=''
+  P087 style='Heading 1' align=None runs=1 num={'numId': 2, 'ilvl': 0} text='{{ body }}'
+  P088 style='Normal' align=None runs=0 num=None text=''
+  P089 style='Normal' align=None runs=0 num=None text=''
+  P090 style='样式 首行缩进:  2 字符' align=None runs=0 num=None text=''
+  P091 style='Body Text' align=None runs=0 num=None text=''
+  P092 style='Body Text' align=None runs=0 num=None text=''
+[section[0].header]
+[section[0].footer]
+[section[1].header]
+[section[1].footer]
+[section[2].header]
+[section[2].footer]
+[section[3].header]
+[section[3].footer]
+[section[4].header]
+[section[4].footer]
+[section[5].header]
+[section[5].footer]
+[section[6].header]
+[section[6].footer]
+[section[7].header]
+[section[7].footer]
+[section[8].header]
+[section[8].footer]
+[section[9].header]
+[section[9].footer]
+[section[10].header]
+[section[10].footer]
+[section[11].header]
+[section[11].footer]
+[xml markers]
+  w:txbxContent: 16
+  w:fldSimple: 0
+  w:instrText: 30
+  w:numPr: 18
+  w:bookmarkStart: 12
+  w:drawing: 10

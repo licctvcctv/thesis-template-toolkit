@@ -1,0 +1,37 @@
+{
+  "school": "北京信息科技大学",
+  "title_zh": "基于多智能体的期货交易模拟系统设计与实现",
+  "title_en": "Design and Implementation of a Futures Trading Simulation System Based on Multi-Agent",
+  "college": "应用技术学院",
+  "major": "数据科学与大数据技术",
+  "class_name": "数据GT2301",
+  "name": "",
+  "student_id": "",
+  "advisor": "",
+  "advisor_title": "",
+  "advisor_unit": "",
+  "start_date": "2025年9月1日",
+  "end_date": "2026年5月20日",
+  "start_date_short": "2025.09.01",
+  "end_date_short": "2026.05.20",
+  "keywords_zh": "多智能体；期货交易；历史行情；策略评估；WebSocket；Node.js",
+  "keywords_en": "multi-agent; futures trading; historical market data; strategy evaluation; WebSocket; Node.js",
+  "abstract_zh": [
+    "随着人工智能技术和金融数据基础设施的发展，面向真实行情的交易策略验证逐渐从单一指标回测转向多主体、多情景和可解释的综合模拟。期货市场具有杠杆高、波动强、跨品种联动明显等特点，单纯依靠静态规则难以展示不同风险偏好策略在复杂市场中的表现差异。本文围绕“基于多智能体的期货交易模拟系统设计与实现”展开研究，构建一个能够接入历史商品价格、组织多类智能体进行买入、卖出和持有决策，并在前端实时展示运行状态与统计结果的模拟系统。",
+    "系统采用 Node.js 与 Express 构建后端服务，以原生 JavaScript 组件实现前端交互界面，通过 WebSocket 完成运行状态广播。系统内置黄金、WTI 原油和大豆三类商品的历史月度价格数据，并组织 2016 年至 2026 年间的典型市场情景。针对不同交易风格，系统设计保守型、均衡型、激进型和记忆审计型四类智能体，使其在资讯采集、记忆检索、价格趋势、风险控制和交易执行等工作站之间循环运行，形成可观察的策略决策过程。",
+    "在评价方法上，本文按照教师要求将训练段与测试段区分开来，避免策略只适配已有样本。系统根据真实历史价格的下一期变化计算每轮收益，并统计总得分、训练得分、测试得分、胜率、最大回撤、动作分布和失败样本。对于测试段表现稳定的策略给出采纳建议，对训练高而测试弱的策略保留观察，对回撤较大且收益较低的策略给出淘汰或修正建议。前端统计面板进一步将这些指标可视化，便于比较不同智能体的优劣。",
+    "经过功能测试和运行验证，系统能够完成行情加载、市场情景切换、智能体状态投射、收益评分、统计分析和移动端适配等功能。测试结果表明，系统可以较清晰地展示不同风险偏好策略在历史行情片段中的表现差异，并为后续接入更细粒度行情、更复杂风险约束和大语言模型决策提供了可扩展基础。"
+  ],
+  "abstract_en": [
+    "With the development of artificial intelligence and financial data infrastructure, strategy verification is moving from isolated backtesting indicators to explainable simulations with multiple agents and market scenarios. Futures markets are highly leveraged, volatile, and strongly affected by cross-commodity events. Static rules alone are not sufficient to demonstrate how strategies with different risk preferences behave under changing market conditions. This thesis designs and implements a futures trading simulation system based on multi-agent interaction. The system uses historical commodity prices, organizes several strategy agents to make buy, sell, and hold decisions, and presents runtime status and statistical results in a web interface.",
+    "The backend of the system is built with Node.js and Express, while the frontend is implemented with native JavaScript components. WebSocket is used to broadcast runtime state. The system contains monthly historical prices for gold, WTI crude oil, and soybean, and prepares typical market scenarios from 2016 to 2026. Four types of agents are designed, including conservative, balanced, aggressive, and memory-auditing agents. These agents move through stations such as information collection, memory retrieval, price trend checking, risk control, debate, and trade execution, forming an observable decision process.",
+    "For evaluation, the thesis separates the training segment from the testing segment according to the project requirements. This design prevents a strategy from being judged only by the samples used during adjustment. The system calculates the return of each round according to the next-period price change and records total score, training score, testing score, hit rate, maximum drawdown, action distribution, and failure cases. Stable strategies are recommended for adoption, strategies with strong training performance but weak testing performance are kept under observation, and strategies with large drawdowns or low returns are marked for removal or revision.",
+    "Functional testing and runtime verification show that the system can load market data, switch scenarios, project agent states, calculate returns, display statistical charts, and adapt to mobile screens. The result indicates that the system can present the performance differences of strategies with different risk preferences in historical market slices, and it also provides an extensible basis for integrating finer-grained market data, stricter risk constraints, and large language model decision loops in future work."
+  ],
+  "task_main_content": "围绕期货交易模拟与多智能体策略评估，完成系统需求分析、总体架构设计、功能模块设计、历史行情数据接入、智能体决策流程实现、收益评分与统计分析实现、前端可视化界面实现以及系统功能测试。系统需突出“模拟系统”定位，避免将功能描述为娱乐化内容；运行界面应能够展示行情、智能体、策略评分和预测结果统计图表。",
+  "task_outcomes": "1. 完成基于多智能体的期货交易模拟系统源代码及运行环境配置；2. 完成包含系统架构图、功能结构图、策略评估流程图和真实运行截图的毕业设计论文；3. 完成测试记录，覆盖行情数据加载、智能体决策、统计分析、WebSocket 状态更新和界面适配等关键功能。",
+  "task_requirements": "系统应使用真实或可追溯的历史商品价格数据，将训练样本与测试样本分开统计；智能体应体现不同风险偏好和策略风格；统计结果应包含收益、胜率、回撤和动作分布；论文结构参照案例论文组织，图表编号规范，正文不得残留旧论文主题和不符合本系统定位的表述。",
+  "task_references": "[1] Wooldridge M. An Introduction to MultiAgent Systems[M]. Chichester: John Wiley & Sons, 2009.\n[2] Russell S, Norvig P. Artificial Intelligence: A Modern Approach[M]. 4th ed. Hoboken: Pearson, 2021.\n[3] Sutton R S, Barto A G. Reinforcement Learning: An Introduction[M]. 2nd ed. Cambridge: MIT Press, 2018.\n[4] Lopez de Prado M. Advances in Financial Machine Learning[M]. Hoboken: Wiley, 2018.\n[5] Hull J C. Options, Futures, and Other Derivatives[M]. 11th ed. New York: Pearson, 2022.",
+  "task_environment": "硬件环境：Apple Silicon MacBook、本地开发工作站。软件环境：macOS，Node.js 18 及以上，Express，WebSocket，原生 JavaScript，HTML5/CSS3，Playwright，LibreOffice，Python 文档组装脚本。",
+  "task_schedule": "2025.09—2025.10：调研多智能体、期货交易模拟和历史行情数据处理方法，明确论文题目与系统范围。\n2025.10—2025.11：分析需求，确定系统角色、功能模块、数据字段和评价指标。\n2025.11—2025.12：完成总体架构、功能结构、数据结构和策略评价流程设计。\n2026.01—2026.02：完成后端服务、行情数据加载、情景引擎和智能体状态更新功能。\n2026.02—2026.03：完成前端运行界面、统计面板、移动端适配和可视化图表。\n2026.03—2026.04：进行功能测试与运行截图采集，修正界面和统计逻辑。\n2026.04—2026.05：撰写、排版和检查毕业论文，完成终稿提交材料。"
+}

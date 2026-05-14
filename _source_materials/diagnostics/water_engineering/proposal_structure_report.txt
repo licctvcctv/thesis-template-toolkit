@@ -1,0 +1,30 @@
+Document: /Users/a136/vs/45425/水利工程/港口航道与海岸工程-开题报告.docx
+Sections: 1
+Body blocks: paragraphs and tables in source order
+[body]
+  P000 style='Normal' align='center' runs=1 num=None text=''
+  P001 style='Normal' align='center' runs=1 num=None text='本科生毕业设计开题报告'
+  P002 style='Normal' align=None runs=0 num=None text=''
+  P003 style='Normal' align='center' runs=1 num=None text=''
+  P004 style='Normal' align='center' runs=0 num=None text=''
+  P005 style='Normal' align=None runs=0 num=None text=''
+  P006 style='Normal' align='center' runs=2 num=None text='题目：汕尾电厂配套煤码头工程初步设计'
+  P007 style='Normal' align=None runs=0 num=None text=''
+  P008 style='Normal' align=None runs=0 num=None text=''
+  P009 style='Normal' align=None runs=6 num=None text='学 院 建筑工程学院'
+  P010 style='Normal' align=None runs=6 num=None text='专 业 港口航道与海岸工程'
+  P011 style='Normal' align=None runs=10 num=None text='年 级 2022级'
+  P012 style='Normal' align=None runs=7 num=None text='姓 名 潘欣'
+  P013 style='Normal' align=None runs=6 num=None text='学 号 3022001703'
+  P014 style='Normal' align=None runs=5 num=None text='指导教师 孙克俐'
+  T015 rows=3 cols=1 first_cell='一、课题的来源及意义 （一）课题来源 本课题来源于实际工程项目——“汕尾电厂配套煤码头工程初步设计”。汕尾电厂作为广东省重要的电源支撑点，其稳定运行对于保障区域电力供应、促进粤东地区经济社会发展具有战略意义。随着电厂机组容量的扩大和节能减…'
+  P016 style='Normal' align=None runs=0 num=None text=''
+[section[0].header]
+[section[0].footer]
+[xml markers]
+  w:txbxContent: 4
+  w:fldSimple: 0
+  w:instrText: 4
+  w:numPr: 2
+  w:bookmarkStart: 0
+  w:drawing: 7

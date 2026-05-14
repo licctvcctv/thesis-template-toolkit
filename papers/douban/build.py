@@ -30,6 +30,7 @@ def process_content(content_list, doc):
     - 字符串 → 保持不变
     - {"type":"image"} → InlineImage（图片）
     - {"type":"table"} → 转为特殊标记文本（后处理时插入表格）
+    - {"type":"formula"} → 转为特殊标记文本（后处理时统一排版）
     """
     from docxtpl import InlineImage
     from docx.shared import Mm
@@ -54,6 +55,10 @@ def process_content(content_list, doc):
                 # 只放占位标记，不重复生成标注
                 # （标注已在 JSON 内容中作为前一个字符串存在）
                 result.append(f"__TABLE_PLACEHOLDER_{tid}__")
+            elif item.get("type") == "formula":
+                formula = str(item.get("formula", "")).strip()
+                number = str(item.get("number", "")).strip()
+                result.append(f"__FORMULA__{formula}__NUMBER__{number}")
             else:
                 result.append(str(item))
     return result
@@ -290,10 +295,135 @@ def _set_run_font(run, size=None, east="宋体", ascii_font="Times New Roman",
         run.bold = bold
 
 
+def _add_math_run(paragraph, text, script=None):
+    """Add a formula run, supporting true Word sub/superscript styling."""
+    if not text:
+        return None
+    run = paragraph.add_run(text)
+    _set_run_font(run, 10.5, east="Cambria Math",
+                  ascii_font="Cambria Math", bold=False)
+    if script == "sub":
+        run.font.subscript = True
+    elif script == "sup":
+        run.font.superscript = True
+    return run
+
+
+def _add_formula_runs(paragraph, formula):
+    """Render a small TeX-like subset: x_{i}, p^{2} become real runs."""
+    i = 0
+    buf = []
+
+    def flush():
+        if buf:
+            _add_math_run(paragraph, ''.join(buf))
+            buf.clear()
+
+    while i < len(formula):
+        ch = formula[i]
+        if ch in {"_", "^"} and i + 1 < len(formula):
+            flush()
+            script = "sub" if ch == "_" else "sup"
+            i += 1
+            if formula[i] == "{":
+                end = formula.find("}", i + 1)
+                if end != -1:
+                    _add_math_run(paragraph, formula[i + 1:end], script)
+                    i = end + 1
+                    continue
+            _add_math_run(paragraph, formula[i], script)
+            i += 1
+            continue
+        buf.append(ch)
+        i += 1
+    flush()
+
+
+def _format_citations(paragraph):
+    """Make正文中的 [1] 类引用以上标小号显示。"""
+    import re
+
+    text = paragraph.text or ""
+    if not re.search(r'\[\d+\]', text):
+        return
+
+    for r in paragraph.runs:
+        r.text = ""
+
+    pos = 0
+    for m in re.finditer(r'\[\d+\]', text):
+        if m.start() > pos:
+            run = paragraph.add_run(text[pos:m.start()])
+            _set_run_font(run, 12, east="宋体",
+                          ascii_font="Times New Roman", bold=False)
+        cite = paragraph.add_run(m.group(0))
+        _set_run_font(cite, 9, east="宋体",
+                      ascii_font="Times New Roman", bold=False)
+        cite.font.superscript = True
+        pos = m.end()
+    if pos < len(text):
+        run = paragraph.add_run(text[pos:])
+        _set_run_font(run, 12, east="宋体",
+                      ascii_font="Times New Roman", bold=False)
+
+
 def _toc_page_for(title, level):
     import re
 
-    chapter_pages = {1: 1, 2: 6, 3: 12, 4: 17, 5: 25, 6: 31}
+    explicit_pages = {
+        "1 绪论": "5",
+        "1.1 研究背景": "5",
+        "1.2 国内外研究现状": "5",
+        "1.2.1 国外研究现状": "5",
+        "1.2.2 国内研究现状": "5",
+        "1.3 研究内容与方法": "6",
+        "2 相关理论与技术基础": "8",
+        "2.1 数据获取技术": "8",
+        "2.2 数据预处理技术": "8",
+        "2.3 文本特征提取": "9",
+        "2.4 分类算法理论": "9",
+        "2.4.1 朴素贝叶斯": "9",
+        "2.4.2 决策树": "10",
+        "2.4.3 支持向量机": "11",
+        "2.5 模型评估指标": "11",
+        "2.6 数据可视化技术": "12",
+        "2.7 本章小结": "13",
+        "3 数据获取及预处理": "14",
+        "3.1 数据获取方案": "14",
+        "3.2 数据存储": "14",
+        "3.3 数据清洗": "15",
+        "3.4 特征工程": "16",
+        "3.5 数据集描述": "17",
+        "3.6 本章小结": "18",
+        "4 算法设计与实现": "19",
+        "4.1 实验环境与评价指标": "19",
+        "4.1.1 实验环境": "19",
+        "4.1.2 评价指标定义": "19",
+        "4.2 朴素贝叶斯分类实现": "20",
+        "4.3 决策树分类实现": "21",
+        "4.4 支持向量机分类实现": "22",
+        "4.5 模型优化": "22",
+        "4.6 模型优化与改进实验": "25",
+        "4.6.1 改进方案设计": "25",
+        "4.6.2 改进实验结果": "26",
+        "4.7 本章小结": "27",
+        "5 算法对比及可视化": "28",
+        "5.1 算法结果对比": "28",
+        "5.2 分类性能可视化": "28",
+        "5.3 各类型分类表现分析": "32",
+        "5.4 基线与改进实验对比分析": "33",
+        "5.5 改进后各类型分类难度分析": "34",
+        "5.6 项目结论": "34",
+        "5.7 本章小结": "35",
+        "6 总结与展望": "36",
+        "6.1 研究总结": "36",
+        "6.2 研究不足": "36",
+        "6.3 未来展望": "37",
+    }
+    if title in explicit_pages:
+        return explicit_pages[title]
+
+    chapter_pages = {1: 5, 2: 8, 3: 16, 4: 23, 5: 34, 6: 43}
     m = re.match(r'^(\d+)(?:\.(\d+))?', title or "")
     if not m:
         return ""
@@ -398,9 +528,13 @@ def _post_process(docx_path):
     fig_pat = re.compile(r'^图\d')
     tbl_cap_pat = re.compile(r'^表\d+[.-]\d+\s')
     placeholder_pat = re.compile(r'^__TABLE_PLACEHOLDER_(\d+)__$')
+    formula_pat = re.compile(r'^__FORMULA__(.*?)__NUMBER__(.*?)$')
+    in_references = False
 
     for p in list(doc.paragraphs):
         t = (p.text or "").strip()
+        if t == "参考文献":
+            in_references = True
 
         # Heading 1 → 每章前分页
         if p.style and p.style.name == 'Heading 1':
@@ -462,6 +596,37 @@ def _post_process(docx_path):
                 # 清空占位文本
                 for r in p.runs:
                     r.text = ""
+
+        # 公式 → 独立成行：公式按居中制表位排，编号靠右
+        fm = formula_pat.match(t)
+        if fm:
+            formula = fm.group(1).strip()
+            number = fm.group(2).strip()
+            for r in p.runs:
+                r.text = ""
+            tab_run = p.add_run("\t")
+            _add_formula_runs(p, formula)
+            number_run = p.add_run(f"\t（{number}）" if number else "")
+            p.alignment = WD_ALIGN_PARAGRAPH.LEFT
+            from docx.shared import Cm
+            p.paragraph_format.left_indent = Cm(0)
+            p.paragraph_format.first_line_indent = Cm(0)
+            p.paragraph_format.space_before = Pt(3)
+            p.paragraph_format.space_after = Pt(3)
+            from docx.enum.text import WD_TAB_ALIGNMENT
+            p.paragraph_format.tab_stops.add_tab_stop(
+                Cm(7.2), WD_TAB_ALIGNMENT.CENTER)
+            p.paragraph_format.tab_stops.add_tab_stop(
+                Cm(14.5), WD_TAB_ALIGNMENT.RIGHT)
+            _set_run_font(tab_run, 10.5, east="Cambria Math",
+                          ascii_font="Cambria Math", bold=False)
+            _set_run_font(number_run, 10.5, east="宋体",
+                          ascii_font="Times New Roman", bold=False)
+            t = p.text.strip()
+
+        if (not in_references and not has_drawing and
+                not placeholder_pat.match(t) and not formula_pat.match(t)):
+            _format_citations(p)
 
     doc.save(docx_path)
     print(f"  后处理: 图片居中+{len(_pending_tables)}个表格")
@@ -610,10 +775,6 @@ def _insert_table(doc, after_para, tbl_data):
             szCs = OxmlElement('w:szCs')
             szCs.set(qn('w:val'), '21')
             rPr.append(szCs)
-            # 表头加粗
-            if ri == 0:
-                b = OxmlElement('w:b')
-                rPr.append(b)
             r.append(rPr)
             t = OxmlElement('w:t')
             t.set(qn('xml:space'), 'preserve')

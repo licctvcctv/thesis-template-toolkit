@@ -1,0 +1,114 @@
+[
+  {
+    "caption": "图3-1 管理员用例图9",
+    "p_index": 0,
+    "media": [
+      "image1.png"
+    ]
+  },
+  {
+    "caption": "图6-7 训练准确率变化曲线",
+    "p_index": 462,
+    "media": [
+      "image22.png"
+    ]
+  },
+  {
+    "caption": "图6-8 验证损失变化曲线",
+    "p_index": 465,
+    "media": [
+      "image23.png"
+    ]
+  },
+  {
+    "caption": "图6-9 混淆矩阵分析图",
+    "p_index": 470,
+    "media": [
+      "image24.png"
+    ]
+  },
+  {
+    "caption": "图6-12 流量趋势统计图",
+    "p_index": 504,
+    "media": [
+      "image27.png"
+    ]
+  },
+  {
+    "caption": "图6-13 协议端口热力图",
+    "p_index": 509,
+    "media": [
+      "image28.png"
+    ]
+  },
+  {
+    "caption": "图6-14 SHAP式特征贡献排序图",
+    "p_index": 514,
+    "media": [
+      "image29.png"
+    ]
+  },
+  {
+    "caption": "图7-1 仪表盘界面",
+    "p_index": 527,
+    "media": [
+      "image31.png"
+    ]
+  },
+  {
+    "caption": "图7-2 用户管理界面",
+    "p_index": 531,
+    "media": [
+      "image32.png"
+    ]
+  },
+  {
+    "caption": "图7-3 部门管理界面",
+    "p_index": 535,
+    "media": [
+      "image33.png"
+    ]
+  },
+  {
+    "caption": "图7-4 角色管理界面",
+    "p_index": 539,
+    "media": [
+      "image34.png"
+    ]
+  },
+  {
+    "caption": "图7-5 日志管理界面",
+    "p_index": 543,
+    "media": [
+      "image35.png"
+    ]
+  },
+  {
+    "caption": "图7-6 系统监控界面",
+    "p_index": 548,
+    "media": [
+      "image36.png"
+    ]
+  },
+  {
+    "caption": "图7-7 流量仪表盘界面",
+    "p_index": 552,
+    "media": [
+      "image37.png"
+    ]
+  },
+  {
+    "caption": "图7-8 流量数据界面",
+    "p_index": 556,
+    "media": [
+      "image38.png"
+    ]
+  },
+  {
+    "caption": "图7-9 异常检测界面",
+    "p_index": 560,
+    "media": [
+      "image39.png"
+    ]
+  }
+]

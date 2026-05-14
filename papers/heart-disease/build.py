@@ -144,6 +144,8 @@ def main():
     _remove_comments(output)
     # 后处理：修正图片居中和图标注格式
     _post_process(output)
+    # 正文文献标注上标化
+    _superscript_body_citations(output)
     # 校验
     errors = _verify(output)
     if errors:
@@ -202,6 +204,61 @@ def _remove_comments(docx_path):
                 zout.writestr(item, data)
     shutil.move(tmp, docx_path)
     print("  批注已删除")
+
+
+def _superscript_body_citations(docx_path):
+    """将正文中的 [1] 这类文献标注转成上标，参考文献列表本身不处理。"""
+    from copy import deepcopy
+    from docx import Document
+    import re
+
+    marker_pat = re.compile(r'\[\d{1,3}\]')
+    doc = Document(docx_path)
+    converted = 0
+    in_references = False
+
+    for p in doc.paragraphs:
+        t = (p.text or "").strip()
+        compact = t.replace(" ", "").replace("　", "")
+        if compact == "参考文献":
+            in_references = True
+            continue
+        if in_references:
+            continue
+        if not marker_pat.search(p.text or ""):
+            continue
+
+        # 正文段落由模板统一控制格式；复制首个 run 的 rPr，避免新 run 失去字体。
+        runs = list(p.runs)
+        if not runs:
+            continue
+        base_rpr = next((r._r.rPr for r in runs if r._r.rPr is not None), None)
+        full_text = ''.join(r.text for r in runs)
+        if not marker_pat.search(full_text):
+            continue
+
+        for r in runs:
+            p._p.remove(r._r)
+
+        cursor = 0
+        for m in marker_pat.finditer(full_text):
+            if m.start() > cursor:
+                run = p.add_run(full_text[cursor:m.start()])
+                if base_rpr is not None:
+                    run._r.insert(0, deepcopy(base_rpr))
+            run = p.add_run(m.group(0))
+            if base_rpr is not None:
+                run._r.insert(0, deepcopy(base_rpr))
+            run.font.superscript = True
+            cursor = m.end()
+        if cursor < len(full_text):
+            run = p.add_run(full_text[cursor:])
+            if base_rpr is not None:
+                run._r.insert(0, deepcopy(base_rpr))
+        converted += 1
+
+    doc.save(docx_path)
+    print(f"  文献标注已上标化: {converted} 段")
 
 
 def _verify(docx_path):

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.heath.community.mapper.PatientMapper">
+
+    <resultMap id="PatientDTOResultMap" type="com.heath.community.dto.PatientDTO">
+        <id column="id" property="id"/>
+        <result column="patient_no" property="patientNo"/>
+        <result column="name" property="name"/>
+        <result column="gender" property="gender"/>
+        <result column="birthday" property="birthday"/>
+        <result column="id_card" property="idCard"/>
+        <result column="phone" property="phone"/>
+        <result column="address" property="address"/>
+        <result column="disease_type" property="diseaseType"/>
+        <result column="diagnosis_date" property="diagnosisDate"/>
+        <result column="current_doctor_id" property="currentDoctorId"/>
+        <result column="doctor_name" property="doctorName"/>
+        <result column="risk_level" property="riskLevel"/>
+        <result column="risk_level_name" property="riskLevelName"/>
+        <result column="status" property="status"/>
+    </resultMap>
+
+    <resultMap id="PatientResultMap" type="com.heath.community.entity.Patient">
+        <id column="id" property="id"/>
+        <result column="patient_no" property="patientNo"/>
+        <result column="name" property="name"/>
+        <result column="gender" property="gender"/>
+        <result column="birthday" property="birthday"/>
+        <result column="id_card" property="idCard"/>
+        <result column="phone" property="phone"/>
+        <result column="address" property="address"/>
+        <result column="disease_type" property="diseaseType"/>
+        <result column="diagnosis_date" property="diagnosisDate"/>
+        <result column="current_doctor_id" property="currentDoctorId"/>
+        <result column="risk_level" property="riskLevel"/>
+        <result column="status" property="status"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <select id="findPage" resultMap="PatientDTOResultMap">
+        SELECT p.id, p.patient_no, p.name, p.gender, p.birthday, p.id_card, p.phone, p.address,
+               p.disease_type, p.diagnosis_date, p.current_doctor_id, p.risk_level, p.status,
+               u.name AS doctor_name, rlc.level_name AS risk_level_name
+        FROM patient p
+        LEFT JOIN doctor d ON p.current_doctor_id = d.id
+        LEFT JOIN user u ON d.user_id = u.id
+        LEFT JOIN risk_level_config rlc ON p.risk_level = rlc.level_code
+        <where>
+            <if test="name != null and name != ''">
+                AND p.name LIKE CONCAT('%', #{name}, '%')
+            </if>
+            <if test="patientNo != null and patientNo != ''">
+                AND p.patient_no LIKE CONCAT('%', #{patientNo}, '%')
+            </if>
+            <if test="diseaseType != null and diseaseType != ''">
+                AND p.disease_type LIKE CONCAT('%', #{diseaseType}, '%')
+            </if>
+            <if test="riskLevel != null and riskLevel != ''">
+                AND p.risk_level = #{riskLevel}
+            </if>
+            <if test="doctorId != null">
+                AND p.current_doctor_id = #{doctorId}
+            </if>
+        </where>
+        ORDER BY p.create_time DESC
+        LIMIT #{offset}, #{limit}
+    </select>
+
+    <select id="count" resultType="Long">
+        SELECT COUNT(*)
+        FROM patient p
+        <where>
+            <if test="name != null and name != ''">
+                AND p.name LIKE CONCAT('%', #{name}, '%')
+            </if>
+            <if test="patientNo != null and patientNo != ''">
+                AND p.patient_no LIKE CONCAT('%', #{patientNo}, '%')
+            </if>
+            <if test="diseaseType != null and diseaseType != ''">
+                AND p.disease_type LIKE CONCAT('%', #{diseaseType}, '%')
+            </if>
+            <if test="riskLevel != null and riskLevel != ''">
+                AND p.risk_level = #{riskLevel}
+            </if>
+            <if test="doctorId != null">
+                AND p.current_doctor_id = #{doctorId}
+            </if>
+        </where>
+    </select>
+
+    <select id="findById" resultMap="PatientDTOResultMap">
+        SELECT p.id, p.patient_no, p.name, p.gender, p.birthday, p.id_card, p.phone, p.address,
+               p.disease_type, p.diagnosis_date, p.current_doctor_id, p.risk_level, p.status,
+               u.name AS doctor_name, rlc.level_name AS risk_level_name
+        FROM patient p
+        LEFT JOIN doctor d ON p.current_doctor_id = d.id
+        LEFT JOIN user u ON d.user_id = u.id
+        LEFT JOIN risk_level_config rlc ON p.risk_level = rlc.level_code
+        WHERE p.id = #{id}
+    </select>
+
+    <select id="findByPatientNo" resultMap="PatientResultMap">
+        SELECT * FROM patient WHERE patient_no = #{patientNo}
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO patient (patient_no, name, gender, birthday, id_card, phone, address,
+                           disease_type, diagnosis_date, current_doctor_id, risk_level, status)
+        VALUES (#{patientNo}, #{name}, #{gender}, #{birthday}, #{idCard}, #{phone}, #{address},
+                #{diseaseType}, #{diagnosisDate}, #{currentDoctorId}, #{riskLevel}, #{status})
+    </insert>
+
+    <update id="update">
+        UPDATE patient
+        <set>
+            <if test="name != null">name = #{name},</if>
+            <if test="gender != null">gender = #{gender},</if>
+            <if test="birthday != null">birthday = #{birthday},</if>
+            <if test="idCard != null">id_card = #{idCard},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="diseaseType != null">disease_type = #{diseaseType},</if>
+            <if test="diagnosisDate != null">diagnosis_date = #{diagnosisDate},</if>
+            <if test="currentDoctorId != null">current_doctor_id = #{currentDoctorId},</if>
+            <if test="riskLevel != null">risk_level = #{riskLevel},</if>
+            <if test="status != null">status = #{status},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM patient WHERE id = #{id}
+    </delete>
+
+</mapper>

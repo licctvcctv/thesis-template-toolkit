@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+<defs><marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0,0 L12,6 L0,12 Z" fill="#315f9a"/></marker></defs>
+<rect width="1600" height="900" fill="#ffffff"/>
+<text x="800" y="70" text-anchor="middle" font-size="40" font-weight="700" font-family="Songti SC, SimSun, Noto Serif CJK SC" fill="#111827">相关技术与工具结构图</text>
+<rect x="250" y="145" width="1100" height="600" rx="18" fill="#f8fafc" stroke="#334155" stroke-width="3"/>
+<rect x="330" y="205" width="940" height="92" rx="8" fill="#eaf2ff" stroke="#1f4e79" stroke-width="2"/><text x="800" y="242" text-anchor="middle" font-size="26" font-family="Songti SC, SimSun, Noto Serif CJK SC" fill="#172033">前端展示层：HTML5、CSS3、原生 JavaScript、Canvas/DO</text>
+<text x="800" y="276" text-anchor="middle" font-size="26" font-family="Songti SC, SimSun, Noto Serif CJK SC" fill="#172033">M 可视化</text>
+<rect x="330" y="325" width="940" height="92" rx="8" fill="#f2fbf3" stroke="#2f6b3f" stroke-width="2"/><text x="800" y="362" text-anchor="middle" font-size="26" font-family="Songti SC, SimSun, Noto Serif CJK SC" fill="#172033">实时通信层：HTTP 请求与 WebSocket 双向状态广播</text>
+<rect x="330" y="445" width="940" height="92" rx="8" fill="#fff7e8" stroke="#9a6b1f" stroke-width="2"/><text x="800" y="482" text-anchor="middle" font-size="26" font-family="Songti SC, SimSun, Noto Serif CJK SC" fill="#172033">后端服务层：Node.js、Express、情景引擎、收益评分模块</text>
+<rect x="330" y="565" width="940" height="92" rx="8" fill="#eef2ff" stroke="#4f46e5" stroke-width="2"/><text x="800" y="602" text-anchor="middle" font-size="26" font-family="Songti SC, SimSun, Noto Serif CJK SC" fill="#172033">数据与验证层：历史行情文件、测试脚本、浏览器截图、Word 渲染</text>
+<line x1="800" y1="297" x2="800" y2="325" stroke="#315f9a" stroke-width="4" marker-end="url(#arrow)"/>
+<line x1="800" y1="417" x2="800" y2="445" stroke="#315f9a" stroke-width="4" marker-end="url(#arrow)"/>
+<line x1="800" y1="537" x2="800" y2="565" stroke="#315f9a" stroke-width="4" marker-end="url(#arrow)"/>
+</svg>

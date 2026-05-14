@@ -1,0 +1,175 @@
+{
+  "removals": [
+    {
+      "caption_anchor": "图1-1 技术路线图"
+    },
+    {
+      "caption_anchor": "图3-2 系统活动图"
+    }
+  ],
+  "replacements": [
+    {
+      "caption_anchor": "图5-1 医生管理界面",
+      "caption_text": "图5-1 医生管理界面",
+      "image": "images/system_screenshots/fig5_1_doctor_manage_chrome.png",
+      "width_mm": 150
+    },
+    {
+      "caption_anchor": "图5-3 患者管理界面",
+      "caption_text": "图5-3 患者管理界面",
+      "image": "images/system_screenshots/fig5_3_patient_manage_chrome.png",
+      "width_mm": 150
+    },
+    {
+      "caption_anchor": "图5-9随访任务分配界面",
+      "caption_text": "图5-9 随访任务分配界面",
+      "image": "images/system_screenshots/fig5_9_followup_task_chrome.png",
+      "width_mm": 150
+    },
+    {
+      "caption_anchor": "图5-11 数据与统计界面",
+      "caption_text": "图5-11 数据与统计界面",
+      "image": "images/system_screenshots/fig5_11_statistics_chrome.png",
+      "width_mm": 150
+    },
+    {
+      "caption_anchor": "图3-1 系统一级功能结构图",
+      "caption_text": "图3-1 系统一级功能结构图",
+      "image": "images/imagegen/fig4_1_function_structure_imagegen.png",
+      "width_mm": 150
+    },
+    {
+      "caption_anchor": "图3-3 系统用例图",
+      "caption_text": "图3-3 系统用例图",
+      "image": "images/imagegen/fig3_3_use_case_imagegen.png",
+      "width_mm": 145
+    },
+    {
+      "caption_anchor": "图4-1 系统功能模块图",
+      "caption_text": "图4-2 系统功能模块图",
+      "image": "images/imagegen/fig4_1_function_structure_imagegen.png",
+      "width_mm": 150
+    },
+    {
+      "caption_anchor": "图4-6 系统E-R图",
+      "caption_text": "图4-5 系统核心E-R图",
+      "image": "images/imagegen/fig4_5_er_diagram_chen_total_v2.png",
+      "width_mm": 150
+    },
+    {
+      "caption_anchor": "图5-10 随访任务分配流程图",
+      "caption_text": "图5-10 随访任务分配流程图",
+      "image": "images/imagegen/fig5_10_followup_task_flow_imagegen.png",
+      "width_mm": 95
+    },
+    {
+      "caption_anchor": "图5-2 医生管理流程图",
+      "caption_text": "图5-2 医生管理流程图",
+      "image": "images/imagegen/fig5_2_doctor_manage_flow_imagegen_v2.png",
+      "width_mm": 95
+    },
+    {
+      "caption_anchor": "图5-4 患者管理流程图",
+      "caption_text": "图5-4 患者管理流程图",
+      "image": "images/imagegen/fig5_4_patient_manage_flow_imagegen_v2.png",
+      "width_mm": 95
+    },
+    {
+      "caption_anchor": "图5-6 药品管理流程图",
+      "caption_text": "图5-6 药品管理流程图",
+      "image": "images/imagegen/fig5_6_medicine_manage_flow_imagegen_v2.png",
+      "width_mm": 95
+    },
+    {
+      "caption_anchor": "图5-8 诊疗记录录入流程图",
+      "caption_text": "图5-8 诊疗记录录入流程图",
+      "image": "images/imagegen/fig5_8_medical_record_flow_imagegen_v2.png",
+      "width_mm": 95
+    },
+    {
+      "caption_anchor": "图5-12 数据与统计流程图",
+      "caption_text": "图5-12 数据与统计流程图",
+      "image": "images/imagegen/fig5_12_statistics_flow_imagegen_v2.png",
+      "width_mm": 95
+    }
+  ],
+  "insertions": [
+    {
+      "after_anchor": "根据系统的主要功能需求，系统主要活动图如图3-2所示。",
+      "intro": "",
+      "image": "images/imagegen/fig3_2_activity_imagegen.png",
+      "caption": "图3-2 系统活动图",
+      "width_mm": 150
+    },
+    {
+      "after_anchor": "这种结构将界面交互、业务逻辑和数据存储分开，既便于社区卫生服务中心在普通浏览器中使用系统，也有利于后续对功能模块、统计查询和数据表结构进行维护扩展。",
+      "intro": "结合前端、接口、业务服务和数据访问的分层关系，系统总体架构如图4-1所示。",
+      "image": "images/imagegen/fig4_1_system_architecture_imagegen.png",
+      "caption": "图4-1 系统架构图",
+      "width_mm": 150
+    },
+    {
+      "after_anchor": "系统对象模型如图4-3所示。",
+      "intro": "",
+      "image": "images/imagegen/fig4_2_class_diagram_imagegen.png",
+      "caption": "图4-3 系统对象模型图",
+      "width_mm": 150
+    },
+    {
+      "after_anchor": "图4-3 系统对象模型图",
+      "intro": "在随访任务处理过程中，社区医生通过前端页面查看待办任务并提交随访记录，后端控制器接收请求后调用业务服务完成记录保存和任务状态更新，主要调用过程如图4-4所示。",
+      "image": "images/imagegen/fig4_3_followup_sequence_imagegen.png",
+      "caption": "图4-4 随访任务处理顺序图",
+      "width_mm": 150
+    },
+    {
+      "after_anchor": "图4-5 系统核心E-R图",
+      "intro": "各核心数据表的主键和主要字段采用实体属性图表示，基础信息表实体属性图如图4-6所示。",
+      "image": "images/imagegen/fig4_6_basic_tables_attribute_er.png",
+      "caption": "图4-6 基础信息表实体属性图",
+      "width_mm": 150
+    },
+    {
+      "after_anchor": "图4-6 基础信息表实体属性图",
+      "intro": "业务记录类数据表的实体属性图如图4-7所示。",
+      "image": "images/imagegen/fig4_7_business_tables_attribute_er.png",
+      "caption": "图4-7 业务记录表实体属性图",
+      "width_mm": 150
+    },
+    {
+      "after_anchor": "为了说明医生管理页面从前端到数据库的调用关系，本文补充医生管理查询顺序图，如图5-16所示。",
+      "intro": "",
+      "image": "images/imagegen/fig5_16_doctor_query_sequence_imagegen.png",
+      "caption": "图5-16 医生管理查询顺序图",
+      "width_mm": 150
+    },
+    {
+      "after_anchor": "患者档案保存与风险等级设置的主要调用过程如图5-17所示。",
+      "intro": "",
+      "image": "images/imagegen/fig5_17_patient_risk_sequence_imagegen.png",
+      "caption": "图5-17 患者档案与风险等级设置顺序图",
+      "width_mm": 150
+    },
+    {
+      "after_anchor": "随访记录提交过程如图5-18所示。",
+      "intro": "",
+      "image": "images/imagegen/fig5_18_followup_record_sequence_imagegen.png",
+      "caption": "图5-18 随访记录提交顺序图",
+      "width_mm": 150
+    },
+    {
+      "after_anchor": "界面测试主要查看菜单、查询区、表格、弹窗和状态标签是否能够正常显示。测试时分别进入管理员端和医生端常用页面，检查按钮位置、提示信息和列表刷新情况，页面整体能够满足日常操作需要。",
+      "intro": "以患者管理页面为例，测试时检查查询区、表格区和操作按钮显示情况，界面测试截图如图6-1所示。",
+      "image": "images/system_screenshots/fig6_1_test_patient_page_chrome.png",
+      "caption": "图6-1 患者管理界面测试截图",
+      "width_mm": 150
+    },
+    {
+      "after_anchor": "功能测试围绕管理员端和社区医生端的常用操作展开。测试时先准备基础数据，再分别检查新增、查询、修改、状态变更、记录保存和报告生成等场景，测试表记录测试条件、处理过程、预期表现和实际结果。",
+      "intro": "以随访任务分配页面为例，测试时重点检查任务状态、计划日期和操作按钮是否与业务流程一致，功能测试截图如图6-2所示。",
+      "image": "images/system_screenshots/fig6_2_test_followup_task_chrome.png",
+      "caption": "图6-2 随访任务分配功能测试截图",
+      "width_mm": 150
+    }
+  ]
+}

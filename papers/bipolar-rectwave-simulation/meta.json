@@ -1,0 +1,21 @@
+{
+  "title_zh": "双极性矩形波发射控制系统设计",
+  "title_en": "Design of a Bipolar Rectangular Wave Transmission Control System",
+  "name": "",
+  "student_id": "",
+  "class_name": "",
+  "advisor": "",
+  "finish_date": "2026年5月13日",
+  "abstract_zh_list": [
+    "针对低频发射与实验测试场景中双极性矩形波输出频率、幅值和触发方式需要灵活控制的问题，本文设计了一种基于STM32的双极性矩形波发射控制系统。系统以STM32F103C8T6为核心控制器，结合AD9850 DDS波形发生器、AD5683R幅值设定DAC、ADG884极性切换电路以及功率放大与反馈采样模块，实现12.5Hz及其倍频矩形波的数字化控制和双极性等效输出。",
+    "论文首先分析双极性矩形波发射控制系统的研究背景、技术路线和主要性能指标，随后完成系统总体方案、硬件电路、软件控制逻辑和Proteus仿真验证设计。硬件部分围绕电源输入与稳压、STM32最小系统、RS232通信、DDS波形生成、幅值设定、极性切换、功率放大与反馈采样等模块展开；软件部分采用模块化流程实现频率倍数调节、幅值档位调节、手动触发和外部同步触发等功能。",
+    "由于本课题当前以仿真验证为主，论文结合Keil编译日志、Proteus虚拟示波器截图、波形采样数据和测试统计表，对频率精度、幅值稳定性、占空比、响应时间和矩形波等效失真进行分析。结果表明，系统能够实现12.5Hz至100Hz范围内的倍频输出，幅值覆盖±5V至±20V，幅值稳定性最大误差约0.60%，控制响应小于1ms，满足毕业设计任务中对双极性矩形波发射控制系统的基本要求。"
+  ],
+  "keywords_zh": "STM32；双极性矩形波；AD9850；Proteus仿真；发射控制",
+  "abstract_en_list": [
+    "To address the need for flexible frequency, amplitude and trigger control of bipolar rectangular waves in low-frequency transmission and experimental test scenarios, this thesis designs a bipolar rectangular wave transmission control system based on STM32. The system adopts STM32F103C8T6 as the core controller and integrates an AD9850 DDS waveform generator, an AD5683R amplitude-setting DAC, an ADG884 polarity switching circuit, and a power amplification and feedback sampling module.",
+    "The thesis first analyzes the research background, technical route and key performance requirements of the bipolar rectangular wave control system. Then the overall scheme, hardware circuit, software control logic and Proteus simulation verification are designed. The hardware design covers power input and regulation, STM32 minimum system, RS232 communication, DDS waveform generation, amplitude setting, polarity switching, power amplification and feedback sampling. The software design implements frequency multiplication adjustment, amplitude setting, manual trigger and external synchronous trigger functions in a modular way.",
+    "Since the current project is mainly verified by simulation, Keil build logs, Proteus virtual oscilloscope screenshots, waveform sampling data and test statistics are used to analyze frequency accuracy, amplitude stability, duty cycle, response time and equivalent rectangular-wave distortion. The results show that the system can realize frequency-multiplied output from 12.5 Hz to 100 Hz, cover an amplitude range from ±5 V to ±20 V, keep the maximum amplitude stability error at about 0.60%, and achieve a control response shorter than 1 ms, meeting the basic design requirements."
+  ],
+  "keywords_en": "STM32; bipolar rectangular wave; AD9850; Proteus simulation; transmission control"
+}

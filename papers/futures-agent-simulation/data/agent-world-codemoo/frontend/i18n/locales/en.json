@@ -1,0 +1,240 @@
+{
+  "app": {
+    "title": "Futures Agent Simulation System",
+    "subtitle": "agent memory · decision · strategy evolution",
+    "connecting": "Connecting...",
+    "worldEditor": "World Editor"
+  },
+  "connection": {
+    "live": "Live",
+    "reconnecting": "Reconnecting...",
+    "error": "Connection Error"
+  },
+  "help": {
+    "title": "Keyboard shortcuts",
+    "subtitle": "Press ? to toggle. Hover an agent to preview; click to open details.",
+    "footer": "futures agent simulation · decision lab",
+    "closeHint": "Esc or ? to close",
+    "sections": {
+      "global": "Global",
+      "agentPanel": "Agent panel",
+      "editor": "Editor"
+    },
+    "shortcuts": {
+      "showHelp": "Show / hide this help",
+      "focusAgent": "Focus agent #N",
+      "closePanel": "Close session panel",
+      "closePanels": "Close panels & modals",
+      "toggleNames": "Toggle name tags",
+      "toggleMinimal": "Toggle minimal sprite preview",
+      "toggleEditor": "Toggle world editor (needs assets)",
+      "scrubTimeline": "Scrub timeline (bottom bar)",
+      "playPause": "Play / pause timeline",
+      "clickSprite": "Open session details",
+      "openTranscript": "Open transcript viewer",
+      "switchLive": "Switch to Live PTY",
+      "focusTerminal": "Bring the host Terminal to front",
+      "undo": "Undo",
+      "redo": "Redo",
+      "save": "Save layout",
+      "remove": "Remove selection",
+      "nudge": "Nudge ±1 tile",
+      "flip": "Flip horizontal / vertical"
+    }
+  },
+  "roster": {
+    "title": "Agents",
+    "tradingTitle": "Trading Agents",
+    "count": "{count} agents",
+    "empty": "No active agents"
+  },
+  "session": {
+    "status": {
+      "working": "Working",
+      "waiting": "Waiting",
+      "errored": "Errored",
+      "idle": "Idle",
+      "idleStale": "Stale",
+      "finished": "Done"
+    },
+    "labels": {
+      "repo": "repo",
+      "branch": "branch",
+      "model": "model",
+      "tool": "tool",
+      "pid": "pid",
+      "noLongerActive": "Session {id}… is no longer active."
+    },
+    "cost": {
+      "title": "session cost",
+      "input": "in",
+      "output": "out",
+      "cacheWrite": "cache W",
+      "cacheRead": "cache R",
+      "messages": "msg"
+    },
+    "flow": {
+      "title": "flow / 60s",
+      "peak": "peak {rate}"
+    },
+    "actions": {
+      "viewConversation": "View conversation",
+      "noConversation": "No conversation yet",
+      "focusTerminal": "Focus terminal",
+      "close": "Close",
+      "noTranscript": "no transcript yet"
+    },
+    "footer": "Esc · close · T transcript · L live"
+  },
+  "trading": {
+    "decision": "decision",
+    "memory": "memory retrieved",
+    "strategy": "strategy patch",
+    "noDecision": "No decision yet.",
+    "confidence": "confidence {value}%",
+    "pnl": "PnL {value}",
+    "drawdown": "DD {value}",
+    "promptVersion": "prompt v{version}",
+    "actions": {
+      "BUY": "BUY",
+      "SELL": "SELL",
+      "HOLD": "HOLD"
+    },
+    "source": {
+      "llm": "Live model · {model}",
+      "pending": "Waiting for live model",
+      "simulated": "Simulated fallback"
+    }
+  },
+  "tradingHud": {
+    "aria": "Trading simulation briefing",
+    "scoreAria": "Strategy score panel",
+    "reportAria": "Prediction result statistics",
+    "flowAria": "Agent decision flow",
+    "unknown": "unknown",
+    "trainingSlice": "Training slice: {regime} · long-horizon daily decisions",
+    "marketBoard": "Market board",
+    "newsMemory": "News entering memory",
+    "scoreTitle": "Strategy Scores",
+    "scoreSubtitle": "multi-agent cumulative scoring · train · fixed test",
+    "scoreMethod": "Scoring method",
+    "trainingWindow": "Training",
+    "testWindow": "Test",
+    "strategyPool": "Strategy pool",
+    "poolAdopt": "Adopt next round",
+    "poolWatch": "Watch",
+    "poolRemove": "Downweight / remove",
+    "agentScores": "Agent ranking",
+    "score": "score",
+    "trainingScore": "train",
+    "testScore": "test",
+    "hitRate": "hit",
+    "drawdown": "DD {value}",
+    "lastTrade": "last: {action} {symbol} / {score}",
+    "noTrade": "no completed trade",
+    "noScores": "No score data yet",
+    "reportTitle": "Prediction Result Analysis",
+    "reportSubtitle": "{date} · cumulative {rounds}/{total} rounds · {decisions} decisions",
+    "reportCached": "restored after refresh",
+    "reportCollapse": "Collapse",
+    "reportExpand": "Expand",
+    "reportKpi": "Key metrics",
+    "bestAgent": "Best agent",
+    "sampleCount": "trades scored",
+    "cumulativeRounds": "cumulative rounds",
+    "agentDecisionCount": "agent decisions",
+    "avgHitRate": "avg hit rate",
+    "avgDrawdown": "avg drawdown",
+    "alphaSpread": "alpha spread",
+    "scoreChart": "Train/test score comparison",
+    "equityChart": "Best strategy equity curve",
+    "actionDistribution": "Action mix",
+    "equityAxis": "Equity range {min} to {max}",
+    "reportScope": "Cumulative statistics through round {rounds}, covering {decisions} agent trade decisions.",
+    "agentBreakdownTitle": "Cumulative agent performance",
+    "agentBreakdownHint": "{rounds} rounds · {decisions} decisions",
+    "tradeCount": "{count} trades",
+    "winsLosses": "W/L",
+    "failureRate": "loss rate",
+    "bestTrade": "best",
+    "worstTrade": "worst",
+    "failurePoints": "Failure points",
+    "repairPlan": "Strategy repair",
+    "noFailures": "No losing trades yet; keep watching stability across later rounds.",
+    "defaultRepairPlan": "Keep the current strategy frame and adjust the prompt after more samples accumulate.",
+    "steps": {
+      "news": "News",
+      "memory": "Memory",
+      "debate": "Debate",
+      "trade": "Trade",
+      "patch": "Patch"
+    }
+  },
+  "eventLog": {
+    "title": "Events",
+    "aria": "Event log",
+    "empty": "no events yet",
+    "toolFallback": "tool",
+    "kinds": {
+      "sessionStarted": "session started",
+      "sessionEnded": "session ended",
+      "statusChanged": "status changed",
+      "toolInvoked": "tool invoked"
+    },
+    "labels": {
+      "sessionStarted": "{name} started",
+      "sessionEnded": "{name} signed off",
+      "statusChanged": "{name} · {from} → {to}",
+      "toolInvoked": "{name} · {icon} {tool}"
+    },
+    "time": {
+      "now": "now",
+      "seconds": "{n}s",
+      "minutes": "{n}m",
+      "hours": "{n}h"
+    }
+  },
+  "permission": {
+    "title": "Permission requested",
+    "actions": {
+      "allow": "Allow",
+      "deny": "Deny",
+      "focus": "Focus terminal"
+    },
+    "hint": "Decision is sent to the waiting claude hook. Timeout falls back to the CLI prompt.",
+    "fallbackHint": "Install the PreToolUse hook to Allow/Deny from this page. Until then, respond in the host terminal.",
+    "fallbackTitle": "Waiting for permission",
+    "noInput": "(no input preview)"
+  },
+  "timeline": {
+    "title": "Timeline",
+    "live": "LIVE",
+    "paused": "PAUSED",
+    "returnLive": "Return to live (Space)"
+  },
+  "budget": {
+    "title": "World Budget",
+    "total": "Total",
+    "perSession": "Per Session",
+    "titleAttr": "Token flow across all live sessions · click for breakdown",
+    "tokens": "tok",
+    "messages": "msg",
+    "popoverTitle": "Per-session tokens",
+    "totalFlow": "Total flow",
+    "hint": "in ↓ / out ↑ / cache from transcript tails"
+  },
+  "assets": {
+    "dismiss": "Dismiss",
+    "minimalMode": "◇ Minimal mode",
+    "minimalPreview": "◇ Minimal preview (M)",
+    "forcedBody": "Previewing without sprite assets. Press <kbd>M</kbd> to restore the full sprite view. Your choice is remembered.",
+    "missingBody": "Running without sprite assets. The app is using procedural fallback art so the agent decision flow remains visible."
+  },
+  "editor": {
+    "toggle": "Edit"
+  },
+  "language": {
+    "selector": "Language selector",
+    "select": "Select language"
+  }
+}

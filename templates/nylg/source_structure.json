@@ -1,0 +1,82 @@
+{
+  "school": "南阳理工学院",
+  "source": "source.docx",
+  "template": "template.docx",
+  "anchors": {
+    "outer_cover": {
+      "college": 13,
+      "major": 14,
+      "name": 15,
+      "advisor": 16,
+      "date_year": 26,
+      "date_month": 26
+    },
+    "inner_cover": {
+      "title_zh": 36,
+      "title_en": 39,
+      "page_count": 51,
+      "table_count": 52,
+      "figure_count": 53,
+      "title_zh_2": 65,
+      "title_en_2": 67,
+      "college": 71,
+      "major": 72,
+      "name": 73,
+      "student_id": 74,
+      "advisor": 75,
+      "advisor_title": 75,
+      "reviewer": 76,
+      "date_year": 77,
+      "date_month": 77,
+      "major_name_cn": 90,
+      "title_en_3": 108,
+      "major_name_en": 109
+    },
+    "abstract": {
+      "abstract_zh": 91,
+      "keywords_zh": 92,
+      "abstract_en": 110,
+      "keywords_en": 111
+    },
+    "body": {
+      "h1": 192,
+      "h2": 193,
+      "h3": 194,
+      "sample": 317,
+      "start": 192,
+      "end": 641
+    },
+    "references": {
+      "heading": 641,
+      "sample": 642
+    },
+    "acknowledgement": {
+      "heading": 662,
+      "body": 663
+    }
+  },
+  "placeholders": [
+    "title_zh",
+    "title_en",
+    "name",
+    "name_en",
+    "student_id",
+    "college",
+    "major",
+    "major_en",
+    "advisor",
+    "advisor_title",
+    "reviewer",
+    "year",
+    "month",
+    "page_count",
+    "table_count",
+    "figure_count",
+    "abstract_zh",
+    "keywords_zh",
+    "abstract_en",
+    "keywords_en",
+    "acknowledgement",
+    "references"
+  ]
+}

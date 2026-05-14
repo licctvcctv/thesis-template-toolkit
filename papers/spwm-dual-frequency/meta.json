@@ -1,0 +1,21 @@
+{
+  "title_zh": "基于SPWM的375Hz与900Hz双频高质量发射优化设计",
+  "title_en": "Optimization Design of High-quality Dual-frequency Transmission at 375 Hz and 900 Hz Based on SPWM",
+  "name": "王翔",
+  "student_id": "202214010124",
+  "class_name": "自动化22101",
+  "advisor": "王圣捷、孙一书",
+  "finish_date": "2026年5月9日",
+  "abstract_zh_list": [
+    "针对375Hz与900Hz双频发射场景中波形质量、频率稳定性和硬件实现复杂度之间难以兼顾的问题，本文设计了一种基于SPWM思想与STM32控制平台的双频高质量发射系统。系统以STM32F103C8T6为控制核心，结合AD9833 DDS信号发生模块完成双频基准信号输出，并通过输出滤波、幅值调节、功率放大和阻抗变换等环节提高输出信号的可用性与稳定性。",
+    "论文首先分析SPWM调制、DDS频率合成和双频信号输出的基本原理，建立频率控制字、采样点序列和相位连续切换之间的关系；随后完成系统总体方案、硬件电路和软件流程设计，重点说明AD9833接口、STM32最小系统、电源去耦、SPI通信、查表输出与按键/串口调节等实现方法。为验证设计可行性，本文结合Proteus仿真、Keil工程和实物平台进行调试，并对375Hz与900Hz两种目标频率的输出结果进行统计分析。",
+    "测试结果表明，系统在375Hz和900Hz输出状态下均能够保持稳定工作，实测频率误差控制在较小范围内，输出波形状态正常，满足双频发射系统的基本设计要求。该设计具有结构清晰、成本较低、可扩展性较好和便于二次开发等特点，可为低频双频信号源、实验教学平台和小型发射控制系统设计提供参考。"
+  ],
+  "keywords_zh": "SPWM；双频发射；STM32；AD9833；DDS",
+  "abstract_en_list": [
+    "Aiming at the difficulty of balancing waveform quality, frequency stability and hardware complexity in 375 Hz and 900 Hz dual-frequency transmission, this thesis designs a high-quality dual-frequency transmission system based on SPWM concept and STM32 control platform. STM32F103C8T6 is used as the main controller, and the AD9833 DDS signal generation module is adopted to generate dual-frequency reference signals. Output filtering, amplitude adjustment, power amplification and impedance transformation are introduced to improve signal usability and stability.",
+    "The thesis first analyzes the basic principles of SPWM modulation, DDS frequency synthesis and dual-frequency signal output, and then establishes the relationship among frequency control words, sampling sequences and phase-continuous switching. On this basis, the overall scheme, hardware circuit and software process are designed. The implementation of AD9833 interface, STM32 minimum system, power decoupling, SPI communication, lookup-table output and key/serial adjustment is discussed in detail. Proteus simulation, Keil project debugging and physical tests are carried out to verify the feasibility of the design.",
+    "The test results show that the system can operate stably at both 375 Hz and 900 Hz. The measured frequency errors are small and the output waveform status is normal, which meets the basic requirements of the dual-frequency transmission system. The design has a clear structure, low cost, good extensibility and convenient secondary development, and can provide a reference for low-frequency dual-frequency signal sources, experimental teaching platforms and small transmission control systems."
+  ],
+  "keywords_en": "SPWM; dual-frequency transmission; STM32; AD9833; DDS"
+}

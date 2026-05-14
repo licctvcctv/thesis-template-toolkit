@@ -1,0 +1,556 @@
+{
+  "currentDate": "2025-10-08",
+  "trainingWindow": "2016-02-11 → 2018-05-09",
+  "testWindow": "2018-05-09 → 2026-01-12",
+  "completedRoundCount": 22,
+  "totalAgentDecisions": 88,
+  "trainingTrades": 3,
+  "testTrades": 19,
+  "averageHitRate": 35.3,
+  "averageDrawdown": 39.14,
+  "alphaSpread": 46.34,
+  "actionDistribution": {
+    "BUY": 30,
+    "SELL": 22,
+    "HOLD": 36
+  },
+  "conclusions": [
+    "激进型当前综合得分最高，适合作为下一轮策略采样的主候选。",
+    "训练段优势来自激进型，测试段表现最好的是激进型，用于判断策略是否泛化。",
+    "均衡型最大回撤为 55.17，是后续 prompt 修正的主要风险样本。"
+  ],
+  "scoreBars": [
+    {
+      "agentId": "aggressive-breakout",
+      "role": "激进型",
+      "symbol": "ZS",
+      "totalScore": 25.59,
+      "trainingScore": 15.76,
+      "testScore": 9.84,
+      "maxDrawdown": 35.79,
+      "hitRate": 40.9,
+      "tradeCount": 22,
+      "lossCount": 13,
+      "recommendation": "adopt"
+    },
+    {
+      "agentId": "conservative-hedger",
+      "role": "保守型",
+      "symbol": "GC",
+      "totalScore": -0.71,
+      "trainingScore": -0.42,
+      "testScore": -0.3,
+      "maxDrawdown": 34.22,
+      "hitRate": 36.4,
+      "tradeCount": 22,
+      "lossCount": 14,
+      "recommendation": "remove"
+    },
+    {
+      "agentId": "balanced-strategist",
+      "role": "均衡型",
+      "symbol": "CL",
+      "totalScore": -4.13,
+      "trainingScore": -11.77,
+      "testScore": 7.63,
+      "maxDrawdown": 55.17,
+      "hitRate": 36.4,
+      "tradeCount": 22,
+      "lossCount": 13,
+      "recommendation": "remove"
+    },
+    {
+      "agentId": "memory-auditor",
+      "role": "记忆审计",
+      "symbol": "GC",
+      "totalScore": -20.75,
+      "trainingScore": -3.58,
+      "testScore": -17.17,
+      "maxDrawdown": 31.39,
+      "hitRate": 27.3,
+      "tradeCount": 22,
+      "lossCount": 16,
+      "recommendation": "remove"
+    }
+  ],
+  "agentBreakdowns": [
+    {
+      "agentId": "aggressive-breakout",
+      "role": "激进型",
+      "style": "当动量和资讯共振时提前行动，接受更大的阶段性回撤。",
+      "symbol": "ZS",
+      "totalScore": 25.59,
+      "rawScore": 22.72,
+      "trainingScore": 15.76,
+      "testScore": 9.84,
+      "maxDrawdown": 35.79,
+      "hitRate": 40.9,
+      "tradeCount": 22,
+      "winCount": 9,
+      "lossCount": 13,
+      "failureRate": 59.1,
+      "actionDistribution": {
+        "BUY": 10,
+        "SELL": 7,
+        "HOLD": 5
+      },
+      "recommendation": "adopt",
+      "recommendationLabel": "采纳",
+      "recommendationText": "当前累计排名第一，下一轮提高该策略采样概率。",
+      "bestTrade": {
+        "round": 2,
+        "actionLabel": "买入",
+        "symbol": "ZS",
+        "scoreDelta": 22
+      },
+      "worstTrade": {
+        "round": 7,
+        "actionLabel": "买入",
+        "symbol": "ZS",
+        "scoreDelta": -18
+      },
+      "failurePoints": [
+        {
+          "round": 7,
+          "date": "2020-01-15",
+          "exitDate": "2020-04-20",
+          "regime": "第一阶段协议",
+          "action": "BUY",
+          "actionLabel": "买入",
+          "symbol": "ZS",
+          "scoreDelta": -18,
+          "entry": 121.70916388779409,
+          "exit": 98.1098484848487,
+          "reason": "第 7 轮 买入 ZS 后记 -18.00 分。"
+        },
+        {
+          "round": 11,
+          "date": "2021-11-08",
+          "exitDate": "2022-03-08",
+          "regime": "紧缩预期",
+          "action": "SELL",
+          "actionLabel": "卖出",
+          "symbol": "ZS",
+          "scoreDelta": -18,
+          "entry": 143.09294040008018,
+          "exit": 198.37210482298696,
+          "reason": "第 11 轮 卖出 ZS 后记 -18.00 分。"
+        },
+        {
+          "round": 15,
+          "date": "2023-05-03",
+          "exitDate": "2023-10-05",
+          "regime": "银行业危机",
+          "action": "BUY",
+          "actionLabel": "买入",
+          "symbol": "ZS",
+          "scoreDelta": -18,
+          "entry": 182.072961228226,
+          "exit": 155.73192424079699,
+          "reason": "第 15 轮 买入 ZS 后记 -18.00 分。"
+        }
+      ],
+      "failureSummary": "激进型 累计 13/22 轮失分，最大失分来自第 7 轮 买入 ZS。",
+      "repairPlan": "把最大失分回合加入记忆检索，遇到相似价格结构时先降权。 降低连续同向开仓权重，先控制回撤再追求收益。"
+    },
+    {
+      "agentId": "conservative-hedger",
+      "role": "保守型",
+      "style": "先保本金。至少等待两个信号互相确认后，才逐步增加仓位。",
+      "symbol": "GC",
+      "totalScore": -0.71,
+      "rawScore": -3.59,
+      "trainingScore": -0.42,
+      "testScore": -0.3,
+      "maxDrawdown": 34.22,
+      "hitRate": 36.4,
+      "tradeCount": 22,
+      "winCount": 8,
+      "lossCount": 14,
+      "failureRate": 63.6,
+      "actionDistribution": {
+        "BUY": 8,
+        "SELL": 5,
+        "HOLD": 9
+      },
+      "recommendation": "remove",
+      "recommendationLabel": "淘汰",
+      "recommendationText": "收益/回撤排名靠后，下一轮降低权重或移除该策略。",
+      "bestTrade": {
+        "round": 21,
+        "actionLabel": "买入",
+        "symbol": "GC",
+        "scoreDelta": 13.98
+      },
+      "worstTrade": {
+        "round": 5,
+        "actionLabel": "卖出",
+        "symbol": "GC",
+        "scoreDelta": -10.5
+      },
+      "failurePoints": [
+        {
+          "round": 5,
+          "date": "2018-12-20",
+          "exitDate": "2019-08-05",
+          "regime": "贸易战升级",
+          "action": "SELL",
+          "actionLabel": "卖出",
+          "symbol": "GC",
+          "scoreDelta": -10.5,
+          "entry": 1291.75,
+          "exit": 1500.41,
+          "reason": "第 5 轮 卖出 GC 后记 -10.50 分。"
+        },
+        {
+          "round": 8,
+          "date": "2020-04-20",
+          "exitDate": "2020-08-07",
+          "regime": "疫情错位",
+          "action": "SELL",
+          "actionLabel": "卖出",
+          "symbol": "GC",
+          "scoreDelta": -9.57,
+          "entry": 1715.91,
+          "exit": 1968.63,
+          "reason": "第 8 轮 卖出 GC 后记 -9.57 分。"
+        },
+        {
+          "round": 11,
+          "date": "2021-11-08",
+          "exitDate": "2022-03-08",
+          "regime": "紧缩预期",
+          "action": "SELL",
+          "actionLabel": "卖出",
+          "symbol": "GC",
+          "scoreDelta": -4.5,
+          "entry": 1821.76,
+          "exit": 1947.83,
+          "reason": "第 11 轮 卖出 GC 后记 -4.50 分。"
+        }
+      ],
+      "failureSummary": "保守型 累计 14/22 轮失分，最大失分来自第 5 轮 卖出 GC。",
+      "repairPlan": "把最大失分回合加入记忆检索，遇到相似价格结构时先降权。 降低连续同向开仓权重，先控制回撤再追求收益。"
+    },
+    {
+      "agentId": "balanced-strategist",
+      "role": "均衡型",
+      "style": "综合宏观资讯、价格趋势和回撤压力，偏好分批进出。",
+      "symbol": "CL",
+      "totalScore": -4.13,
+      "rawScore": -7.01,
+      "trainingScore": -11.77,
+      "testScore": 7.63,
+      "maxDrawdown": 55.17,
+      "hitRate": 36.4,
+      "tradeCount": 22,
+      "winCount": 8,
+      "lossCount": 13,
+      "failureRate": 59.1,
+      "actionDistribution": {
+        "BUY": 10,
+        "SELL": 6,
+        "HOLD": 6
+      },
+      "recommendation": "remove",
+      "recommendationLabel": "淘汰",
+      "recommendationText": "收益/回撤排名靠后，下一轮降低权重或移除该策略。",
+      "bestTrade": {
+        "round": 9,
+        "actionLabel": "买入",
+        "symbol": "CL",
+        "scoreDelta": 22
+      },
+      "worstTrade": {
+        "round": 4,
+        "actionLabel": "买入",
+        "symbol": "CL",
+        "scoreDelta": -18
+      },
+      "failurePoints": [
+        {
+          "round": 4,
+          "date": "2018-05-09",
+          "exitDate": "2018-12-20",
+          "regime": "贸易摩擦",
+          "action": "BUY",
+          "actionLabel": "买入",
+          "symbol": "CL",
+          "scoreDelta": -18,
+          "entry": 69.98,
+          "exit": 49.52,
+          "reason": "第 4 轮 买入 CL 后记 -18.00 分。"
+        },
+        {
+          "round": 8,
+          "date": "2020-04-20",
+          "exitDate": "2020-08-07",
+          "regime": "疫情错位",
+          "action": "SELL",
+          "actionLabel": "卖出",
+          "symbol": "CL",
+          "scoreDelta": -18,
+          "entry": 16.55,
+          "exit": 42.34,
+          "reason": "第 8 轮 卖出 CL 后记 -18.00 分。"
+        },
+        {
+          "round": 11,
+          "date": "2021-11-08",
+          "exitDate": "2022-03-08",
+          "regime": "紧缩预期",
+          "action": "SELL",
+          "actionLabel": "卖出",
+          "symbol": "CL",
+          "scoreDelta": -18,
+          "entry": 79.15,
+          "exit": 108.5,
+          "reason": "第 11 轮 卖出 CL 后记 -18.00 分。"
+        }
+      ],
+      "failureSummary": "均衡型 累计 13/22 轮失分，最大失分来自第 4 轮 买入 CL。",
+      "repairPlan": "把最大失分回合加入记忆检索，遇到相似价格结构时先降权。 降低连续同向开仓权重，先控制回撤再追求收益。"
+    },
+    {
+      "agentId": "memory-auditor",
+      "role": "记忆审计",
+      "style": "质疑拥挤交易，检索相似失败案例，并在每一季后修正提示词。",
+      "symbol": "GC",
+      "totalScore": -20.75,
+      "rawScore": -23.62,
+      "trainingScore": -3.58,
+      "testScore": -17.17,
+      "maxDrawdown": 31.39,
+      "hitRate": 27.3,
+      "tradeCount": 22,
+      "winCount": 6,
+      "lossCount": 16,
+      "failureRate": 72.7,
+      "actionDistribution": {
+        "BUY": 2,
+        "SELL": 4,
+        "HOLD": 16
+      },
+      "recommendation": "remove",
+      "recommendationLabel": "淘汰",
+      "recommendationText": "收益/回撤排名靠后，下一轮降低权重或移除该策略。",
+      "bestTrade": {
+        "round": 17,
+        "actionLabel": "买入",
+        "symbol": "GC",
+        "scoreDelta": 11.54
+      },
+      "worstTrade": {
+        "round": 5,
+        "actionLabel": "卖出",
+        "symbol": "GC",
+        "scoreDelta": -12.11
+      },
+      "failurePoints": [
+        {
+          "round": 5,
+          "date": "2018-12-20",
+          "exitDate": "2019-08-05",
+          "regime": "贸易战升级",
+          "action": "SELL",
+          "actionLabel": "卖出",
+          "symbol": "GC",
+          "scoreDelta": -12.11,
+          "entry": 1291.75,
+          "exit": 1500.41,
+          "reason": "第 5 轮 卖出 GC 后记 -12.11 分。"
+        },
+        {
+          "round": 8,
+          "date": "2020-04-20",
+          "exitDate": "2020-08-07",
+          "regime": "疫情错位",
+          "action": "SELL",
+          "actionLabel": "卖出",
+          "symbol": "GC",
+          "scoreDelta": -11.05,
+          "entry": 1715.91,
+          "exit": 1968.63,
+          "reason": "第 8 轮 卖出 GC 后记 -11.05 分。"
+        },
+        {
+          "round": 11,
+          "date": "2021-11-08",
+          "exitDate": "2022-03-08",
+          "regime": "紧缩预期",
+          "action": "SELL",
+          "actionLabel": "卖出",
+          "symbol": "GC",
+          "scoreDelta": -5.19,
+          "entry": 1821.76,
+          "exit": 1947.83,
+          "reason": "第 11 轮 卖出 GC 后记 -5.19 分。"
+        }
+      ],
+      "failureSummary": "记忆审计 累计 16/22 轮失分，最大失分来自第 5 轮 卖出 GC。",
+      "repairPlan": "把最大失分回合加入记忆检索，遇到相似价格结构时先降权。 降低连续同向开仓权重，先控制回撤再追求收益。"
+    }
+  ],
+  "topEquityCurve": [
+    {
+      "date": "2016-02-11",
+      "value": 0,
+      "phase": "start",
+      "label": "起点"
+    },
+    {
+      "date": "2016-09-28",
+      "value": -2.2,
+      "phase": "training",
+      "action": "BUY",
+      "scoreDelta": -2.2
+    },
+    {
+      "date": "2017-06-15",
+      "value": 19.8,
+      "phase": "training",
+      "action": "BUY",
+      "scoreDelta": 22
+    },
+    {
+      "date": "2018-05-09",
+      "value": 19.21,
+      "phase": "training",
+      "action": "HOLD",
+      "scoreDelta": -0.59
+    },
+    {
+      "date": "2018-12-20",
+      "value": 17.94,
+      "phase": "test",
+      "action": "HOLD",
+      "scoreDelta": -1.27
+    },
+    {
+      "date": "2019-08-05",
+      "value": 39.94,
+      "phase": "test",
+      "action": "SELL",
+      "scoreDelta": 22
+    },
+    {
+      "date": "2020-01-15",
+      "value": 54.7,
+      "phase": "test",
+      "action": "BUY",
+      "scoreDelta": 14.76
+    },
+    {
+      "date": "2020-04-20",
+      "value": 36.7,
+      "phase": "test",
+      "action": "BUY",
+      "scoreDelta": -18
+    },
+    {
+      "date": "2020-08-07",
+      "value": 48.61,
+      "phase": "test",
+      "action": "SELL",
+      "scoreDelta": 11.91
+    },
+    {
+      "date": "2021-05-12",
+      "value": 43.83,
+      "phase": "test",
+      "action": "HOLD",
+      "scoreDelta": -4.78
+    },
+    {
+      "date": "2021-11-08",
+      "value": 44.99,
+      "phase": "test",
+      "action": "BUY",
+      "scoreDelta": 1.16
+    },
+    {
+      "date": "2022-03-08",
+      "value": 26.99,
+      "phase": "test",
+      "action": "SELL",
+      "scoreDelta": -18
+    },
+    {
+      "date": "2022-06-15",
+      "value": 26,
+      "phase": "test",
+      "action": "HOLD",
+      "scoreDelta": -0.99
+    },
+    {
+      "date": "2022-11-10",
+      "value": 48,
+      "phase": "test",
+      "action": "SELL",
+      "scoreDelta": 22
+    },
+    {
+      "date": "2023-05-03",
+      "value": 57.91,
+      "phase": "test",
+      "action": "BUY",
+      "scoreDelta": 9.91
+    },
+    {
+      "date": "2023-10-05",
+      "value": 39.91,
+      "phase": "test",
+      "action": "BUY",
+      "scoreDelta": -18
+    },
+    {
+      "date": "2024-04-12",
+      "value": 27.77,
+      "phase": "test",
+      "action": "SELL",
+      "scoreDelta": -12.14
+    },
+    {
+      "date": "2024-09-18",
+      "value": 29.47,
+      "phase": "test",
+      "action": "BUY",
+      "scoreDelta": 1.7
+    },
+    {
+      "date": "2025-01-17",
+      "value": 28.52,
+      "phase": "test",
+      "action": "BUY",
+      "scoreDelta": -0.95
+    },
+    {
+      "date": "2025-04-22",
+      "value": 25.75,
+      "phase": "test",
+      "action": "SELL",
+      "scoreDelta": -2.77
+    },
+    {
+      "date": "2025-07-15",
+      "value": 25.44,
+      "phase": "test",
+      "action": "SELL",
+      "scoreDelta": -0.31
+    },
+    {
+      "date": "2025-10-08",
+      "value": 22.12,
+      "phase": "test",
+      "action": "BUY",
+      "scoreDelta": -3.32
+    },
+    {
+      "date": "2026-01-12",
+      "value": 22.72,
+      "phase": "test",
+      "action": "HOLD",
+      "scoreDelta": 0.6
+    }
+  ]
+}

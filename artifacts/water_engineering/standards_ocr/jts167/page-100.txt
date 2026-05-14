@@ -1,0 +1,33 @@
+6 me BS
+Eg Fee A Fe J HTT EP EERE aH RE
+(KN) ,按第 6.1.11 条规定计算,计算时土与墙面间的摩擦角取零;
+已,一一锚达板和锚奉墙前被动士压力水平分为的标准值(KN) ,按式(6.3. 11-1) 、
+式(6.3.11-2)计算;
+多一一抗力分项系数,取1.25。
+6.3.11.3 ” 错达板和错达墙到前墙的最小距离(图 6.3.11 ) 宜按下式计算:
+L = Hyun 45° aa + ttan{ 45°42)               (6.3. 11-4)
+skp L——Fiie the Fae Ha ET PB (m) ;
+A,B es Ee ek Te BE (om) , RA it SEA BRS
+顶面的距离,采用坚向弹性地基梁法时取变形第一零点到码头项面的距离;
+2 2:一一分别为前墙后侧土的内摩擦角(*) PE HG .错奉板前土或填料的内摩擦角
+(?) ,当土体分层时,可采用加权平均值;
+几一一锚奏板和锚矿墙底端至码头顶面的埋深(m ) -
+L
+REREREERE I
+_                                 =~    | <
+|   | /            和
+x                               S45       2
+17 aso
+图6.3.11 FARES AR) BA) RTS
+4) ARTES Fa LAR AS ER AE A )前土体的被动破改面的交点 d BS AB ARC in)
+6.3. 11.4 ”当锚寿板和锚奉墙到前墙的距离不能满足式(6. 3. 11-4) 的要求时,式
+(6.3.11-3 ) 中的错奉板和错达墙前的被动士压力水平分为的标准值应减去按式(6.3.11-5)计
+AE = "ik                             (6.3. 11-5)
+式中 AR, ——#ea + Ee Fo EE ACF ot A MEK) ;
+y— Ag EH Ys Ea 0) Eo iS eA eH BT LK BS TB 3
+Ad VW EASE (kN/m’) ;
+4 FEHB Js LAR AY Es Se aH ER 8 es 1 3S
+点到码头项面的距离(m) ;
+/一一拉杆间距(my) ;
+天-被动十压力系数。
+91

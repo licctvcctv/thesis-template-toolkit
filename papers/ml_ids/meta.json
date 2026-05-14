@@ -1,0 +1,23 @@
+{
+  "title_zh": "基于机器学习的网络入侵检测系统的设计与实现",
+  "title_en": "Design and Implementation of a Network Intrusion Detection System Based on Machine Learning",
+  "name": "",
+  "student_id": "",
+  "college": "",
+  "major": "",
+  "class_name": "",
+  "advisor": "",
+  "finish_date": "2026年5月",
+  "abstract_zh_list": [
+    "当前网络安全环境日益复杂，传统基于规则库的入侵检测方式主要依赖已知攻击特征，对未知变种、低频探测和混合攻击的识别能力有限，容易出现误报率偏高、规则维护滞后和适应性不足等问题。为提升网络威胁识别效率，本文设计并实现一套基于机器学习的网络入侵检测系统，通过多源流量采集、特征清洗、分类模型训练和可视化监控，形成从数据接入到异常告警的完整检测流程。",
+    "系统技术架构采用Django和MySQL搭建后端业务与持久化数据服务，利用Pandas完成流量字段清洗与统计特征组织，并通过后端模型训练模块实现决策树、K近邻、逻辑回归和支持向量机等模型训练与预测，借助ECharts展示流量趋势、异常类型、端口热力和模型评价结果。系统面向管理员和普通用户两类角色：管理员负责用户、部门、角色和日志等平台基础管理，普通用户负责系统监控、流量采集、算法实验对比和异常检测。",
+    "实验与系统运行结果表明，平台能够对CSV样本、上传数据、实时快照和模拟流量进行统一处理，模型评价指标覆盖准确率、精确率、召回率、F1值、误报率、漏报率和AUC等多个维度。系统能够降低人工筛查成本，增强异常流量识别与追溯能力，为中小规模网络环境下的安全监测提供可落地的实现方案。"
+  ],
+  "keywords_zh": "入侵检测；机器学习；流量分析；模型评估；网络安全",
+  "abstract_en_list": [
+    "The current network security environment is increasingly complex. Traditional rule-based intrusion detection methods rely heavily on known signatures, and they often perform poorly when facing unknown variants, low-frequency probing and mixed attacks. To improve the efficiency of network threat identification, this thesis designs and implements a machine-learning-based network intrusion detection system. The system builds a complete detection workflow from multi-source traffic acquisition, feature cleaning and model training to real-time anomaly warning and visualization.",
+    "The system adopts Django and MySQL to implement backend services and persistent storage, uses Pandas for traffic feature cleaning and statistical feature organization, implements decision tree, k-nearest neighbors, logistic regression and support vector machine training through backend model modules, and integrates ECharts to present traffic trends, anomaly types, port heat maps and model evaluation results. Administrators are responsible for user, department, role and log management, while ordinary users can perform system monitoring, traffic acquisition, algorithm comparison and anomaly detection.",
+    "The experimental results show that the platform can uniformly process static CSV samples, uploaded data, real-time snapshots and simulated traffic. The evaluation covers accuracy, precision, recall, F1-score, false alarm rate, miss rate and AUC. The system reduces manual inspection costs and improves anomaly identification and traceability, providing a practical implementation scheme for security monitoring in small and medium-sized network environments."
+  ],
+  "keywords_en": "Intrusion Detection; Machine Learning; Traffic Analysis; Model Evaluation; Network Security"
+}

@@ -12,8 +12,8 @@ from docx import Document
 from lxml import etree
 
 # ── paths ──────────────────────────────────────────────────────────────
-DOCX = "/Users/a136/vs/45425/Analysis_and_Implementation_of_Classification_Algorithms_Based_on_Douban_Movie_Data_Thesis (1).docx"
-OUT  = Path(__file__).resolve().parent
+OUT = Path(__file__).resolve().parent
+DOCX = OUT / "2022211592李孟阳批注修改版.docx"
 IMG_DIR = OUT / "images"
 IMG_DIR.mkdir(exist_ok=True)
 

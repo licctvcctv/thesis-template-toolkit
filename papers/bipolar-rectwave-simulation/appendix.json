@@ -1,0 +1,85 @@
+{
+  "items": [
+    {
+      "type": "heading",
+      "text": "关键程序代码"
+    },
+    {
+      "type": "paragraph",
+      "text": "附录列出Proteus简化仿真包中与波形控制相关的主要程序片段，用于说明频率倍数、幅值设定、外部触发和波形翻转的实现思路。"
+    },
+    {
+      "type": "code_plain",
+      "caption": "附录A 主循环与波形控制关键代码",
+      "font_size": 8.5,
+      "lines": [
+        "#define AMP_MIN_V          5u",
+        "#define AMP_MAX_V          20u",
+        "#define AMP_STEP_V         5u",
+        "#define FREQ_MULT_MIN      1u",
+        "#define FREQ_MULT_MAX      8u",
+        "#define KEY_DEBOUNCE_MS    180u",
+        "#define WAVE_PHASE_LIMIT   40u",
+        "",
+        "static uint8_t g_freq_mult = 1u;",
+        "static uint8_t g_amp_set_v = 20u;",
+        "static uint8_t g_external_mode = 0u;",
+        "static uint8_t g_output_enabled = 1u;",
+        "static uint8_t g_wave_high = 0u;",
+        "static uint32_t g_last_wave_tick = 0u;",
+        "static uint32_t g_last_key_tick = 0u;",
+        "static uint32_t g_wave_phase = 0u;",
+        "",
+        "static uint16_t App_AmplitudeToDacCode(uint8_t amplitude_v)",
+        "{",
+        "    if (amplitude_v < AMP_MIN_V) amplitude_v = AMP_MIN_V;",
+        "    if (amplitude_v > AMP_MAX_V) amplitude_v = AMP_MAX_V;",
+        "    return (uint16_t)(((uint32_t)amplitude_v * 0x0fffu) / AMP_MAX_V);",
+        "}",
+        "",
+        "static void App_ProcessWaveform(void)",
+        "{",
+        "    uint32_t now = HAL_GetTick();",
+        "    uint32_t elapsed_ms = now - g_last_wave_tick;",
+        "    if (g_output_enabled == 0u)",
+        "    {",
+        "        App_WriteWaveLow();",
+        "        App_ResetWaveTiming(now);",
+        "        return;",
+        "    }",
+        "    g_last_wave_tick = now;",
+        "    g_wave_phase += elapsed_ms * g_freq_mult;",
+        "    while (g_wave_phase >= WAVE_PHASE_LIMIT)",
+        "    {",
+        "        g_wave_phase -= WAVE_PHASE_LIMIT;",
+        "        if (g_wave_high != 0u) App_WriteWaveLow();",
+        "        else App_WriteWaveHigh();",
+        "    }",
+        "}"
+      ]
+    },
+    {
+      "type": "code_plain",
+      "caption": "附录B 主函数任务调度代码",
+      "font_size": 8.5,
+      "lines": [
+        "int main(void)",
+        "{",
+        "    HAL_Init();",
+        "    SystemClock_Config();",
+        "    MX_GPIO_Init();",
+        "    App_WriteWaveLow();",
+        "    App_ResetWaveTiming(HAL_GetTick());",
+        "",
+        "    while (1)",
+        "    {",
+        "        App_ProcessKeys();",
+        "        App_ProcessExternalTrigger();",
+        "        App_ProcessWaveform();",
+        "        HAL_Delay(1);",
+        "    }",
+        "}"
+      ]
+    }
+  ]
+}

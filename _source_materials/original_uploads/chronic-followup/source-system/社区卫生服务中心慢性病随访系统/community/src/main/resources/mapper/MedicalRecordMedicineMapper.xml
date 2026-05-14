@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.heath.community.mapper.MedicalRecordMedicineMapper">
+
+    <resultMap id="BaseResultMap" type="com.heath.community.entity.MedicalRecordMedicine">
+        <id column="id" property="id"/>
+        <result column="medical_record_id" property="medicalRecordId"/>
+        <result column="medicine_id" property="medicineId"/>
+        <result column="quantity" property="quantity"/>
+        <result column="dosage" property="dosage"/>
+        <result column="create_time" property="createTime"/>
+        <result column="medicine_name" property="medicineName"/>
+        <result column="medicine_code" property="medicineCode"/>
+    </resultMap>
+
+    <select id="findByRecordId" resultMap="BaseResultMap">
+        SELECT mrm.id, mrm.medical_record_id, mrm.medicine_id, mrm.quantity, mrm.dosage, mrm.create_time,
+               m.medicine_name, m.medicine_code
+        FROM medical_record_medicine mrm
+        LEFT JOIN medicine m ON mrm.medicine_id = m.id
+        WHERE mrm.medical_record_id = #{recordId}
+        ORDER BY mrm.create_time
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO medical_record_medicine (medical_record_id, medicine_id, quantity, dosage)
+        VALUES (#{medicalRecordId}, #{medicineId}, #{quantity}, #{dosage})
+    </insert>
+
+    <delete id="deleteByRecordId">
+        DELETE FROM medical_record_medicine WHERE medical_record_id = #{recordId}
+    </delete>
+
+</mapper>

@@ -1,0 +1,5967 @@
+Document: /Users/a136/vs/45425/thesis_project/templates/hnwlxy/source.docx
+Sections: 3
+Body blocks: paragraphs and tables in source order
+[body]
+  P000 style='Normal' align=None runs=0 num=None text=''
+  P001 style='Normal' align='center' runs=1 num=None text=''
+  P002 style='Normal' align='center' runs=1 num=None text='本科生毕业论文（设计）'
+  P003 style='Normal' align='center' runs=1 num=None text=''
+  T004 rows=6 cols=2 first_cell='题 目：'
+  P005 style='Normal' align=None runs=0 num=None text=''
+  P006 style='Normal' align=None runs=1 num=None text=''
+  P007 style='Subtitle' align=None runs=3 num=None text='目 录'
+  P008 style='toc 2' align=None runs=3 num=None text='摘 要 1'
+  P009 style='toc 2' align=None runs=0 num=None text='ABSTRACT 2'
+  P010 style='toc 1' align=None runs=0 num=None text='第一章 绪论 3'
+  P011 style='toc 2' align=None runs=0 num=None text='1.1 课题研究的背景和意义 3'
+  P012 style='toc 2' align=None runs=0 num=None text='1.2 课题研究的国内外现状 4'
+  P013 style='toc 3' align=None runs=0 num=None text='1.2.1 电动汽车双向直流电源国外研究现状 4'
+  P014 style='toc 3' align=None runs=0 num=None text='1.2.2 电动汽车双向直流电源国内研究现状 4'
+  P015 style='toc 2' align=None runs=0 num=None text='1.3 课题内容 5'
+  P016 style='toc 1' align=None runs=0 num=None text='第二章 工作原理与数学模型 7'
+  P017 style='toc 2' align=None runs=0 num=None text='2.1 电动汽车的系统架构与直流电源工作模式分析 7'
+  P018 style='toc 3' align=None runs=0 num=None text='2.1.1 电动汽车的系统架构 7'
+  P019 style='toc 3' align=None runs=0 num=None text='2.1.2 电动汽车直流电源工作模式分析 9'
+  P020 style='toc 2' align=None runs=0 num=None text='2.2 Buck-Boost直流电源拓扑结构分析 10'
+  P021 style='toc 3' align=None runs=0 num=None text='2.2.1 基础DC-DC变换器 10'
+  P022 style='toc 3' align=None runs=0 num=None text='2.2.2 双向Buck-Boost变换器 14'
+  P023 style='toc 2' align=None runs=0 num=None text='2.3 本章小结 15'
+  P024 style='toc 1' align=None runs=0 num=None text='第三章 电动汽车Buck-Boost直流电源设计 16'
+  P025 style='toc 2' align=None runs=0 num=None text='3.1 硬件结构设计 16'
+  P026 style='toc 2' align=None runs=0 num=None text='3.2 主要元器件选型 17'
+  P027 style='toc 3' align=None runs=0 num=None text='3.2.1 主控芯片 17'
+  P028 style='toc 3' align=None runs=0 num=None text='3.2.2 开关管选型 17'
+  P029 style='toc 3' align=None runs=0 num=None text='3.2.3 二极管选择 17'
+  P030 style='toc 3' align=None runs=0 num=None text='3.2.4 电感选择 18'
+  P031 style='toc 2' align=None runs=0 num=None text='3.3 硬件电路组成 18'
+  P032 style='toc 3' align=None runs=0 num=None text='3.3.1 主电路模块 18'
+  P033 style='toc 3' align=None runs=0 num=None text='3.3.2 采样模块 19'
+  P034 style='toc 3' align=None runs=0 num=None text='3.3.3 辅助电源模块 20'
+  P035 style='toc 3' align=None runs=0 num=None text='3.3.4 按键模块 22'
+  P036 style='toc 2' align=None runs=0 num=None text='3.4 软件设计 22'
+  P037 style='toc 3' align=None runs=0 num=None text='3.4.1 主程序设计 23'
+  P038 style='toc 3' align=None runs=0 num=None text='3.4.2 中断程序设计 23'
+  P039 style='toc 2' align=None runs=0 num=None text='3.5 本章小结 24'
+  P040 style='toc 1' align=None runs=0 num=None text='第四章 仿真设计与实物验证 25'
+  P041 style='toc 2' align=None runs=0 num=None text='4.1 仿真分析 25'
+  P042 style='toc 3' align=None runs=0 num=None text='4.1.1 Buck模式分析 25'
+  P043 style='toc 3' align=None runs=0 num=None text='4.1.2 Boost模式分析 26'
+  P044 style='toc 2' align=None runs=0 num=None text='4.2 等比例缩小仿真 27'
+  P045 style='toc 3' align=None runs=0 num=None text='4.2.1 Buck模式 28'
+  P046 style='toc 3' align=None runs=0 num=None text='4.2.2 Boost模式 28'
+  P047 style='toc 2' align=None runs=0 num=None text='4.3 实验与测试 29'
+  P048 style='toc 2' align=None runs=0 num=None text='4.4 本章小结 30'
+  P049 style='toc 1' align=None runs=0 num=None text='第五章 总结与展望 31'
+  P050 style='toc 2' align=None runs=0 num=None text='5.1 总结与讨论 31'
+  P051 style='toc 2' align=None runs=0 num=None text='5.2 研究局限与展望 31'
+  P052 style='toc 2' align=None runs=0 num=None text='参考文献 33'
+  P053 style='toc 2' align=None runs=0 num=None text='致 谢 35'
+  P054 style='toc 2' align=None runs=0 num=None text='附 录 36'
+  P055 style='Normal' align=None runs=1 num=None text=''
+  P056 style='Subtitle' align=None runs=3 num=None text='摘 要'
+  P057 style='Normal' align=None runs=3 num=None text='随着人类社会快速发展，节约资源与保护环境意识日益增强，传统燃油汽车因污染问题引发对新能源发展的广泛关注。新能源电动汽车凭借电能替代汽油的优势，不但节能环保且能量利用效率高，且有效缓解了传统燃油汽车带来的环境问题，成为社会发展的新动力。而双…'
+  P058 style='Normal' align=None runs=22 num=None text='本文围绕电动汽车双向Buck-Boost直流电源的设计与验证展开研究，设计了一种基于STM32F103C8T6单片机的双向DC-DC变换器，实现了Buck-Boost的双向控制。其实质是一个由驱动模块、采样模块、辅助电源模块、按键模块和M…'
+  P059 style='Normal' align=None runs=3 num=None text='本研究为电动汽车高效能量管理提供了理论支持与实践参考，后续可结合多电平拓扑、高频SiC器件及智能保护功能进一步优化性能，推动车载电源系统向高频化、集成化方向发展。'
+  P060 style='Normal' align=None runs=8 num=None text='关键词：电动汽车，双向DC-DC变换器，Buck-Boost，STM32F103C8T6'
+  P061 style='Normal' align=None runs=1 num=None text=''
+  P062 style='Subtitle' align=None runs=1 num=None text='ABSTRACT'
+  P063 style='Normal' align=None runs=1 num=None text='With the rapid development of human society, the awareness of resource conservation and environmental protection has be…'
+  P064 style='Normal' align=None runs=1 num=None text='This paper focuses on the design and verification of a bidirectional Buck-Boost DC power supply for electric vehicles. …'
+  P065 style='Normal' align=None runs=1 num=None text='This research provides theoretical support and practical reference for efficient energy management in electric vehicles…'
+  P066 style='Normal' align=None runs=4 num=None text='Keywords: Electricvehicles,Bidirectional DC-DC converter, Buck-Boost, STM32F103C8T6'
+  P067 style='Heading 1' align=None runs=2 num=None text='绪论'
+  P068 style='Normal' align=None runs=3 num=None text='本章主要介绍课题研究意义及背景，电动汽车Buck-Boost直流电源的重要应用前景，并对国内外发展现状进行调研，根据任务书确定课题内容。'
+  P069 style='Heading 2' align=None runs=2 num=None text='1.1 课题研究的背景和意义'
+  P070 style='Normal' align=None runs=1 num=None text='随着全球能源危机和环境污染问题的严峻态势日益凸显，新能源汽车的发展已成为全球汽车制造工业的一个重大趋势，国家“十四五”规划提及的“碳达峰”与“碳中和”发展目标，发展低碳、清洁、可持续利用的新能源成为关键举措，电动汽车作为新能源汽车的典型代…'
+  P071 style='Normal' align=None runs=17 num=None text='习近平总书记指出，发展新能源汽车是我国由汽车大国走向汽车强国的必经之路途。短短12年，我国新能源汽车实现了从1万到1000万的迅速增长态势，这为汽车产业智能化转型打下了坚实基础，中国也所以成为全球第一个新能源汽车年产量达到1000万辆的国…'
+  P072 style='Normal' align=None runs=11 num=None text='在电动汽车的电池组当中，因电池单体的制造工艺、使用环境等方面因素，会出现电池单体彼此间电压不一致状况，这种不一致情形会引起电池组整体性能下降，如电池容量下降、使用寿数缩短等。Buck - Boost直流电源可对每一个电池单体的电压开展精确…'
+  P073 style='Heading 2' align=None runs=2 num=None text='1.2 课题研究的国内外现状'
+  P074 style='Normal' align=None runs=4 num=None text='近年来，国内外学者围绕着电动汽车双向DC - DC变换器的功率提升、效率优化做了大量研究，研究方向涵盖拓扑结构升级、控制策略优化、器件选型与损耗管控等范畴，以下结合了相关文献总结研究现状。'
+  P075 style='Heading 3' align=None runs=3 num=None text='1.2.1 电动汽车双向直流电源国外研究现状'
+  P076 style='Normal' align=None runs=20 num=None text='Z. Yu等人[4]经研究发现，采用多电平拓扑结构能有效减小开关器件的电压应力，以此减少开关损耗。采用软开关技术可达成零电压或者零电流的开关条件，此方式能把开关损耗降低40% - 60%，在控制策略的范畴内，选用空间矢量调制或移相脉宽调制…'
+  P077 style='Normal' align=None runs=13 num=None text='而Manjare S等人[5]借助挑选成本较低的功率器件、简化电路设计和优化控制策略，使双向DC - DC变换器的成本得以降低，即采用了对性能有较低要求的传统硅（Si）功率器件，而且把变换器的拓扑结构予以简化，减掉了部件数量。尽管这样去做…'
+  P078 style='Heading 3' align=None runs=2 num=None text='1.2.2 电动汽车双向直流电源国内研究现状'
+  P079 style='Normal' align=None runs=11 num=None text='在国内，郭雨霏等人[6]开展了通过优化三重移相控制以提升双有源桥（Dual Active Bridge，DAB）变换器的实际效率，研究采用二维遍历算法对工作点予以优化，研发出一种依据电流应力和效率的综合优化手段。依靠调整控制角度，实现了电…'
+  P080 style='Normal' align=None runs=9 num=None text='付明朝[7]探究的交错并联技术通过让n个单元并联分担负载电流，即每个单元所承受的电流应力为总电流的1/n，降低了功率消耗，采用的均流技术运用电流反馈闭环控制等算法，实现各模块输出电流偏差控制在±5%，杜绝因电流分布不均造成的额外损耗。并采…'
+  P081 style='Normal' align=None runs=9 num=None text='经过研究剖析，电动汽车的Buck - Boost变换器展现出多方面的发展走向。从智能化的角度看，智能控制算法变得越发关键，其可按照车载负载需求情况自动调整工作模式，并且跟电池管理系统与动力系统紧密配合协同，进而达成更高效的能量管理[8]。…'
+  P082 style='Normal' align=None runs=5 num=None text='国外的研究侧重于通过多电平拓扑、高频器件（SIC/GaN）及软件开关技术来实现突破。国内的研究则聚焦于控制算法的优化与拓扑结构的创新。基于上述对比分析，本研究开发一种兼顾高效率、低成本、高可靠性的双向Buck-Boost变换器，融合国内外…'
+  P083 style='Heading 2' align=None runs=2 num=None text='1.3 课题内容'
+  P084 style='Normal' align=None runs=5 num=None text='本设计主要采用STM32F103C8T6处理器作为控制芯片，完成了电动汽车的Buck - Boost直流电源设计。'
+  P085 style='Normal' align=None runs=5 num=None text='第一章 开篇介绍了电动汽车发展背景，以及其在环境保护和提升能源效率上的意义，随后剖析了Buck - Boost双向直流电源的国内外研究现状及关键技术，以及未来技术创新和应用领域的发展走向。'
+  P086 style='Normal' align=None runs=7 num=None text='第二章 首先对电动汽车的基本结构进行介绍，涉及动力电池、电动机、控制系统等核心构件，以及该汽车的工作模式，如充电、放电跟能量回收这三种情况，接着开展了针对直流电源基本拓扑架构的研究，探究了Buck - Boost变换器的特性与应用，最后透…'
+  P087 style='Normal' align=None runs=5 num=None text='第三章 围绕双向Buck - Boost变换器进行了主要元器件筛选、具体电路图设计以及软件开发事宜的设计描述。'
+  P088 style='Normal' align=None runs=7 num=None text='第四章 利用Simulink平台搭建起双向DC - DC变换器的电路仿真模型，凭借对仿真波形的分析，验证理论研究的正确性以及控制策略的有效性，之后针对已设计的电路搭建实验测试平台，经对变换器的带载能力、电感输出电流、驱动电压等实施测试分析…'
+  P089 style='Normal' align=None runs=1 num=None text=''
+  P090 style='Heading 1' align=None runs=2 num=None text='工作原理与数学模型'
+  P091 style='Normal' align=None runs=3 num=None text='本章节将针对电动汽车的基本结构及双向直流电源工作模式，论述电动汽车双向直流电源的工作原理，数学模型分析提供一种量化且精确的方式去剖析Buck - Boost直流电源的特性，这对于推动电动汽车电源技术的发展以及提升电动汽车的整体性能具有至关…'
+  P092 style='Heading 2' align=None runs=2 num=None text='2.1 电动汽车的系统架构与直流电源工作模式分析'
+  P093 style='Heading 3' align=None runs=2 num=None text='2.1.1 电动汽车的系统架构'
+  P094 style='Normal' align=None runs=11 num=None text='从纯电动汽车角度看，能源系统占据核心地位，电动汽车借助动力电池实现动力输出，电机运转的调节任务由控制器承担，以此输出驱动力，该动力经减速系统处理后驱动车轮工作，实现电动汽车的移动，常规纯电动汽车的技术架构主要包括能量存储系统、牵引电机系统…'
+  P095 style='Normal' align='center' runs=2 num=None text=''
+  P096 style='图表' align=None runs=9 num=None text='（a） （b）'
+  P097 style='图表' align=None runs=9 num=None text='图2.1 电动汽车系统框图： （a）电动汽车高压系统车身示意图；（b）电动汽车能源传动示意图'
+  P098 style='Normal' align=None runs=8 num=None text='电源系统主要由电池组、超级电容、电池管理系统（Battery Management System, BMS）以及充电系统所构成。电池组作为储存电能的关键构件，大多采用锂离子电池，给车辆给予持续的能量支撑，其容量的大小直接影响车辆续航里程。…'
+  P099 style='Normal' align='center' runs=1 num=None text=''
+  P100 style='图表' align=None runs=3 num=None text='图2.2 超级电容工作图'
+  P101 style='Normal' align=None runs=3 num=None text='电机控制器及其驱动的动力电机构成了电动汽车驱动系统的主体框架。就纯电动汽车而言，驱动电机除输出动力外，也可实现发电功能。执行正常驱动功能期间，电动机把电能转变为机械动力；若发生减速或处于下坡状态，驱动电机实施反向驱动，作为发电单元实现机械…'
+  P102 style='Normal' align=None runs=3 num=None text='整车控制器依据驾驶员踩动加速踏板或者制动踏板的信息，给出指令调节电机的工作，同时借助与Buck - Boost直流电源通信，获取电源系统的实时实际状态，按照车辆运行的需求对电源系统进行协调把控，保障各电气系统供电稳定，达成能量合理分配。遇…'
+  P103 style='Normal' align=None runs=3 num=None text='辅助系统主要以空调、制动、车载充电、照明、信息娱乐系统等为主，这些辅助系统在增强电动汽车的驾驶体验、舒适性以及安全性方面有着重大意义，Buck - Boost直流电源可为辅助系统供给稳定的电源支撑，让这些系统能够正常地工作。'
+  P104 style='Heading 3' align=None runs=2 num=None text='2.1.2 电动汽车直流电源工作模式分析'
+  P105 style='Normal' align=None runs=28 num=None text='根据图 2.1 （b）可知，在电动汽车的双向DC-DC变换器（Bi-directional DC-DC Converter，BDC）工作模式中，包含超级电容的变换器会根据不同的驾驶情况实时切换工作模式，确保电力系统的高效运行和稳定的母线电…'
+  P106 style='图表' align=None runs=2 num=None text=''
+  P107 style='图表' align=None runs=17 num=None text='（a） （b）'
+  P108 style='图表' align=None runs=1 num=None text=''
+  P109 style='图表' align=None runs=4 num=None text='（c）'
+  P110 style='图表' align=None runs=21 num=None text='图2.3 双向DC-DC变换器工作模式: （a）Boost模式；（b）待机模式；（c）Buck模式'
+  P111 style='Normal' align=None runs=14 num={'numId': 2, 'ilvl': 0} text='Boost模式（升压模式）：当车辆开始启动或加速时，BDC变换器切换成Boost模式，处于该模式的时候，超级电容实施放电，给出高功率输出，协助车辆提速，而且维持母线电压稳定不变，超级电容为系统赋予了短时间的高功率支持，保证车辆可快速加速，…'
+  P112 style='Normal' align=None runs=4 num={'numId': 2, 'ilvl': 0} text='待机模式：在车辆正常行驶期间，BDC变换器进入闲置模式，超级电容与电池实时开展能量互换，按所需吸收或释放能量，协助平衡电力需求并提升能量利用效率，超级电容在这种模式下，主要从事能量的调节和存储工作，让电力系统稳定状态下正常运行。'
+  P113 style='Normal' align=None runs=8 num={'numId': 2, 'ilvl': 0} text='Buck模式（降压模式）：当车辆实施制动或减速动作，BDC变换器进入Buck这一模式，此时制动所回收的能量会借助变换器存进超级电容之内，这有利于把制动时的动能转化成电能加以回收，同时防止母线电压因能量回馈出现快速升高。'
+  P114 style='Normal' align=None runs=1 num=None text='这三种模式依照车辆的不同情况自动进行切换，维持电压稳定的态势，保证电动汽车可以高效且平稳地运转，超级电容与电池合作工作，辅助电动汽车在各种工况里对能量管理加以优化，提升性能。'
+  P115 style='Heading 2' align=None runs=2 num=None text='2.2 Buck-Boost直流电源拓扑结构分析'
+  P116 style='Normal' align=None runs=12 num=None text='双向DC-DC变换器BDC（Bi-directional DC-DC Converter）是一种具备能量双向传输能力的直流变换器。按照BDC的构成，根据电路设计中是否包含隔离变压器可以分为非隔离式和隔离式，如表 1所示。'
+  P117 style='图表' align=None runs=3 num=None text='表 1 BDC变换器拓扑结构分类'
+  T118 rows=10 cols=2 first_cell='拓扑结构分类'
+  P119 style='Heading 3' align=None runs=4 num=None text='2.2.1 基础DC-DC变换器'
+  P120 style='Normal' align=None runs=3 num=None text='其中基础的DC-DC变换器有以下三种：'
+  P121 style='Normal' align=None runs=5 num=None text='（1）Buck变换器'
+  P122 style='Normal' align=None runs=19 num=None text='Buck变换器为了降低电路的输出纹波，在输出侧增加了LC滤波电路，并使用续流二极管保持电感支路的电流连续[13]。如图 2.4所示，Buck变换器的关键器件有开关管、电感、电容和二极管。其中电感的任务是把电能转化为磁能后进行储存，然后把磁…'
+  P123 style='图表' align=None runs=4 num=None text='图2.4 Buck变换器拓扑结构'
+  P124 style='Normal' align=None runs=6 num=None text='当开关管处于导通阶段如图 2.5（a），电流沿正极至电感路径流动，实现电能到磁能的转换与存储，电容充电、流经负载，回到电源负极，并有下式成立：'
+  P125 style='Normal' align=None runs=5 num=None text='（2-1）'
+  P126 style='Normal' align=None runs=25 num=None text='当开关管关断时如图 2.5（b），系统失去外部供电，电感元件阻碍电流的瞬时变化，电感抑制电流瞬变，把积累的磁能转变为电能输出，充当电路中的电源；这里的电容主要起到滤波作用，降低输出电压的。设为电感电压，为输入电压，为输出电压，T为PWM波…'
+  P127 style='Normal' align=None runs=11 num=None text='（）**=* （2-3）'
+  P128 style='Normal' align=None runs=1 num=None text='由以上所述可得：'
+  P129 style='Normal' align=None runs=7 num=None text='=* （2-4）'
+  P130 style='Normal' align='center' runs=12 num=None text='（a） （b）'
+  P131 style='图表' align=None runs=14 num=None text='图2.5 Buck变换器工作电路图： （a） 开关管导通状态；（b）开关管截止状态'
+  P132 style='Normal' align=None runs=11 num=None text='由于占空比D是一个大于0小于1的值，上述结论可知，Buck型 DC-DC变换器是一种降压型变换器。'
+  P133 style='Normal' align=None runs=2 num={'numId': 3, 'ilvl': 0} text='Boost变换器'
+  P134 style='Normal' align=None runs=18 num=None text='Boost变换器能将增大输入电压的输出。根据电路原理可知，在同一回路中，电流从高压流向低压，为了防止Boost电路中输出电流回流至低电压处，因此利用二极管阻碍电流流动[13]。Boost变换器拓扑架构如图 2.6所示。'
+  P135 style='Normal' align='center' runs=1 num=None text=''
+  P136 style='图表' align=None runs=3 num=None text='图2.6 Boost变换器拓扑结构'
+  P137 style='Normal' align=None runs=13 num=None text='开关管导通如图 2.7（a）所示，电路相当于短路状态。电感在输入电压激励下充电，线圈电流呈现累积性上升；VD二极管呈现反向截止特性，实现电流阻断；电容进入为负载供电的放电阶段，伴随时间流逝，电容C上的电压缓慢降低。电感电压与输入电压相等，…'
+  P138 style='Normal' align=None runs=5 num=None text='（2-5）'
+  P139 style='图表' align=None runs=1 num=None text=''
+  P140 style='图表' align=None runs=11 num=None text='（a） （b）'
+  P141 style='图表' align=None runs=14 num=None text='图2.7 Buck变换器工作电路图： （a） 开关管导通状态；（b）开关管截止状态'
+  P142 style='Normal' align=None runs=15 num=None text='当开关管截止时，相当于断路如图 2.7（b）所示。由于电感具有阻碍电流变化的性质[14]，感生出电势，随着时间的增加，电感上的电流不断减小。输入电压与电感电压在该阶段叠加，联合为电容补充电荷，且对负载进行供电，此时'
+  P143 style='Normal' align=None runs=5 num=None text='（2-6）'
+  P144 style='Normal' align=None runs=1 num=None text='有伏秒平衡原理得：'
+  P145 style='Normal' align=None runs=11 num=None text='**=（）* （2-7）'
+  P146 style='Normal' align=None runs=1 num=None text='由以上所述可得：'
+  P147 style='Normal' align=None runs=6 num=None text='= （2-8）'
+  P148 style='Normal' align=None runs=5 num=None text='由此可知，Boost型 DC-DC变换器为升压型变换器。'
+  P149 style='Normal' align=None runs=2 num={'numId': 4, 'ilvl': 0} text='Buck-Boost变换器'
+  P150 style='Normal' align=None runs=13 num=None text='Buck-Boost变换器的主要用途是实现电压的升降压输出，跟传统的Buck和Boost电路不同，其采用了独特的拓扑结构，使输出电压的极性与输入电压的极性相反，但幅度可以灵活调整[13]。此特性在需要宽输入输出电压范围或者出现电压极性反转…'
+  P151 style='图表' align=None runs=1 num=None text=''
+  P152 style='图表' align=None runs=5 num=None text='图2.8 Buck-Boost变换器拓扑结构'
+  P153 style='Normal' align=None runs=15 num=None text='若开关管Q导通，该状态下电流路径如图 2.9（a）所示。电感L1的两端分别接电源两极，该时段内电感电流稳定上升，导通瞬态时很大。输出端，C依靠自身的放电为R提供能量。'
+  P154 style='图表' align=None runs=1 num=None text=''
+  P155 style='图表' align=None runs=10 num=None text='（a） （b）'
+  P156 style='图表' align=None runs=15 num=None text='图2.9 Buck-Boost变换器工作电路图： （a）开关管导通； （b）开关管截止'
+  P157 style='Normal' align=None runs=14 num=None text='当开关管Q截止时，电流走向见图 2.9（b）所示，由于电感电流的渐变特性，电感借助续流二极管D向输出端电容C和负载R输送能量，系统进入稳定工作阶段后，电感实现伏秒守恒，电感承受的电压即为输入电压。'
+  P158 style='Normal' align=None runs=3 num=None text='Q导通时，电感电压等于输入端电压，即：'
+  P159 style='Normal' align=None runs=5 num=None text='（2-9）'
+  P160 style='Normal' align=None runs=3 num=None text='Q截止时，电感电压等于输出端电压，即：'
+  P161 style='Normal' align=None runs=5 num=None text='（2-10）'
+  P162 style='Normal' align=None runs=5 num=None text='设为导通时间，为关断时间，D为占空比。由此可得：'
+  P163 style='Normal' align='center' runs=6 num=None text='= （2-11）'
+  P164 style='Normal' align='center' runs=7 num=None text='=* （2-12）'
+  P165 style='Normal' align='center' runs=6 num=None text='= （2-13）'
+  P166 style='Normal' align='left' runs=5 num=None text='综上所述，可知当占空比小于50%是输出降压；当占空比大于50%是输出升压。'
+  P167 style='Heading 3' align=None runs=4 num=None text='2.2.2 双向Buck-Boost变换器'
+  P168 style='Normal' align=None runs=35 num=None text='双向Buck-Boost变换器是由基本的Buck电路和Boost电路组成，如图 2.10（a）（b）所示，据观察其中电感与电容位置完全一致，不同之处在于开关管与二极管位置互换，由此可将二极管替换成开关器件[13]，即可得到图 2.10（c…'
+  P169 style='图表' align=None runs=9 num=None text='（a） （b）'
+  P170 style='图表' align=None runs=1 num=None text=''
+  P171 style='图表' align=None runs=3 num=None text='（c）'
+  P172 style='图表' align=None runs=25 num=None text='图2.10 双向Buck-Boost变换器组成： （a）基本Buck电路；（b）基本Boost电路；（c）双向Buck-Boost电路'
+  P173 style='Normal' align=None runs=23 num=None text='如图 2.10（c）所示，D1不影响电能从左往右的传输，无论Q1是否导通，对变压器降压变换没有影响；D2同理。因此双向Buck-Boost变换器在工作时，采用独立的PWM控制[16]。本设计应用此拓扑进行了开发研究。'
+  P174 style='Heading 2' align=None runs=2 num=None text='2.3 本章小结'
+  P175 style='Normal' align=None runs=11 num=None text='本章研究了3种基本的DC-DC变换器拓扑架构和工作原理，进一步阐述了各拓扑之间存在的差异与联系。在此基础上选择了双向Buck-Boost变换器作为本课题车载BDC变换器的核心设计部分。详细介绍了电动汽车Buck-Boost直流电源的基本电…'
+  P176 style='Normal' align=None runs=1 num=None text=''
+  P177 style='Heading 1' align=None runs=4 num=None text='电动汽车Buck-Boost直流电源设计'
+  P178 style='Normal' align=None runs=4 num=None text='Buck - Boost直流电源在电动汽车上承担着电压转换以及能量分配的重要任务，需要综合考虑多个因素，从输出电压的稳定状态、效率的合理利用到元件挑选策略以及电路排布格局等，本章节会聚焦在电动汽车Buck - Boost直流电源硬件设计上…'
+  P179 style='Heading 2' align=None runs=2 num=None text='3.1 硬件结构设计'
+  P180 style='Normal' align=None runs=14 num=None text='考虑到安全、成本等因素，本设计根据实际电动汽车 BDC 变换器等比例进行了缩放，即计满足输出电压为40 Vdc±5%，放电输出负载调整率低于2%，充放电效率不低于90%的要求，进行了实物硬件分析与设计。输入的直流电压在24~48 Vdc，…'
+  P181 style='Normal' align='center' runs=1 num=None text=''
+  P182 style='图表' align=None runs=3 num=None text='图3.1 系统组成模型图'
+  P183 style='图表' align=None runs=1 num=None text=''
+  P184 style='图表' align=None runs=3 num=None text='图3.2 模型原理图'
+  P185 style='Normal' align=None runs=15 num=None text='主电路输出的电压电流经由检测模块转换，生成的电信号被STM32F103C8T6的ADC模块采集，经过微控制器（Micro Contorller Unit,MCU）的数据处理后，传递出符合条件的PWM信号，PWM信号作为驱动电路的开关信号，…'
+  P186 style='Heading 2' align=None runs=2 num=None text='3.2 主要元器件选型'
+  P187 style='Heading 3' align=None runs=2 num=None text='3.2.1 主控芯片'
+  P188 style='Normal' align=None runs=5 num=None text='本设计选择STM32F103C8T6作为主控芯片，主要原因在于其采用高性能的ARM Cortex-M3内核，处理速度快，能实时、精准地执行复杂的双向功率变换控制算法。配备了多个外设接口，便于连接各类传感器、驱动电路等，实现高效的数据交互与…'
+  P189 style='Heading 3' align=None runs=2 num=None text='3.2.2 开关管选型'
+  P190 style='Normal' align=None runs=20 num=None text='IRF540ZP-VB MOS管的最大耐压为100 V，而我们设计中的最大输入电压只有48 V，远低于它的耐压上限。所以它能轻松承受电路中可能出现的电压尖峰，避免损坏，保证在高压环境下的可靠性。其次，它的耐流能力非常强，支持100 A的脉…'
+  P191 style='Heading 3' align=None runs=2 num=None text='3.2.3 二极管选择'
+  P192 style='Normal' align=None runs=7 num=None text='在电流连续模式（Continuous Conduction Mode, CCM）下，双向直流电路的主要损耗来自于反向恢复电流产生的功耗。使用快恢复二极管成为减小损耗的有效解决方案。根据不同的特点，快恢复二极管可以分为三类，如下表 2所示。'
+  P193 style='Normal' align=None runs=11 num=None text='综合考虑，选择肖特基二极管最为合适。其中1N4148作为高速开关二极管，具备4 ns反向恢复时间，适应高频驱动电路的快速开关需求，能够减少损耗。具有75 V反向耐压，满足本设计驱动电路中的电压等级。正向电压降在10 mA时仅1 V，降低导…'
+  P194 style='图表' align=None runs=3 num=None text='表 2 快恢复二极管具体类型主要特点及应用场景'
+  T195 rows=4 cols=6 first_cell='类型'
+  P196 style='Heading 3' align='left' runs=2 num=None text='3.2.4 电感选择'
+  P197 style='Normal' align=None runs=9 num=None text='电感器依照不同材质的磁芯，可归为三类：开气隙铁氧体磁芯效率高，易受明显的电磁干扰；非晶磁芯有着高效率与低损耗的特性，只是工作频率受限；低磁通磁芯在效率跟频率方面表现均衡，经过全面考量，最终采用铁硅铝磁芯电感，因为其效率与工作频率所呈现的平…'
+  P198 style='Normal' align=None runs=11 num=None text='电感感量选定了600uH电感，电感的取值越大，电流里的纹波越小，输出稳定性高，有利于降低输出电压的波动，该电感在双向DC - DC电路里起到储能与滤波的作用，开关管导通的这一时刻，释放的能量为负载输送电力。600uH电感可存下较多能量，可…'
+  P199 style='Heading 2' align=None runs=2 num=None text='3.3 硬件电路组成'
+  P200 style='Heading 3' align='left' runs=2 num=None text='3.3.1 主电路模块'
+  P201 style='图表' align=None runs=4 num=None text='图3.3 主拓扑图'
+  P202 style='Normal' align=None runs=7 num=None text='结合上述主要元器件选型以及拓扑结构的选择，如图 3.3、图 3.4设计了主电路及驱动部分的原理图。'
+  P203 style='图表' align=None runs=1 num=None text=''
+  P204 style='图表' align=None runs=3 num=None text='图3.4 驱动电路图'
+  P205 style='Normal' align=None runs=15 num=None text='此部分主要使用EG2104驱动MOS管，由于其支持10 V-600 V宽电压范围的高电压驱动能力、逻辑兼容性、保护功能以及通过自举电容实现高端驱动，无需隔离电源的自举供电机制。电路设计时为了保护电路元件并提高驱动稳定性，在MOS管前端并联…'
+  P206 style='Normal' align=None runs=12 num=None text='EG2104利用自举电容在Vs端电平摆动，为高端MOS管提供浮动电源，实现高效驱动。同时，EG2104接收到PWM信号经内部缓冲放大后，输出高电流驱动信号至MOS管栅极，实现精确的开关控制。结合前端电阻和二极管，实现了更加高效、安全的能量…'
+  P207 style='Heading 3' align=None runs=2 num=None text='3.3.2 采样模块'
+  P208 style='Normal' align=None runs=5 num=None text='（1） 电流采样模块'
+  P209 style='图表' align=None runs=1 num=None text=''
+  P210 style='图表' align=None runs=4 num=None text='图3.5 输出电流采样'
+  P211 style='Normal' align=None runs=39 num=None text='如图 3.5所示，使用INA282AIDR电流传感器进行电流采样。由于该传感器具有高精度、宽输入范围和低功耗的特性，可以通过50倍增益放大10mΩ采样电阻两端的电压差，将电流信号转换为线性输出的电压信号，并支持-14 V至80 V共模电压…'
+  P212 style='Normal' align=None runs=3 num=None text='（2）电压采样电路'
+  P213 style='Normal' align=None runs=16 num=None text='在本设计中使用AD8552运放进行直流电压采样，如图 3.6所示。由于该运放具有1 μV失调电压和0.005 μV/°C漂移，配合轨到轨输入输出能力，可精准捕捉双向DC-DC变换器的输出电压变化。电路设计中，AD8552通过分压电阻网络连…'
+  P214 style='图表' align=None runs=1 num=None text=''
+  P215 style='图表' align=None runs=4 num=None text='图3.6 直流电压采样'
+  P216 style='Heading 3' align=None runs=2 num=None text='3.3.3 辅助电源模块'
+  P217 style='Normal' align=None runs=5 num=None text='在BDC变换器中，单独使用辅助电源模块能够为系统提供稳定、可靠的独立供电支持，不仅有效隔离主电路与控制电路的电气干扰，确保控制信号的精准传输与处理，还通过内置的高效DC-DC转换功能实现宽范围输入电压到所需工作电压的灵活适配。'
+  P218 style='图表' align=None runs=1 num=None text=''
+  P219 style='图表' align=None runs=5 num=None text='图3.7 辅助电源-12V'
+  P220 style='Normal' align=None runs=14 num={'numId': 5, 'ilvl': 0} text='选用MP4581作为12 V辅助电源供电芯片，因其具有8 V至100 V宽输入电压范围、高效率、高集成度、灵活的频率调节、的过流、短路保护功能等优势，能够为系统提供稳定可靠的12 V供电，满足复杂工况下的电源需求并提升整体能效与可靠性。具…'
+  P221 style='图表' align=None runs=1 num=None text=''
+  P222 style='图表' align=None runs=6 num=None text='图3.8 辅助电源-5V'
+  P223 style='图表' align=None runs=1 num=None text=''
+  P224 style='图表' align=None runs=6 num=None text='图3.9 辅助电源-3.3V'
+  P225 style='Normal' align=None runs=31 num=None text='（2）使用LM1117系列线性稳压器作为5 V、3.3 V辅助电源供电，具体电路如图 3.8、图 3.9所示。LM1117支持4.75 V至20 V输入电压，可以稳定输出5 V或3.3 V，精度达到±1%，能确保电路电压的稳定性；虽然线性…'
+  P226 style='Heading 3' align=None runs=2 num=None text='3.3.4 按键模块'
+  P227 style='Normal' align=None runs=21 num=None text='本设计中还设有按键模块，如图 3.10所示。SW1、SW2用于设置输出电压的大小；SW3、SW4用于Buck或Boost模式的切换。'
+  P228 style='图表' align=None runs=1 num=None text=''
+  P229 style='图表' align=None runs=5 num=None text='图3.10 按键模块'
+  P230 style='Heading 2' align=None runs=2 num=None text='3.4 软件设计'
+  P231 style='Normal' align=None runs=7 num=None text='软件设计关系到BDC变换器能否正常工作，在软件编程时主要分为三部分：主程序初始化子程序和中断子程序。'
+  P232 style='Heading 3' align=None runs=2 num=None text='3.4.1 主程序设计'
+  P233 style='图表' align=None runs=1 num=None text=''
+  P234 style='图表' align=None runs=5 num=None text='图3.11 主程序流程图'
+  P235 style='Normal' align=None runs=16 num=None text='编写主程序首先进行初始化。随后进行ADC采集并对其数据归一化处理，进入定时器中断服务程序工作。如此往复循环。主程序流程图如图 3.11所示。'
+  P236 style='Heading 3' align=None runs=2 num=None text='3.4.2 中断程序设计'
+  P237 style='Normal' align=None runs=8 num=None text='对系统进行系统时钟、串口、PID、定时器、PWM以及ADC等模块的初始化'
+  P238 style='Normal' align=None runs=39 num=None text='在电动汽车Buck-Boost直流电源的软件设计中，中断程序作为核心控制环节，需要进行ADC采样、Buck-Boost模式切换及PI调节[18]等任务，其设计牵扯到系统的动态响应速度和稳定性。中断程序中，首先默认进入Boost模式，随后判…'
+  P239 style='Normal' align='center' runs=3 num=None text=''
+  P240 style='图表' align=None runs=6 num=None text='图3.12 初始化程序图以及中断程序流程图'
+  P241 style='Heading 2' align=None runs=2 num=None text='3.5 本章小结'
+  P242 style='Normal' align=None runs=3 num=None text='本章节主要围绕电动汽车BDC直流电源的硬件电路设计与具体元器件选型进行了介绍，重点剖析了二极管、开关管、主控芯片等关键元器件的选择，对驱动模块、电压电流采样模块以及辅助电源模块等还进行了详细的电路设计与解析，同时说明了软件部分主程序跟中断…'
+  P243 style='Normal' align=None runs=1 num=None text=''
+  P244 style='Heading 1' align=None runs=2 num=None text='仿真设计与实物验证'
+  P245 style='Normal' align=None runs=22 num=None text='为验证相关理论的有效性，本章首先借助Simulink软件平台构建了BDC变换器的仿真模型[19][20]。通过对负载切换以及输入电压突变等工况加以验证，查看输出电压、电流波形的稳定情形，说明了实验具备可行条件，以这为基础搭建了BDC变换器…'
+  P246 style='Heading 2' align=None runs=2 num=None text='4.1 仿真分析'
+  P247 style='Normal' align='center' runs=1 num=None text=''
+  P248 style='图表' align=None runs=3 num=None text='图4.1 BDC变换器的仿真模型'
+  P249 style='Heading 3' align=None runs=2 num=None text='4.1.1 Buck模式分析'
+  P250 style='Normal' align=None runs=27 num=None text='如图 4.1仿真模型所示，当BDC变换器在Buck模式下工作时，采用模糊PI双闭环控制[21]，如图 4.2所示。在Buck模式下，BDC变换器的输出电压电流波形如图 4.3所示。'
+  P251 style='Normal' align=None runs=5 num=None text='在放电初期或车辆紧急加速时，BDC变换器会优先使用恒流模式来限制最大输出电流，防止电池过度放电或电路过载。此时，输出电压会根据负载需求自动调整，确保电流稳定在安全阈值内。通过恒流模式控制电流大小，避免电池电压急剧下降，由此延长电池寿命。当…'
+  P252 style='Normal' align='center' runs=1 num=None text=''
+  P253 style='图表' align=None runs=4 num=None text='图4.2 放电控制PI'
+  P254 style='图表' align=None runs=4 num=None text=''
+  P255 style='图表' align=None runs=3 num=None text='图4.3 Buck模式输出电压电流仿真波形'
+  P256 style='Heading 3' align=None runs=2 num=None text='4.1.2 Boost模式分析'
+  P257 style='Normal' align=None runs=20 num=None text='如图 4.1仿真模型所示，Boost模式的模糊PI控制器的参数设置于Buck区别不大，除了采样信号外，其相对应的比例系数也略有差异[21]。如图 4.4所示。'
+  P258 style='Normal' align=None runs=14 num=None text='在Boost模式下，BDC变换器的输出电压电流波形如图 4.5所示。由图可知此模式下变换器输出电压的动态相应迅速，调整时间<0.05 s。'
+  P259 style='Normal' align='center' runs=1 num=None text=''
+  P260 style='图表' align=None runs=4 num=None text='图4.4 充电控制PI'
+  P261 style='图表' align=None runs=1 num=None text=''
+  P262 style='图表' align=None runs=3 num=None text='图4.5 Boost模式输出电压电流仿真波形'
+  P263 style='Heading 2' align=None runs=2 num=None text='4.2 等比例缩小仿真'
+  P264 style='Normal' align=None runs=15 num=None text='考虑到安全、成本等因素，本设计实物按实际大小等比例缩小进行，并对其先在Simulink软件平台上进行了仿真模拟，以此来验证本设计等比例缩小后，电路实物的可实行性。'
+  P265 style='Heading 3' align=None runs=2 num=None text='4.2.1 Buck模式'
+  P266 style='Normal' align=None runs=8 num=None text='Buck模式等比例放电电路如图 4.6所示，波形如图 4.7所示'
+  P267 style='图表' align=None runs=1 num=None text=''
+  P268 style='图表' align=None runs=4 num=None text='图4.6 实物等比例放电控制PI'
+  P269 style='图表' align=None runs=4 num=None text=''
+  P270 style='图表' align=None runs=5 num=None text='图4.7 等比例Buck模式输出电压电流仿真波形'
+  P271 style='Heading 3' align=None runs=2 num=None text='4.2.2 Boost模式'
+  P272 style='Normal' align=None runs=8 num=None text='Boost模式等比例放电电路如图 4.8所示，波形如图 4.9所示'
+  P273 style='Normal' align='center' runs=1 num=None text=''
+  P274 style='图表' align=None runs=4 num=None text='图4.8 等比例充电控制PI'
+  P275 style='图表' align=None runs=1 num=None text=''
+  P276 style='图表' align=None runs=7 num=None text='图4.9 等比例Boost模式输出电压电流仿真波形'
+  P277 style='Heading 2' align=None runs=2 num=None text='4.3 实验与测试'
+  P278 style='Normal' align=None runs=7 num=None text='通过BDC变换器的软硬件调试，优化设计出最佳电路与参数如图 4.10所示，并对变换器进行了一系列测试。如下表所示。'
+  P279 style='图表' align=None runs=11 num=None text=''
+  P280 style='图表' align=None runs=5 num=None text='图4.10 电路实物图'
+  P281 style='Normal' align=None runs=6 num=None text='Boost模式下，调整负载实验参数如表 3所示。'
+  P282 style='图表' align=None runs=3 num=None text='表3 Boost模式实物测试数据'
+  T283 rows=5 cols=5 first_cell='输入电压/V'
+  P284 style='Normal' align=None runs=6 num=None text='Buck模式下，调整负载实验参数如表 4所示。'
+  P285 style='图表' align=None runs=3 num=None text='表 4 Buck模式实物测试数据'
+  T286 rows=5 cols=5 first_cell='输入电压/V'
+  P287 style='Normal' align=None runs=7 num=None text='根据实验测试数据可知，本设计满足输出电压40 V±5%，放电输出负载调整率＜2%，充放电效率＞90%的要求。'
+  P288 style='Heading 2' align=None runs=2 num=None text='4.4 本章小结'
+  P289 style='Normal' align=None runs=6 num=None text='通过仿真实验验证与硬件实验，本章节证实了BDC变换器的理论模型及设计方案合理且可行，仿真结果表明了变换器在各种工况下的输出特性及动态稳定性，硬件实验则进一步核实了驱动控制信号、电压稳定性、电流响应及负载适应性的性能表现状况，凭借数据记录与…'
+  P290 style='Heading 1' align=None runs=2 num=None text='总结与展望'
+  P291 style='Heading 2' align=None runs=2 num=None text='5.1 总结与讨论'
+  P292 style='Normal' align=None runs=13 num=None text='本文以充分调研电动汽车电源系统双向DC - DC变换器国内外相关研究现状为基础，对电动汽车工作原理以及BDC变换器工作模式进行了分析，针对电动汽车对高输出效率、宽泛电压输入的要求，提出一套基于Buck - Boost拓扑的双向DC - D…'
+  P293 style='Normal' align=None runs=1 num=None text='本设计本文主要工作如下：'
+  P294 style='Normal' align=None runs=5 num=None text='（1）分析了课题的研究背景和意义，认清了电动汽车对高效、可靠直流电源的核心需要，通过整合国内外研究态势，说明了Buck - Boost变换器在电动汽车领域存在广泛应用前景，且表明未来往高频化、集成化方向发展的趋势。'
+  P295 style='Normal' align=None runs=7 num=None text='（2）在理论分析与设计范畴，论文对电动汽车基本结构及工作模式做了详细介绍，为电源设计形成了系统级的框架，就直流电源的基本拓扑架构而言，着重探究了双向Buck - Boost变换器的工作原理，诠释了它在升降压方面灵活、能量双向流动的好处，又…'
+  P296 style='Normal' align=None runs=9 num=None text='（3）为检验设计的正确性以及控制策略的有效性，运用Simulink平台搭建了BDC变换器的电路仿真模型，仿真结果证实，变换器在宽幅输入电压范围内展现出良好的升降压特性，动态反应迅速，且输出的电压稳定可靠，进一步搭建实验检测平台，实际测量了…'
+  P297 style='Heading 2' align=None runs=2 num=None text='5.2 研究局限与展望'
+  P298 style='Normal' align=None runs=2 num=None text='从实验过程分析能看出，效率损耗的主要原因表现在以下方面：'
+  P299 style='Normal' align=None runs=3 num={'numId': 6, 'ilvl': 0} text='功率器件在状态切换期间，因电压与电流的变化引起损耗，跟开关速度以及电压电流变化的快慢相关联，米勒效应会加剧这一损耗现象，器件开始导通的时候，电流沿着导通电阻产生损耗，依赖于器件导通电阻和电流有效值，对于同步整流电路而言，MOSFET和电感…'
+  P300 style='Normal' align=None runs=1 num={'numId': 6, 'ilvl': 0} text='磁性材料于交变磁场里产生磁滞和涡流损耗，跟材料特性与工作频率相关联'
+  P301 style='Normal' align=None runs=5 num={'numId': 6, 'ilvl': 0} text='电流流经电容的等效串联电阻（ESR）会造成损耗，低ESR电容可降低这种损耗值，鉴于实验条件与个人能力的约束，本设计依旧留存部分相关问题需进一步深入学习研究。'
+  P302 style='Normal' align=None runs=1 num=None text='后续可以从以下方面加以完善强化：'
+  P303 style='Normal' align=None runs=1 num={'numId': 7, 'ilvl': 0} text='本设计着重留意输出范围及动态变化情形，未涉及到过流保护、过压保护和短路保护等事项，后续相关研究可以添加进去。'
+  P304 style='Normal' align=None runs=9 num={'numId': 7, 'ilvl': 0} text='本设计在仿真模拟中，Buck部分的PI双闭环调节存在纹波缺陷情况，Boost部分负载的调整时间偏长，可以试着加入PID调节。'
+  P305 style='Normal' align=None runs=9 num={'numId': 7, 'ilvl': 0} text='开展针对硬件设计与器件的升级，如采用多电平拓扑，降低开关动作的损耗，把普通MOS管替换为SiC或GaN器件，把开关频率提升至500 kHz以上，把无源器件体积减小。'
+  P306 style='Normal' align=None runs=3 num={'numId': 7, 'ilvl': 0} text='采用纳米晶磁芯或者扁平线电感做设计，减小磁芯损耗跟绕组电阻，提升高频作业的性能，对PCB布局进行优化，降低辐射干扰。'
+  P307 style='Normal' align=None runs=1 num={'numId': 7, 'ilvl': 0} text=''
+  P308 style='Subtitle' align=None runs=1 num=None text='参考文献'
+  P309 style='Normal' align=None runs=6 num={'numId': 8, 'ilvl': 0} text='王政.坚定迈向汽车强国[N].人民日报,2024-11-15(003).'
+  P310 style='Normal' align=None runs=5 num={'numId': 8, 'ilvl': 0} text='Wei Qian, Honnyong Cha, Fang Zheng Peng, Leon M, Tolbert. 55-kW Variable 3X DC-DC Converter for Plug-in Hybrid Electric…'
+  P311 style='Normal' align=None runs=1 num={'numId': 8, 'ilvl': 0} text='Han S, Divan D. Bi-directional DC/DC converters for plug-in hybrid electric vehicle (PHEV) applications[C]//2008 Twenty…'
+  P312 style='Normal' align=None runs=5 num={'numId': 8, 'ilvl': 0} text='Z. Yu, H. Kapels and K. F. Hoffmann. "High Efficiency Bidirectional DC-DC Converter with Wide Input and Output Voltage …'
+  P313 style='Normal' align=None runs=1 num={'numId': 8, 'ilvl': 0} text='Manjare S, Saraf S, Rajeshwari C. Design and Control of Bidirectional Converter for EV Application[C]//2023 IEEE Renewa…'
+  P314 style='Normal' align=None runs=12 num={'numId': 8, 'ilvl': 0} text='郭雨霏,李一梁,王懿杰,徐殿国.基于三重移相控制的双有源桥变换器研究[J].电气传动,2023,53(2):10-15'
+  P315 style='Normal' align=None runs=8 num={'numId': 8, 'ilvl': 0} text='付明朝. 交错并联双向DC-DC变换器均流技术研究[D]. 重庆理工大学,2021.'
+  P316 style='Normal' align=None runs=6 num={'numId': 8, 'ilvl': 0} text='张卓然，许彦武，姚一鸣.多电飞机电力系统及其关键技术[J].南京航空航天大学学报,2022,54(5):969-984.'
+  P317 style='Normal' align=None runs=20 num={'numId': 8, 'ilvl': 0} text='龚春阳,夏潇,包俊,郑建,陈辉,陈晓琳,王志新,黄冬梅.宽增益高效谐振型直流变换器技术[J].电力系统保护与控列.2024.52(1):133-144.'
+  P318 style='Normal' align=None runs=1 num={'numId': 8, 'ilvl': 0} text='Automotive electricity: electric drives[M]. John Wiley & Sons, 2013.'
+  P319 style='Normal' align=None runs=14 num={'numId': 8, 'ilvl': 0} text='王震坡,孙逢春，刘鹏.电动汽车原理与应用技术.第2版[M].北京:机械工业出版社,2017'
+  P320 style='Normal' align=None runs=10 num={'numId': 8, 'ilvl': 0} text='张雷, 胡晓松, 王震坡. 超级电容管理技术及在电动汽车中的应用综述[J]. 机械工程学报, 2017, 53(16): 32-43, 69.'
+  P321 style='Normal' align=None runs=12 num={'numId': 8, 'ilvl': 0} text='王兆安，刘进军.电力电子技术.第5版[M].北京:机械工业出版社,2009'
+  P322 style='Normal' align=None runs=3 num={'numId': 8, 'ilvl': 0} text='Wu H F, Jia Y H, Yang F, et al. Two-stage isolated bidirectional DC-AC converters with three-port converters and two DC…'
+  P323 style='Normal' align=None runs=8 num={'numId': 8, 'ilvl': 0} text='解光军,程心.DC-DC开关变换器的建模与设计[M].科学出版社,2015.'
+  P324 style='Normal' align=None runs=1 num={'numId': 8, 'ilvl': 0} text='Sanjida M and John C W L. A soft-switched, multiport photovoltaic power optimizer with integrated storage interface and…'
+  P325 style='Normal' align=None runs=1 num={'numId': 8, 'ilvl': 0} text='Yazdani F, Zolghadri M. Design of dual active bridge isolated bi-directional DC converter based on current stress optim…'
+  P326 style='Normal' align=None runs=12 num={'numId': 8, 'ilvl': 0} text='张湘映. 基于改进PID控制的快速响应数字DC-DC变换器设计[D]. 江苏:南京理工大学,2020.'
+  P327 style='Normal' align=None runs=18 num={'numId': 8, 'ilvl': 0} text='赵成勇,李路遥,翟晓萌,黄晓明,陆翌,裘鹏.新型模块化高压大功率DC-DC变换器[J].电力系统自动化,2014,38(4):72-78'
+  P328 style='Normal' align=None runs=10 num={'numId': 8, 'ilvl': 0} text='杜少武,陈中.一种新颖的软开关双向DC/DC变换器[J].电力电子技术,2007,41(7):21-23'
+  P329 style='Normal' align=None runs=14 num={'numId': 8, 'ilvl': 0} text='张相军,刘冠男,王懿杰,等.软开关双向DC-DC变换器控制模型[J].电机与控制学报, 2013, 17(011):89-96.'
+  P330 style='Normal' align=None runs=1 num=None text=''
+  P331 style='Subtitle' align=None runs=3 num=None text='致 谢'
+  P332 style='Normal' align=None runs=3 num=None text='XX。'
+  P333 style='Subtitle' align='justify' runs=3 num=None text='附 录'
+  P334 style='Normal' align='center' runs=3 num=None text=''
+  P335 style='Normal' align=None runs=1 num=None text=''
+  P336 style='Normal' align=None runs=1 num=None text='主函数'
+  P337 style='Normal' align=None runs=1 num=None text='#include "stm32f4xx.h"'
+  P338 style='Normal' align=None runs=1 num=None text='#include "sys.h"'
+  P339 style='Normal' align=None runs=1 num=None text='int main(void)'
+  P340 style='Normal' align=None runs=1 num=None text='{'
+  P341 style='Normal' align=None runs=3 num=None text='NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);'
+  P342 style='Normal' align=None runs=1 num=None text='TIM1_Init(20.0f,0.6,400);'
+  P343 style='Normal' align=None runs=1 num=None text='TIM2_Init(20.0f);'
+  P344 style='Normal' align=None runs=1 num=None text='Get_Dot();'
+  P345 style='Normal' align=None runs=1 num=None text='while(1){'
+  P346 style='Normal' align=None runs=1 num=None text='}}'
+  P347 style='Normal' align=None runs=0 num=None text=''
+  P348 style='Normal' align=None runs=2 num=None text='ADC采样函数'
+  P349 style='Normal' align=None runs=1 num=None text='u16 Get_ADC_Value(u8 Channel)'
+  P350 style='Normal' align=None runs=1 num=None text='{'
+  P351 style='Normal' align=None runs=1 num=None text='u8 count, i, j;'
+  P352 style='Normal' align=None runs=1 num=None text='u32 sum = 0;'
+  P353 style='Normal' align=None runs=1 num=None text='u16 temp = 0;'
+  P354 style='Normal' align=None runs=1 num=None text='u16 tempbuf[ADC_TIMES];'
+  P355 style='Normal' align=None runs=1 num=None text='for (i = 0; i < ADC_TIMES; i++)'
+  P356 style='Normal' align=None runs=1 num=None text='{'
+  P357 style='Normal' align=None runs=2 num=None text='tempbuf[i] = ADC1_Raw_Value[i][Channel];'
+  P358 style='Normal' align=None runs=1 num=None text='}'
+  P359 style='Normal' align=None runs=2 num=None text='for (j = 0; j < ADC_TIMES; j++) //冒泡法'
+  P360 style='Normal' align=None runs=1 num=None text='{'
+  P361 style='Normal' align=None runs=2 num=None text='for (i = j; i < ADC_TIMES; i++)'
+  P362 style='Normal' align=None runs=2 num=None text='{'
+  P363 style='Normal' align=None runs=3 num=None text='if (tempbuf[i] > tempbuf[j])'
+  P364 style='Normal' align=None runs=1 num=None text='{'
+  P365 style='Normal' align=None runs=1 num=None text='temp = tempbuf[i];'
+  P366 style='Normal' align=None runs=1 num=None text='tempbuf[i] = tempbuf[j];'
+  P367 style='Normal' align=None runs=1 num=None text='tempbuf[j] = temp;'
+  P368 style='Normal' align=None runs=1 num=None text='}}}'
+  P369 style='Normal' align=None runs=1 num=None text='for (count = 1; count < ADC_TIMES - 1; count++)'
+  P370 style='Normal' align=None runs=2 num=None text='sum = sum + tempbuf[count];'
+  P371 style='Normal' align=None runs=1 num=None text='return (sum / (ADC_TIMES - 2));'
+  P372 style='Normal' align=None runs=1 num=None text='}'
+  P373 style='Normal' align=None runs=0 num=None text=''
+  P374 style='Normal' align=None runs=1 num=None text='void ADC_Process(void)'
+  P375 style='Normal' align=None runs=1 num=None text='{'
+  P376 style='Normal' align=None runs=1 num=None text='U_AC = 53.8040862f * (0.0008056640625f*Get_ADC_Value(0)-1.59753361232f);'
+  P377 style='Normal' align=None runs=1 num=None text='U_AC1=53.8040862f*((0.0008056640625f* Get_ADC_Value(1)) -1.59753361232f);'
+  P378 style='Normal' align=None runs=1 num=None text='I_AC =2.159f * (0.0008056640625f*Get_ADC_Value(1)-1.4874874288f);'
+  P379 style='Normal' align=None runs=1 num=None text='}'
+  P380 style='Normal' align=None runs=0 num=None text=''
+  P381 style='Normal' align=None runs=2 num=None text='PID函数'
+  P382 style='Normal' align=None runs=1 num=None text='#include "pid.h"'
+  P383 style='Normal' align=None runs=1 num=None text='PID_Data1 Spwm;'
+  P384 style='Normal' align=None runs=1 num=None text='void PID_Vdc_PI_Init(void)'
+  P385 style='Normal' align=None runs=2 num=None text='{ Vdc_PI.Kp = 0.0001300f; //0.2f 0.01f'
+  P386 style='Normal' align=None runs=1 num=None text='Vdc_PI.Ki = 0.00005f; //0.05f 10.0f'
+  P387 style='Normal' align=None runs=1 num=None text='Vdc_PI.Error[0] = 0.0f;'
+  P388 style='Normal' align=None runs=1 num=None text='Vdc_PI.Error[1] = 0.0f;'
+  P389 style='Normal' align=None runs=1 num=None text='Vdc_PI.OutputMax = 1;'
+  P390 style='Normal' align=None runs=1 num=None text='Vdc_PI.OutputMin = 0.7;'
+  P391 style='Normal' align=None runs=1 num=None text='}'
+  P392 style='Normal' align=None runs=0 num=None text=''
+  P393 style='Normal' align=None runs=1 num=None text='void PID_PLL_PI_Init(void)'
+  P394 style='Normal' align=None runs=1 num=None text='{PLL_PI.Kp = 157.0f; //16.5'
+  P395 style='Normal' align=None runs=1 num=None text='PLL_PI.Ki = 15781.0f;'
+  P396 style='Normal' align=None runs=1 num=None text='PLL_PI.Error[0] = 0.0f;'
+  P397 style='Normal' align=None runs=1 num=None text='PLL_PI.Error[1] = 0.0f;'
+  P398 style='Normal' align=None runs=1 num=None text='PLL_PI.OutputMax = 50000;'
+  P399 style='Normal' align=None runs=1 num=None text='PLL_PI.OutputMin = -1000;}'
+  P400 style='Normal' align=None runs=0 num=None text=''
+  P401 style='Normal' align=None runs=1 num=None text='void PID_Current_Loop_Init(void)'
+  P402 style='Normal' align=None runs=1 num=None text='{'
+  P403 style='Normal' align=None runs=1 num=None text='Id_PI.Kp = 2.05f; // 2.08 2.05'
+  P404 style='Normal' align=None runs=1 num=None text='Iq_PI.Kp = Id_PI.Kp ;'
+  P405 style='Normal' align=None runs=1 num=None text=''
+  P406 style='Normal' align=None runs=1 num=None text='Id_PI.Ki =8.0f;// * Interrupt_Ts; //8.0f 100f'
+  P407 style='Normal' align=None runs=1 num=None text='Iq_PI.Ki = Id_PI.Ki;'
+  P408 style='Normal' align=None runs=1 num=None text=''
+  P409 style='Normal' align=None runs=1 num=None text='Id_PI.Error[0] = 0.0f;'
+  P410 style='Normal' align=None runs=1 num=None text='Iq_PI.Error[0] = Id_PI.Error[0];'
+  P411 style='Normal' align=None runs=1 num=None text=''
+  P412 style='Normal' align=None runs=1 num=None text='Id_PI.Error[1] = 0.0f;'
+  P413 style='Normal' align=None runs=1 num=None text='Iq_PI.Error[1] = Id_PI.Error[1];'
+  P414 style='Normal' align=None runs=1 num=None text=''
+  P415 style='Normal' align=None runs=1 num=None text='Id_PI.OutputMax = 36.0f;'
+  P416 style='Normal' align=None runs=1 num=None text='Iq_PI.OutputMax = Id_PI.OutputMax;'
+  P417 style='Normal' align=None runs=1 num=None text=''
+  P418 style='Normal' align=None runs=1 num=None text='Id_PI.OutputMin = -36.0f;'
+  P419 style='Normal' align=None runs=1 num=None text='Iq_PI.OutputMin = Id_PI.OutputMin;'
+  P420 style='Normal' align=None runs=1 num=None text='}'
+  P421 style='Normal' align=None runs=0 num=None text=''
+  P422 style='Normal' align=None runs=1 num=None text='void PID_Current1_Loop_Init(void)'
+  P423 style='Normal' align=None runs=1 num=None text='{'
+  P424 style='Normal' align=None runs=3 num=None text='Vd_PI.Kp = 0.4f; //1.05f 0.2'
+  P425 style='Normal' align=None runs=1 num=None text='Vq_PI.Kp = Vd_PI.Kp ;'
+  P426 style='Normal' align=None runs=1 num=None text=''
+  P427 style='Normal' align=None runs=1 num=None text='Vd_PI.Ki = 10.0f * Interrupt_Ts; //5.0f 20.0'
+  P428 style='Normal' align=None runs=1 num=None text='Vq_PI.Ki = Vd_PI.Ki;'
+  P429 style='Normal' align=None runs=1 num=None text=''
+  P430 style='Normal' align=None runs=1 num=None text='Vd_PI.Error[0] = 0.0f;'
+  P431 style='Normal' align=None runs=1 num=None text='Vq_PI.Error[0] = Vd_PI.Error[0];'
+  P432 style='Normal' align=None runs=1 num=None text=''
+  P433 style='Normal' align=None runs=1 num=None text='Vd_PI.Error[1] = 0.0f;'
+  P434 style='Normal' align=None runs=1 num=None text='Vq_PI.Error[1] = Vd_PI.Error[1];'
+  P435 style='Normal' align=None runs=1 num=None text=''
+  P436 style='Normal' align=None runs=1 num=None text='Vd_PI.OutputMax = 2.828f;'
+  P437 style='Normal' align=None runs=1 num=None text='Vq_PI.OutputMax = Vd_PI.OutputMax;'
+  P438 style='Normal' align=None runs=1 num=None text=''
+  P439 style='Normal' align=None runs=1 num=None text='Vd_PI.OutputMin = -2.828f;'
+  P440 style='Normal' align=None runs=1 num=None text='Vq_PI.OutputMin = Vd_PI.OutputMin;'
+  P441 style='Normal' align=None runs=1 num=None text='}'
+  P442 style='Normal' align=None runs=1 num=None text='void Spwm_PID_Init(void) //'
+  P443 style='Normal' align=None runs=3 num=None text='{ Spwm.kp =0.0001300f; //增大调节稍稳'
+  P444 style='Normal' align=None runs=2 num=None text='Spwm.ki = 0.005f; //变小调节缓慢'
+  P445 style='Normal' align=None runs=1 num=None text='Spwm.kd = 0.00f;'
+  P446 style='Normal' align=None runs=1 num=None text='Spwm.err=0.0;'
+  P447 style='Normal' align=None runs=1 num=None text='Spwm.err_last=0.0;'
+  P448 style='Normal' align=None runs=1 num=None text='Spwm.err_laster=0.0;'
+  P449 style='Normal' align=None runs=1 num=None text='Spwm.OutputMAX = 1;'
+  P450 style='Normal' align=None runs=1 num=None text='Spwm.OutputMIN = 0.7;}'
+  P451 style='Normal' align=None runs=1 num=None text='float Spwm_PID_Control(float Set_Val, float Samp_Val, PID_Data1 *pid_set, float N)'
+  P452 style='Normal' align=None runs=2 num=None text='{ float P_temp, I_temp, D_temp;'
+  P453 style='Normal' align=None runs=2 num=None text='pid_set->err = (Set_Val - Samp_Val); //误差值'
+  P454 style='Normal' align=None runs=2 num=None text='if(fabs(pid_set->err) < N) //积分分离'
+  P455 style='Normal' align=None runs=2 num=None text='{pid_set->Output = pid_set->Output_Last; //重新赋值'
+  P456 style='Normal' align=None runs=1 num=None text='pid_set->err_last = pid_set->err;'
+  P457 style='Normal' align=None runs=1 num=None text='return pid_set->Output;}'
+  P458 style='Normal' align=None runs=3 num=None text='P_temp=pid_set->kp*(pid_set->err-pid_set->err_last); //比例'
+  P459 style='Normal' align=None runs=2 num=None text='I_temp=pid_set->ki*pid_set->err; //积分'
+  P460 style='Normal' align=None runs=2 num=None text='D_temp = pid_set->kd * (pid_set->err - 2*pid_set->err_last + pid_set->err_laster); //微分'
+  P461 style='Normal' align=None runs=2 num=None text='pid_set->Increment = P_temp + I_temp + D_temp; //增量型'
+  P462 style='Normal' align=None runs=1 num=None text='pid_set->Output = pid_set->Increment + pid_set->Output_Last;'
+  P463 style='Normal' align=None runs=2 num=None text='if(pid_set->Output > pid_set->OutputMAX) pid_set->Output = pid_set->OutputMAX; //抗饱和'
+  P464 style='Normal' align=None runs=1 num=None text='if(pid_set->Output < pid_set->OutputMIN) pid_set->Output = pid_set->OutputMIN;'
+  P465 style='Normal' align=None runs=1 num=None text=''
+  P466 style='Normal' align=None runs=2 num=None text='pid_set->Output_Last = pid_set->Output; //重新赋值'
+  P467 style='Normal' align=None runs=2 num=None text='pid_set->err_laster = pid_set->err_last;'
+  P468 style='Normal' align=None runs=1 num=None text='pid_set->err_last = pid_set->err;'
+  P469 style='Normal' align=None runs=1 num=None text='return (float)pid_set->Output;'
+  P470 style='Normal' align=None runs=2 num=None text='}'
+  P471 style='Normal' align=None runs=0 num=None text=''
+  P472 style='Normal' align=None runs=1 num=None text='float PID_Processing(float Err, PID_Data *pid_set)'
+  P473 style='Normal' align=None runs=2 num=None text='{ float P_temp, I_temp/*, D_temp*/;'
+  P474 style='Normal' align=None runs=1 num=None text='pid_set->Error[0] = Err;'
+  P475 style='Normal' align=None runs=3 num=None text='P_temp=pid_set->Kp*(pid_set->Error[0]-pid_set->Error[1]); //比例'
+  P476 style='Normal' align=None runs=2 num=None text='I_temp=pid_set->Ki*pid_set->Error[0]; //积分'
+  P477 style='Normal' align=None runs=1 num=None text='pid_set->Increment = P_temp + I_temp;'
+  P478 style='Normal' align=None runs=1 num=None text='pid_set->Output[0] = pid_set->Increment + pid_set->Output[1];'
+  P479 style='Normal' align=None runs=1 num=None text='if(pid_set->Output[0]>pid_set->OutputMax)pid_set->Output[0]=pid_set->OutputMax;'
+  P480 style='Normal' align=None runs=1 num=None text='if(pid_set->Output[0]<id_set->OutputMin)pid_set->Output[0] = pid_set->OutputMin;'
+  P481 style='Normal' align=None runs=1 num=None text='pid_set->Output[1] = pid_set->Output[0];'
+  P482 style='Normal' align=None runs=1 num=None text='pid_set->Error[1] = pid_set->Error[0];'
+  P483 style='Normal' align=None runs=1 num=None text='return (float)pid_set->Output[0];}'
+[section[0].header]
+[section[0].footer]
+[section[1].header]
+[section[1].footer]
+[section[2].header]
+[section[2].footer]
+[xml markers]
+  w:txbxContent: 40
+  w:fldSimple: 0
+  w:instrText: 134
+  w:numPr: 72
+  w:bookmarkStart: 114
+  w:drawing: 87
+{
+  "docx": "/Users/a136/vs/45425/thesis_project/templates/hnwlxy/source.docx",
+  "sections": 3,
+  "body_blocks": [
+    {
+      "kind": "paragraph",
+      "index": 0,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 1,
+      "text": "",
+      "style": "Normal",
+      "alignment": "center",
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 2,
+      "text": "本科生毕业论文（设计）",
+      "style": "Normal",
+      "alignment": "center",
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 3,
+      "text": "",
+      "style": "Normal",
+      "alignment": "center",
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "table",
+      "index": 4,
+      "text": "题 目：",
+      "style": null,
+      "alignment": null,
+      "numbering": null,
+      "run_count": null,
+      "runs": null,
+      "table_shape": {
+        "rows": 6,
+        "cols": 2
+      }
+    },
+    {
+      "kind": "paragraph",
+      "index": 5,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 6,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 7,
+      "text": "目 录",
+      "style": "Subtitle",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 8,
+      "text": "摘 要 1",
+      "style": "toc 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 9,
+      "text": "ABSTRACT 2",
+      "style": "toc 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 10,
+      "text": "第一章 绪论 3",
+      "style": "toc 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 11,
+      "text": "1.1 课题研究的背景和意义 3",
+      "style": "toc 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 12,
+      "text": "1.2 课题研究的国内外现状 4",
+      "style": "toc 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 13,
+      "text": "1.2.1 电动汽车双向直流电源国外研究现状 4",
+      "style": "toc 3",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 14,
+      "text": "1.2.2 电动汽车双向直流电源国内研究现状 4",
+      "style": "toc 3",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 15,
+      "text": "1.3 课题内容 5",
+      "style": "toc 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 16,
+      "text": "第二章 工作原理与数学模型 7",
+      "style": "toc 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 17,
+      "text": "2.1 电动汽车的系统架构与直流电源工作模式分析 7",
+      "style": "toc 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 18,
+      "text": "2.1.1 电动汽车的系统架构 7",
+      "style": "toc 3",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 19,
+      "text": "2.1.2 电动汽车直流电源工作模式分析 9",
+      "style": "toc 3",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 20,
+      "text": "2.2 Buck-Boost直流电源拓扑结构分析 10",
+      "style": "toc 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 21,
+      "text": "2.2.1 基础DC-DC变换器 10",
+      "style": "toc 3",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 22,
+      "text": "2.2.2 双向Buck-Boost变换器 14",
+      "style": "toc 3",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 23,
+      "text": "2.3 本章小结 15",
+      "style": "toc 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 24,
+      "text": "第三章 电动汽车Buck-Boost直流电源设计 16",
+      "style": "toc 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 25,
+      "text": "3.1 硬件结构设计 16",
+      "style": "toc 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 26,
+      "text": "3.2 主要元器件选型 17",
+      "style": "toc 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 27,
+      "text": "3.2.1 主控芯片 17",
+      "style": "toc 3",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 28,
+      "text": "3.2.2 开关管选型 17",
+      "style": "toc 3",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 29,
+      "text": "3.2.3 二极管选择 17",
+      "style": "toc 3",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 30,
+      "text": "3.2.4 电感选择 18",
+      "style": "toc 3",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 31,
+      "text": "3.3 硬件电路组成 18",
+      "style": "toc 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 32,
+      "text": "3.3.1 主电路模块 18",
+      "style": "toc 3",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 33,
+      "text": "3.3.2 采样模块 19",
+      "style": "toc 3",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 34,
+      "text": "3.3.3 辅助电源模块 20",
+      "style": "toc 3",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 35,
+      "text": "3.3.4 按键模块 22",
+      "style": "toc 3",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 36,
+      "text": "3.4 软件设计 22",
+      "style": "toc 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 37,
+      "text": "3.4.1 主程序设计 23",
+      "style": "toc 3",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 38,
+      "text": "3.4.2 中断程序设计 23",
+      "style": "toc 3",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 39,
+      "text": "3.5 本章小结 24",
+      "style": "toc 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 40,
+      "text": "第四章 仿真设计与实物验证 25",
+      "style": "toc 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 41,
+      "text": "4.1 仿真分析 25",
+      "style": "toc 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 42,
+      "text": "4.1.1 Buck模式分析 25",
+      "style": "toc 3",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 43,
+      "text": "4.1.2 Boost模式分析 26",
+      "style": "toc 3",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 44,
+      "text": "4.2 等比例缩小仿真 27",
+      "style": "toc 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 45,
+      "text": "4.2.1 Buck模式 28",
+      "style": "toc 3",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 46,
+      "text": "4.2.2 Boost模式 28",
+      "style": "toc 3",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 47,
+      "text": "4.3 实验与测试 29",
+      "style": "toc 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 48,
+      "text": "4.4 本章小结 30",
+      "style": "toc 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 49,
+      "text": "第五章 总结与展望 31",
+      "style": "toc 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 50,
+      "text": "5.1 总结与讨论 31",
+      "style": "toc 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 51,
+      "text": "5.2 研究局限与展望 31",
+      "style": "toc 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 52,
+      "text": "参考文献 33",
+      "style": "toc 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 53,
+      "text": "致 谢 35",
+      "style": "toc 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 54,
+      "text": "附 录 36",
+      "style": "toc 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 55,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 56,
+      "text": "摘 要",
+      "style": "Subtitle",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 57,
+      "text": "随着人类社会快速发展，节约资源与保护环境意识日益增强，传统燃油汽车因污染问题引发对新能源发展的广泛关注。新能源电动汽车凭借电能替代汽油的优势，不但节能环保且能量利用效率高，且有效缓解了传统燃油汽车带来的环境问题，成为社会发展的新动力。而双…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 58,
+      "text": "本文围绕电动汽车双向Buck-Boost直流电源的设计与验证展开研究，设计了一种基于STM32F103C8T6单片机的双向DC-DC变换器，实现了Buck-Boost的双向控制。其实质是一个由驱动模块、采样模块、辅助电源模块、按键模块和M…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 22,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 59,
+      "text": "本研究为电动汽车高效能量管理提供了理论支持与实践参考，后续可结合多电平拓扑、高频SiC器件及智能保护功能进一步优化性能，推动车载电源系统向高频化、集成化方向发展。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 60,
+      "text": "关键词：电动汽车，双向DC-DC变换器，Buck-Boost，STM32F103C8T6",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 8,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 61,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 62,
+      "text": "ABSTRACT",
+      "style": "Subtitle",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 63,
+      "text": "With the rapid development of human society, the awareness of resource conservation and environmental protection has be…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 64,
+      "text": "This paper focuses on the design and verification of a bidirectional Buck-Boost DC power supply for electric vehicles. …",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 65,
+      "text": "This research provides theoretical support and practical reference for efficient energy management in electric vehicles…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 66,
+      "text": "Keywords: Electricvehicles,Bidirectional DC-DC converter, Buck-Boost, STM32F103C8T6",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 4,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 67,
+      "text": "绪论",
+      "style": "Heading 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 68,
+      "text": "本章主要介绍课题研究意义及背景，电动汽车Buck-Boost直流电源的重要应用前景，并对国内外发展现状进行调研，根据任务书确定课题内容。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 69,
+      "text": "1.1 课题研究的背景和意义",
+      "style": "Heading 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 70,
+      "text": "随着全球能源危机和环境污染问题的严峻态势日益凸显，新能源汽车的发展已成为全球汽车制造工业的一个重大趋势，国家“十四五”规划提及的“碳达峰”与“碳中和”发展目标，发展低碳、清洁、可持续利用的新能源成为关键举措，电动汽车作为新能源汽车的典型代…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 71,
+      "text": "习近平总书记指出，发展新能源汽车是我国由汽车大国走向汽车强国的必经之路途。短短12年，我国新能源汽车实现了从1万到1000万的迅速增长态势，这为汽车产业智能化转型打下了坚实基础，中国也所以成为全球第一个新能源汽车年产量达到1000万辆的国…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 17,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 72,
+      "text": "在电动汽车的电池组当中，因电池单体的制造工艺、使用环境等方面因素，会出现电池单体彼此间电压不一致状况，这种不一致情形会引起电池组整体性能下降，如电池容量下降、使用寿数缩短等。Buck - Boost直流电源可对每一个电池单体的电压开展精确…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 11,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 73,
+      "text": "1.2 课题研究的国内外现状",
+      "style": "Heading 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 74,
+      "text": "近年来，国内外学者围绕着电动汽车双向DC - DC变换器的功率提升、效率优化做了大量研究，研究方向涵盖拓扑结构升级、控制策略优化、器件选型与损耗管控等范畴，以下结合了相关文献总结研究现状。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 4,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 75,
+      "text": "1.2.1 电动汽车双向直流电源国外研究现状",
+      "style": "Heading 3",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 76,
+      "text": "Z. Yu等人[4]经研究发现，采用多电平拓扑结构能有效减小开关器件的电压应力，以此减少开关损耗。采用软开关技术可达成零电压或者零电流的开关条件，此方式能把开关损耗降低40% - 60%，在控制策略的范畴内，选用空间矢量调制或移相脉宽调制…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 20,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 77,
+      "text": "而Manjare S等人[5]借助挑选成本较低的功率器件、简化电路设计和优化控制策略，使双向DC - DC变换器的成本得以降低，即采用了对性能有较低要求的传统硅（Si）功率器件，而且把变换器的拓扑结构予以简化，减掉了部件数量。尽管这样去做…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 13,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 78,
+      "text": "1.2.2 电动汽车双向直流电源国内研究现状",
+      "style": "Heading 3",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 79,
+      "text": "在国内，郭雨霏等人[6]开展了通过优化三重移相控制以提升双有源桥（Dual Active Bridge，DAB）变换器的实际效率，研究采用二维遍历算法对工作点予以优化，研发出一种依据电流应力和效率的综合优化手段。依靠调整控制角度，实现了电…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 11,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 80,
+      "text": "付明朝[7]探究的交错并联技术通过让n个单元并联分担负载电流，即每个单元所承受的电流应力为总电流的1/n，降低了功率消耗，采用的均流技术运用电流反馈闭环控制等算法，实现各模块输出电流偏差控制在±5%，杜绝因电流分布不均造成的额外损耗。并采…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 9,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 81,
+      "text": "经过研究剖析，电动汽车的Buck - Boost变换器展现出多方面的发展走向。从智能化的角度看，智能控制算法变得越发关键，其可按照车载负载需求情况自动调整工作模式，并且跟电池管理系统与动力系统紧密配合协同，进而达成更高效的能量管理[8]。…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 9,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 82,
+      "text": "国外的研究侧重于通过多电平拓扑、高频器件（SIC/GaN）及软件开关技术来实现突破。国内的研究则聚焦于控制算法的优化与拓扑结构的创新。基于上述对比分析，本研究开发一种兼顾高效率、低成本、高可靠性的双向Buck-Boost变换器，融合国内外…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 5,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 83,
+      "text": "1.3 课题内容",
+      "style": "Heading 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 84,
+      "text": "本设计主要采用STM32F103C8T6处理器作为控制芯片，完成了电动汽车的Buck - Boost直流电源设计。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 5,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 85,
+      "text": "第一章 开篇介绍了电动汽车发展背景，以及其在环境保护和提升能源效率上的意义，随后剖析了Buck - Boost双向直流电源的国内外研究现状及关键技术，以及未来技术创新和应用领域的发展走向。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 5,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 86,
+      "text": "第二章 首先对电动汽车的基本结构进行介绍，涉及动力电池、电动机、控制系统等核心构件，以及该汽车的工作模式，如充电、放电跟能量回收这三种情况，接着开展了针对直流电源基本拓扑架构的研究，探究了Buck - Boost变换器的特性与应用，最后透…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 7,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 87,
+      "text": "第三章 围绕双向Buck - Boost变换器进行了主要元器件筛选、具体电路图设计以及软件开发事宜的设计描述。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 5,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 88,
+      "text": "第四章 利用Simulink平台搭建起双向DC - DC变换器的电路仿真模型，凭借对仿真波形的分析，验证理论研究的正确性以及控制策略的有效性，之后针对已设计的电路搭建实验测试平台，经对变换器的带载能力、电感输出电流、驱动电压等实施测试分析…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 7,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 89,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 90,
+      "text": "工作原理与数学模型",
+      "style": "Heading 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 91,
+      "text": "本章节将针对电动汽车的基本结构及双向直流电源工作模式，论述电动汽车双向直流电源的工作原理，数学模型分析提供一种量化且精确的方式去剖析Buck - Boost直流电源的特性，这对于推动电动汽车电源技术的发展以及提升电动汽车的整体性能具有至关…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 92,
+      "text": "2.1 电动汽车的系统架构与直流电源工作模式分析",
+      "style": "Heading 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 93,
+      "text": "2.1.1 电动汽车的系统架构",
+      "style": "Heading 3",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 94,
+      "text": "从纯电动汽车角度看，能源系统占据核心地位，电动汽车借助动力电池实现动力输出，电机运转的调节任务由控制器承担，以此输出驱动力，该动力经减速系统处理后驱动车轮工作，实现电动汽车的移动，常规纯电动汽车的技术架构主要包括能量存储系统、牵引电机系统…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 11,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 95,
+      "text": "",
+      "style": "Normal",
+      "alignment": "center",
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 96,
+      "text": "（a） （b）",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 9,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 97,
+      "text": "图2.1 电动汽车系统框图： （a）电动汽车高压系统车身示意图；（b）电动汽车能源传动示意图",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 9,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 98,
+      "text": "电源系统主要由电池组、超级电容、电池管理系统（Battery Management System, BMS）以及充电系统所构成。电池组作为储存电能的关键构件，大多采用锂离子电池，给车辆给予持续的能量支撑，其容量的大小直接影响车辆续航里程。…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 8,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 99,
+      "text": "",
+      "style": "Normal",
+      "alignment": "center",
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 100,
+      "text": "图2.2 超级电容工作图",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 101,
+      "text": "电机控制器及其驱动的动力电机构成了电动汽车驱动系统的主体框架。就纯电动汽车而言，驱动电机除输出动力外，也可实现发电功能。执行正常驱动功能期间，电动机把电能转变为机械动力；若发生减速或处于下坡状态，驱动电机实施反向驱动，作为发电单元实现机械…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 102,
+      "text": "整车控制器依据驾驶员踩动加速踏板或者制动踏板的信息，给出指令调节电机的工作，同时借助与Buck - Boost直流电源通信，获取电源系统的实时实际状态，按照车辆运行的需求对电源系统进行协调把控，保障各电气系统供电稳定，达成能量合理分配。遇…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 103,
+      "text": "辅助系统主要以空调、制动、车载充电、照明、信息娱乐系统等为主，这些辅助系统在增强电动汽车的驾驶体验、舒适性以及安全性方面有着重大意义，Buck - Boost直流电源可为辅助系统供给稳定的电源支撑，让这些系统能够正常地工作。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 104,
+      "text": "2.1.2 电动汽车直流电源工作模式分析",
+      "style": "Heading 3",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 105,
+      "text": "根据图 2.1 （b）可知，在电动汽车的双向DC-DC变换器（Bi-directional DC-DC Converter，BDC）工作模式中，包含超级电容的变换器会根据不同的驾驶情况实时切换工作模式，确保电力系统的高效运行和稳定的母线电…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 28,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 106,
+      "text": "",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 107,
+      "text": "（a） （b）",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 17,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 108,
+      "text": "",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 109,
+      "text": "（c）",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 4,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 110,
+      "text": "图2.3 双向DC-DC变换器工作模式: （a）Boost模式；（b）待机模式；（c）Buck模式",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 21,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 111,
+      "text": "Boost模式（升压模式）：当车辆开始启动或加速时，BDC变换器切换成Boost模式，处于该模式的时候，超级电容实施放电，给出高功率输出，协助车辆提速，而且维持母线电压稳定不变，超级电容为系统赋予了短时间的高功率支持，保证车辆可快速加速，…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": {
+        "numId": 2,
+        "ilvl": 0
+      },
+      "run_count": 14,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 112,
+      "text": "待机模式：在车辆正常行驶期间，BDC变换器进入闲置模式，超级电容与电池实时开展能量互换，按所需吸收或释放能量，协助平衡电力需求并提升能量利用效率，超级电容在这种模式下，主要从事能量的调节和存储工作，让电力系统稳定状态下正常运行。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": {
+        "numId": 2,
+        "ilvl": 0
+      },
+      "run_count": 4,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 113,
+      "text": "Buck模式（降压模式）：当车辆实施制动或减速动作，BDC变换器进入Buck这一模式，此时制动所回收的能量会借助变换器存进超级电容之内，这有利于把制动时的动能转化成电能加以回收，同时防止母线电压因能量回馈出现快速升高。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": {
+        "numId": 2,
+        "ilvl": 0
+      },
+      "run_count": 8,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 114,
+      "text": "这三种模式依照车辆的不同情况自动进行切换，维持电压稳定的态势，保证电动汽车可以高效且平稳地运转，超级电容与电池合作工作，辅助电动汽车在各种工况里对能量管理加以优化，提升性能。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 115,
+      "text": "2.2 Buck-Boost直流电源拓扑结构分析",
+      "style": "Heading 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 116,
+      "text": "双向DC-DC变换器BDC（Bi-directional DC-DC Converter）是一种具备能量双向传输能力的直流变换器。按照BDC的构成，根据电路设计中是否包含隔离变压器可以分为非隔离式和隔离式，如表 1所示。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 12,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 117,
+      "text": "表 1 BDC变换器拓扑结构分类",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "table",
+      "index": 118,
+      "text": "拓扑结构分类",
+      "style": null,
+      "alignment": null,
+      "numbering": null,
+      "run_count": null,
+      "runs": null,
+      "table_shape": {
+        "rows": 10,
+        "cols": 2
+      }
+    },
+    {
+      "kind": "paragraph",
+      "index": 119,
+      "text": "2.2.1 基础DC-DC变换器",
+      "style": "Heading 3",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 4,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 120,
+      "text": "其中基础的DC-DC变换器有以下三种：",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 121,
+      "text": "（1）Buck变换器",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 5,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 122,
+      "text": "Buck变换器为了降低电路的输出纹波，在输出侧增加了LC滤波电路，并使用续流二极管保持电感支路的电流连续[13]。如图 2.4所示，Buck变换器的关键器件有开关管、电感、电容和二极管。其中电感的任务是把电能转化为磁能后进行储存，然后把磁…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 19,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 123,
+      "text": "图2.4 Buck变换器拓扑结构",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 4,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 124,
+      "text": "当开关管处于导通阶段如图 2.5（a），电流沿正极至电感路径流动，实现电能到磁能的转换与存储，电容充电、流经负载，回到电源负极，并有下式成立：",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 6,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 125,
+      "text": "（2-1）",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 5,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 126,
+      "text": "当开关管关断时如图 2.5（b），系统失去外部供电，电感元件阻碍电流的瞬时变化，电感抑制电流瞬变，把积累的磁能转变为电能输出，充当电路中的电源；这里的电容主要起到滤波作用，降低输出电压的。设为电感电压，为输入电压，为输出电压，T为PWM波…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 25,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 127,
+      "text": "（）**=* （2-3）",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 11,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 128,
+      "text": "由以上所述可得：",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 129,
+      "text": "=* （2-4）",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 7,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 130,
+      "text": "（a） （b）",
+      "style": "Normal",
+      "alignment": "center",
+      "numbering": null,
+      "run_count": 12,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 131,
+      "text": "图2.5 Buck变换器工作电路图： （a） 开关管导通状态；（b）开关管截止状态",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 14,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 132,
+      "text": "由于占空比D是一个大于0小于1的值，上述结论可知，Buck型 DC-DC变换器是一种降压型变换器。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 11,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 133,
+      "text": "Boost变换器",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": {
+        "numId": 3,
+        "ilvl": 0
+      },
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 134,
+      "text": "Boost变换器能将增大输入电压的输出。根据电路原理可知，在同一回路中，电流从高压流向低压，为了防止Boost电路中输出电流回流至低电压处，因此利用二极管阻碍电流流动[13]。Boost变换器拓扑架构如图 2.6所示。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 18,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 135,
+      "text": "",
+      "style": "Normal",
+      "alignment": "center",
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 136,
+      "text": "图2.6 Boost变换器拓扑结构",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 137,
+      "text": "开关管导通如图 2.7（a）所示，电路相当于短路状态。电感在输入电压激励下充电，线圈电流呈现累积性上升；VD二极管呈现反向截止特性，实现电流阻断；电容进入为负载供电的放电阶段，伴随时间流逝，电容C上的电压缓慢降低。电感电压与输入电压相等，…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 13,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 138,
+      "text": "（2-5）",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 5,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 139,
+      "text": "",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 140,
+      "text": "（a） （b）",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 11,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 141,
+      "text": "图2.7 Buck变换器工作电路图： （a） 开关管导通状态；（b）开关管截止状态",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 14,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 142,
+      "text": "当开关管截止时，相当于断路如图 2.7（b）所示。由于电感具有阻碍电流变化的性质[14]，感生出电势，随着时间的增加，电感上的电流不断减小。输入电压与电感电压在该阶段叠加，联合为电容补充电荷，且对负载进行供电，此时",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 15,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 143,
+      "text": "（2-6）",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 5,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 144,
+      "text": "有伏秒平衡原理得：",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 145,
+      "text": "**=（）* （2-7）",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 11,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 146,
+      "text": "由以上所述可得：",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 147,
+      "text": "= （2-8）",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 6,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 148,
+      "text": "由此可知，Boost型 DC-DC变换器为升压型变换器。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 5,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 149,
+      "text": "Buck-Boost变换器",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": {
+        "numId": 4,
+        "ilvl": 0
+      },
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 150,
+      "text": "Buck-Boost变换器的主要用途是实现电压的升降压输出，跟传统的Buck和Boost电路不同，其采用了独特的拓扑结构，使输出电压的极性与输入电压的极性相反，但幅度可以灵活调整[13]。此特性在需要宽输入输出电压范围或者出现电压极性反转…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 13,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 151,
+      "text": "",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 152,
+      "text": "图2.8 Buck-Boost变换器拓扑结构",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 5,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 153,
+      "text": "若开关管Q导通，该状态下电流路径如图 2.9（a）所示。电感L1的两端分别接电源两极，该时段内电感电流稳定上升，导通瞬态时很大。输出端，C依靠自身的放电为R提供能量。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 15,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 154,
+      "text": "",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 155,
+      "text": "（a） （b）",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 10,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 156,
+      "text": "图2.9 Buck-Boost变换器工作电路图： （a）开关管导通； （b）开关管截止",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 15,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 157,
+      "text": "当开关管Q截止时，电流走向见图 2.9（b）所示，由于电感电流的渐变特性，电感借助续流二极管D向输出端电容C和负载R输送能量，系统进入稳定工作阶段后，电感实现伏秒守恒，电感承受的电压即为输入电压。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 14,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 158,
+      "text": "Q导通时，电感电压等于输入端电压，即：",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 159,
+      "text": "（2-9）",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 5,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 160,
+      "text": "Q截止时，电感电压等于输出端电压，即：",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 161,
+      "text": "（2-10）",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 5,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 162,
+      "text": "设为导通时间，为关断时间，D为占空比。由此可得：",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 5,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 163,
+      "text": "= （2-11）",
+      "style": "Normal",
+      "alignment": "center",
+      "numbering": null,
+      "run_count": 6,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 164,
+      "text": "=* （2-12）",
+      "style": "Normal",
+      "alignment": "center",
+      "numbering": null,
+      "run_count": 7,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 165,
+      "text": "= （2-13）",
+      "style": "Normal",
+      "alignment": "center",
+      "numbering": null,
+      "run_count": 6,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 166,
+      "text": "综上所述，可知当占空比小于50%是输出降压；当占空比大于50%是输出升压。",
+      "style": "Normal",
+      "alignment": "left",
+      "numbering": null,
+      "run_count": 5,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 167,
+      "text": "2.2.2 双向Buck-Boost变换器",
+      "style": "Heading 3",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 4,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 168,
+      "text": "双向Buck-Boost变换器是由基本的Buck电路和Boost电路组成，如图 2.10（a）（b）所示，据观察其中电感与电容位置完全一致，不同之处在于开关管与二极管位置互换，由此可将二极管替换成开关器件[13]，即可得到图 2.10（c…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 35,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 169,
+      "text": "（a） （b）",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 9,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 170,
+      "text": "",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 171,
+      "text": "（c）",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 172,
+      "text": "图2.10 双向Buck-Boost变换器组成： （a）基本Buck电路；（b）基本Boost电路；（c）双向Buck-Boost电路",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 25,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 173,
+      "text": "如图 2.10（c）所示，D1不影响电能从左往右的传输，无论Q1是否导通，对变压器降压变换没有影响；D2同理。因此双向Buck-Boost变换器在工作时，采用独立的PWM控制[16]。本设计应用此拓扑进行了开发研究。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 23,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 174,
+      "text": "2.3 本章小结",
+      "style": "Heading 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 175,
+      "text": "本章研究了3种基本的DC-DC变换器拓扑架构和工作原理，进一步阐述了各拓扑之间存在的差异与联系。在此基础上选择了双向Buck-Boost变换器作为本课题车载BDC变换器的核心设计部分。详细介绍了电动汽车Buck-Boost直流电源的基本电…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 11,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 176,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 177,
+      "text": "电动汽车Buck-Boost直流电源设计",
+      "style": "Heading 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 4,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 178,
+      "text": "Buck - Boost直流电源在电动汽车上承担着电压转换以及能量分配的重要任务，需要综合考虑多个因素，从输出电压的稳定状态、效率的合理利用到元件挑选策略以及电路排布格局等，本章节会聚焦在电动汽车Buck - Boost直流电源硬件设计上…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 4,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 179,
+      "text": "3.1 硬件结构设计",
+      "style": "Heading 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 180,
+      "text": "考虑到安全、成本等因素，本设计根据实际电动汽车 BDC 变换器等比例进行了缩放，即计满足输出电压为40 Vdc±5%，放电输出负载调整率低于2%，充放电效率不低于90%的要求，进行了实物硬件分析与设计。输入的直流电压在24~48 Vdc，…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 14,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 181,
+      "text": "",
+      "style": "Normal",
+      "alignment": "center",
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 182,
+      "text": "图3.1 系统组成模型图",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 183,
+      "text": "",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 184,
+      "text": "图3.2 模型原理图",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 185,
+      "text": "主电路输出的电压电流经由检测模块转换，生成的电信号被STM32F103C8T6的ADC模块采集，经过微控制器（Micro Contorller Unit,MCU）的数据处理后，传递出符合条件的PWM信号，PWM信号作为驱动电路的开关信号，…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 15,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 186,
+      "text": "3.2 主要元器件选型",
+      "style": "Heading 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 187,
+      "text": "3.2.1 主控芯片",
+      "style": "Heading 3",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 188,
+      "text": "本设计选择STM32F103C8T6作为主控芯片，主要原因在于其采用高性能的ARM Cortex-M3内核，处理速度快，能实时、精准地执行复杂的双向功率变换控制算法。配备了多个外设接口，便于连接各类传感器、驱动电路等，实现高效的数据交互与…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 5,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 189,
+      "text": "3.2.2 开关管选型",
+      "style": "Heading 3",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 190,
+      "text": "IRF540ZP-VB MOS管的最大耐压为100 V，而我们设计中的最大输入电压只有48 V，远低于它的耐压上限。所以它能轻松承受电路中可能出现的电压尖峰，避免损坏，保证在高压环境下的可靠性。其次，它的耐流能力非常强，支持100 A的脉…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 20,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 191,
+      "text": "3.2.3 二极管选择",
+      "style": "Heading 3",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 192,
+      "text": "在电流连续模式（Continuous Conduction Mode, CCM）下，双向直流电路的主要损耗来自于反向恢复电流产生的功耗。使用快恢复二极管成为减小损耗的有效解决方案。根据不同的特点，快恢复二极管可以分为三类，如下表 2所示。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 7,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 193,
+      "text": "综合考虑，选择肖特基二极管最为合适。其中1N4148作为高速开关二极管，具备4 ns反向恢复时间，适应高频驱动电路的快速开关需求，能够减少损耗。具有75 V反向耐压，满足本设计驱动电路中的电压等级。正向电压降在10 mA时仅1 V，降低导…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 11,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 194,
+      "text": "表 2 快恢复二极管具体类型主要特点及应用场景",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "table",
+      "index": 195,
+      "text": "类型",
+      "style": null,
+      "alignment": null,
+      "numbering": null,
+      "run_count": null,
+      "runs": null,
+      "table_shape": {
+        "rows": 4,
+        "cols": 6
+      }
+    },
+    {
+      "kind": "paragraph",
+      "index": 196,
+      "text": "3.2.4 电感选择",
+      "style": "Heading 3",
+      "alignment": "left",
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 197,
+      "text": "电感器依照不同材质的磁芯，可归为三类：开气隙铁氧体磁芯效率高，易受明显的电磁干扰；非晶磁芯有着高效率与低损耗的特性，只是工作频率受限；低磁通磁芯在效率跟频率方面表现均衡，经过全面考量，最终采用铁硅铝磁芯电感，因为其效率与工作频率所呈现的平…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 9,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 198,
+      "text": "电感感量选定了600uH电感，电感的取值越大，电流里的纹波越小，输出稳定性高，有利于降低输出电压的波动，该电感在双向DC - DC电路里起到储能与滤波的作用，开关管导通的这一时刻，释放的能量为负载输送电力。600uH电感可存下较多能量，可…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 11,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 199,
+      "text": "3.3 硬件电路组成",
+      "style": "Heading 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 200,
+      "text": "3.3.1 主电路模块",
+      "style": "Heading 3",
+      "alignment": "left",
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 201,
+      "text": "图3.3 主拓扑图",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 4,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 202,
+      "text": "结合上述主要元器件选型以及拓扑结构的选择，如图 3.3、图 3.4设计了主电路及驱动部分的原理图。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 7,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 203,
+      "text": "",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 204,
+      "text": "图3.4 驱动电路图",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 205,
+      "text": "此部分主要使用EG2104驱动MOS管，由于其支持10 V-600 V宽电压范围的高电压驱动能力、逻辑兼容性、保护功能以及通过自举电容实现高端驱动，无需隔离电源的自举供电机制。电路设计时为了保护电路元件并提高驱动稳定性，在MOS管前端并联…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 15,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 206,
+      "text": "EG2104利用自举电容在Vs端电平摆动，为高端MOS管提供浮动电源，实现高效驱动。同时，EG2104接收到PWM信号经内部缓冲放大后，输出高电流驱动信号至MOS管栅极，实现精确的开关控制。结合前端电阻和二极管，实现了更加高效、安全的能量…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 12,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 207,
+      "text": "3.3.2 采样模块",
+      "style": "Heading 3",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 208,
+      "text": "（1） 电流采样模块",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 5,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 209,
+      "text": "",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 210,
+      "text": "图3.5 输出电流采样",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 4,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 211,
+      "text": "如图 3.5所示，使用INA282AIDR电流传感器进行电流采样。由于该传感器具有高精度、宽输入范围和低功耗的特性，可以通过50倍增益放大10mΩ采样电阻两端的电压差，将电流信号转换为线性输出的电压信号，并支持-14 V至80 V共模电压…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 39,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 212,
+      "text": "（2）电压采样电路",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 213,
+      "text": "在本设计中使用AD8552运放进行直流电压采样，如图 3.6所示。由于该运放具有1 μV失调电压和0.005 μV/°C漂移，配合轨到轨输入输出能力，可精准捕捉双向DC-DC变换器的输出电压变化。电路设计中，AD8552通过分压电阻网络连…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 16,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 214,
+      "text": "",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 215,
+      "text": "图3.6 直流电压采样",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 4,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 216,
+      "text": "3.3.3 辅助电源模块",
+      "style": "Heading 3",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 217,
+      "text": "在BDC变换器中，单独使用辅助电源模块能够为系统提供稳定、可靠的独立供电支持，不仅有效隔离主电路与控制电路的电气干扰，确保控制信号的精准传输与处理，还通过内置的高效DC-DC转换功能实现宽范围输入电压到所需工作电压的灵活适配。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 5,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 218,
+      "text": "",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 219,
+      "text": "图3.7 辅助电源-12V",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 5,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 220,
+      "text": "选用MP4581作为12 V辅助电源供电芯片，因其具有8 V至100 V宽输入电压范围、高效率、高集成度、灵活的频率调节、的过流、短路保护功能等优势，能够为系统提供稳定可靠的12 V供电，满足复杂工况下的电源需求并提升整体能效与可靠性。具…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": {
+        "numId": 5,
+        "ilvl": 0
+      },
+      "run_count": 14,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 221,
+      "text": "",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 222,
+      "text": "图3.8 辅助电源-5V",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 6,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 223,
+      "text": "",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 224,
+      "text": "图3.9 辅助电源-3.3V",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 6,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 225,
+      "text": "（2）使用LM1117系列线性稳压器作为5 V、3.3 V辅助电源供电，具体电路如图 3.8、图 3.9所示。LM1117支持4.75 V至20 V输入电压，可以稳定输出5 V或3.3 V，精度达到±1%，能确保电路电压的稳定性；虽然线性…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 31,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 226,
+      "text": "3.3.4 按键模块",
+      "style": "Heading 3",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 227,
+      "text": "本设计中还设有按键模块，如图 3.10所示。SW1、SW2用于设置输出电压的大小；SW3、SW4用于Buck或Boost模式的切换。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 21,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 228,
+      "text": "",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 229,
+      "text": "图3.10 按键模块",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 5,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 230,
+      "text": "3.4 软件设计",
+      "style": "Heading 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 231,
+      "text": "软件设计关系到BDC变换器能否正常工作，在软件编程时主要分为三部分：主程序初始化子程序和中断子程序。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 7,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 232,
+      "text": "3.4.1 主程序设计",
+      "style": "Heading 3",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 233,
+      "text": "",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 234,
+      "text": "图3.11 主程序流程图",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 5,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 235,
+      "text": "编写主程序首先进行初始化。随后进行ADC采集并对其数据归一化处理，进入定时器中断服务程序工作。如此往复循环。主程序流程图如图 3.11所示。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 16,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 236,
+      "text": "3.4.2 中断程序设计",
+      "style": "Heading 3",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 237,
+      "text": "对系统进行系统时钟、串口、PID、定时器、PWM以及ADC等模块的初始化",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 8,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 238,
+      "text": "在电动汽车Buck-Boost直流电源的软件设计中，中断程序作为核心控制环节，需要进行ADC采样、Buck-Boost模式切换及PI调节[18]等任务，其设计牵扯到系统的动态响应速度和稳定性。中断程序中，首先默认进入Boost模式，随后判…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 39,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 239,
+      "text": "",
+      "style": "Normal",
+      "alignment": "center",
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 240,
+      "text": "图3.12 初始化程序图以及中断程序流程图",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 6,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 241,
+      "text": "3.5 本章小结",
+      "style": "Heading 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 242,
+      "text": "本章节主要围绕电动汽车BDC直流电源的硬件电路设计与具体元器件选型进行了介绍，重点剖析了二极管、开关管、主控芯片等关键元器件的选择，对驱动模块、电压电流采样模块以及辅助电源模块等还进行了详细的电路设计与解析，同时说明了软件部分主程序跟中断…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 243,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 244,
+      "text": "仿真设计与实物验证",
+      "style": "Heading 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 245,
+      "text": "为验证相关理论的有效性，本章首先借助Simulink软件平台构建了BDC变换器的仿真模型[19][20]。通过对负载切换以及输入电压突变等工况加以验证，查看输出电压、电流波形的稳定情形，说明了实验具备可行条件，以这为基础搭建了BDC变换器…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 22,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 246,
+      "text": "4.1 仿真分析",
+      "style": "Heading 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 247,
+      "text": "",
+      "style": "Normal",
+      "alignment": "center",
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 248,
+      "text": "图4.1 BDC变换器的仿真模型",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 249,
+      "text": "4.1.1 Buck模式分析",
+      "style": "Heading 3",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 250,
+      "text": "如图 4.1仿真模型所示，当BDC变换器在Buck模式下工作时，采用模糊PI双闭环控制[21]，如图 4.2所示。在Buck模式下，BDC变换器的输出电压电流波形如图 4.3所示。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 27,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 251,
+      "text": "在放电初期或车辆紧急加速时，BDC变换器会优先使用恒流模式来限制最大输出电流，防止电池过度放电或电路过载。此时，输出电压会根据负载需求自动调整，确保电流稳定在安全阈值内。通过恒流模式控制电流大小，避免电池电压急剧下降，由此延长电池寿命。当…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 5,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 252,
+      "text": "",
+      "style": "Normal",
+      "alignment": "center",
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 253,
+      "text": "图4.2 放电控制PI",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 4,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 254,
+      "text": "",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 4,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 255,
+      "text": "图4.3 Buck模式输出电压电流仿真波形",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 256,
+      "text": "4.1.2 Boost模式分析",
+      "style": "Heading 3",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 257,
+      "text": "如图 4.1仿真模型所示，Boost模式的模糊PI控制器的参数设置于Buck区别不大，除了采样信号外，其相对应的比例系数也略有差异[21]。如图 4.4所示。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 20,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 258,
+      "text": "在Boost模式下，BDC变换器的输出电压电流波形如图 4.5所示。由图可知此模式下变换器输出电压的动态相应迅速，调整时间<0.05 s。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 14,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 259,
+      "text": "",
+      "style": "Normal",
+      "alignment": "center",
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 260,
+      "text": "图4.4 充电控制PI",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 4,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 261,
+      "text": "",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 262,
+      "text": "图4.5 Boost模式输出电压电流仿真波形",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 263,
+      "text": "4.2 等比例缩小仿真",
+      "style": "Heading 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 264,
+      "text": "考虑到安全、成本等因素，本设计实物按实际大小等比例缩小进行，并对其先在Simulink软件平台上进行了仿真模拟，以此来验证本设计等比例缩小后，电路实物的可实行性。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 15,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 265,
+      "text": "4.2.1 Buck模式",
+      "style": "Heading 3",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 266,
+      "text": "Buck模式等比例放电电路如图 4.6所示，波形如图 4.7所示",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 8,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 267,
+      "text": "",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 268,
+      "text": "图4.6 实物等比例放电控制PI",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 4,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 269,
+      "text": "",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 4,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 270,
+      "text": "图4.7 等比例Buck模式输出电压电流仿真波形",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 5,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 271,
+      "text": "4.2.2 Boost模式",
+      "style": "Heading 3",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 272,
+      "text": "Boost模式等比例放电电路如图 4.8所示，波形如图 4.9所示",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 8,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 273,
+      "text": "",
+      "style": "Normal",
+      "alignment": "center",
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 274,
+      "text": "图4.8 等比例充电控制PI",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 4,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 275,
+      "text": "",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 276,
+      "text": "图4.9 等比例Boost模式输出电压电流仿真波形",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 7,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 277,
+      "text": "4.3 实验与测试",
+      "style": "Heading 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 278,
+      "text": "通过BDC变换器的软硬件调试，优化设计出最佳电路与参数如图 4.10所示，并对变换器进行了一系列测试。如下表所示。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 7,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 279,
+      "text": "",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 11,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 280,
+      "text": "图4.10 电路实物图",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 5,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 281,
+      "text": "Boost模式下，调整负载实验参数如表 3所示。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 6,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 282,
+      "text": "表3 Boost模式实物测试数据",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "table",
+      "index": 283,
+      "text": "输入电压/V",
+      "style": null,
+      "alignment": null,
+      "numbering": null,
+      "run_count": null,
+      "runs": null,
+      "table_shape": {
+        "rows": 5,
+        "cols": 5
+      }
+    },
+    {
+      "kind": "paragraph",
+      "index": 284,
+      "text": "Buck模式下，调整负载实验参数如表 4所示。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 6,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 285,
+      "text": "表 4 Buck模式实物测试数据",
+      "style": "图表",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "table",
+      "index": 286,
+      "text": "输入电压/V",
+      "style": null,
+      "alignment": null,
+      "numbering": null,
+      "run_count": null,
+      "runs": null,
+      "table_shape": {
+        "rows": 5,
+        "cols": 5
+      }
+    },
+    {
+      "kind": "paragraph",
+      "index": 287,
+      "text": "根据实验测试数据可知，本设计满足输出电压40 V±5%，放电输出负载调整率＜2%，充放电效率＞90%的要求。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 7,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 288,
+      "text": "4.4 本章小结",
+      "style": "Heading 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 289,
+      "text": "通过仿真实验验证与硬件实验，本章节证实了BDC变换器的理论模型及设计方案合理且可行，仿真结果表明了变换器在各种工况下的输出特性及动态稳定性，硬件实验则进一步核实了驱动控制信号、电压稳定性、电流响应及负载适应性的性能表现状况，凭借数据记录与…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 6,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 290,
+      "text": "总结与展望",
+      "style": "Heading 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 291,
+      "text": "5.1 总结与讨论",
+      "style": "Heading 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 292,
+      "text": "本文以充分调研电动汽车电源系统双向DC - DC变换器国内外相关研究现状为基础，对电动汽车工作原理以及BDC变换器工作模式进行了分析，针对电动汽车对高输出效率、宽泛电压输入的要求，提出一套基于Buck - Boost拓扑的双向DC - D…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 13,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 293,
+      "text": "本设计本文主要工作如下：",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 294,
+      "text": "（1）分析了课题的研究背景和意义，认清了电动汽车对高效、可靠直流电源的核心需要，通过整合国内外研究态势，说明了Buck - Boost变换器在电动汽车领域存在广泛应用前景，且表明未来往高频化、集成化方向发展的趋势。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 5,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 295,
+      "text": "（2）在理论分析与设计范畴，论文对电动汽车基本结构及工作模式做了详细介绍，为电源设计形成了系统级的框架，就直流电源的基本拓扑架构而言，着重探究了双向Buck - Boost变换器的工作原理，诠释了它在升降压方面灵活、能量双向流动的好处，又…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 7,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 296,
+      "text": "（3）为检验设计的正确性以及控制策略的有效性，运用Simulink平台搭建了BDC变换器的电路仿真模型，仿真结果证实，变换器在宽幅输入电压范围内展现出良好的升降压特性，动态反应迅速，且输出的电压稳定可靠，进一步搭建实验检测平台，实际测量了…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 9,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 297,
+      "text": "5.2 研究局限与展望",
+      "style": "Heading 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 298,
+      "text": "从实验过程分析能看出，效率损耗的主要原因表现在以下方面：",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 299,
+      "text": "功率器件在状态切换期间，因电压与电流的变化引起损耗，跟开关速度以及电压电流变化的快慢相关联，米勒效应会加剧这一损耗现象，器件开始导通的时候，电流沿着导通电阻产生损耗，依赖于器件导通电阻和电流有效值，对于同步整流电路而言，MOSFET和电感…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": {
+        "numId": 6,
+        "ilvl": 0
+      },
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 300,
+      "text": "磁性材料于交变磁场里产生磁滞和涡流损耗，跟材料特性与工作频率相关联",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": {
+        "numId": 6,
+        "ilvl": 0
+      },
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 301,
+      "text": "电流流经电容的等效串联电阻（ESR）会造成损耗，低ESR电容可降低这种损耗值，鉴于实验条件与个人能力的约束，本设计依旧留存部分相关问题需进一步深入学习研究。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": {
+        "numId": 6,
+        "ilvl": 0
+      },
+      "run_count": 5,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 302,
+      "text": "后续可以从以下方面加以完善强化：",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 303,
+      "text": "本设计着重留意输出范围及动态变化情形，未涉及到过流保护、过压保护和短路保护等事项，后续相关研究可以添加进去。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": {
+        "numId": 7,
+        "ilvl": 0
+      },
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 304,
+      "text": "本设计在仿真模拟中，Buck部分的PI双闭环调节存在纹波缺陷情况，Boost部分负载的调整时间偏长，可以试着加入PID调节。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": {
+        "numId": 7,
+        "ilvl": 0
+      },
+      "run_count": 9,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 305,
+      "text": "开展针对硬件设计与器件的升级，如采用多电平拓扑，降低开关动作的损耗，把普通MOS管替换为SiC或GaN器件，把开关频率提升至500 kHz以上，把无源器件体积减小。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": {
+        "numId": 7,
+        "ilvl": 0
+      },
+      "run_count": 9,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 306,
+      "text": "采用纳米晶磁芯或者扁平线电感做设计，减小磁芯损耗跟绕组电阻，提升高频作业的性能，对PCB布局进行优化，降低辐射干扰。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": {
+        "numId": 7,
+        "ilvl": 0
+      },
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 307,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": {
+        "numId": 7,
+        "ilvl": 0
+      },
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 308,
+      "text": "参考文献",
+      "style": "Subtitle",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 309,
+      "text": "王政.坚定迈向汽车强国[N].人民日报,2024-11-15(003).",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": {
+        "numId": 8,
+        "ilvl": 0
+      },
+      "run_count": 6,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 310,
+      "text": "Wei Qian, Honnyong Cha, Fang Zheng Peng, Leon M, Tolbert. 55-kW Variable 3X DC-DC Converter for Plug-in Hybrid Electric…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": {
+        "numId": 8,
+        "ilvl": 0
+      },
+      "run_count": 5,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 311,
+      "text": "Han S, Divan D. Bi-directional DC/DC converters for plug-in hybrid electric vehicle (PHEV) applications[C]//2008 Twenty…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": {
+        "numId": 8,
+        "ilvl": 0
+      },
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 312,
+      "text": "Z. Yu, H. Kapels and K. F. Hoffmann. \"High Efficiency Bidirectional DC-DC Converter with Wide Input and Output Voltage …",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": {
+        "numId": 8,
+        "ilvl": 0
+      },
+      "run_count": 5,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 313,
+      "text": "Manjare S, Saraf S, Rajeshwari C. Design and Control of Bidirectional Converter for EV Application[C]//2023 IEEE Renewa…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": {
+        "numId": 8,
+        "ilvl": 0
+      },
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 314,
+      "text": "郭雨霏,李一梁,王懿杰,徐殿国.基于三重移相控制的双有源桥变换器研究[J].电气传动,2023,53(2):10-15",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": {
+        "numId": 8,
+        "ilvl": 0
+      },
+      "run_count": 12,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 315,
+      "text": "付明朝. 交错并联双向DC-DC变换器均流技术研究[D]. 重庆理工大学,2021.",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": {
+        "numId": 8,
+        "ilvl": 0
+      },
+      "run_count": 8,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 316,
+      "text": "张卓然，许彦武，姚一鸣.多电飞机电力系统及其关键技术[J].南京航空航天大学学报,2022,54(5):969-984.",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": {
+        "numId": 8,
+        "ilvl": 0
+      },
+      "run_count": 6,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 317,
+      "text": "龚春阳,夏潇,包俊,郑建,陈辉,陈晓琳,王志新,黄冬梅.宽增益高效谐振型直流变换器技术[J].电力系统保护与控列.2024.52(1):133-144.",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": {
+        "numId": 8,
+        "ilvl": 0
+      },
+      "run_count": 20,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 318,
+      "text": "Automotive electricity: electric drives[M]. John Wiley & Sons, 2013.",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": {
+        "numId": 8,
+        "ilvl": 0
+      },
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 319,
+      "text": "王震坡,孙逢春，刘鹏.电动汽车原理与应用技术.第2版[M].北京:机械工业出版社,2017",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": {
+        "numId": 8,
+        "ilvl": 0
+      },
+      "run_count": 14,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 320,
+      "text": "张雷, 胡晓松, 王震坡. 超级电容管理技术及在电动汽车中的应用综述[J]. 机械工程学报, 2017, 53(16): 32-43, 69.",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": {
+        "numId": 8,
+        "ilvl": 0
+      },
+      "run_count": 10,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 321,
+      "text": "王兆安，刘进军.电力电子技术.第5版[M].北京:机械工业出版社,2009",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": {
+        "numId": 8,
+        "ilvl": 0
+      },
+      "run_count": 12,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 322,
+      "text": "Wu H F, Jia Y H, Yang F, et al. Two-stage isolated bidirectional DC-AC converters with three-port converters and two DC…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": {
+        "numId": 8,
+        "ilvl": 0
+      },
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 323,
+      "text": "解光军,程心.DC-DC开关变换器的建模与设计[M].科学出版社,2015.",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": {
+        "numId": 8,
+        "ilvl": 0
+      },
+      "run_count": 8,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 324,
+      "text": "Sanjida M and John C W L. A soft-switched, multiport photovoltaic power optimizer with integrated storage interface and…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": {
+        "numId": 8,
+        "ilvl": 0
+      },
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 325,
+      "text": "Yazdani F, Zolghadri M. Design of dual active bridge isolated bi-directional DC converter based on current stress optim…",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": {
+        "numId": 8,
+        "ilvl": 0
+      },
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 326,
+      "text": "张湘映. 基于改进PID控制的快速响应数字DC-DC变换器设计[D]. 江苏:南京理工大学,2020.",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": {
+        "numId": 8,
+        "ilvl": 0
+      },
+      "run_count": 12,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 327,
+      "text": "赵成勇,李路遥,翟晓萌,黄晓明,陆翌,裘鹏.新型模块化高压大功率DC-DC变换器[J].电力系统自动化,2014,38(4):72-78",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": {
+        "numId": 8,
+        "ilvl": 0
+      },
+      "run_count": 18,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 328,
+      "text": "杜少武,陈中.一种新颖的软开关双向DC/DC变换器[J].电力电子技术,2007,41(7):21-23",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": {
+        "numId": 8,
+        "ilvl": 0
+      },
+      "run_count": 10,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 329,
+      "text": "张相军,刘冠男,王懿杰,等.软开关双向DC-DC变换器控制模型[J].电机与控制学报, 2013, 17(011):89-96.",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": {
+        "numId": 8,
+        "ilvl": 0
+      },
+      "run_count": 14,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 330,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 331,
+      "text": "致 谢",
+      "style": "Subtitle",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 332,
+      "text": "XX。",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 333,
+      "text": "附 录",
+      "style": "Subtitle",
+      "alignment": "justify",
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 334,
+      "text": "",
+      "style": "Normal",
+      "alignment": "center",
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 335,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 336,
+      "text": "主函数",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 337,
+      "text": "#include \"stm32f4xx.h\"",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 338,
+      "text": "#include \"sys.h\"",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 339,
+      "text": "int main(void)",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 340,
+      "text": "{",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 341,
+      "text": "NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 342,
+      "text": "TIM1_Init(20.0f,0.6,400);",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 343,
+      "text": "TIM2_Init(20.0f);",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 344,
+      "text": "Get_Dot();",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 345,
+      "text": "while(1){",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 346,
+      "text": "}}",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 347,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 348,
+      "text": "ADC采样函数",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 349,
+      "text": "u16 Get_ADC_Value(u8 Channel)",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 350,
+      "text": "{",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 351,
+      "text": "u8 count, i, j;",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 352,
+      "text": "u32 sum = 0;",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 353,
+      "text": "u16 temp = 0;",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 354,
+      "text": "u16 tempbuf[ADC_TIMES];",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 355,
+      "text": "for (i = 0; i < ADC_TIMES; i++)",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 356,
+      "text": "{",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 357,
+      "text": "tempbuf[i] = ADC1_Raw_Value[i][Channel];",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 358,
+      "text": "}",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 359,
+      "text": "for (j = 0; j < ADC_TIMES; j++) //冒泡法",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 360,
+      "text": "{",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 361,
+      "text": "for (i = j; i < ADC_TIMES; i++)",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 362,
+      "text": "{",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 363,
+      "text": "if (tempbuf[i] > tempbuf[j])",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 364,
+      "text": "{",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 365,
+      "text": "temp = tempbuf[i];",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 366,
+      "text": "tempbuf[i] = tempbuf[j];",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 367,
+      "text": "tempbuf[j] = temp;",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 368,
+      "text": "}}}",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 369,
+      "text": "for (count = 1; count < ADC_TIMES - 1; count++)",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 370,
+      "text": "sum = sum + tempbuf[count];",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 371,
+      "text": "return (sum / (ADC_TIMES - 2));",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 372,
+      "text": "}",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 373,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 374,
+      "text": "void ADC_Process(void)",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 375,
+      "text": "{",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 376,
+      "text": "U_AC = 53.8040862f * (0.0008056640625f*Get_ADC_Value(0)-1.59753361232f);",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 377,
+      "text": "U_AC1=53.8040862f*((0.0008056640625f* Get_ADC_Value(1)) -1.59753361232f);",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 378,
+      "text": "I_AC =2.159f * (0.0008056640625f*Get_ADC_Value(1)-1.4874874288f);",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 379,
+      "text": "}",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 380,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 381,
+      "text": "PID函数",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 382,
+      "text": "#include \"pid.h\"",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 383,
+      "text": "PID_Data1 Spwm;",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 384,
+      "text": "void PID_Vdc_PI_Init(void)",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 385,
+      "text": "{ Vdc_PI.Kp = 0.0001300f; //0.2f 0.01f",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 386,
+      "text": "Vdc_PI.Ki = 0.00005f; //0.05f 10.0f",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 387,
+      "text": "Vdc_PI.Error[0] = 0.0f;",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 388,
+      "text": "Vdc_PI.Error[1] = 0.0f;",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 389,
+      "text": "Vdc_PI.OutputMax = 1;",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 390,
+      "text": "Vdc_PI.OutputMin = 0.7;",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 391,
+      "text": "}",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 392,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 393,
+      "text": "void PID_PLL_PI_Init(void)",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 394,
+      "text": "{PLL_PI.Kp = 157.0f; //16.5",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 395,
+      "text": "PLL_PI.Ki = 15781.0f;",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 396,
+      "text": "PLL_PI.Error[0] = 0.0f;",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 397,
+      "text": "PLL_PI.Error[1] = 0.0f;",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 398,
+      "text": "PLL_PI.OutputMax = 50000;",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 399,
+      "text": "PLL_PI.OutputMin = -1000;}",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 400,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 401,
+      "text": "void PID_Current_Loop_Init(void)",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 402,
+      "text": "{",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 403,
+      "text": "Id_PI.Kp = 2.05f; // 2.08 2.05",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 404,
+      "text": "Iq_PI.Kp = Id_PI.Kp ;",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 405,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 406,
+      "text": "Id_PI.Ki =8.0f;// * Interrupt_Ts; //8.0f 100f",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 407,
+      "text": "Iq_PI.Ki = Id_PI.Ki;",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 408,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 409,
+      "text": "Id_PI.Error[0] = 0.0f;",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 410,
+      "text": "Iq_PI.Error[0] = Id_PI.Error[0];",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 411,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 412,
+      "text": "Id_PI.Error[1] = 0.0f;",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 413,
+      "text": "Iq_PI.Error[1] = Id_PI.Error[1];",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 414,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 415,
+      "text": "Id_PI.OutputMax = 36.0f;",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 416,
+      "text": "Iq_PI.OutputMax = Id_PI.OutputMax;",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 417,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 418,
+      "text": "Id_PI.OutputMin = -36.0f;",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 419,
+      "text": "Iq_PI.OutputMin = Id_PI.OutputMin;",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 420,
+      "text": "}",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 421,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 422,
+      "text": "void PID_Current1_Loop_Init(void)",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 423,
+      "text": "{",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 424,
+      "text": "Vd_PI.Kp = 0.4f; //1.05f 0.2",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 425,
+      "text": "Vq_PI.Kp = Vd_PI.Kp ;",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 426,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 427,
+      "text": "Vd_PI.Ki = 10.0f * Interrupt_Ts; //5.0f 20.0",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 428,
+      "text": "Vq_PI.Ki = Vd_PI.Ki;",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 429,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 430,
+      "text": "Vd_PI.Error[0] = 0.0f;",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 431,
+      "text": "Vq_PI.Error[0] = Vd_PI.Error[0];",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 432,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 433,
+      "text": "Vd_PI.Error[1] = 0.0f;",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 434,
+      "text": "Vq_PI.Error[1] = Vd_PI.Error[1];",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 435,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 436,
+      "text": "Vd_PI.OutputMax = 2.828f;",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 437,
+      "text": "Vq_PI.OutputMax = Vd_PI.OutputMax;",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 438,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 439,
+      "text": "Vd_PI.OutputMin = -2.828f;",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 440,
+      "text": "Vq_PI.OutputMin = Vd_PI.OutputMin;",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 441,
+      "text": "}",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 442,
+      "text": "void Spwm_PID_Init(void) //",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 443,
+      "text": "{ Spwm.kp =0.0001300f; //增大调节稍稳",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 444,
+      "text": "Spwm.ki = 0.005f; //变小调节缓慢",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 445,
+      "text": "Spwm.kd = 0.00f;",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 446,
+      "text": "Spwm.err=0.0;",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 447,
+      "text": "Spwm.err_last=0.0;",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 448,
+      "text": "Spwm.err_laster=0.0;",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 449,
+      "text": "Spwm.OutputMAX = 1;",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 450,
+      "text": "Spwm.OutputMIN = 0.7;}",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 451,
+      "text": "float Spwm_PID_Control(float Set_Val, float Samp_Val, PID_Data1 *pid_set, float N)",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 452,
+      "text": "{ float P_temp, I_temp, D_temp;",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 453,
+      "text": "pid_set->err = (Set_Val - Samp_Val); //误差值",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 454,
+      "text": "if(fabs(pid_set->err) < N) //积分分离",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 455,
+      "text": "{pid_set->Output = pid_set->Output_Last; //重新赋值",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 456,
+      "text": "pid_set->err_last = pid_set->err;",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 457,
+      "text": "return pid_set->Output;}",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 458,
+      "text": "P_temp=pid_set->kp*(pid_set->err-pid_set->err_last); //比例",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 459,
+      "text": "I_temp=pid_set->ki*pid_set->err; //积分",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 460,
+      "text": "D_temp = pid_set->kd * (pid_set->err - 2*pid_set->err_last + pid_set->err_laster); //微分",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 461,
+      "text": "pid_set->Increment = P_temp + I_temp + D_temp; //增量型",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 462,
+      "text": "pid_set->Output = pid_set->Increment + pid_set->Output_Last;",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 463,
+      "text": "if(pid_set->Output > pid_set->OutputMAX) pid_set->Output = pid_set->OutputMAX; //抗饱和",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 464,
+      "text": "if(pid_set->Output < pid_set->OutputMIN) pid_set->Output = pid_set->OutputMIN;",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 465,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 466,
+      "text": "pid_set->Output_Last = pid_set->Output; //重新赋值",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 467,
+      "text": "pid_set->err_laster = pid_set->err_last;",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 468,
+      "text": "pid_set->err_last = pid_set->err;",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 469,
+      "text": "return (float)pid_set->Output;",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 470,
+      "text": "}",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 471,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 472,
+      "text": "float PID_Processing(float Err, PID_Data *pid_set)",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 473,
+      "text": "{ float P_temp, I_temp/*, D_temp*/;",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 474,
+      "text": "pid_set->Error[0] = Err;",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 475,
+      "text": "P_temp=pid_set->Kp*(pid_set->Error[0]-pid_set->Error[1]); //比例",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 476,
+      "text": "I_temp=pid_set->Ki*pid_set->Error[0]; //积分",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 477,
+      "text": "pid_set->Increment = P_temp + I_temp;",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 478,
+      "text": "pid_set->Output[0] = pid_set->Increment + pid_set->Output[1];",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 479,
+      "text": "if(pid_set->Output[0]>pid_set->OutputMax)pid_set->Output[0]=pid_set->OutputMax;",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 480,
+      "text": "if(pid_set->Output[0]<id_set->OutputMin)pid_set->Output[0] = pid_set->OutputMin;",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 481,
+      "text": "pid_set->Output[1] = pid_set->Output[0];",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 482,
+      "text": "pid_set->Error[1] = pid_set->Error[0];",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 483,
+      "text": "return (float)pid_set->Output[0];}",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    }
+  ],
+  "headers_footers": {
+    "section_0_header": [],
+    "section_0_footer": [],
+    "section_1_header": [],
+    "section_1_footer": [],
+    "section_2_header": [],
+    "section_2_footer": []
+  },
+  "xml_markers": {
+    "w:txbxContent": 40,
+    "w:fldSimple": 0,
+    "w:instrText": 134,
+    "w:numPr": 72,
+    "w:bookmarkStart": 114,
+    "w:drawing": 87
+  }
+}

@@ -1,0 +1,302 @@
+[
+  {
+    "anchor": "系统用户用例图如图3-1所示",
+    "replacement": "系统用户用例图如图3-1所示。图中以普通用户为主要参与者，将数据查看、专题统计和智能分析功能纳入统一系统边界，同时把文本预处理、特征向量化和相似度计算作为智能分析用例的包含环节。",
+    "items": [
+      [
+        "imagegen/fig_3_1_use_case_imagegen_v2.png",
+        "图3-1 系统用户用例图",
+        12.2
+      ]
+    ]
+  },
+  {
+    "anchor": "系统总体架构如图4-1所示",
+    "replacement": "系统总体架构如图4-1所示。该架构将数据处理任务与Web展示任务分离，既便于说明Spark在系统中的核心作用，也便于后续将本地批处理流程迁移到更大规模的数据处理环境。",
+    "items": [
+      [
+        "imagegen/fig_4_1_system_architecture_imagegen_v3.png",
+        "图4-1 基于Spark的系统总体架构图",
+        12.8
+      ]
+    ]
+  },
+  {
+    "anchor": "系统功能模块图如图4-2所示",
+    "replacement": "系统功能模块图如图4-2所示。图中仅保留三大模块及其子功能，分别对应基础数据、专题分析和智能分析，使三级标题与模块划分保持一致。",
+    "items": [
+      [
+        "imagegen/fig_4_3_function_modules_clean_imagegen.png",
+        "图4-2 系统功能模块图",
+        13.2
+      ]
+    ]
+  },
+  {
+    "anchor": "系统整体流程如图4-3所示",
+    "replacement": "系统整体流程如图4-3所示。该流程体现了用户操作、接口调用、结果读取和页面展示之间的基本顺序。",
+    "items": [
+      [
+        "imagegen/fig_4_3_overall_business_flow_imagegen_notitle.png",
+        "图4-3 系统整体流程图",
+        8.2
+      ]
+    ]
+  },
+  {
+    "anchor": "数据采集与预处理流程如图4-4所示",
+    "replacement": "数据采集与预处理流程如图4-4所示。该流程把原始数据整理为后续页面展示和模型分析可复用的中间结果。",
+    "items": [
+      [
+        "imagegen/fig_4_4_data_preprocess_flow_imagegen_v2.png",
+        "图4-4 数据采集与预处理流程图",
+        7.0
+      ]
+    ]
+  },
+  {
+    "anchor": "智能分析核心流程如图4-5所示",
+    "replacement": "智能分析核心流程如图4-5所示。该流程覆盖情感分析、类型预测和相似推荐三类智能分析任务。",
+    "items": [
+      [
+        "imagegen/fig_4_5_intelligent_analysis_flow_imagegen_v2.png",
+        "图4-5 智能分析核心流程图",
+        11.0
+      ]
+    ]
+  },
+  {
+    "anchor": "实体属性如图4-6至图4-10所示",
+    "replacement": "实体属性如图4-6至图4-10所示。由于影视元数据来自文件而非完整关系型数据库，系统将影片编号、片名、类型、导演、地区、评分、年份和简介作为影视数据实体的核心属性；分析结果和推荐记录虽然以文件结果为主，也需要在概念结构中体现其与影视数据的关系。",
+    "items": [
+      [
+        "imagegen/fig_4_4_user_entity_imagegen_notitle.png",
+        "图4-6 用户实体属性图",
+        10.4
+      ],
+      [
+        "imagegen/fig_4_5_movie_entity_imagegen_notitle.png",
+        "图4-7 影视数据实体属性图",
+        10.4
+      ],
+      [
+        "imagegen/fig_4_6_comment_entity_imagegen_notitle.png",
+        "图4-8 评论数据实体属性图",
+        10.4
+      ],
+      [
+        "imagegen/fig_4_9_analysis_result_entity_imagegen.png",
+        "图4-9 分析结果实体属性图",
+        10.4
+      ],
+      [
+        "imagegen/fig_4_10_recommendation_entity_imagegen.png",
+        "图4-10 推荐记录实体属性图",
+        10.4
+      ]
+    ]
+  },
+  {
+    "anchor": "系统总体E-R图如图4-11所示",
+    "replacement": "系统总体E-R图如图4-11所示。图中用户与影视数据之间存在浏览和查询关系，影视数据与评论数据、分析结果和推荐记录之间形成一对多或关联关系。",
+    "items": [
+      [
+        "imagegen/fig_4_7_overall_er_imagegen_notitle.png",
+        "图4-11 系统总体E-R图",
+        12.8
+      ]
+    ]
+  },
+  {
+    "anchor": "虚拟机静态IP与主机名配置如图5-1所示",
+    "replacement": "为保证Spark运行环境能够被本机访问，系统先在虚拟机中配置静态IP、主机名和基础网络参数。虚拟机静态IP与主机名配置如图5-1所示。",
+    "items": [
+      [
+        "final_figures/fig_5_1_vm_network_config.png",
+        "图5-1 虚拟机静态IP与主机名配置",
+        12.2
+      ]
+    ]
+  },
+  {
+    "anchor": "虚拟机网络连通性测试如图5-2所示",
+    "replacement": "网络配置完成后，系统通过主机与虚拟机之间的连通性测试确认开发环境可用。虚拟机网络连通性测试如图5-2所示。",
+    "items": [
+      [
+        "final_figures/fig_5_2_vm_ping_test.png",
+        "图5-2 虚拟机网络连通性测试",
+        12.2
+      ]
+    ]
+  },
+  {
+    "anchor": "Spark环境启动测试如图5-3所示",
+    "replacement": "Spark环境启动时需要确认spark-submit版本、PySpark入口和SparkSession是否能够正常创建。Spark环境启动测试如图5-3所示。",
+    "items": [
+      [
+        "final_figures/fig_5_3_spark_startup.png",
+        "图5-3 Spark环境启动测试",
+        12.2
+      ]
+    ]
+  },
+  {
+    "anchor": "Spark数据读取与清洗结果如图5-4所示",
+    "replacement": "系统读取影视数据文件后，依次完成去重、空值过滤、评分数值化、年份提取、类型拆分和无效记录剔除。Spark数据读取与清洗结果如图5-4所示。",
+    "items": [
+      [
+        "final_figures/fig_5_4_spark_cleaning_result.png",
+        "图5-4 Spark数据读取与清洗结果",
+        12.2
+      ]
+    ]
+  },
+  {
+    "anchor": "Flask服务运行结果如图5-5所示",
+    "replacement": "Flask服务负责组织页面路由、接口服务和会话状态。系统启动后加载影视数据与模型结果文件，并对外提供页面访问入口。Flask服务运行结果如图5-5所示。",
+    "items": [
+      [
+        "final_figures/fig_5_5_flask_runtime.png",
+        "图5-5 Flask服务运行结果",
+        12.2
+      ]
+    ]
+  },
+  {
+    "anchor": "首页数据概览界面如图5-6所示",
+    "replacement": "数据概览页面通过统计卡片和图表展示影视数据集的总体情况。系统从清洗后的数据中计算影视总量、平均评分、评分人数、类型数量和年份趋势，并通过JSON接口返回前端渲染。首页数据概览界面如图5-6所示。",
+    "items": [
+      [
+        "final_figures/fig_5_7_dashboard.png",
+        "图5-6 首页数据概览界面",
+        12.2
+      ]
+    ]
+  },
+  {
+    "anchor": "影视浏览界面如图5-7所示",
+    "replacement": "影视浏览页面提供关键词搜索、类型筛选、排序和分页功能。用户可以按照片名、导演或类型定位影视作品，系统在后端完成过滤和分页后返回列表数据。影视浏览界面如图5-7所示。",
+    "items": [
+      [
+        "final_figures/fig_5_8_movies.png",
+        "图5-7 影视浏览界面",
+        12.2
+      ]
+    ]
+  },
+  {
+    "anchor": "评分分析界面如图5-8所示",
+    "replacement": "评分分析接口统计评分分布、平均评分、评分人数和评分年份关系。前端通过柱状图、折线图和散点图展示结果，用户能够直观看到豆瓣影视评分的集中区间和评分人数对作品热度的影响。评分分析界面如图5-8所示。",
+    "items": [
+      [
+        "final_figures/fig_5_9_rating_analysis.png",
+        "图5-8 评分分析界面",
+        12.2
+      ]
+    ]
+  },
+  {
+    "anchor": "类型分析界面如图5-9所示",
+    "replacement": "类型分析先拆分多类型字段，再统计各类型影片数量和平均评分。该模块能够帮助用户观察题材热度和不同题材的评分差异。类型分析界面如图5-9所示。",
+    "items": [
+      [
+        "final_figures/fig_5_10_genre_analysis.png",
+        "图5-9 类型分析界面",
+        12.2
+      ]
+    ]
+  },
+  {
+    "anchor": "导演分析界面如图5-10所示",
+    "replacement": "导演分析对导演字段进行拆分，统计导演作品数量、平均评分和代表作品。该功能能够从创作者角度补充对影视数据的理解。导演分析界面如图5-10所示。",
+    "items": [
+      [
+        "final_figures/fig_5_11_director_analysis.png",
+        "图5-10 导演分析界面",
+        12.2
+      ]
+    ]
+  },
+  {
+    "anchor": "地区分析界面如图5-11所示",
+    "replacement": "地区分析根据国家或地区字段汇总影片分布，并对不同地区的平均评分和类型交叉情况进行展示。地区分析界面如图5-11所示。",
+    "items": [
+      [
+        "final_figures/fig_5_12_region_analysis.png",
+        "图5-11 地区分析界面",
+        12.2
+      ]
+    ]
+  },
+  {
+    "anchor": "年份趋势界面如图5-12所示",
+    "replacement": "年份趋势分析按照上映年份统计作品数量和平均评分变化，帮助用户观察影视数据在时间维度上的变化规律。年份趋势界面如图5-12所示。",
+    "items": [
+      [
+        "final_figures/fig_5_13_year_trends.png",
+        "图5-12 年份趋势界面",
+        12.2
+      ]
+    ]
+  },
+  {
+    "anchor": "情感分析界面如图5-13所示",
+    "replacement": "情感分析模块接收用户输入文本，先进行空值校验，再调用SnowNLP计算情感得分，并按照阈值返回正向、中性或负向标签。情感分析界面如图5-13所示。",
+    "items": [
+      [
+        "final_figures/fig_5_14_sentiment.png",
+        "图5-13 情感分析界面",
+        12.2
+      ]
+    ]
+  },
+  {
+    "anchor": "词云分析界面如图5-14所示",
+    "replacement": "词云模块从评论或简介文本中提取高频词，去除停用词后返回词频数据，前端据此生成词云图。词云分析界面如图5-14所示。",
+    "items": [
+      [
+        "final_figures/fig_5_15_wordcloud.png",
+        "图5-14 词云分析界面",
+        12.2
+      ]
+    ]
+  },
+  {
+    "anchor": "模型对比界面如图5-15所示",
+    "replacement": "模型对比页面展示朴素贝叶斯、决策树和支持向量机等算法的准确率、召回率和F1值差异，便于判断分类模型的适配性。模型对比界面如图5-15所示，模型训练与评估结果如图5-18所示。",
+    "items": [
+      [
+        "final_figures/fig_5_16_models.png",
+        "图5-15 模型对比界面",
+        12.2
+      ],
+      [
+        "final_figures/fig_5_6_model_training_output.png",
+        "图5-18 模型训练与评估结果",
+        12.2
+      ]
+    ]
+  },
+  {
+    "anchor": "类型预测界面如图5-16所示",
+    "replacement": "类型预测模块将剧情简介输入分词与TF-IDF向量化流程，再调用训练好的分类模型输出预测类别。类型预测界面如图5-16所示。",
+    "items": [
+      [
+        "final_figures/fig_5_17_prediction.png",
+        "图5-16 类型预测界面",
+        12.2
+      ]
+    ]
+  },
+  {
+    "anchor": "相似推荐界面如图5-17所示",
+    "replacement": "影视推荐模块以当前影片简介向量为查询对象，计算其与候选影片向量之间的余弦相似度，并返回相似度较高的影片列表。推荐结果包含片名、评分、类型和年份等信息，便于用户理解推荐原因。相似推荐界面如图5-17所示。",
+    "items": [
+      [
+        "final_figures/fig_5_18_recommendation.png",
+        "图5-17 相似推荐界面",
+        12.2
+      ]
+    ]
+  }
+]

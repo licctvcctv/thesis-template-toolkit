@@ -1,0 +1,19 @@
+{
+  "source": "/Users/a136/vs/45425/thesis_project/templates/uav_high_altitude_red_review/source.docx",
+  "template": "/Users/a136/vs/45425/thesis_project/templates/uav_high_altitude_red_review/template.docx",
+  "placeholders": {
+    "abstract_zh_p1": "中文摘要第1段",
+    "abstract_zh_p2": "中文摘要第2段",
+    "keywords_zh": "中文关键词，保留模板的“关键词：”标签",
+    "abstract_en_p1": "英文摘要第1段",
+    "abstract_en_p2": "英文摘要第2段",
+    "keywords_en": "英文关键词，保留模板的“Key words:”标签",
+    "acknowledgement_p1..pN": "致谢段落"
+  },
+  "preserved_regions": [
+    "目录字段与缓存目录文本",
+    "正文标题样式、编号、图表、嵌入公式/OLE 对象",
+    "参考文献标题、编号样式和示例条目",
+    "页眉页脚与分节设置"
+  ]
+}

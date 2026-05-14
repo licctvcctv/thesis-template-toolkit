@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.heath.community.mapper.RiskAssessmentMapper">
+
+    <resultMap id="RiskAssessmentDTOResultMap" type="com.heath.community.dto.RiskAssessmentDTO">
+        <id column="id" property="id"/>
+        <result column="patient_id" property="patientId"/>
+        <result column="patient_name" property="patientName"/>
+        <result column="risk_level" property="riskLevel"/>
+        <result column="risk_level_name" property="riskLevelName"/>
+        <result column="assessment_date" property="assessmentDate"/>
+        <result column="assessor_id" property="assessorId"/>
+        <result column="assessor_name" property="assessorName"/>
+        <result column="assessment_result" property="assessmentResult"/>
+        <result column="remarks" property="remarks"/>
+    </resultMap>
+
+    <select id="findPage" resultMap="RiskAssessmentDTOResultMap">
+        SELECT ra.id, ra.patient_id, p.name AS patient_name, ra.risk_level, rlc.level_name AS risk_level_name,
+               ra.assessment_date, ra.assessor_id, u.name AS assessor_name,
+               ra.assessment_result, ra.remarks
+        FROM risk_assessment ra
+        LEFT JOIN patient p ON ra.patient_id = p.id
+        LEFT JOIN user u ON ra.assessor_id = u.id
+        LEFT JOIN risk_level_config rlc ON ra.risk_level = rlc.level_code
+        <where>
+            <if test="patientId != null">
+                AND ra.patient_id = #{patientId}
+            </if>
+            <if test="riskLevel != null and riskLevel != ''">
+                AND ra.risk_level = #{riskLevel}
+            </if>
+        </where>
+        ORDER BY ra.assessment_date DESC, ra.create_time DESC
+        LIMIT #{offset}, #{limit}
+    </select>
+
+    <select id="count" resultType="Long">
+        SELECT COUNT(*)
+        FROM risk_assessment ra
+        <where>
+            <if test="patientId != null">
+                AND ra.patient_id = #{patientId}
+            </if>
+            <if test="riskLevel != null and riskLevel != ''">
+                AND ra.risk_level = #{riskLevel}
+            </if>
+        </where>
+    </select>
+
+    <select id="findById" resultMap="RiskAssessmentDTOResultMap">
+        SELECT ra.id, ra.patient_id, p.name AS patient_name, ra.risk_level, rlc.level_name AS risk_level_name,
+               ra.assessment_date, ra.assessor_id, u.name AS assessor_name,
+               ra.assessment_result, ra.remarks
+        FROM risk_assessment ra
+        LEFT JOIN patient p ON ra.patient_id = p.id
+        LEFT JOIN user u ON ra.assessor_id = u.id
+        LEFT JOIN risk_level_config rlc ON ra.risk_level = rlc.level_code
+        WHERE ra.id = #{id}
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO risk_assessment (patient_id, risk_level, assessment_date, assessor_id, assessment_result, remarks)
+        VALUES (#{patientId}, #{riskLevel}, #{assessmentDate}, #{assessorId}, #{assessmentResult}, #{remarks})
+    </insert>
+
+</mapper>

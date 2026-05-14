@@ -1,0 +1,1566 @@
+import { buildConversation, GROUP_LINES } from './agentDialogues.mjs';
+import { interactionKindFor } from './interactionKind.mjs';
+import { resolvePose, POSES } from './poseResolver.mjs';
+import { computeStationFacing } from './stationFacing.mjs';
+import { computeActivityLoop } from './activityLoop.mjs';
+
+const BASE_MOVE_INTERVAL_MS = 380;
+
+// Visual channel tuning (consumed by WorldMap renderer).
+// Keep constants here so runtime + renderer stay coherent.
+export const VISUAL = Object.freeze({
+  // Sub-tile interpolation: ~200ms glide between tile centers. Snaps
+  // (server authority, destination change, chat start) set prev=current
+  // so the glide doesn't span the map.
+  STEP_LERP_MS: 200,
+  // Tool pop emote: when (tool.name, inputPreview) changes, pop the icon
+  // above the head for this long. Rate-limited per-agent.
+  TOOL_POP_MS: 1100,
+  TOOL_POP_MIN_GAP_MS: 800,
+  // Productivity burst: ≥N edit/write invocations within WINDOW_MS → glow.
+  EDIT_BURST_COUNT: 3,
+  EDIT_BURST_WINDOW_MS: 10_000,
+  EDIT_BURST_GLOW_MS: 4_000,
+  // Status-transition poof: short radial burst on meaningful transitions.
+  POOF_MS: 320
+});
+
+const EDIT_TOOL_NAMES = new Set(['Edit', 'Write', 'NotebookEdit']);
+
+// Transitions worth announcing with a poof burst.
+// Ignores benign Working↔Idle churn + initial-connect floods.
+function isNoteworthyTransition(prev, next) {
+  if (!prev || !next || prev === next) return false;
+  if (prev === 'Waiting' && next === 'Working') return true;
+  if (prev === 'Errored') return true;      // recovery from error
+  if (next === 'Errored') return true;      // entering error
+  if (prev === 'Idle' && next === 'Working') return true;
+  if (prev === 'IdleStale' && next === 'Working') return true;
+  if (next === 'Finished') return true;
+  return false;
+}
+
+// Ambient chat tuning — conversations are scripted by buildConversation:
+// 2 turns (short greeting exchange) or 4 turns (greeting → reply → topic
+// → reply). Both participants pause movement and turn to face each
+// other for the full duration.
+const CHAT_PROXIMITY = 2;           // Chebyshev tiles
+const CHAT_TURN_MS = 3500;          // milliseconds per line
+const CHAT_TAIL_MS = 600;           // linger on last speaker after final line
+const CHAT_COOLDOWN_MS = 6000;      // per-agent cooldown after any conversation
+const CHAT_PAIR_COOLDOWN_MS = 45000; // same pair can't re-chat for 45s
+// Drama-level tunables (mutable via setDramaLevel). Defaults are the
+// Phase 2-4 shipping values ("normal").
+let CHAT_START_CHANCE = 0.3;        // chance per eligible tick to start chat
+
+export const DRAMA_MODES = Object.freeze(['calm', 'normal', 'lively']);
+
+const DRAMA_CONFIGS = Object.freeze({
+  calm:   { reactionCap: 1, chatChance: 0.10, groupChance: 0.05 },
+  normal: { reactionCap: 3, chatChance: 0.30, groupChance: 0.20 },
+  lively: { reactionCap: 5, chatChance: 0.50, groupChance: 0.35 }
+});
+
+// Applied at module init + whenever UI changes drama. No-ops on
+// unknown modes so a corrupt localStorage value can't break init.
+export function setDramaLevel(mode) {
+  const cfg = DRAMA_CONFIGS[mode];
+  if (!cfg) return false;
+  CHAT_START_CHANCE   = cfg.chatChance;
+  REACTION_MAX_ACTIVE = cfg.reactionCap;
+  GROUP_START_CHANCE  = cfg.groupChance;
+  return true;
+}
+
+export function getDramaLevel() {
+  // Reverse-lookup by cheapest discriminator (chatChance). Used by UI
+  // to render the current state after a page reload.
+  for (const mode of DRAMA_MODES) {
+    if (DRAMA_CONFIGS[mode].chatChance === CHAT_START_CHANCE) return mode;
+  }
+  return 'normal';
+}
+
+// Movement vectors — reduced idle probability (1 in 8 instead of 1 in 5)
+const MOVES = [
+  [1, 0],
+  [-1, 0],
+  [0, 1],
+  [0, -1],
+  [1, 0],
+  [-1, 0],
+  [0, 1],
+  [0, 0]
+];
+
+const DIRECTION_BY_MOVE = {
+  '1,0': 'right',
+  '-1,0': 'left',
+  '0,1': 'down',
+  '0,-1': 'up'
+};
+
+function clamp(value, min, max) {
+  return Math.max(min, Math.min(max, value));
+}
+
+function nextMoveTime(timestamp, rng = Math.random, urgent = false) {
+  // Urgent sprites (Waiting status, heading to info desk) step roughly
+  // twice as fast: base 180ms + ≤180ms jitter vs the usual 380+380.
+  // Visual cadence reads as "running" without rewriting A* or the
+  // step-lerp lerp duration.
+  if (urgent) {
+    return timestamp + 180 + Math.floor(rng() * 180);
+  }
+  return (
+    timestamp +
+    BASE_MOVE_INTERVAL_MS +
+    Math.floor(rng() * BASE_MOVE_INTERVAL_MS)
+  );
+}
+
+// An agent is "urgent" (running) while Waiting for a permission AND
+// still in transit to the info desk. Pinned agents already at a desk
+// slot read as standing in line, not running.
+function isUrgent(runtime) {
+  if (!runtime || !runtime.moving) return false;
+  const intent = runtime.intent?.kind;
+  if (intent !== 'to_info_desk') return false;
+  // If already adjacent to destination (≤1 tile), stop running —
+  // they're queuing, not en route.
+  const dest = runtime.currentDestination;
+  if (dest && Number.isFinite(dest.x)) {
+    const dx = Math.abs(dest.x - runtime.x);
+    const dy = Math.abs(dest.y - runtime.y);
+    if (dx + dy <= 1) return false;
+  }
+  return true;
+}
+
+function chooseMove(rng = Math.random) {
+  const index = Math.floor(rng() * MOVES.length);
+  return MOVES[index] || MOVES[0];
+}
+
+function resolveDirection(deltaX, deltaY, fallback = 'down') {
+  if (deltaX > 0) {
+    return 'right';
+  }
+
+  if (deltaX < 0) {
+    return 'left';
+  }
+
+  if (deltaY > 0) {
+    return 'down';
+  }
+
+  if (deltaY < 0) {
+    return 'up';
+  }
+
+  return fallback;
+}
+
+// A* pathfinding for goal-directed movement
+// Per-agent path noise: hash avatar ID to a stable integer seed.
+function agentHashSeed(agentId) {
+  if (!agentId) return 0;
+  let h = 2166136261;
+  for (let i = 0; i < agentId.length; i++) {
+    h ^= agentId.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  return (h >>> 0);
+}
+
+const NEIGHBOR_ROTATIONS = [
+  [[0, 1], [1, 0], [0, -1], [-1, 0]],
+  [[1, 0], [0, -1], [-1, 0], [0, 1]],
+  [[0, -1], [-1, 0], [0, 1], [1, 0]],
+  [[-1, 0], [0, 1], [1, 0], [0, -1]]
+];
+
+function findPath(startX, startY, goalX, goalY, width, height, blockedTiles, opts = {}) {
+  if (startX === goalX && startY === goalY) return [];
+
+  const { agentSeed = 0, softBlocked = null } = opts;
+
+  const key = (x, y) => `${x},${y}`;
+  const openSet = new Map();
+  const closedSet = new Set();
+  const cameFrom = new Map();
+  const gScore = new Map();
+  const fScore = new Map();
+
+  const startKey = key(startX, startY);
+  gScore.set(startKey, 0);
+  fScore.set(startKey, Math.abs(goalX - startX) + Math.abs(goalY - startY));
+  openSet.set(startKey, { x: startX, y: startY });
+
+  // Each agent explores neighbors in a different order → different tie-breaks
+  // → varied paths even between identical endpoints.
+  const neighbors = NEIGHBOR_ROTATIONS[agentSeed % NEIGHBOR_ROTATIONS.length];
+  let iterations = 0;
+  const maxIterations = width * height * 2;
+
+  while (openSet.size > 0 && iterations < maxIterations) {
+    iterations++;
+
+    // Find node with lowest fScore in openSet
+    let currentKey = null;
+    let currentNode = null;
+    let bestF = Infinity;
+    for (const [k, node] of openSet) {
+      const f = fScore.get(k) || Infinity;
+      if (f < bestF) {
+        bestF = f;
+        currentKey = k;
+        currentNode = node;
+      }
+    }
+
+    if (!currentKey) break;
+
+    if (currentNode.x === goalX && currentNode.y === goalY) {
+      // Reconstruct path
+      const path = [];
+      let ck = currentKey;
+      while (cameFrom.has(ck)) {
+        const [px, py] = ck.split(',').map(Number);
+        path.unshift({ x: px, y: py });
+        ck = cameFrom.get(ck);
+      }
+      return path;
+    }
+
+    openSet.delete(currentKey);
+    closedSet.add(currentKey);
+
+    for (const [dx, dy] of neighbors) {
+      const nx = currentNode.x + dx;
+      const ny = currentNode.y + dy;
+
+      if (nx < 0 || nx >= width || ny < 0 || ny >= height) continue;
+
+      const nKey = key(nx, ny);
+      if (closedSet.has(nKey)) continue;
+      if (blockedTiles && blockedTiles.has(nKey)) continue;
+
+      // Soft-block: extra cost for tiles currently occupied by other agents
+      // so routes bend around them instead of overlapping.
+      const softCost = softBlocked && softBlocked.has(nKey) ? 3 : 0;
+      // Per-tile deterministic jitter per agent (0..2) — scatters paths
+      // without making them chaotic.
+      const jitter = ((agentSeed ^ (nx * 73856093) ^ (ny * 19349663)) >>> 0) % 3 === 0 ? 1 : 0;
+      const tentativeG = (gScore.get(currentKey) || 0) + 1 + softCost + jitter;
+
+      if (tentativeG < (gScore.get(nKey) || Infinity)) {
+        cameFrom.set(nKey, currentKey);
+        gScore.set(nKey, tentativeG);
+        fScore.set(nKey, tentativeG + Math.abs(goalX - nx) + Math.abs(goalY - ny));
+        if (!openSet.has(nKey)) {
+          openSet.set(nKey, { x: nx, y: ny });
+        }
+      }
+    }
+  }
+
+  return null; // No path found
+}
+
+export function syncAvatarRuntimeEntries(
+  avatarRuntime,
+  avatars,
+  now,
+  rng = Math.random
+) {
+  const aliveIds = new Set();
+  // First sync after connect: the runtime is empty, so every avatar
+  // looks "new." Suppress hello bursts in that batch — only sessions
+  // that spawn AFTER we've already observed others are genuine arrivals.
+  const isInitialHydration = avatarRuntime.size === 0;
+
+  Object.entries(avatars).forEach(([avatarId, avatar]) => {
+    aliveIds.add(avatarId);
+
+    const runtime = avatarRuntime.get(avatarId);
+    // Only lock position when agent is NOT moving (i.e. working)
+    // Moving/idle agents should have client-side movement freedom
+    const authoritativePosition = avatar.authoritativePosition !== false && !avatar.moving;
+
+    if (!runtime) {
+      // Seed lastToolKey from the first-observed tool so the next sync
+      // doesn't mistake the initial tool for a new invocation.
+      const initialTool = avatar.tool;
+      const initialToolKey = initialTool && initialTool.name
+        ? `${initialTool.name}::${initialTool.inputPreview || ''}`
+        : '';
+      const initialStatus = typeof avatar.status === 'string' ? avatar.status : undefined;
+      avatarRuntime.set(avatarId, {
+        ...avatar,
+        authoritativePosition,
+        direction: 'down',
+        nextMoveAt: nextMoveTime(now, rng),
+        path: null,
+        pathIndex: 0,
+        arrivalPauseUntil: 0,
+        agentSeed: agentHashSeed(avatarId),
+        // Sub-tile interpolation state. prev* = previous discrete tile;
+        // the renderer lerps between (prev*, x/y) across STEP_LERP_MS.
+        // Starting equal to x/y means "no glide on first frame."
+        prevX: avatar.x,
+        prevY: avatar.y,
+        stepStartedAt: now - 1000,
+        // Tool-pop emote channel (see VISUAL.TOOL_POP_MS). Captures the
+        // icon that popped most recently + when. lastToolKey is seeded
+        // from the current tool so only subsequent changes trigger a pop.
+        lastToolKey: initialToolKey,
+        toolPopAt: 0,
+        toolPopIcon: '',
+        toolPopLastAt: 0,
+        // Productivity burst: timestamps of recent Edit/Write invocations.
+        editBurstTs: [],
+        productiveUntil: 0,
+        // Item E — courier-pulse trigger timestamp (Edit/Write/NotebookEdit
+        // invocations emit a 2s dashed-line pulse to same-branch peers).
+        courierPulseAt: 0,
+        // Status-transition poof. prevServerStatus seeded from initial
+        // status so the first post-connect diff doesn't poof-storm. It
+        // still captures real subsequent transitions.
+        prevServerStatus: initialStatus,
+        poofAt: 0,
+        // Stagecraft — first-seen stamp for a hello burst, and a
+        // farewell flag set when the server pushes intent.to_exit_fade
+        // so the renderer can draw a goodbye wave. `isInitialHydration`
+        // suppresses the hello on the first post-connect batch so
+        // reconnects don't storm-pop every existing sprite.
+        arrivalAt: isInitialHydration ? 0 : now,
+        farewellAt: 0,
+        // One-tick facing override for reactions (e.g. "look at neighbor
+        // who just errored"). Renderer reads facingOverride || direction.
+        // Cleared at the top of advanceAvatarRuntimeEntries every tick.
+        facingOverride: null,
+        // Phase 3 reaction channel — { icon, expiresAt } or null.
+        // Expired by updateReactions at the top of each tick.
+        reactionEmote: null,
+        reactionCooldowns: {}
+      });
+      return;
+    }
+
+    const prevMoving = runtime.moving;
+    const prevX = runtime.x;
+    const prevY = runtime.y;
+
+    runtime.moving = avatar.moving;
+    runtime.state = avatar.state;
+    // Preserve client-set bubble text (station activities like
+    // "mining stones") when server sends an empty value. Server wins
+    // only for task labels when working.
+    if (avatar.bubbleText) {
+      runtime.bubbleText = avatar.bubbleText;
+    } else if (runtime.bubbleText == null) {
+      runtime.bubbleText = '';
+    }
+    runtime.authoritativePosition = authoritativePosition;
+    runtime.displayName = avatar.displayName;
+
+    // Only snap position from server when agent is NOT moving client-side
+    // (i.e. when working or when first transitioning to moving state)
+    if (authoritativePosition || !prevMoving) {
+      // Detect an actual server-driven teleport. Same-tile syncs are
+      // common (state diffs) — don't break the ongoing lerp for those.
+      if (runtime.x !== avatar.x || runtime.y !== avatar.y) {
+        runtime.prevX = avatar.x;
+        runtime.prevY = avatar.y;
+        runtime.stepStartedAt = now - VISUAL.STEP_LERP_MS; // force progress=1
+      }
+      runtime.x = avatar.x;
+      runtime.y = avatar.y;
+    }
+
+    // Update destination from server state. When the server attaches an
+    // `intent` (e.g. to_info_desk, to_exit_fade), we also sync intent-only
+    // metadata so arrival behavior can differ per kind.
+    if (avatar.destination && avatar.destination.x !== undefined) {
+      const destChanged = !runtime.currentDestination ||
+        runtime.currentDestination.x !== avatar.destination.x ||
+        runtime.currentDestination.y !== avatar.destination.y ||
+        runtime.currentDestination.stationId !== avatar.destination.stationId ||
+        runtime.currentDestination.intent?.kind !== avatar.destination.intent?.kind;
+      if (destChanged) {
+        runtime.currentDestination = avatar.destination;
+        runtime.intent = avatar.destination.intent || null;
+        runtime.path = null; // Force re-pathfind
+        runtime.pathIndex = 0;
+        runtime.arrivalPauseUntil = 0; // resume pathing immediately
+        // Don't glide visually across a destination change — A* will
+        // restart from current tile. Collapse lerp.
+        runtime.prevX = runtime.x;
+        runtime.prevY = runtime.y;
+        runtime.stepStartedAt = now - VISUAL.STEP_LERP_MS;
+      }
+    } else if (!runtime.moving) {
+      runtime.currentDestination = null;
+      runtime.intent = null;
+      runtime.path = null;
+    }
+    // Top-level intent signal (falls back to destination.intent).
+    if (avatar.intent) runtime.intent = avatar.intent;
+
+    // Propagate cosmetic channels from the server (hat hue, tool icon, status).
+    if (typeof avatar.hatHue === 'number') runtime.hatHue = avatar.hatHue;
+    if (typeof avatar.status === 'string') runtime.serverStatus = avatar.status;
+    if (typeof avatar.toolIcon === 'string') runtime.toolIcon = avatar.toolIcon;
+    if (typeof avatar.model === 'string') runtime.model = avatar.model;
+    // Phase 1 dialog context (§5B) — repoRoot identifies same-repo
+    // conversations, repoLabel renders the {repo} placeholder.
+    if (typeof avatar.repoRoot === 'string')  runtime.repoRoot = avatar.repoRoot;
+    if (typeof avatar.repoLabel === 'string') runtime.repoLabel = avatar.repoLabel;
+    if (typeof avatar.gitBranch === 'string' || avatar.gitBranch === null) {
+      runtime.gitBranch = avatar.gitBranch;
+    }
+
+    // Tool-pop emote: detect a *new* tool invocation by hashing the
+    // (name, inputPreview) tuple. The server rewrites avatar.tool to null
+    // between invocations, so a flicker null→{Bash}→null→{Bash} would
+    // otherwise over-fire. The tuple-based key collapses that pattern
+    // into a single real change per invocation.
+    const toolInfo = avatar.tool;
+    const toolKey = toolInfo && toolInfo.name
+      ? `${toolInfo.name}::${toolInfo.inputPreview || ''}`
+      : '';
+    if (toolKey && toolKey !== runtime.lastToolKey) {
+      // Rate-limit to 1 pop per TOOL_POP_MIN_GAP_MS per agent so Bash
+      // spam doesn't strobe the viewer.
+      if (now - runtime.toolPopLastAt > VISUAL.TOOL_POP_MIN_GAP_MS) {
+        runtime.toolPopAt = now;
+        runtime.toolPopLastAt = now;
+        runtime.toolPopIcon = toolInfo.icon || avatar.toolIcon || '⚙';
+      }
+      // Productivity burst: record Edit/Write/NotebookEdit invocations in
+      // a rolling 10s window. Three within window → 4s glow.
+      if (EDIT_TOOL_NAMES.has(toolInfo.name)) {
+        const cutoff = now - VISUAL.EDIT_BURST_WINDOW_MS;
+        runtime.editBurstTs = runtime.editBurstTs.filter(t => t > cutoff);
+        runtime.editBurstTs.push(now);
+        if (runtime.editBurstTs.length >= VISUAL.EDIT_BURST_COUNT) {
+          runtime.productiveUntil = now + VISUAL.EDIT_BURST_GLOW_MS;
+        }
+        // Item E — courier pulse trigger: mark the moment so the
+        // renderer can draw dashed lines to same-repo+branch peers.
+        runtime.courierPulseAt = now;
+      }
+    }
+    runtime.lastToolKey = toolKey;
+
+    // Status-transition poof. Only fires on meaningful transitions, and
+    // only after we've observed at least one prior status (suppresses
+    // initial-connect storm).
+    const nextStatus = typeof avatar.status === 'string' ? avatar.status : runtime.serverStatus;
+    if (
+      runtime.prevServerStatus !== undefined &&
+      isNoteworthyTransition(runtime.prevServerStatus, nextStatus)
+    ) {
+      runtime.poofAt = now;
+    }
+    runtime.prevServerStatus = nextStatus;
+
+    // to_exit_fade — drive a fade from 1 → 0 across the intent's ttl.
+    if (runtime.intent?.kind === 'to_exit_fade') {
+      const expiresAt = runtime.intent.expiresAt || now + 30_000;
+      const remaining = Math.max(0, expiresAt - now);
+      runtime.fadeOpacity = Math.max(0.05, Math.min(1, remaining / 30_000));
+      // Stamp farewell on first observation of the exit intent so the
+      // renderer can play a one-shot goodbye wave (~1200ms) at the
+      // transition point, not every frame while fading.
+      if (!runtime.farewellAt) runtime.farewellAt = now;
+    } else {
+      runtime.fadeOpacity = 1;
+      runtime.farewellAt = 0;
+    }
+
+    if (authoritativePosition && (prevX !== avatar.x || prevY !== avatar.y)) {
+      runtime.direction = resolveDirection(
+        avatar.x - prevX,
+        avatar.y - prevY,
+        runtime.direction
+      );
+    }
+
+    if (!runtime.moving) {
+      runtime.nextMoveAt = nextMoveTime(now, rng);
+    }
+  });
+
+  Array.from(avatarRuntime.keys()).forEach(avatarId => {
+    if (!aliveIds.has(avatarId)) {
+      avatarRuntime.delete(avatarId);
+    }
+  });
+}
+
+// Plaza-detour constants. When an Idle sprite rolls a new client
+// destination, ~18% of the time swap it out for a plaza visit instead
+// of a random location. Creates organic "gather at the fountain"
+// feel — distant sprites passing through the same tile triggers the
+// pass-by greeting + ambient chat systems automatically.
+const PLAZA_DETOUR_CHANCE  = 0.18;
+const PLAZA_CENTER_X       = 14;
+const PLAZA_CENTER_Y       = 14;
+
+function pickClientDestination(runtime, locations, rng) {
+  if (!locations || locations.length === 0) return null;
+
+  // Plaza detour — skip if we're already there. Also skip if the
+  // sprite was JUST sent to plaza last pick (stored on runtime so
+  // back-to-back plaza picks don't stick an idle sprite at 14,14
+  // forever).
+  const atPlaza = runtime.x === PLAZA_CENTER_X && runtime.y === PLAZA_CENTER_Y;
+  const justWentPlaza = runtime._lastPickWasPlaza === true;
+  if (!atPlaza && !justWentPlaza && rng() < PLAZA_DETOUR_CHANCE) {
+    runtime._lastPickWasPlaza = true;
+    return {
+      locationId: null,
+      locationName: 'plaza',
+      x: PLAZA_CENTER_X,
+      y: PLAZA_CENTER_Y
+    };
+  }
+  runtime._lastPickWasPlaza = false;
+
+  // Pick a location different from where we currently are
+  const candidates = locations.filter(loc => {
+    const cx = loc.x + Math.floor((loc.w || 5) / 2);
+    const cy = loc.y + (loc.h || 4) - 1;
+    return !(runtime.x === cx && runtime.y === cy);
+  });
+  const pool = candidates.length > 0 ? candidates : locations;
+  const chosen = pool[Math.floor(rng() * pool.length)];
+  return {
+    locationId: chosen.id,
+    locationName: chosen.name,
+    x: chosen.x + Math.floor((chosen.w || 5) / 2),
+    y: chosen.y + (chosen.h || 4) - 1,
+  };
+}
+
+// Pick a station matching the agent's current state.
+// - state==='working' → prefer a 'work' station
+// - state==='idle'    → prefer a 'rest' station
+// Build a bubble text given a chosen destination and agent state.
+// Outdoor stations carry an explicit `activity` phrase; indoor stations
+// fall back to "working at <label> @ <room>" / "resting at <label> @ <room>".
+function formatStationBubble(dest, state, phase /* 'at' | 'heading to' */) {
+  if (!dest) return '';
+  if (dest.stationActivity) {
+    return phase === 'heading to'
+      ? `heading out to ${dest.stationLabel || 'the spot'}`
+      : dest.stationActivity;
+  }
+  const target = dest.stationLabel
+    ? `${dest.stationLabel} @ ${dest.locationName}`
+    : dest.locationName;
+  if (phase === 'heading to') return `heading to ${target}`;
+  return state === 'working' ? `working at ${target}` : `resting at ${target}`;
+}
+
+// Claimed stations (currently targeted by another agent) are skipped.
+// Also skips `lastStationId` so an agent doesn't immediately re-pick the
+// same spot they just left — keeps rotation lively.
+function pickStationForState(runtime, stations, rng, claimedStationIds, lastStationId = null) {
+  if (!stations || stations.length === 0) return null;
+  const wantKind = runtime.state === 'working' ? 'work' : 'rest';
+  const available = (s) => !claimedStationIds.has(s.id) && s.id !== lastStationId;
+  const preferred = stations.filter(s => s.kind === wantKind && available(s));
+  const fallback = stations.filter(available);
+  // If excluding lastStationId left nothing, allow it again.
+  const finalPool = preferred.length > 0 ? preferred :
+    fallback.length > 0 ? fallback :
+    stations.filter(s => !claimedStationIds.has(s.id));
+  if (finalPool.length === 0) return null;
+  const chosen = finalPool[Math.floor(rng() * finalPool.length)];
+  return {
+    stationId: chosen.id,
+    locationId: chosen.locationId,
+    locationName: chosen.locationName,
+    stationLabel: chosen.label,
+    stationKind: chosen.kind,
+    stationActivity: chosen.activity || null,
+    x: chosen.x,
+    y: chosen.y
+  };
+}
+
+// Build { [stationId]: station } for O(1) lookup during pose
+// resolution. Stations may appear multiple times across ticks so we
+// dedupe by id.
+function buildStationLookup(stations) {
+  const lookup = {};
+  if (!Array.isArray(stations)) return lookup;
+  for (const st of stations) {
+    if (st && typeof st.id === 'string') lookup[st.id] = st;
+  }
+  return lookup;
+}
+
+// Phase 3 reaction tuning. REACTION_MAX_ACTIVE is drama-tunable; the
+// timing constants below stay fixed (changing them would feel buggy
+// more than "dramatic").
+let REACTION_MAX_ACTIVE      = 3;        // global cap (drama-tunable)
+const REACTION_DUR_MS        = 1600;     // default emote dwell
+const REACTION_WAVE_MS       = 1200;     // wave-goodbye emote dwell
+const REACTION_CD_ERROR_MS   = 20_000;   // per-observer-per-source
+const REACTION_CD_BURST_MS   = 30_000;
+const REACTION_CD_FAREWELL_MS = 60_000;
+const REACTION_CD_COURIER_MS = 15_000;   // per (source,observer) ack cooldown
+const REACTION_COURIER_DUR_MS = 1200;    // ack emote dwell (shorter than default)
+const REACTION_RADIUS_NORMAL = 4;        // chebyshev tiles
+const REACTION_RADIUS_WAVE   = 3;
+
+// Pass-by greeting — a lightweight alternative to the full scripted
+// conversation. Fires when two *moving* sprites cross within
+// PASSBY_RADIUS tiles, neither is busy (Waiting/Errored/in-chat/
+// in-reaction) and the per-pair cooldown has elapsed. Both emit 👋
+// and face each other for one tick. No chat pause, no bubble — just
+// visual texture for walking past neighbors.
+const PASSBY_RADIUS        = 1.8;        // euclidean tiles
+const PASSBY_RADIUS_SQ     = PASSBY_RADIUS * PASSBY_RADIUS;
+const PASSBY_COOLDOWN_MS   = 120_000;    // per-pair (A↔B) cooldown
+const PASSBY_GREET_DUR_MS  = 900;        // emote dwell
+const PASSBY_CHANCE        = 0.45;       // per-eligible-tick fire chance
+
+// Glance-around — while walking, sprites occasionally swing their
+// facing 90° for a single tick then snap back. Reads as "noticing
+// something" and makes straight-line walks feel less mechanical.
+const GLANCE_PROB_PER_MS   = 0.00018;    // ≈ 0.01/frame at 60fps, 1 per ~5.5s
+const GLANCE_DUR_MS        = 250;
+
+// Nightly yawn — during late-hours (≥20:00 or <06:00 local), Idle
+// sprites occasionally emit 💤. Self-only (no proximity fan-out),
+// long per-sprite cooldown so it reads as ambient texture, not
+// cartoonish spam. Yields to any reactionEmote already active.
+const YAWN_COOLDOWN_MS     = 180_000;    // 3 minutes per sprite
+const YAWN_PROB_PER_MS     = 0.00003;    // ≈ once per ~33s of eligible time
+const YAWN_DUR_MS          = 1600;
+
+// Detect social events that just happened this tick and dispatch
+// observer emotes. Purely client-side: no server state is read.
+// Deterministic tie-break: event enumeration sorted by agent id
+// (lexicographic); observer enumeration also sorted.
+function updateReactions(avatarRuntime, timestamp) {
+  // 1. Expire stale reactions first so the global-cap check below
+  //    sees the current live set.
+  avatarRuntime.forEach(rt => {
+    if (rt.reactionEmote && rt.reactionEmote.expiresAt <= timestamp) {
+      rt.reactionEmote = null;
+    }
+  });
+
+  // 2. Enumerate runtimes once, id-sorted. Detect transitions.
+  const entries = Array.from(avatarRuntime.entries())
+    .sort((a, b) => a[0].localeCompare(b[0]));
+
+  const events = [];
+  for (const [id, rt] of entries) {
+    const prevStatus = rt._prevSocialStatus;
+    const curStatus  = rt.serverStatus;
+
+    // First-tick suppressor: when prevStatus is undefined this is the
+    // first time we've observed this runtime, so we cannot know it's
+    // a transition. Skip event dispatch. All transition predicates
+    // below depend on prevStatus having at least one prior value.
+    const firstObserved = prevStatus === undefined;
+
+    // Errored entry → broadcast concern.
+    if (!firstObserved &&
+        prevStatus !== 'Errored' && curStatus === 'Errored') {
+      events.push({ kind: 'error', sourceId: id, source: rt });
+    }
+
+    // Waiting → Working → self-cheer (approval granted).
+    if (!firstObserved &&
+        prevStatus === 'Waiting' && curStatus === 'Working') {
+      events.push({ kind: 'approval_self', sourceId: id, source: rt });
+    }
+
+    rt._prevSocialStatus = curStatus;
+
+    // Productive burst: productiveUntil crossed past → future.
+    // First observation initializes _prevProductiveUntil without
+    // firing a burst event (prevents page-load flood).
+    const firstBurstObs = rt._prevProductiveUntil === undefined;
+    const prevProd = rt._prevProductiveUntil || 0;
+    const prod = rt.productiveUntil || 0;
+    if (!firstBurstObs && prod > prevProd && prod > timestamp + 1000) {
+      events.push({ kind: 'burst', sourceId: id, source: rt });
+    }
+    rt._prevProductiveUntil = prod;
+
+    // Farewell: farewellUntil freshly set → wave to neighbors.
+    const firstFareObs = rt._prevFarewellUntil === undefined;
+    const prevFare = rt._prevFarewellUntil || 0;
+    const fare = rt.farewellUntil || 0;
+    if (!firstFareObs && fare > prevFare && fare > timestamp) {
+      events.push({ kind: 'farewell', sourceId: id, source: rt });
+    }
+    rt._prevFarewellUntil = fare;
+
+    // Courier: courierPulseAt freshly set → same-repo/branch peers
+    // nod back. Repo-scoped, not proximity-scoped, so distant buildings
+    // still feel the handshake. First observation of the field is
+    // suppressed like other events.
+    const firstCourierObs = rt._prevCourierPulseAt === undefined;
+    const prevCourier = rt._prevCourierPulseAt || 0;
+    const cur = rt.courierPulseAt || 0;
+    if (!firstCourierObs && cur > prevCourier && timestamp - cur < 1500) {
+      events.push({ kind: 'courier', sourceId: id, source: rt });
+    }
+    rt._prevCourierPulseAt = cur;
+  }
+
+  // 3. Dispatch each event.
+  for (const ev of events) {
+    if (ev.kind === 'approval_self') {
+      // Only self; no cooldown; overwrite any weaker active emote.
+      ev.source.reactionEmote = {
+        icon: '🎉',
+        expiresAt: timestamp + REACTION_DUR_MS
+      };
+      continue;
+    }
+
+    // Courier ack: repo-scoped, proximity-agnostic. Recipients must
+    // share (repoRoot, gitBranch) with the sender. Facing override
+    // points toward the sender's current tile for one tick.
+    if (ev.kind === 'courier') {
+      const { sourceId, source } = ev;
+      if (!source.repoRoot) continue;
+      const srcBranch = source.gitBranch || null;
+      for (const [obsId, obs] of entries) {
+        if (obsId === sourceId) continue;
+        if (obs.repoRoot !== source.repoRoot) continue;
+        if (srcBranch && obs.gitBranch && obs.gitBranch !== srcBranch) continue;
+        if (!obs.reactionCooldowns) obs.reactionCooldowns = {};
+        const cdKey = `${sourceId}:courier`;
+        if (timestamp < (obs.reactionCooldowns[cdKey] || 0)) continue;
+        obs.reactionCooldowns[cdKey] = timestamp + REACTION_CD_COURIER_MS;
+        // Soft-merge: don't clobber a stronger reaction (error/farewell)
+        // that's still live. Courier is chatty; yield to louder events.
+        if (obs.reactionEmote && obs.reactionEmote.expiresAt > timestamp + 800) continue;
+        obs.reactionEmote = { icon: '👀', expiresAt: timestamp + REACTION_COURIER_DUR_MS };
+        obs.facingOverride = faceDirection(source.x - obs.x, source.y - obs.y);
+      }
+      continue;
+    }
+
+    const { kind, sourceId, source } = ev;
+    const radius = kind === 'farewell' ? REACTION_RADIUS_WAVE : REACTION_RADIUS_NORMAL;
+    // Observer icon per event kind. For burst, observers clap (👏)
+    // while the source keeps the ✨ pop — creates "applause cascade"
+    // feel when one sprite's productivity burst lights up neighbors.
+    const icon = kind === 'error'    ? '😦'
+               : kind === 'burst'    ? '👏'
+               : /* farewell */        '👋';
+    // Light up the SOURCE too on burst so you can see who's being
+    // applauded, not just the crowd. Skip for error (source already
+    // has the errored-status visual) and farewell (source is fading).
+    if (kind === 'burst') {
+      source.reactionEmote = {
+        icon: '✨',
+        expiresAt: timestamp + REACTION_DUR_MS
+      };
+    }
+    const durMs = kind === 'farewell' ? REACTION_WAVE_MS : REACTION_DUR_MS;
+    const cooldownMs = kind === 'error'    ? REACTION_CD_ERROR_MS
+                     : kind === 'burst'    ? REACTION_CD_BURST_MS
+                                           : REACTION_CD_FAREWELL_MS;
+    const cooldownKey = `${sourceId}:${kind}`;
+
+    for (const [obsId, obs] of entries) {
+      if (obsId === sourceId) continue;
+      const dx = Math.abs(obs.x - source.x);
+      const dy = Math.abs(obs.y - source.y);
+      if (dx > radius || dy > radius) continue;
+
+      if (!obs.reactionCooldowns) obs.reactionCooldowns = {};
+      const until = obs.reactionCooldowns[cooldownKey] || 0;
+      if (timestamp < until) continue;
+      obs.reactionCooldowns[cooldownKey] = timestamp + cooldownMs;
+
+      obs.reactionEmote = { icon, expiresAt: timestamp + durMs };
+
+      // Neighbor-error: head turns toward the errored agent (1-tick
+      // facing override; cleared at the next tick's clearing pass).
+      if (kind === 'error') {
+        obs.facingOverride = faceDirection(source.x - obs.x, source.y - obs.y);
+      }
+    }
+  }
+
+  // 4. Global cap: evict earliest-expiring first, lex id tie-break.
+  const active = entries.filter(([, rt]) => rt.reactionEmote);
+  if (active.length > REACTION_MAX_ACTIVE) {
+    active.sort(([aId, aRt], [bId, bRt]) => {
+      const d = aRt.reactionEmote.expiresAt - bRt.reactionEmote.expiresAt;
+      if (d !== 0) return d;
+      return aId.localeCompare(bId);
+    });
+    const evictCount = active.length - REACTION_MAX_ACTIVE;
+    for (let i = 0; i < evictCount; i++) {
+      active[i][1].reactionEmote = null;
+    }
+  }
+}
+
+// Nightly yawn pass. Idle sprites during late hours (20:00–06:00)
+// occasionally emit 💤. Self-only, long cooldown; yields to any
+// active reactionEmote so real social signals still win.
+function tryNightYawn(avatarRuntime, timestamp, rng, nowClock = new Date()) {
+  const h = nowClock.getHours();
+  const isNightHour = h >= 20 || h < 6;
+  if (!isNightHour) return;
+  avatarRuntime.forEach(rt => {
+    const status = rt.serverStatus;
+    if (status && status !== 'Idle' && status !== 'IdleStale') return;
+    if (rt.reactionEmote && rt.reactionEmote.expiresAt > timestamp) return;
+    if (rt.chatPauseUntil && timestamp < rt.chatPauseUntil) return;
+    if (timestamp < (rt._yawnUntil || 0)) return;
+    const dt = Math.max(0, Math.min(100, timestamp - (rt._yawnLastCheckAt || timestamp)));
+    rt._yawnLastCheckAt = timestamp;
+    if (dt === 0) return;
+    if (rng() > dt * YAWN_PROB_PER_MS) return;
+    rt.reactionEmote = { icon: '💤', expiresAt: timestamp + YAWN_DUR_MS };
+    rt._yawnUntil = timestamp + YAWN_COOLDOWN_MS;
+  });
+}
+
+// Pass-by greeting pass. Runs per tick before movement so the emote +
+// facing override survive to render. Cheap O(n²) pair scan — bounded
+// by live-session count which is typically <20.
+function tryPassByGreet(avatarRuntime, timestamp, rng) {
+  const entries = Array.from(avatarRuntime.values());
+  if (entries.length < 2) return;
+  for (let i = 0; i < entries.length; i++) {
+    const a = entries[i];
+    if (!a.moving) continue;
+    if (a.chatPauseUntil && timestamp < a.chatPauseUntil) continue;
+    if (a.reactionEmote && a.reactionEmote.expiresAt > timestamp) continue;
+    const aStatus = a.serverStatus;
+    if (aStatus === 'Waiting' || aStatus === 'Errored') continue;
+    for (let j = i + 1; j < entries.length; j++) {
+      const b = entries[j];
+      if (!b.moving) continue;
+      if (b.chatPauseUntil && timestamp < b.chatPauseUntil) continue;
+      if (b.reactionEmote && b.reactionEmote.expiresAt > timestamp) continue;
+      const bStatus = b.serverStatus;
+      if (bStatus === 'Waiting' || bStatus === 'Errored') continue;
+      const dx = a.x - b.x;
+      const dy = a.y - b.y;
+      const d2 = dx * dx + dy * dy;
+      if (d2 > PASSBY_RADIUS_SQ) continue;
+      if (d2 === 0) continue;
+      // Per-pair cooldown.
+      if (!a._greetCooldowns) a._greetCooldowns = {};
+      if (!b._greetCooldowns) b._greetCooldowns = {};
+      const aKey = b.id || '';
+      const bKey = a.id || '';
+      if (timestamp < (a._greetCooldowns[aKey] || 0)) continue;
+      if (rng() > PASSBY_CHANCE) continue;
+      a.reactionEmote = { icon: '👋', expiresAt: timestamp + PASSBY_GREET_DUR_MS };
+      b.reactionEmote = { icon: '👋', expiresAt: timestamp + PASSBY_GREET_DUR_MS };
+      a.facingOverride = faceDirection(b.x - a.x, b.y - a.y);
+      b.facingOverride = faceDirection(a.x - b.x, a.y - b.y);
+      a._greetCooldowns[aKey] = timestamp + PASSBY_COOLDOWN_MS;
+      b._greetCooldowns[bKey] = timestamp + PASSBY_COOLDOWN_MS;
+      break; // a greets only one per tick
+    }
+  }
+}
+
+// Glance-around pass. For each moving runtime, with low per-frame
+// probability, shove the facing to a perpendicular direction for
+// GLANCE_DUR_MS. Read as "noticing something" — makes straight walks
+// feel less robotic. Expires via _glanceUntil timer on the runtime.
+function tryGlanceAround(avatarRuntime, timestamp, rng) {
+  avatarRuntime.forEach(rt => {
+    // Active glance — release when expired.
+    if (rt._glanceUntil && timestamp >= rt._glanceUntil) {
+      rt._glanceUntil = 0;
+      rt._glanceFacing = null;
+    }
+    if (rt._glanceUntil && rt._glanceFacing) {
+      rt.facingOverride = rt._glanceFacing;
+      return;
+    }
+    if (!rt.moving) return;
+    if (rt.reactionEmote && rt.reactionEmote.expiresAt > timestamp) return;
+    if (rt.chatPauseUntil && timestamp < rt.chatPauseUntil) return;
+    // Scale probability by time since last tick, not frame count.
+    const dt = Math.max(0, Math.min(100, timestamp - (rt._glanceLastCheckAt || timestamp)));
+    rt._glanceLastCheckAt = timestamp;
+    if (dt === 0) return;
+    if (rng() > dt * GLANCE_PROB_PER_MS) return;
+    // Perpendicular to current direction.
+    const cur = rt.direction || 'down';
+    const side = rng() < 0.5 ? 'left' : 'right';
+    const perp = { up: side, down: side, left: rng() < 0.5 ? 'up' : 'down', right: rng() < 0.5 ? 'up' : 'down' }[cur] || 'down';
+    rt._glanceUntil = timestamp + GLANCE_DUR_MS;
+    rt._glanceFacing = perp;
+    rt.facingOverride = perp;
+  });
+}
+
+function faceDirection(dx, dy) {
+  if (Math.abs(dx) > Math.abs(dy)) return dx > 0 ? 'right' : 'left';
+  if (dy === 0 && dx === 0) return 'down';
+  return dy > 0 ? 'down' : 'up';
+}
+
+// Phase 4 group-scene tuning. GROUP_START_CHANCE is drama-tunable.
+const GROUP_SOCIAL_KINDS = new Set([
+  'tavern', 'tavern_seat', 'plaza', 'lounge', 'break_area'
+]);
+const GROUP_MIN_MEMBERS = 3;
+const GROUP_DUR_MS = 90_000;
+let GROUP_START_CHANCE = 0.20;          // per eligible tick (drama-tunable)
+const GROUP_REFORM_COOLDOWN_MS = 60_000; // per-location
+
+// Form a group scene: N members at the same social location start a
+// 90-second scripted round-table. One random member speaks per
+// CHAT_TURN_MS turn; others listen. Members pause movement and face
+// the centroid. Uses the existing chatQueue channel so rendering
+// stays unchanged.
+function startGroupScene(members, timestamp, locationId, rng) {
+  const endAt = timestamp + GROUP_DUR_MS;
+  const turns = Math.floor(GROUP_DUR_MS / CHAT_TURN_MS);
+  const groupId = `grp_${locationId}_${timestamp}`;
+
+  // Centroid to face toward.
+  const cx = members.reduce((s, m) => s + m.x, 0) / members.length;
+  const cy = members.reduce((s, m) => s + m.y, 0) / members.length;
+
+  for (const m of members) {
+    m.chatPauseUntil = endAt;
+    m.chatPartnerId = null;                 // group, not 1:1
+    m.chatQueue = [];
+    m.chat = null;
+    m.groupId = groupId;
+    m.inGroupUntil = endAt;
+    m._groupLocationId = locationId;
+    m._groupMemberIds = members.map(x => x.id || '').filter(Boolean);
+
+    // Huddle-toward-centroid render offset: each member visually leans
+    // ~0.3 tiles toward the circle's center during the group chat.
+    // Renderer reads (renderOffsetX, renderOffsetY) and applies on top
+    // of interpolated position. Logical position unchanged → hit-test +
+    // collision unaffected.
+    const dx = cx - m.x;
+    const dy = cy - m.y;
+    const dist = Math.max(0.01, Math.hypot(dx, dy));
+    m.renderOffsetX = (dx / dist) * 0.30;
+    m.renderOffsetY = (dy / dist) * 0.30;
+
+    // Turn to face the centroid; collapse any in-flight movement.
+    m.direction = faceDirection(cx - m.x, cy - m.y);
+    m.path = null;
+    m.pathIndex = 0;
+    m.prevX = m.x;
+    m.prevY = m.y;
+    m.stepStartedAt = timestamp - 1000;
+  }
+
+  // Schedule turns. Every turn picks one member as speaker.
+  // Deterministic from rng (seeded externally) but not predictable
+  // across ticks — OK because this only runs once at formation.
+  for (let t = 0; t < turns; t++) {
+    const speaker = members[Math.floor(rng() * members.length)];
+    const line = GROUP_LINES[Math.floor(rng() * GROUP_LINES.length)];
+    speaker.chatQueue.push({
+      text: line,
+      showAt: timestamp + t * CHAT_TURN_MS,
+      expireAt: timestamp + (t + 1) * CHAT_TURN_MS
+    });
+  }
+}
+
+// Derive the bucket key for grouping. Indoor locations use their
+// locationId (cafe, home_nw, etc.). Outdoor plazas/gardens have
+// locationId=null but are socially equivalent — bucket them by
+// interactionKind so three agents sitting at different plaza tiles
+// can still form a group.
+function groupBucketKey(rt) {
+  const locId = rt.currentDestination?.locationId;
+  if (locId) return locId;
+  // Outdoor social kinds only — park_bench is too generic (just a
+  // seat, not a hangout spot), garden is too spread out.
+  if (rt.interactionKind === 'plaza') return 'outdoor:plaza';
+  return null;
+}
+
+// Detect + form groups. Runs BEFORE the 1:1 pair loop so in-group
+// members have chatPauseUntil set, which makes the pair loop skip
+// them naturally.
+function tryStartGroupScenes(avatarRuntime, timestamp, rng) {
+  const bucket = new Map(); // bucketKey → [runtime]
+  avatarRuntime.forEach(rt => {
+    if (rt.chatPauseUntil && timestamp < rt.chatPauseUntil) return;
+    if (rt.chatCooldownUntil && timestamp < rt.chatCooldownUntil) return;
+    if (!rt.seated) return;
+    if (!GROUP_SOCIAL_KINDS.has(rt.interactionKind)) return;
+    const key = groupBucketKey(rt);
+    if (!key) return;
+    // Reform suppressor — per-observer-per-location (stored on
+    // runtime so each member carries its own recent-dispersal
+    // timestamp after being in a prior group at this location).
+    const reformUntil = rt.chatRecentGroups?.[key] || 0;
+    if (timestamp < reformUntil) return;
+    if (!bucket.has(key)) bucket.set(key, []);
+    bucket.get(key).push(rt);
+  });
+
+  for (const [key, members] of bucket) {
+    if (members.length < GROUP_MIN_MEMBERS) continue;
+    // Proximity gate: all members must be within Chebyshev 5 of the
+    // centroid. Keeps distant same-locationId agents (e.g. a huge
+    // building) from being grouped visually.
+    const cx = members.reduce((s, m) => s + m.x, 0) / members.length;
+    const cy = members.reduce((s, m) => s + m.y, 0) / members.length;
+    const tooFar = members.some(m =>
+      Math.abs(m.x - cx) > 5 || Math.abs(m.y - cy) > 5
+    );
+    if (tooFar) continue;
+    if (rng() > GROUP_START_CHANCE) continue;
+    startGroupScene(members, timestamp, key, rng);
+  }
+}
+
+// Called when a runtime's chatPauseUntil expires — if the runtime
+// was in a group, apply pair cooldown to every other member + set
+// group-reform suppressor on the location for each member.
+function onGroupDisband(runtime, avatarRuntime, timestamp) {
+  if (!runtime.groupId) return;
+  const locId = runtime._groupLocationId;
+  const memberIds = runtime._groupMemberIds || [];
+  for (const otherId of memberIds) {
+    if (otherId === runtime.id) continue;
+    if (!runtime.chatRecentPartners) runtime.chatRecentPartners = {};
+    runtime.chatRecentPartners[otherId] = timestamp + CHAT_PAIR_COOLDOWN_MS;
+  }
+  if (locId) {
+    if (!runtime.chatRecentGroups) runtime.chatRecentGroups = {};
+    runtime.chatRecentGroups[locId] = timestamp + GROUP_REFORM_COOLDOWN_MS;
+  }
+  // Clear group bookkeeping so the runtime can re-enter ambient
+  // social flow after the individual cooldown.
+  runtime.groupId = null;
+  runtime._groupLocationId = null;
+  runtime._groupMemberIds = null;
+  runtime.inGroupUntil = 0;
+  runtime.renderOffsetX = 0;
+  runtime.renderOffsetY = 0;
+}
+
+// Pair two agents into a scripted conversation: alternating lines, both
+// paused + facing each other for the full duration.
+function startConversation(a, b, timestamp, rng) {
+  // Phase 1 context-aware dialog + time-of-day + reconnect memory.
+  // metBeforeMsAgo = how long ago these two last met (0 = never).
+  // Checks both sides since chatLastMetAt is maintained on each
+  // runtime independently after each chat.
+  const aMet = (a.chatLastMetAt && a.chatLastMetAt[b.id]) || 0;
+  const bMet = (b.chatLastMetAt && b.chatLastMetAt[a.id]) || 0;
+  const lastMet = Math.max(aMet, bMet);
+  const metBeforeMsAgo = lastMet > 0 ? timestamp - lastMet : 0;
+
+  const ctx = {
+    a: { repoRoot: a.repoRoot, repoLabel: a.repoLabel, serverStatus: a.serverStatus },
+    b: { repoRoot: b.repoRoot, repoLabel: b.repoLabel, serverStatus: b.serverStatus },
+    hour: new Date().getHours(),
+    metBeforeMsAgo
+  };
+  const lines = buildConversation(ctx, rng);
+
+  // Record the meeting for future reconnect detection.
+  if (!a.chatLastMetAt) a.chatLastMetAt = {};
+  if (!b.chatLastMetAt) b.chatLastMetAt = {};
+  if (a.id) b.chatLastMetAt[a.id] = timestamp;
+  if (b.id) a.chatLastMetAt[b.id] = timestamp;
+  const turns = lines.length; // 2 or 4
+  const endAt = timestamp + CHAT_TURN_MS * turns + CHAT_TAIL_MS;
+  a.chatPauseUntil = endAt;
+  b.chatPauseUntil = endAt;
+  a.chatPartnerId = b.id || null;
+  b.chatPartnerId = a.id || null;
+  a.chatQueue = [];
+  b.chatQueue = [];
+  for (let i = 0; i < turns; i++) {
+    const speaker = i % 2 === 0 ? a : b;
+    speaker.chatQueue.push({
+      text: lines[i],
+      showAt: timestamp + i * CHAT_TURN_MS,
+      expireAt: timestamp + (i + 1) * CHAT_TURN_MS
+    });
+  }
+  // Both turn to face each other.
+  const ddx = b.x - a.x;
+  const ddy = b.y - a.y;
+  a.direction = faceDirection(ddx, ddy);
+  b.direction = faceDirection(-ddx, -ddy);
+  // Abandon in-flight paths so they don't resume stepping mid-chat.
+  a.path = null; a.pathIndex = 0;
+  b.path = null; b.pathIndex = 0;
+  // Collapse any in-flight lerp so facing-each-other doesn't glide.
+  a.prevX = a.x; a.prevY = a.y; a.stepStartedAt = timestamp - 1000;
+  b.prevX = b.x; b.prevY = b.y; b.stepStartedAt = timestamp - 1000;
+  // Per-pair cooldown so the same duo doesn't re-chat immediately.
+  const until = endAt + CHAT_PAIR_COOLDOWN_MS;
+  if (!a.chatRecentPartners) a.chatRecentPartners = {};
+  if (!b.chatRecentPartners) b.chatRecentPartners = {};
+  if (b.id) a.chatRecentPartners[b.id] = until;
+  if (a.id) b.chatRecentPartners[a.id] = until;
+}
+
+// Expire finished conversations + surface the currently-active line
+// for each agent. Runs before pose resolution so disbanded members
+// are already free to re-pick destinations.
+function updateAgentChatsExpire(avatarRuntime, timestamp) {
+  avatarRuntime.forEach(runtime => {
+    if (runtime.chatPauseUntil && runtime.chatPauseUntil <= timestamp) {
+      // conversation ended → apply group disband hook first (it reads
+      // runtime.groupId before we clear it), then free up state.
+      onGroupDisband(runtime, avatarRuntime, timestamp);
+      runtime.chatPauseUntil = 0;
+      runtime.chatPartnerId = null;
+      runtime.chatQueue = null;
+      runtime.chatCooldownUntil = timestamp + CHAT_COOLDOWN_MS;
+      runtime.chat = null;
+      // force re-pathfind with fresh state
+      runtime.path = null;
+      runtime.pathIndex = 0;
+    }
+    // Derive the currently-visible line from the queue, if any.
+    if (runtime.chatQueue) {
+      const active = runtime.chatQueue.find(
+        item => item.showAt <= timestamp && item.expireAt > timestamp
+      );
+      runtime.chat = active
+        ? { text: active.text, expiresAt: active.expireAt }
+        : null;
+    }
+  });
+}
+
+// Try to start new conversations (group first, then 1:1 pairs). Runs
+// AFTER pose resolution so interactionKind + seated are fresh.
+function updateAgentChatsStart(avatarRuntime, timestamp, rng) {
+  // Phase 4: group scenes first so members are already paused and
+  // invisible to pair matching.
+  tryStartGroupScenes(avatarRuntime, timestamp, rng);
+
+  // Try to start new conversations for nearby pairs.
+  const agents = Array.from(avatarRuntime.values());
+  if (agents.length < 2) return;
+  for (let i = 0; i < agents.length; i++) {
+    const a = agents[i];
+    if (a.chatPauseUntil && timestamp < a.chatPauseUntil) continue;
+    if (a.chatCooldownUntil && timestamp < a.chatCooldownUntil) continue;
+    for (let j = i + 1; j < agents.length; j++) {
+      const b = agents[j];
+      if (b.chatPauseUntil && timestamp < b.chatPauseUntil) continue;
+      if (b.chatCooldownUntil && timestamp < b.chatCooldownUntil) continue;
+      const dx = Math.abs(a.x - b.x);
+      const dy = Math.abs(a.y - b.y);
+      if (dx > CHAT_PROXIMITY || dy > CHAT_PROXIMITY) continue;
+      if (dx === 0 && dy === 0) continue;
+      if (rng() > CHAT_START_CHANCE) continue;
+      // Per-pair cooldown
+      const aRecent = a.chatRecentPartners && b.id ? a.chatRecentPartners[b.id] : 0;
+      if (aRecent && timestamp < aRecent) continue;
+      startConversation(a, b, timestamp, rng);
+      break;
+    }
+  }
+}
+
+export function advanceAvatarRuntimeEntries(
+  avatarRuntime,
+  dimensions,
+  timestamp,
+  rng = Math.random,
+  blockedTiles = null,
+  locations = null,
+  stations = null
+) {
+  const width = Number.isInteger(dimensions?.width) ? dimensions.width : 30;
+  const height = Number.isInteger(dimensions?.height) ? dimensions.height : 30;
+
+  // Single owner for facingOverride: clear it at the start of every tick
+  // so one-tick reaction facings don't survive past the frame that set
+  // them. Reactions downstream write it freshly after this point.
+  avatarRuntime.forEach(runtime => {
+    runtime.facingOverride = null;
+  });
+
+  // Ambient chat — expire step. Split from the start step because
+  // group detection needs up-to-date seated/interactionKind, which
+  // aren't resolved until the pose pass below.
+  updateAgentChatsExpire(avatarRuntime, timestamp);
+
+  // Per-tick visual flags:
+  //   seated  — paused at a station → idle frame + small down-shift
+  //   talking — paused in a conversation → idle frame (still standing)
+  avatarRuntime.forEach(runtime => {
+    runtime.seated = Boolean(
+      runtime.arrivalPauseUntil &&
+      timestamp < runtime.arrivalPauseUntil &&
+      runtime.currentDestination?.stationId
+    );
+    runtime.talking = Boolean(
+      runtime.chatPauseUntil && timestamp < runtime.chatPauseUntil
+    );
+  });
+
+  // Phase 2: resolve interactionKind + pose per tick. Reset one-shot
+  // triggers (farewell, stretch) when the destination changes so the
+  // next arrival fires them again.
+  const stationLookup = buildStationLookup(stations);
+  avatarRuntime.forEach(runtime => {
+    const dest = runtime.currentDestination;
+    const destKey = dest
+      ? `${dest.locationId || ''}:${dest.stationId || ''}:${dest.x},${dest.y}`
+      : '';
+    if (runtime._prevDestKey !== destKey) {
+      runtime.farewellConsumed = false;
+      runtime.stretchConsumed = false;
+      runtime.arrivalOneShotConsumed = false;
+      runtime.arrivalOneShotUntil = 0;
+      runtime.arrivalOneShotPose = null;
+      runtime.arrivalOneShotEmote = null;
+      runtime._prevDestKey = destKey;
+    }
+
+    runtime.interactionKind = interactionKindFor(runtime, stationLookup);
+
+    // One-shot pose triggers on arrival.
+    const arrived = runtime.arrivalPauseUntil && timestamp < runtime.arrivalPauseUntil;
+    if (arrived && runtime.interactionKind === 'exit' &&
+        (runtime.fadeOpacity == null || runtime.fadeOpacity > 0.85) &&
+        !runtime.farewellConsumed) {
+      runtime.farewellUntil = timestamp + 1500;
+      runtime.farewellConsumed = true;
+    }
+    if (arrived && runtime.interactionKind === 'break_area' &&
+        !runtime.stretchConsumed) {
+      runtime.stretchUntil = timestamp + 800;
+      runtime.stretchConsumed = true;
+    }
+
+    // Phase C.3 — leisure arrival beats. Trimmed scope (Codex):
+    //   garden → "inspect flowers" (1200ms stretching + 🌸)
+    //   lounge → "open book"       (900ms leaning + 📖)
+    // park_bench/plaza/break_area explicitly NOT included — break_area
+    // already stretches; plaza/park_bench stay social/ambient.
+    if (arrived && !runtime.arrivalOneShotConsumed) {
+      if (runtime.interactionKind === 'garden') {
+        runtime.arrivalOneShotUntil = timestamp + 1200;
+        runtime.arrivalOneShotPose = POSES.STRETCHING;
+        runtime.arrivalOneShotEmote = '🌸';
+        runtime.arrivalOneShotConsumed = true;
+      } else if (runtime.interactionKind === 'lounge') {
+        runtime.arrivalOneShotUntil = timestamp + 900;
+        runtime.arrivalOneShotPose = POSES.LEANING;
+        runtime.arrivalOneShotEmote = '📖';
+        runtime.arrivalOneShotConsumed = true;
+      }
+    }
+
+    const { pose, emote } = resolvePose(runtime, timestamp);
+    runtime.pose = pose;
+    runtime.persistentEmote = emote;
+
+    // IdleStale override — sprites whose session has been quiet long
+    // enough for the server to degrade them get a steady 💤 so the
+    // "napping" state is readable at a glance. Yielded to by any
+    // active reactionEmote / farewell / stretch via the hasTransient
+    // guard below.
+    if (runtime.serverStatus === 'IdleStale' && !runtime.reactionEmote) {
+      runtime.persistentEmote = '💤';
+    }
+
+    // Phase D — seated activity beat. Overrides persistentEmote for
+    // ~200ms per loop period on a dephased cadence. Skipped when a
+    // higher-priority emote is active (arrival one-shot, farewell,
+    // stretch, errored, reaction), chat scene is active, or the agent
+    // isn't seated (in transit).
+    const hasTransient = (
+      (runtime.farewellUntil && timestamp < runtime.farewellUntil) ||
+      (runtime.stretchUntil && timestamp < runtime.stretchUntil) ||
+      (runtime.erroredPoseUntil && timestamp < runtime.erroredPoseUntil) ||
+      (runtime.arrivalOneShotUntil && timestamp < runtime.arrivalOneShotUntil)
+    );
+    const chatActive = runtime.chatPauseUntil && timestamp < runtime.chatPauseUntil;
+    if (runtime.seated && runtime.interactionKind && !hasTransient && !chatActive) {
+      const beat = computeActivityLoop(
+        runtime.interactionKind,
+        runtime.agentSeed || 0,
+        timestamp
+      );
+      if (beat.emoteOverride) {
+        runtime.persistentEmote = beat.emoteOverride;
+      }
+    }
+
+    // Impatient pose: flip facingOverride left↔right every ~4s so the
+    // sprite visibly "looks around" while queueing. Purely visual,
+    // cleared next tick by the clear-step above.
+    if (pose === POSES.IMPATIENT) {
+      const phase = Math.floor(timestamp / 4000) % 2;
+      runtime.facingOverride = phase === 0 ? 'left' : 'right';
+    }
+  });
+
+  // Phase 4: group detection + 1:1 pair matching. Runs AFTER pose
+  // resolution so seated + interactionKind are current.
+  updateAgentChatsStart(avatarRuntime, timestamp, rng);
+
+  // Phase 3: dispatch reaction emotes from this tick's social events
+  // (error / burst / farewell / approval). Must run AFTER pose
+  // resolution (farewellUntil has just been set for exits) but
+  // BEFORE movement so facingOverride survives to the render frame.
+  updateReactions(avatarRuntime, timestamp);
+
+  // Pass-by greeting (👋 on crossing) + glance-around (idle facing
+  // jiggle while walking). Both run AFTER updateReactions so they
+  // yield to heavier reactions, and BEFORE the movement loop so
+  // facingOverride writes survive to the render pass.
+  tryPassByGreet(avatarRuntime, timestamp, rng);
+  tryGlanceAround(avatarRuntime, timestamp, rng);
+  tryNightYawn(avatarRuntime, timestamp, rng);
+
+  // Collect which stations are currently claimed (targeted or occupied) so
+  // routing picks different ones for each agent.
+  const claimedStationIds = new Set();
+  avatarRuntime.forEach(r => {
+    const id = r.currentDestination?.stationId;
+    if (id) claimedStationIds.add(id);
+  });
+
+  // Soft-block: tiles currently occupied by other agents. Used as extra A*
+  // cost so routes bend around other avatars instead of stacking.
+  const occupiedTiles = new Set();
+  avatarRuntime.forEach(r => {
+    occupiedTiles.add(`${r.x},${r.y}`);
+  });
+
+  function pickDestination(runtime, lastStationId = null) {
+    // Prefer station-targeted routing when stations are available.
+    if (stations && stations.length > 0) {
+      const st = pickStationForState(runtime, stations, rng, claimedStationIds, lastStationId);
+      if (st) {
+        claimedStationIds.add(st.stationId);
+        return st;
+      }
+    }
+    return pickClientDestination(runtime, locations, rng);
+  }
+
+  avatarRuntime.forEach(runtime => {
+    if (!runtime.moving || runtime.authoritativePosition) {
+      return;
+    }
+    // Frozen during an ambient chat — pathfinding resumes when the
+    // conversation ends (updateAgentChats clears chatPauseUntil).
+    if (runtime.chatPauseUntil && timestamp < runtime.chatPauseUntil) {
+      return;
+    }
+    // Urgency flag — Waiting sprites en route to info desk step
+    // roughly 2× faster and get a 💨 reactionEmote each tick so the
+    // hurry is visible from afar. Computed once per tick for the
+    // runtime so all nextMoveTime() calls in this body use the same.
+    const urgent = isUrgent(runtime);
+    if (urgent) {
+      // Yield to louder reactions already present (error, farewell).
+      if (!runtime.reactionEmote || runtime.reactionEmote.expiresAt < timestamp + 600) {
+        runtime.reactionEmote = { icon: '💨', expiresAt: timestamp + 800 };
+      }
+    }
+
+    if (timestamp < runtime.nextMoveAt) {
+      return;
+    }
+
+    // If paused at arrival, wait then pick a new destination
+    if (runtime.arrivalPauseUntil && timestamp < runtime.arrivalPauseUntil) {
+      return;
+    }
+    if (runtime.arrivalPauseUntil && timestamp >= runtime.arrivalPauseUntil) {
+      runtime.arrivalPauseUntil = 0;
+      const intentKind = runtime.intent?.kind;
+      // Sticky intents: don't auto-repick. Server will update destination
+      // when the session's status changes (e.g. permission granted).
+      const stickyIntents = new Set(['to_info_desk', 'to_tavern', 'to_exit_fade', 'frozen', 'at_desk', 'at_leisure']);
+      if (stickyIntents.has(intentKind) && runtime.currentDestination) {
+        // Extend the pause so the sprite keeps "sitting" at the spot.
+        // at_leisure gets a longer extension so the agent visibly
+        // uses the station (30-50s). Others get the legacy 8-12s.
+        if (intentKind === 'at_leisure') {
+          runtime.arrivalPauseUntil = timestamp + 30_000 + Math.floor(rng() * 20_000);
+        } else {
+          runtime.arrivalPauseUntil = timestamp + 8000 + Math.floor(rng() * 4000);
+        }
+      } else {
+        // Release the previously claimed station (if any) before re-picking.
+        const prevStationId = runtime.currentDestination?.stationId || null;
+        if (prevStationId) {
+          claimedStationIds.delete(prevStationId);
+        }
+        const newDest = pickDestination(runtime, prevStationId);
+        if (newDest) {
+          runtime.currentDestination = newDest;
+          runtime.path = null;
+          runtime.pathIndex = 0;
+          runtime.bubbleText = formatStationBubble(newDest, runtime.state, 'heading to');
+        }
+      }
+    }
+
+    // Goal-directed movement with A* pathfinding
+    if (runtime.currentDestination) {
+      const dest = runtime.currentDestination;
+
+      // Check if we've arrived at destination
+      if (runtime.x === dest.x && runtime.y === dest.y) {
+        // Pause at destination for a while. Keep currentDestination so the
+        // station stays claimed while this agent uses it (released on pick-next).
+        // at_leisure gets the long sticky pause so arrivals visibly
+        // use the station before the next server-driven rotation.
+        // Dwell policy (Phase C.4):
+        //   at_leisure  → 30–50s (server-driven rotation takes over)
+        //   working     → 20–35s (long enough to read as "at work")
+        //   idle/other  → 4–10s  (tent sessions falling through)
+        const intentKind = runtime.intent?.kind;
+        let restTime;
+        if (intentKind === 'at_leisure') {
+          restTime = 30_000 + Math.floor(rng() * 20_000);
+        } else if (runtime.state === 'working') {
+          restTime = 20_000 + Math.floor(rng() * 15_000);
+        } else {
+          restTime = 4000 + Math.floor(rng() * 6000);
+        }
+        runtime.arrivalPauseUntil = timestamp + restTime;
+
+        // Face the station on arrival so the sprite isn't looking
+        // away from the prop it just sat down at. Null → keep the
+        // direction we were walking in (social stations).
+        const station = dest.stationId ? stationLookup[dest.stationId] : null;
+        const forcedFacing = computeStationFacing(station);
+        if (forcedFacing) {
+          runtime.direction = forcedFacing;
+        }
+
+        runtime.path = null;
+        runtime.pathIndex = 0;
+        runtime.nextMoveAt = nextMoveTime(timestamp, rng, urgent);
+        // Switch bubble text from "heading to" → at-station activity.
+        if (dest.stationId) {
+          runtime.bubbleText = formatStationBubble(dest, runtime.state, 'at');
+        }
+        return;
+      }
+
+      // Compute path if needed
+      if (!runtime.path) {
+        // Soft-block other agents' current tiles (but not our own).
+        const myKey = `${runtime.x},${runtime.y}`;
+        const softBlocked = new Set();
+        for (const k of occupiedTiles) if (k !== myKey) softBlocked.add(k);
+        runtime.path = findPath(
+          runtime.x, runtime.y,
+          dest.x, dest.y,
+          width, height,
+          blockedTiles,
+          { agentSeed: runtime.agentSeed || 0, softBlocked }
+        );
+        runtime.pathIndex = 0;
+
+        // If no path found, release the claim and fall back to re-picking
+        // a different station next frame.
+        if (!runtime.path) {
+          if (runtime.currentDestination?.stationId) {
+            claimedStationIds.delete(runtime.currentDestination.stationId);
+          }
+          runtime.currentDestination = null;
+        }
+      }
+
+      // Follow path
+      if (runtime.path && runtime.pathIndex < runtime.path.length) {
+        const nextStep = runtime.path[runtime.pathIndex];
+        const dx = nextStep.x - runtime.x;
+        const dy = nextStep.y - runtime.y;
+
+        if (dx !== 0 || dy !== 0) {
+          runtime.direction = resolveDirection(dx, dy, runtime.direction);
+        }
+
+        // Capture lerp start BEFORE updating x/y. Teleports (|dx|+|dy|>1)
+        // shouldn't glide; collapse prev=next for those.
+        if (Math.abs(dx) + Math.abs(dy) > 1) {
+          runtime.prevX = nextStep.x;
+          runtime.prevY = nextStep.y;
+          runtime.stepStartedAt = timestamp - VISUAL.STEP_LERP_MS;
+        } else {
+          runtime.prevX = runtime.x;
+          runtime.prevY = runtime.y;
+          runtime.stepStartedAt = timestamp;
+        }
+
+        runtime.x = nextStep.x;
+        runtime.y = nextStep.y;
+        runtime.pathIndex++;
+        runtime.nextMoveAt = nextMoveTime(timestamp, rng, urgent);
+        return;
+      }
+
+      // Path completed
+      runtime.currentDestination = null;
+      runtime.path = null;
+      runtime.pathIndex = 0;
+    }
+
+    // Fallback: pick a new destination (station-preferred) if available.
+    const fallbackDest = pickDestination(runtime);
+    if (fallbackDest) {
+      runtime.currentDestination = fallbackDest;
+      runtime.path = null;
+      runtime.pathIndex = 0;
+      runtime.bubbleText = formatStationBubble(fallbackDest, runtime.state, 'heading to');
+      runtime.nextMoveAt = nextMoveTime(timestamp, rng, urgent);
+      return;
+    }
+
+    // Random walk as last resort
+    const [dx, dy] = chooseMove(rng);
+    const nextX = clamp(runtime.x + dx, 0, width - 1);
+    const nextY = clamp(runtime.y + dy, 0, height - 1);
+
+    // Collision check against buildings, props, and water
+    if (blockedTiles && blockedTiles.has(`${nextX},${nextY}`)) {
+      runtime.nextMoveAt = nextMoveTime(timestamp, rng, urgent);
+      return;
+    }
+
+    if (nextX !== runtime.x || nextY !== runtime.y) {
+      runtime.direction = DIRECTION_BY_MOVE[`${dx},${dy}`] || runtime.direction;
+      runtime.prevX = runtime.x;
+      runtime.prevY = runtime.y;
+      runtime.stepStartedAt = timestamp;
+    }
+
+    runtime.x = nextX;
+    runtime.y = nextY;
+    runtime.nextMoveAt = nextMoveTime(timestamp, rng, urgent);
+  });
+}

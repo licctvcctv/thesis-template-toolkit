@@ -1,0 +1,28 @@
+码头结梅设计规范{JTS 167—2018)
+也一一错达桩的直径或宽度(m ) ;
+6.3.12.4”错秦桩和错达板桩到前墙的最小距离( 图 6.3.12-2) 可按下式计算 :
+£=H,tan & -2| + tan[ 45° +2                 (6.3. 12-5)
+SRA Laat EP Fae AB EEL Ht EB PS (m2) ;
+A, Fs Eh eR A PE (mm) , A SB FE ET BBS HK
+FAERIE RK ft SE BEE EBS
+Q, P28 AU ATT J PA A (Pe Ee a PE he BY A
+控角(*) ,当土体分层时,可采用加权平均值;
+国一一锚达桩和锚拜板桩前被动破裂棱体的高度(m ) ,取变形第一零点到错达桩项
+的距离,当无变位堆点时,取桩尖到锚秦桩项的距离(m ) 。
+L
+国                             45° 4%   |
+asf
+图6.3. 12-2 FeRAM EAE AT | BAIT BS
+6.3.12.5 Fame AEA PGE Ai PE ETL FF Ah A a Be SE IT ,其值
+不宜大于 50mm.
+6.3.13 ”锚达叉桩可按下列规定进行结构计算                          w
+6.3.13.1 TERE MEA A EN DE dT        Bax
+8 OPS RA BEE, FRE EP EA A
+力标准值(图6.3.13) 可按下列公式计算:
+N _R,, cosa, + Wsina,      6.3.13
+rp sin(a, +@,)         chy Teel J       Ny   om | a,   N,
+N _&,, cosa, — Wsina,,      6.3.132
+“和 sin(a, +a,)       (6.3. 132)      D        Z
+W=G, +L ab +(a+a,)(b +6,) +a,6,] +a,6,4¢
+(6.3.13-3) 图6.3.13 HR VEAHHSER
+94

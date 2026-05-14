@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.heath.community.mapper.FollowupRecordMedicineMapper">
+
+    <resultMap id="FollowupRecordMedicineResultMap" type="com.heath.community.entity.FollowupRecordMedicine">
+        <id column="id" property="id"/>
+        <result column="followup_record_id" property="followupRecordId"/>
+        <result column="medicine_id" property="medicineId"/>
+        <result column="quantity" property="quantity"/>
+        <result column="dosage" property="dosage"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="medicine_name" property="medicineName"/>
+        <result column="medicine_code" property="medicineCode"/>
+    </resultMap>
+
+    <select id="findByRecordId" resultMap="FollowupRecordMedicineResultMap">
+        SELECT frm.id, frm.followup_record_id, frm.medicine_id, frm.quantity, frm.dosage,
+               frm.create_time, frm.update_time,
+               m.medicine_name, m.medicine_code
+        FROM followup_record_medicine frm
+        LEFT JOIN medicine m ON frm.medicine_id = m.id
+        WHERE frm.followup_record_id = #{recordId}
+        ORDER BY frm.create_time ASC
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO followup_record_medicine (followup_record_id, medicine_id, quantity, dosage)
+        VALUES (#{followupRecordId}, #{medicineId}, #{quantity}, #{dosage})
+    </insert>
+
+    <delete id="deleteByRecordId">
+        DELETE FROM followup_record_medicine WHERE followup_record_id = #{recordId}
+    </delete>
+
+</mapper>

@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+<defs><marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0,0 L12,6 L0,12 Z" fill="#315f9a"/></marker></defs>
+<rect width="1600" height="900" fill="#ffffff"/>
+<text x="800" y="70" text-anchor="middle" font-size="40" font-weight="700" font-family="Songti SC, SimSun, Noto Serif CJK SC" fill="#111827">技术路线图</text>
+<rect x="70" y="170" width="210" height="150" rx="10" fill="#eef6ff" stroke="#1f4e79" stroke-width="3"/>
+<text x="175" y="215" text-anchor="middle" font-size="30" font-family="Songti SC, SimSun, Noto Serif CJK SC" fill="#0f3057">课题调研</text>
+<text x="175" y="268" text-anchor="middle" font-size="22" font-family="Songti SC, SimSun, Noto Serif CJK SC" fill="#26374d">历史行情
+智能体系统
+策略</text>
+<text x="175" y="298" text-anchor="middle" font-size="22" font-family="Songti SC, SimSun, Noto Serif CJK SC" fill="#26374d">评价</text>
+<rect x="330" y="170" width="210" height="150" rx="10" fill="#f2fbf3" stroke="#1f4e79" stroke-width="3"/>
+<text x="435" y="215" text-anchor="middle" font-size="30" font-family="Songti SC, SimSun, Noto Serif CJK SC" fill="#0f3057">需求分析</text>
+<text x="435" y="268" text-anchor="middle" font-size="22" font-family="Songti SC, SimSun, Noto Serif CJK SC" fill="#26374d">角色需求
+功能需求
+评价需</text>
+<text x="435" y="298" text-anchor="middle" font-size="22" font-family="Songti SC, SimSun, Noto Serif CJK SC" fill="#26374d">求</text>
+<rect x="590" y="170" width="210" height="150" rx="10" fill="#fff7e8" stroke="#1f4e79" stroke-width="3"/>
+<text x="695" y="215" text-anchor="middle" font-size="30" font-family="Songti SC, SimSun, Noto Serif CJK SC" fill="#0f3057">系统设计</text>
+<text x="695" y="268" text-anchor="middle" font-size="22" font-family="Songti SC, SimSun, Noto Serif CJK SC" fill="#26374d">总体架构
+功能结构
+数据结</text>
+<text x="695" y="298" text-anchor="middle" font-size="22" font-family="Songti SC, SimSun, Noto Serif CJK SC" fill="#26374d">构</text>
+<rect x="850" y="170" width="210" height="150" rx="10" fill="#eef6ff" stroke="#1f4e79" stroke-width="3"/>
+<text x="955" y="215" text-anchor="middle" font-size="30" font-family="Songti SC, SimSun, Noto Serif CJK SC" fill="#0f3057">功能实现</text>
+<text x="955" y="268" text-anchor="middle" font-size="22" font-family="Songti SC, SimSun, Noto Serif CJK SC" fill="#26374d">情景引擎
+收益评分
+状态广</text>
+<text x="955" y="298" text-anchor="middle" font-size="22" font-family="Songti SC, SimSun, Noto Serif CJK SC" fill="#26374d">播</text>
+<rect x="1110" y="170" width="210" height="150" rx="10" fill="#f2fbf3" stroke="#1f4e79" stroke-width="3"/>
+<text x="1215" y="215" text-anchor="middle" font-size="30" font-family="Songti SC, SimSun, Noto Serif CJK SC" fill="#0f3057">运行验证</text>
+<text x="1215" y="268" text-anchor="middle" font-size="22" font-family="Songti SC, SimSun, Noto Serif CJK SC" fill="#26374d">真实截图
+统计面板
+测试结</text>
+<text x="1215" y="298" text-anchor="middle" font-size="22" font-family="Songti SC, SimSun, Noto Serif CJK SC" fill="#26374d">果</text>
+<rect x="590" y="500" width="420" height="160" rx="10" fill="#f8fafc" stroke="#1f4e79" stroke-width="3"/>
+<text x="800" y="545" text-anchor="middle" font-size="30" font-family="Songti SC, SimSun, Noto Serif CJK SC" fill="#0f3057">论文整理</text>
+<text x="800" y="598" text-anchor="middle" font-size="22" font-family="Songti SC, SimSun, Noto Serif CJK SC" fill="#26374d">按照七章结构组织正文，使用</text>
+<text x="800" y="628" text-anchor="middle" font-size="22" font-family="Songti SC, SimSun, Noto Serif CJK SC" fill="#26374d">图示解释前期分析，
+在实现</text>
+<text x="800" y="658" text-anchor="middle" font-size="22" font-family="Songti SC, SimSun, Noto Serif CJK SC" fill="#26374d">和测试章节放置表格、运行截</text>
+<text x="800" y="688" text-anchor="middle" font-size="22" font-family="Songti SC, SimSun, Noto Serif CJK SC" fill="#26374d">图和验证结果。</text>
+<line x1="280" y1="245" x2="330" y2="245" stroke="#315f9a" stroke-width="4" marker-end="url(#arrow)"/>
+<line x1="540" y1="245" x2="590" y2="245" stroke="#315f9a" stroke-width="4" marker-end="url(#arrow)"/>
+<line x1="800" y1="245" x2="850" y2="245" stroke="#315f9a" stroke-width="4" marker-end="url(#arrow)"/>
+<line x1="1060" y1="245" x2="1110" y2="245" stroke="#315f9a" stroke-width="4" marker-end="url(#arrow)"/>
+<line x1="1215" y1="320" x2="850" y2="500" stroke="#315f9a" stroke-width="4" marker-end="url(#arrow)"/>
+<line x1="695" y1="320" x2="695" y2="500" stroke="#315f9a" stroke-width="4" marker-end="url(#arrow)"/>
+</svg>

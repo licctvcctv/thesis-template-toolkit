@@ -1,0 +1,330 @@
+{
+  "vm_network_config": {
+    "caption": "虚拟机网络配置核心配置",
+    "lines": [
+      "# /etc/sysconfig/network-scripts/ifcfg-ens33",
+      "TYPE=Ethernet",
+      "BOOTPROTO=static",
+      "NAME=ens33",
+      "DEVICE=ens33",
+      "ONBOOT=yes",
+      "IPADDR=192.168.10.100",
+      "NETMASK=255.255.255.0",
+      "GATEWAY=192.168.10.2",
+      "DNS1=8.8.8.8",
+      "",
+      "# 修改主机名并重启网络服务",
+      "hostnamectl set-hostname spark100",
+      "systemctl restart network"
+    ]
+  },
+  "network_connectivity": {
+    "caption": "网络连通性测试核心命令",
+    "lines": [
+      "# 测试虚拟机到外网的连通性",
+      "ping -c 4 www.baidu.com",
+      "",
+      "# 测试虚拟机与宿主机网关的连通性",
+      "ping -c 4 192.168.10.1",
+      "",
+      "# 查看当前网卡地址，确认静态IP生效",
+      "ip addr show ens33 | grep inet",
+      "",
+      "# 测试Spark Web端口是否处于监听状态",
+      "ss -lntp | grep 8080 || echo \"Spark UI not started\""
+    ]
+  },
+  "spark_startup": {
+    "caption": "Spark环境启动核心代码",
+    "lines": [
+      "from pyspark.sql import SparkSession",
+      "",
+      "# 创建本地SparkSession，统一后续清洗与统计入口",
+      "spark = (SparkSession.builder",
+      "    .appName(\"douban_movie_analysis\")",
+      "    .master(\"local[*]\")",
+      "    .config(\"spark.sql.shuffle.partitions\", \"4\")",
+      "    .getOrCreate())",
+      "",
+      "# 验证Spark SQL是否可正常执行",
+      "spark.sql(\"SELECT 1 AS ok\").show()",
+      "print(\"Spark version:\", spark.version)"
+    ]
+  },
+  "data_cleaning": {
+    "caption": "数据读取与清洗核心代码",
+    "lines": [
+      "from pyspark.sql import functions as F",
+      "",
+      "# 读取豆瓣影视数据并统一字段类型",
+      "raw_df = spark.read.option(\"header\", True).csv(input_path)",
+      "clean_df = (raw_df",
+      "    .dropDuplicates([\"title\"])",
+      "    .dropna(subset=[\"title\", \"rating\", \"genres\"])",
+      "    .withColumn(\"rating\", F.col(\"rating\").cast(\"double\"))",
+      "    .withColumn(\"rating_count\", F.col(\"rating_count\").cast(\"int\"))",
+      "    .withColumn(\"year\", F.regexp_extract(\"release_date\", r\"(\\d{4})\", 1).cast(\"int\"))",
+      "    .filter((F.col(\"rating\") >= 0) & (F.col(\"rating\") <= 10))",
+      "    .filter(F.col(\"year\").isNotNull()))",
+      "",
+      "# 注册临时视图，供后续专题统计复用",
+      "clean_df.createOrReplaceTempView(\"douban_movies_clean\")"
+    ]
+  },
+  "feature_engineering": {
+    "caption": "特征工程核心代码",
+    "lines": [
+      "import jieba",
+      "from sklearn.compose import ColumnTransformer",
+      "from sklearn.feature_extraction.text import TfidfVectorizer",
+      "from sklearn.preprocessing import MinMaxScaler",
+      "",
+      "def cut_words(text):",
+      "    # 剧情简介先分词，再交给TF-IDF抽取文本特征",
+      "    return \" \".join(jieba.lcut(str(text)))",
+      "",
+      "movie_df[\"summary_words\"] = movie_df[\"summary\"].apply(cut_words)",
+      "feature_builder = ColumnTransformer([",
+      "    (\"text\", TfidfVectorizer(max_features=5000), \"summary_words\"),",
+      "    (\"num\", MinMaxScaler(), [\"rating\", \"rating_count\", \"year\", \"duration\"]),",
+      "])",
+      "feature_matrix = feature_builder.fit_transform(movie_df)"
+    ]
+  },
+  "flask_startup": {
+    "caption": "Flask服务运行核心代码",
+    "lines": [
+      "from flask import Flask",
+      "from flask_sqlalchemy import SQLAlchemy",
+      "",
+      "db = SQLAlchemy()",
+      "",
+      "def create_app():",
+      "    # 初始化应用、数据库和功能蓝图",
+      "    app = Flask(__name__)",
+      "    app.config[\"SQLALCHEMY_DATABASE_URI\"] = \"sqlite:///douban.db\"",
+      "    app.config[\"SECRET_KEY\"] = \"douban-analysis\"",
+      "    db.init_app(app)",
+      "    app.register_blueprint(page_bp)",
+      "    app.register_blueprint(api_bp, url_prefix=\"/api\")",
+      "    with app.app_context():",
+      "        db.create_all()",
+      "        movie_service.load_data(\"data/douban_movies.xlsx\")",
+      "    return app"
+    ]
+  },
+  "dashboard_api": {
+    "caption": "数据概览核心代码",
+    "lines": [
+      "@api_bp.route(\"/dashboard/summary\")",
+      "def dashboard_summary():",
+      "    # 汇总首页统计卡片所需指标",
+      "    df = movie_service.movies",
+      "    genre_count = df[\"genres\"].str.split(\"/\").explode().nunique()",
+      "    result = {",
+      "        \"movie_total\": int(len(df)),",
+      "        \"avg_rating\": round(float(df[\"rating\"].mean()), 2),",
+      "        \"rating_count\": int(df[\"rating_count\"].sum()),",
+      "        \"genre_count\": int(genre_count),",
+      "        \"year_range\": [int(df[\"year\"].min()), int(df[\"year\"].max())]",
+      "    }",
+      "    return jsonify(result)"
+    ]
+  },
+  "base_api": {
+    "caption": "影视浏览核心代码",
+    "lines": [
+      "@api_bp.route(\"/movies\")",
+      "def movies():",
+      "    # 接收关键词、类型和分页参数",
+      "    keyword = request.args.get(\"keyword\", \"\").strip()",
+      "    genre = request.args.get(\"genre\", \"\").strip()",
+      "    page = max(int(request.args.get(\"page\", 1)), 1)",
+      "    page_size = 12",
+      "",
+      "    query_df = movie_service.filter_movies(keyword=keyword, genre=genre)",
+      "    total = len(query_df)",
+      "    start = (page - 1) * page_size",
+      "    records = query_df.iloc[start:start + page_size].to_dict(\"records\")",
+      "",
+      "    return jsonify({\"total\": total, \"page\": page, \"items\": records})"
+    ]
+  },
+  "rating_analysis": {
+    "caption": "评分分析核心代码",
+    "lines": [
+      "@api_bp.route(\"/analysis/rating\")",
+      "def rating_analysis():",
+      "    df = movie_service.movies.copy()",
+      "    # 按评分区间统计影片数量和评分人数",
+      "    df[\"rating_bin\"] = pd.cut(df[\"rating\"], bins=[0, 6, 7, 8, 9, 10])",
+      "    distribution = (df.groupby(\"rating_bin\", observed=True)",
+      "        .agg(movie_count=(\"title\", \"count\"),",
+      "             avg_votes=(\"rating_count\", \"mean\"))",
+      "        .reset_index())",
+      "    distribution[\"rating_bin\"] = distribution[\"rating_bin\"].astype(str)",
+      "    return jsonify(distribution.to_dict(\"records\"))"
+    ]
+  },
+  "topic_analysis": {
+    "caption": "类型分析核心代码",
+    "lines": [
+      "@api_bp.route(\"/analysis/genres\")",
+      "def genre_analysis():",
+      "    df = movie_service.movies.copy()",
+      "    # 多类型字段拆分后再进行分组统计",
+      "    genre_df = df.assign(genre=df[\"genres\"].str.split(\"/\")).explode(\"genre\")",
+      "    stat = (genre_df.groupby(\"genre\")",
+      "        .agg(movie_count=(\"title\", \"count\"),",
+      "             avg_rating=(\"rating\", \"mean\"))",
+      "        .reset_index()",
+      "        .sort_values(\"movie_count\", ascending=False))",
+      "    stat[\"avg_rating\"] = stat[\"avg_rating\"].round(2)",
+      "    return jsonify(stat.head(20).to_dict(\"records\"))"
+    ]
+  },
+  "director_analysis": {
+    "caption": "导演分析核心代码",
+    "lines": [
+      "@api_bp.route(\"/analysis/directors\")",
+      "def director_analysis():",
+      "    df = movie_service.movies.dropna(subset=[\"director\"]).copy()",
+      "    # 导演字段可能包含多个姓名，需拆分后统计代表作品",
+      "    director_df = df.assign(director=df[\"director\"].str.split(\"/|,|、\")).explode(\"director\")",
+      "    director_df[\"director\"] = director_df[\"director\"].str.strip()",
+      "    stat = (director_df.groupby(\"director\")",
+      "        .agg(movie_count=(\"title\", \"count\"),",
+      "             avg_rating=(\"rating\", \"mean\"),",
+      "             sample_movie=(\"title\", \"first\"))",
+      "        .query(\"movie_count >= 2\")",
+      "        .sort_values(\"movie_count\", ascending=False))",
+      "    return jsonify(stat.head(20).reset_index().to_dict(\"records\"))"
+    ]
+  },
+  "region_analysis": {
+    "caption": "地区分析核心代码",
+    "lines": [
+      "@api_bp.route(\"/analysis/regions\")",
+      "def region_analysis():",
+      "    df = movie_service.movies.dropna(subset=[\"region\"]).copy()",
+      "    # 将制片国家或地区拆分为可统计维度",
+      "    region_df = df.assign(region=df[\"region\"].str.split(\"/|,|、\")).explode(\"region\")",
+      "    region_df[\"region\"] = region_df[\"region\"].str.strip()",
+      "    stat = (region_df.groupby(\"region\")",
+      "        .agg(movie_count=(\"title\", \"count\"),",
+      "             avg_rating=(\"rating\", \"mean\"))",
+      "        .reset_index()",
+      "        .sort_values(\"movie_count\", ascending=False))",
+      "    return jsonify(stat.head(15).to_dict(\"records\"))"
+    ]
+  },
+  "year_trends": {
+    "caption": "年份趋势核心代码",
+    "lines": [
+      "@api_bp.route(\"/analysis/year-trends\")",
+      "def year_trends():",
+      "    df = movie_service.movies.dropna(subset=[\"year\"]).copy()",
+      "    # 过滤异常年份后统计年度数量和平均评分",
+      "    df = df[(df[\"year\"] >= 1950) & (df[\"year\"] <= datetime.now().year)]",
+      "    trend = (df.groupby(\"year\")",
+      "        .agg(movie_count=(\"title\", \"count\"),",
+      "             avg_rating=(\"rating\", \"mean\"))",
+      "        .reset_index()",
+      "        .sort_values(\"year\"))",
+      "    trend[\"avg_rating\"] = trend[\"avg_rating\"].round(2)",
+      "    return jsonify(trend.to_dict(\"records\"))"
+    ]
+  },
+  "sentiment_analysis": {
+    "caption": "情感分析核心代码",
+    "lines": [
+      "from snownlp import SnowNLP",
+      "",
+      "@api_bp.route(\"/analysis/sentiment\", methods=[\"POST\"])",
+      "def sentiment_analysis():",
+      "    text = request.json.get(\"text\", \"\").strip()",
+      "    if not text:",
+      "        return jsonify({\"error\": \"评论内容不能为空\"}), 400",
+      "",
+      "    # SnowNLP返回0到1之间的情感得分",
+      "    score = float(SnowNLP(text).sentiments)",
+      "    label = \"正向\" if score >= 0.6 else \"负向\" if score < 0.4 else \"中性\"",
+      "    return jsonify({\"score\": round(score, 4), \"label\": label})"
+    ]
+  },
+  "wordcloud_analysis": {
+    "caption": "词云分析核心代码",
+    "lines": [
+      "def build_wordcloud_terms(text_series, stopwords):",
+      "    # 合并评论或简介文本并进行分词",
+      "    counter = Counter()",
+      "    for text in text_series.dropna():",
+      "        for word in jieba.lcut(str(text)):",
+      "            word = word.strip()",
+      "            if len(word) < 2 or word in stopwords:",
+      "                continue",
+      "            counter[word] += 1",
+      "",
+      "    # 返回前端词云组件需要的name/value结构",
+      "    return [",
+      "        {\"name\": word, \"value\": count}",
+      "        for word, count in counter.most_common(120)",
+      "    ]"
+    ]
+  },
+  "model_compare": {
+    "caption": "模型对比核心代码",
+    "lines": [
+      "models = {",
+      "    \"朴素贝叶斯\": MultinomialNB(),",
+      "    \"决策树\": DecisionTreeClassifier(max_depth=20),",
+      "    \"线性支持向量机\": LinearSVC(C=1.0)",
+      "}",
+      "",
+      "results = []",
+      "for name, model in models.items():",
+      "    # 统一训练集和测试集，保证模型指标可比",
+      "    pipe = Pipeline([(\"tfidf\", TfidfVectorizer(max_features=5000)),",
+      "                     (\"clf\", model)])",
+      "    pipe.fit(x_train, y_train)",
+      "    pred = pipe.predict(x_test)",
+      "    results.append({\"model\": name,",
+      "                    \"accuracy\": accuracy_score(y_test, pred),",
+      "                    \"f1\": f1_score(y_test, pred, average=\"weighted\")})"
+    ]
+  },
+  "prediction_service": {
+    "caption": "类型预测核心代码",
+    "lines": [
+      "@api_bp.route(\"/predict/genre\", methods=[\"POST\"])",
+      "def predict_genre():",
+      "    description = request.json.get(\"description\", \"\").strip()",
+      "    if len(description) < 10:",
+      "        return jsonify({\"error\": \"剧情简介过短\"}), 400",
+      "",
+      "    # 使用训练好的向量器和SVM模型输出类型",
+      "    words = \" \".join(jieba.lcut(description))",
+      "    vec = tfidf_vectorizer.transform([words])",
+      "    label = svm_model.predict(vec)[0]",
+      "    score = float(svm_model.decision_function(vec).max())",
+      "    return jsonify({\"genre\": label, \"confidence\": round(score, 4)})"
+    ]
+  },
+  "recommendation_service": {
+    "caption": "影视推荐核心代码",
+    "lines": [
+      "@api_bp.route(\"/recommend/<int:movie_id>\")",
+      "def recommend_movies(movie_id):",
+      "    # 取当前影片向量，与候选影片计算余弦相似度",
+      "    if movie_id not in movie_index:",
+      "        return jsonify({\"error\": \"影片不存在\"}), 404",
+      "",
+      "    row_idx = movie_index[movie_id]",
+      "    similarity = cosine_similarity(movie_matrix[row_idx], movie_matrix).ravel()",
+      "    top_idx = similarity.argsort()[::-1][1:6]",
+      "    rec_df = movie_df.iloc[top_idx][[\"title\", \"rating\", \"genres\", \"year\"]].copy()",
+      "    rec_df[\"similarity\"] = similarity[top_idx].round(4)",
+      "    return jsonify(rec_df.to_dict(\"records\"))"
+    ]
+  }
+}

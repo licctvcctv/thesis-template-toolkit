@@ -1,0 +1,18 @@
+码头结构设计规范[1JTS 167—2018)
+
+格形钢板桩结构中相邻主格仓之间用短圆弧连接的格仓，
+2.0.32 活动引桥”Movable  Bridge Approach
+
+和斜坡码头`浮码头中浮式结构与岸或固定引桥之间的可适应水位升降的连接桥，
+2.0.33 ”实体斜坡道”Paving Sloping Approach
+
+和斜坡码头中利用岸坡修筑的供缆车 .流动机械和行人上下的实体通道。
+2.0.34 架空斜坡道”Suspended Sloping Approach
+
+和斜坡码头中采用架空斜坡结构供缆车 ,流动机械和行人上下的通道，
+2.0.35 FHKE Risor
+
+浮码头中支承活动引桥并使其随水位涨落而升降的结构，
+2.0.36 不船系留设施   Mooring Facility for Pontoon
+
+FAP A ae Fe NB il EAS AY ei, SEB ak PE ASC AE AS

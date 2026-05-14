@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.heath.community.mapper.PatientVitalSignsMapper">
+
+    <resultMap id="PatientVitalSignsDTOResultMap" type="com.heath.community.dto.PatientVitalSignsDTO">
+        <id column="id" property="id"/>
+        <result column="patient_id" property="patientId"/>
+        <result column="patient_name" property="patientName"/>
+        <result column="record_date" property="recordDate"/>
+        <result column="blood_pressure_systolic" property="bloodPressureSystolic"/>
+        <result column="blood_pressure_diastolic" property="bloodPressureDiastolic"/>
+        <result column="blood_sugar" property="bloodSugar"/>
+        <result column="blood_sugar_type" property="bloodSugarType"/>
+        <result column="remarks" property="remarks"/>
+    </resultMap>
+
+    <select id="findPage" resultMap="PatientVitalSignsDTOResultMap">
+        SELECT pvs.id, pvs.patient_id, p.name AS patient_name, pvs.record_date,
+               pvs.blood_pressure_systolic, pvs.blood_pressure_diastolic,
+               CONCAT(pvs.blood_pressure_systolic, '/', pvs.blood_pressure_diastolic) AS blood_pressure,
+               pvs.blood_sugar, pvs.blood_sugar_type,
+               CASE pvs.blood_sugar_type
+                   WHEN 'fasting' THEN '空腹'
+                   WHEN 'postprandial' THEN '餐后'
+                   WHEN 'random' THEN '随机'
+                   ELSE pvs.blood_sugar_type
+               END AS blood_sugar_type_name,
+               pvs.remarks
+        FROM patient_vital_signs pvs
+        LEFT JOIN patient p ON pvs.patient_id = p.id
+        <where>
+            <if test="patientId != null">
+                AND pvs.patient_id = #{patientId}
+            </if>
+            <if test="startDate != null">
+                AND pvs.record_date >= #{startDate}
+            </if>
+            <if test="endDate != null">
+                AND pvs.record_date &lt;= #{endDate}
+            </if>
+        </where>
+        ORDER BY pvs.record_date DESC
+        LIMIT #{offset}, #{limit}
+    </select>
+
+    <select id="count" resultType="Long">
+        SELECT COUNT(*)
+        FROM patient_vital_signs pvs
+        <where>
+            <if test="patientId != null">
+                AND pvs.patient_id = #{patientId}
+            </if>
+            <if test="startDate != null">
+                AND pvs.record_date >= #{startDate}
+            </if>
+            <if test="endDate != null">
+                AND pvs.record_date &lt;= #{endDate}
+            </if>
+        </where>
+    </select>
+
+    <select id="findById" resultMap="PatientVitalSignsDTOResultMap">
+        SELECT pvs.id, pvs.patient_id, p.name AS patient_name, pvs.record_date,
+               pvs.blood_pressure_systolic, pvs.blood_pressure_diastolic,
+               CONCAT(pvs.blood_pressure_systolic, '/', pvs.blood_pressure_diastolic) AS blood_pressure,
+               pvs.blood_sugar, pvs.blood_sugar_type,
+               CASE pvs.blood_sugar_type
+                   WHEN 'fasting' THEN '空腹'
+                   WHEN 'postprandial' THEN '餐后'
+                   WHEN 'random' THEN '随机'
+                   ELSE pvs.blood_sugar_type
+               END AS blood_sugar_type_name,
+               pvs.remarks
+        FROM patient_vital_signs pvs
+        LEFT JOIN patient p ON pvs.patient_id = p.id
+        WHERE pvs.id = #{id}
+    </select>
+
+    <select id="findByPatientId" resultMap="PatientVitalSignsDTOResultMap">
+        SELECT pvs.id, pvs.patient_id, p.name AS patient_name, pvs.record_date,
+               pvs.blood_pressure_systolic, pvs.blood_pressure_diastolic,
+               CONCAT(pvs.blood_pressure_systolic, '/', pvs.blood_pressure_diastolic) AS blood_pressure,
+               pvs.blood_sugar, pvs.blood_sugar_type,
+               CASE pvs.blood_sugar_type
+                   WHEN 'fasting' THEN '空腹'
+                   WHEN 'postprandial' THEN '餐后'
+                   WHEN 'random' THEN '随机'
+                   ELSE pvs.blood_sugar_type
+               END AS blood_sugar_type_name,
+               pvs.remarks
+        FROM patient_vital_signs pvs
+        LEFT JOIN patient p ON pvs.patient_id = p.id
+        WHERE pvs.patient_id = #{patientId}
+        <if test="startDate != null">
+            AND pvs.record_date >= #{startDate}
+        </if>
+        <if test="endDate != null">
+            AND pvs.record_date &lt;= #{endDate}
+        </if>
+        ORDER BY pvs.record_date ASC
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO patient_vital_signs (patient_id, record_date, blood_pressure_systolic,
+                                         blood_pressure_diastolic, blood_sugar, blood_sugar_type, remarks)
+        VALUES (#{patientId}, #{recordDate}, #{bloodPressureSystolic},
+                #{bloodPressureDiastolic}, #{bloodSugar}, #{bloodSugarType}, #{remarks})
+    </insert>
+
+    <update id="update">
+        UPDATE patient_vital_signs
+        <set>
+            <if test="recordDate != null">record_date = #{recordDate},</if>
+            <if test="bloodPressureSystolic != null">blood_pressure_systolic = #{bloodPressureSystolic},</if>
+            <if test="bloodPressureDiastolic != null">blood_pressure_diastolic = #{bloodPressureDiastolic},</if>
+            <if test="bloodSugar != null">blood_sugar = #{bloodSugar},</if>
+            <if test="bloodSugarType != null">blood_sugar_type = #{bloodSugarType},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM patient_vital_signs WHERE id = #{id}
+    </delete>
+
+</mapper>

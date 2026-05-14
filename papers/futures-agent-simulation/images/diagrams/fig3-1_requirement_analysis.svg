@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+<defs><marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0,0 L12,6 L0,12 Z" fill="#315f9a"/></marker></defs>
+<rect width="1600" height="900" fill="#ffffff"/>
+<text x="800" y="70" text-anchor="middle" font-size="40" font-weight="700" font-family="Songti SC, SimSun, Noto Serif CJK SC" fill="#111827">系统需求分析图</text>
+<rect x="90" y="190" width="230" height="150" rx="10" fill="#eef6ff" stroke="#1f4e79" stroke-width="3"/>
+<text x="205" y="235" text-anchor="middle" font-size="30" font-family="Songti SC, SimSun, Noto Serif CJK SC" fill="#0f3057">论文作者</text>
+<text x="205" y="288" text-anchor="middle" font-size="22" font-family="Songti SC, SimSun, Noto Serif CJK SC" fill="#26374d">运行系统
+采集截图
+验证指</text>
+<text x="205" y="318" text-anchor="middle" font-size="22" font-family="Songti SC, SimSun, Noto Serif CJK SC" fill="#26374d">标</text>
+<rect x="90" y="500" width="230" height="150" rx="10" fill="#eef6ff" stroke="#1f4e79" stroke-width="3"/>
+<text x="205" y="545" text-anchor="middle" font-size="30" font-family="Songti SC, SimSun, Noto Serif CJK SC" fill="#0f3057">指导教师</text>
+<text x="205" y="598" text-anchor="middle" font-size="22" font-family="Songti SC, SimSun, Noto Serif CJK SC" fill="#26374d">关注历史数据
+策略筛选
+统</text>
+<text x="205" y="628" text-anchor="middle" font-size="22" font-family="Songti SC, SimSun, Noto Serif CJK SC" fill="#26374d">计结果</text>
+<rect x="1280" y="190" width="230" height="150" rx="10" fill="#eef6ff" stroke="#1f4e79" stroke-width="3"/>
+<text x="1395" y="235" text-anchor="middle" font-size="30" font-family="Songti SC, SimSun, Noto Serif CJK SC" fill="#0f3057">评阅人员</text>
+<text x="1395" y="288" text-anchor="middle" font-size="22" font-family="Songti SC, SimSun, Noto Serif CJK SC" fill="#26374d">查看结构
+检查功能
+核对测</text>
+<text x="1395" y="318" text-anchor="middle" font-size="22" font-family="Songti SC, SimSun, Noto Serif CJK SC" fill="#26374d">试</text>
+<rect x="1280" y="500" width="230" height="150" rx="10" fill="#eef6ff" stroke="#1f4e79" stroke-width="3"/>
+<text x="1395" y="545" text-anchor="middle" font-size="30" font-family="Songti SC, SimSun, Noto Serif CJK SC" fill="#0f3057">系统用户</text>
+<text x="1395" y="598" text-anchor="middle" font-size="22" font-family="Songti SC, SimSun, Noto Serif CJK SC" fill="#26374d">观察行情
+比较策略
+理解结</text>
+<text x="1395" y="628" text-anchor="middle" font-size="22" font-family="Songti SC, SimSun, Noto Serif CJK SC" fill="#26374d">果</text>
+<rect x="480" y="165" width="640" height="520" rx="16" fill="#f8fafc" stroke="#334155" stroke-width="3"/>
+<text x="800" y="230" text-anchor="middle" font-size="34" font-family="Songti SC, SimSun, Noto Serif CJK SC" fill="#111827">期货交易模拟系统需求</text>
+<rect x="540" y="300" width="220" height="120" rx="10" fill="#f2fbf3" stroke="#1f4e79" stroke-width="3"/>
+<text x="650" y="345" text-anchor="middle" font-size="30" font-family="Songti SC, SimSun, Noto Serif CJK SC" fill="#0f3057">行情数据</text>
+<text x="650" y="398" text-anchor="middle" font-size="22" font-family="Songti SC, SimSun, Noto Serif CJK SC" fill="#26374d">黄金
+原油
+大豆</text>
+<rect x="840" y="300" width="220" height="120" rx="10" fill="#f2fbf3" stroke="#1f4e79" stroke-width="3"/>
+<text x="950" y="345" text-anchor="middle" font-size="30" font-family="Songti SC, SimSun, Noto Serif CJK SC" fill="#0f3057">智能体策略</text>
+<text x="950" y="398" text-anchor="middle" font-size="22" font-family="Songti SC, SimSun, Noto Serif CJK SC" fill="#26374d">保守型
+均衡型
+激进型
+记</text>
+<text x="950" y="428" text-anchor="middle" font-size="22" font-family="Songti SC, SimSun, Noto Serif CJK SC" fill="#26374d">忆审计型</text>
+<rect x="540" y="500" width="220" height="120" rx="10" fill="#fff7e8" stroke="#1f4e79" stroke-width="3"/>
+<text x="650" y="545" text-anchor="middle" font-size="30" font-family="Songti SC, SimSun, Noto Serif CJK SC" fill="#0f3057">运行展示</text>
+<text x="650" y="598" text-anchor="middle" font-size="22" font-family="Songti SC, SimSun, Noto Serif CJK SC" fill="#26374d">地图
+事件日志
+状态面板</text>
+<rect x="840" y="500" width="220" height="120" rx="10" fill="#fff7e8" stroke="#1f4e79" stroke-width="3"/>
+<text x="950" y="545" text-anchor="middle" font-size="30" font-family="Songti SC, SimSun, Noto Serif CJK SC" fill="#0f3057">评价统计</text>
+<text x="950" y="598" text-anchor="middle" font-size="22" font-family="Songti SC, SimSun, Noto Serif CJK SC" fill="#26374d">训练得分
+测试得分
+胜率回</text>
+<text x="950" y="628" text-anchor="middle" font-size="22" font-family="Songti SC, SimSun, Noto Serif CJK SC" fill="#26374d">撤</text>
+<line x1="320" y1="265" x2="480" y2="330" stroke="#315f9a" stroke-width="4" marker-end="url(#arrow)"/>
+<line x1="320" y1="575" x2="480" y2="560" stroke="#315f9a" stroke-width="4" marker-end="url(#arrow)"/>
+<line x1="1280" y1="265" x2="1120" y2="330" stroke="#315f9a" stroke-width="4" marker-end="url(#arrow)"/>
+<line x1="1280" y1="575" x2="1120" y2="560" stroke="#315f9a" stroke-width="4" marker-end="url(#arrow)"/>
+</svg>

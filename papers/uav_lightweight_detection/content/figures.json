@@ -1,0 +1,173 @@
+{
+  "figures": {
+    "detection_timeline": {
+      "image": "images/imagegen/diagram_detection_timeline_zh.png",
+      "caption": "图1.1 目标检测算法发展历程",
+      "width_in": 6.0,
+      "source": "imagegen"
+    },
+    "ann_model": {
+      "image": "images/imagegen/diagram_ann_model_zh.png",
+      "caption": "图2.1 人工神经网络模型",
+      "width_in": 5.8,
+      "source": "imagegen"
+    },
+    "yolov8_flow": {
+      "image": "images/imagegen/diagram_yolov8_flow_zh.png",
+      "caption": "图2.2 YOLOv8算法流程图",
+      "width_in": 6.1,
+      "source": "imagegen"
+    },
+    "improved_architecture": {
+      "image": "images/imagegen/diagram_yolov8s_improved_architecture_zh.png",
+      "caption": "图3.1 改进YOLOv8s-Improved算法网络结构图",
+      "width_in": 6.1,
+      "source": "imagegen"
+    },
+    "c2f_ghost": {
+      "image": "images/imagegen/diagram_c2f_ghost_module_zh.png",
+      "caption": "图3.2 轻量化特征提取模块结构图",
+      "width_in": 6.1,
+      "source": "imagegen"
+    },
+    "cbam_wiou": {
+      "image": "images/imagegen/diagram_cbam_wiou_zh.png",
+      "caption": "图3.3 注意力机制与损失函数优化示意图",
+      "width_in": 6.1,
+      "source": "imagegen"
+    },
+    "dataset_samples": {
+      "image": "images/source_results/uav_scene_samples.jpg",
+      "caption": "图4.1 VisDrone无人机航拍样本图",
+      "width_in": 5.8,
+      "source": "project_result"
+    },
+    "preprocess_samples": {
+      "image": "images/source_results/improved_prediction_samples_detect.jpg",
+      "caption": "图4.2 数据预处理与检测样例",
+      "width_in": 5.8,
+      "source": "project_result"
+    },
+    "best_metrics": {
+      "image": "generated:best_metrics",
+      "caption": "图4.3 各模型最佳Epoch性能指标对比",
+      "width_in": 5.9,
+      "source": "generated_chart"
+    },
+    "module_delta": {
+      "image": "generated:module_delta",
+      "caption": "图4.4 三类改进模块关键指标变化图",
+      "width_in": 6.2,
+      "source": "generated_chart"
+    },
+    "class_ap": {
+      "image": "generated:class_ap",
+      "caption": "图4.5 各类别AP50对比图",
+      "width_in": 6.0,
+      "source": "generated_chart"
+    },
+    "small_object_ap": {
+      "image": "generated:small_object_ap",
+      "caption": "图4.6 小目标类别AP50对比图",
+      "width_in": 6.1,
+      "source": "generated_chart"
+    },
+    "loss_curves": {
+      "image": "generated:loss_curves",
+      "caption": "图4.7 四类模型损失曲线图",
+      "width_in": 6.2,
+      "source": "generated_chart"
+    },
+    "final_loss": {
+      "image": "generated:final_loss",
+      "caption": "图4.8 四类模型末轮验证损失对比图",
+      "width_in": 5.9,
+      "source": "generated_chart"
+    },
+    "map_curves": {
+      "image": "generated:map_curves",
+      "caption": "图4.9 四类模型mAP曲线图",
+      "width_in": 6.1,
+      "source": "generated_chart"
+    },
+    "fps_chart": {
+      "image": "generated:fps_chart",
+      "caption": "图4.10 各模型推理速度对比图",
+      "width_in": 5.6,
+      "source": "generated_chart"
+    },
+    "test_metrics": {
+      "image": "generated:test_metrics",
+      "caption": "图4.11 测试集综合评价图",
+      "width_in": 6.2,
+      "source": "generated_chart"
+    }
+  },
+  "generated_charts": {
+    "best_metrics": {
+      "type": "metrics_bar",
+      "path": "images/source_results/model_best_metrics_corrected.png",
+      "title": "各模型最佳Epoch性能指标对比"
+    },
+    "module_delta": {
+      "type": "module_delta_chart",
+      "path": "images/source_results/module_delta_comparison_zh.png",
+      "title": "三类改进模块关键指标变化对比"
+    },
+    "class_ap": {
+      "type": "class_ap_bar",
+      "path": "images/source_results/class_ap50_comparison_zh.png",
+      "title": "基准模型与完整模型各类别AP50对比",
+      "evaluation_csv": "/Users/a136/vs/45425/thesis_project/experiments/uav_lightweight_detection/source_zip/yolo__v82 - 副本 (2)/results/evaluation_results.csv"
+    },
+    "small_object_ap": {
+      "type": "small_object_ap_bar",
+      "path": "images/source_results/small_object_ap50_comparison_zh.png",
+      "title": "小目标类别AP50对比",
+      "evaluation_csv": "/Users/a136/vs/45425/thesis_project/experiments/uav_lightweight_detection/source_zip/yolo__v82 - 副本 (2)/results/evaluation_results.csv"
+    },
+    "loss_curves": {
+      "type": "training_loss_curves",
+      "path": "images/source_results/loss_curves_comparison_zh.png",
+      "title": "四类模型损失曲线对比"
+    },
+    "final_loss": {
+      "type": "final_loss_bar",
+      "path": "images/source_results/final_loss_summary_zh.png",
+      "title": "四类模型末轮验证损失对比"
+    },
+    "map_curves": {
+      "type": "map_curves",
+      "path": "images/source_results/map_curves_comparison_zh.png",
+      "title": "四类模型mAP曲线对比"
+    },
+    "fps_chart": {
+      "type": "fps_bar",
+      "path": "images/source_results/fps_comparison_zh.png",
+      "title": "各模型推理速度对比"
+    },
+    "test_metrics": {
+      "type": "test_metrics_chart",
+      "path": "images/source_results/test_metrics_summary_zh.png",
+      "title": "测试集精度、复杂度与速度综合评价"
+    }
+  },
+  "training_logs": [
+    {
+      "label": "YOLOv8s基准",
+      "path": "/Users/a136/vs/45425/thesis_project/experiments/uav_lightweight_detection/source_zip/yolo__v82 - 副本 (2)/yolo__v8/runs/resultdata/results1.csv"
+    },
+    {
+      "label": "Ghost轻量化",
+      "path": "/Users/a136/vs/45425/thesis_project/experiments/uav_lightweight_detection/source_zip/yolo__v82 - 副本 (2)/yolo__v8/runs/resultdata/results2.csv"
+    },
+    {
+      "label": "Ghost+CBAM",
+      "path": "/Users/a136/vs/45425/thesis_project/experiments/uav_lightweight_detection/source_zip/yolo__v82 - 副本 (2)/yolo__v8/runs/resultdata/results3.csv"
+    },
+    {
+      "label": "完整模型",
+      "path": "/Users/a136/vs/45425/thesis_project/experiments/uav_lightweight_detection/source_zip/yolo__v82 - 副本 (2)/yolo__v8/runs/resultdata/results4.csv"
+    }
+  ]
+}

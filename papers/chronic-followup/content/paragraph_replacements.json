@@ -1,0 +1,102 @@
+[
+  {
+    "anchor": "在“互联网+医疗健康”和大数据技术快速发展的背景下，社区卫生服务中心在慢性病管理与随访方面面临信息分散、数据利用率低、协同效率不足等问题。传统依赖纸质或简单表格的管理方式，难以支撑医生管理、患者管理、药品管理、诊疗记录及随访任务等环节的规范化处理，也难以对慢性病患者的随访执行情况、风险等级变化和医生工作量进行持续统计分析。因此，建设面向社区卫生服务中心的慢性病随访信息管理系统，具有一定的现实意义。",
+    "replacement": "在社区卫生服务中心日常工作中，慢性病患者数量多、随访周期长，传统纸质登记和分散表格容易造成信息更新不及时、任务交接不清和统计口径不统一。围绕这一问题，本文设计并实现了社区卫生服务中心慢性病随访系统，系统采用B/S结构，以信息管理系统方式整合医生管理、患者管理、诊疗记录、随访任务、随访记录和数据统计分析等业务，使慢性病随访从建档、分配、执行到统计形成连续流程。"
+  },
+  {
+    "anchor": "本文围绕社区卫生服务中心慢性病随访工作的实际需求，设计并实现了一个基于B/S结构的慢性病随访管理系统。系统面向管理员，实现医生管理、患者管理、药品管理、诊疗记录录入、随访任务分配及数据统计等功能；面向社区医生，实现被分配患者的查看与管理、随访任务处理、随访记录填写与查询、报告生成等功能。系统后端采用SpringBoot框架完成业务接口和数据处理，前端采用Vue框架构建浏览器端交互界面，数据库采用MySQL进行数据存储。测试结果表明，系统能够完成社区慢性病随访管理的主要业务流程，具有一定的实用价值。",
+    "replacement": "系统后端基于Spring Boot和MyBatis实现接口服务与数据持久化，前端基于Vue和Element Plus实现管理页面，数据库采用MySQL存储用户、医生、患者、诊疗记录、随访任务、随访记录和风险评估等数据。通过功能测试和典型业务流程验证，系统能够完成慢性病患者信息维护、随访任务分配、随访记录填写、风险等级管理和统计分析等功能，为社区卫生服务中心开展慢性病随访提供了较为规范的信息化支撑。"
+  },
+  {
+    "anchor": "关键词：社区卫生服务中心；慢性病随访；B/S结构；信息管理系统；数据统计分析",
+    "replacement": "关键词：社区卫生服务中心；慢性病随访；B/S结构；信息管理系统；数据统计分析"
+  },
+  {
+    "anchor": "Under the background of \"Internet plus+health care\" and rapid development of big data technology, community health service centers face problems such as scattered information, low data utilization rate, and insufficient collaborative efficiency in chronic disease management and follow-up. Traditional management methods that rely on paper records or simple spreadsheets are difficult to support standardized processing of doctor management, patient management, medicine management, medical records, and follow-up tasks. They are also unable to continuously analyze follow-up implementation, risk-level changes, and doctors' workload. Therefore, it is necessary to build a chronic disease follow-up information system for community health service centers.",
+    "replacement": "Community health service centers need to manage many chronic disease patients over long follow-up cycles. Paper records and scattered spreadsheets often lead to delayed updates, unclear task handover, and inconsistent statistics. To address these problems, this thesis designs and implements a chronic disease follow-up system for community health service centers. The system adopts a B/S structure and works as an information management system that integrates doctor management, patient management, medical records, follow-up tasks, follow-up records, risk assessment, and data statistical analysis into a continuous business process."
+  },
+  {
+    "anchor": "This article focuses on the practical needs of chronic disease follow-up work in community health service centers, and designs and implements a chronic disease follow-up management system based on B/S structure. For administrators, the system realizes doctor management, patient management, medicine management, medical record entry, follow-up task assignment, and data statistics. For community doctors, the system realizes assigned patient viewing, follow-up task processing, follow-up record filling and query, and report generation. The back end uses Spring Boot to provide business interfaces and data processing, the front end uses Vue to build browser-side interaction pages, and MySQL is used for data storage. Test results show that the system can complete the main business process of community chronic disease follow-up management and has practical application value.",
+    "replacement": "The back end is developed with Spring Boot and MyBatis, the front end is developed with Vue and Element Plus, and MySQL stores users, doctors, patients, medical records, follow-up tasks, follow-up records, and risk assessments. Functional tests and typical process tests show that the system can support patient information maintenance, follow-up task assignment, follow-up record filling, risk-level management, and statistical analysis, providing practical information support for chronic disease follow-up in community health service centers."
+  },
+  {
+    "anchor": "Keywords: Community Health Center; Follow up of chronic diseases; B/S structure; mis; Data statistical analysis",
+    "replacement": "Keywords: Community health service center; chronic disease follow-up; B/S structure; information management system; data statistical analysis"
+  },
+  {
+    "anchor": "本文主要分为六部分，如下：",
+    "replacement": "本文围绕系统分析、设计、实现与测试展开，共分为七章，具体安排如下："
+  },
+  {
+    "anchor": "（2）相关技术与理论。介绍本项研究的主要关键技术与理论，即联机分析处理和数据集市。",
+    "replacement": "（2）相关技术与理论。介绍本系统使用的Spring Boot、Vue、MySQL、前后端分离和跨域访问等关键技术。"
+  },
+  {
+    "anchor": "（4）系统设计。介绍社区卫生服务中心慢性病随访系统的功能需求分析和性能需求分析，之后介绍了系统的架构设计、系统功能模块设计和数据库设计，最后简单介绍了的开发环境。",
+    "replacement": "（4）系统设计。说明系统总体架构、功能模块、对象模型、核心业务调用过程、数据库设计和开发环境。"
+  },
+  {
+    "anchor": "（5）系统实现。阐述中医体质信息采集与分析系统实现环境，介绍功能实现。",
+    "replacement": "（5）系统实现。结合实际页面和核心业务流程，说明管理员端、社区医生端及统计模块的实现。"
+  },
+  {
+    "anchor": "（6）系统测试。介绍系统测试环境、测试计划和测试实施。",
+    "replacement": "（6）系统测试。按照测试目的、测试环境、测试设计过程、测试过程和测试结论，对系统主要功能和运行效果进行验证。"
+  },
+  {
+    "anchor": "本章主要介绍了本文的相关技术与理论基础知识，包括SpringBoot、Vue和MySQL。",
+    "replacement": "本章介绍了系统开发所使用的主要技术，包括Spring Boot、Vue、MySQL、MyBatis以及前后端分离通信方式。上述技术共同支撑了系统的页面交互、接口服务、业务处理和数据存储，为后续系统设计与实现奠定了基础。"
+  },
+  {
+    "anchor": "本章阐述了系统的需求分析，包括：功能需求分析和性能需求分析；前期系统需求分析，明确了系统的功能、性能等要求，为后期的系统设计与实现奠定了坚实基础。",
+    "replacement": "本章从管理员和社区医生两类用户出发，对系统功能需求、业务活动和性能需求进行了分析。通过功能结构图、活动图和用例图，可以明确系统需要覆盖患者建档、诊疗记录、随访任务、随访记录、风险评估和统计分析等核心业务，为后续总体设计和数据库设计提供依据。"
+  },
+  {
+    "anchor": "本系统包括三个子系统，管理员功能子系统，社区医生功能子系统，系统统计分析。系统功能模块图，如图4-1所示。",
+    "replacement": "本系统采用分层架构实现前端页面、后端接口、业务服务和数据库之间的协同。系统总体架构如图4-1所示，功能模块结构如图4-2所示。"
+  },
+  {
+    "anchor": "依据系统需求分析，本文对系统进行概念模型设计。",
+    "replacement": "依据系统需求分析，本文按照数据库课程设计中“实体识别—关系抽象—关系模型转换—物理表结构说明”的步骤进行数据库设计。"
+  },
+  {
+    "anchor": "根据上述实体，本文设计了系统概念模型E-R图，如图4-6所示。",
+    "replacement": "根据上述实体及其联系，本文选取医生、患者、诊疗记录、随访任务和随访记录等主业务对象绘制系统核心E-R图，如图4-5所示。图中采用实体矩形、关系菱形和1/N基数标注说明核心业务联系，药品、科室及各表字段信息则在后续表级实体属性图和物理表结构中进一步说明。"
+  },
+  {
+    "anchor": "如表4-6所示，该表用于保存实际执行随访时的详细记录信息，以“随访记录编号”为主键，通过“所属任务编号”“患者编号”“医生编号”等字段与随访任务表、患者信息表和医生信息表关联。表中记录随访日期、随访类型、症状描述、血压、血糖、体重、用药依从性、不良反应、生活方式指导、下次随访日期及随访结果等内容，是衡量随访执行质量和患者病情变化的重要业务表。",
+    "replacement": "如表4-7所示，该表用于保存实际执行随访时的详细记录信息，以“随访记录编号”为主键，通过“所属任务编号”“患者编号”“医生编号”等字段与随访任务表、患者信息表和医生信息表关联。表中记录随访日期、随访类型、症状描述、血压、血糖、体重、用药依从性、不良反应、生活方式指导、下次随访日期及随访结果等内容，是衡量随访执行质量和患者病情变化的重要业务表。"
+  },
+  {
+    "anchor": "（6）随访记录表",
+    "replacement": "（7）随访记录表"
+  },
+  {
+    "anchor": "表4-6 随访记录表",
+    "replacement": "表4-7 随访记录表"
+  },
+  {
+    "anchor": "本章介绍了系统采用的B/S结构，对B/S模式进行了简单的介绍；介绍了系统模块设计和数据库设计；最后，介绍了系统的开发环境 。",
+    "replacement": "本章完成了系统总体设计、功能模块设计、对象模型设计、核心业务顺序设计和数据库设计。通过类图与顺序图进一步说明了模块之间的对象关系和接口调用过程，通过E-R图和数据表说明了系统数据组织方式，为第五章的系统实现提供了直接依据。"
+  },
+  {
+    "anchor": "本章节以第三章的系统设计为基础，论述整个系统的实现。首先介绍系统的主界面的实现，随后就是对本系统的核心功能实现的详细介绍。",
+    "replacement": "本章以第四章的系统设计为基础，结合实际页面、接口调用和业务流程说明系统实现过程。重点描述管理员端的医生、患者、药品、诊疗记录和随访任务管理，以及社区医生端的患者查看、随访任务处理、随访记录填写和报告导出功能。"
+  },
+  {
+    "anchor": "本章将对社区卫生服务中心慢性病随访系统进行功能和性能测试，通过常用的测试方法来发现程序中的错误，之后解决发现的问题，提高系统质量。",
+    "replacement": "本章结合本地部署后的运行结果对系统进行测试，重点检查管理员端和社区医生端的页面操作、数据保存、状态变化和统计结果。测试内容按测试目的、测试环境、测试设计过程、测试过程和测试结论展开，并通过测试表记录预期结果和实际结果。"
+  },
+  {
+    "anchor": "表6-1 硬件环境表",
+    "replacement": "表6-1 测试环境表"
+  },
+  {
+    "anchor": "本节对本系统主要功能模块进行功能测试说明，测试方法均采用黑盒测试法。以下选取部分典型功能模块设计测试用例。",
+    "replacement": "功能测试围绕管理员端和社区医生端的常用操作展开。测试时先准备基础数据，再分别检查新增、查询、修改、状态变更、记录保存和报告生成等场景，测试表记录测试条件、处理过程、预期表现和实际结果。"
+  },
+  {
+    "anchor": "本章首先介绍了系统的测试环境，之后介绍了系统的测试计划，即采用黑盒测试法来测试功能，测试包括两方面，界面测试和功能测试。最后，详细介绍了界面测试和功能测试。",
+    "replacement": "本章完成了系统主要功能的运行测试。测试结果显示，医生、患者、药品、诊疗记录、随访任务、随访记录和统计分析等功能能够按业务流程完成操作；对于必填项缺失、状态变更等情况，页面能够给出基本反馈，数据库记录与页面显示也能保持一致。"
+  }
+]

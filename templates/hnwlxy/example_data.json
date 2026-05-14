@@ -1,0 +1,49 @@
+{
+  "title_zh": "基于SPWM的375Hz与900Hz双频高质量发射优化设计",
+  "name": "王翔",
+  "student_id": "202214010124",
+  "class_name": "自动化22101",
+  "advisor": "孙一书",
+  "finish_date": "2026年5月9日",
+  "toc_placeholder": "目录生成后在 Word 中更新",
+  "abstract_zh_list": [
+    "本文面向375Hz与900Hz双频发射应用，围绕SPWM调制、DDS信号产生、功率驱动与滤波输出等环节开展系统设计。",
+    "系统以STM32为控制核心，结合AD9833频率合成模块完成双频信号输出，并通过仿真与测试验证输出频率、波形质量和切换稳定性。"
+  ],
+  "keywords_zh": "SPWM；双频发射；STM32；AD9833；频率合成",
+  "abstract_en_list": [
+    "This thesis focuses on a dual-frequency transmission design for 375 Hz and 900 Hz applications, covering SPWM modulation, DDS signal generation, power driving and filtered output.",
+    "The system uses STM32 as the controller and AD9833 as the frequency synthesis module, and verifies frequency accuracy, waveform quality and switching stability through simulation and testing."
+  ],
+  "keywords_en": "SPWM; dual-frequency transmission; STM32; AD9833; frequency synthesis",
+  "chapters": [
+    {
+      "title": "绪论",
+      "content": [
+        "本章介绍课题研究背景、研究意义以及双频高质量发射系统的应用需求。"
+      ],
+      "sections": [
+        {
+          "title": "1.1 研究背景与意义",
+          "content": [
+            "在电气控制与信号发射场景中，稳定的低频信号源对系统测试、驱动控制与参数标定具有重要意义。"
+          ],
+          "subsections": [
+            {
+              "title": "1.1.1 双频发射需求分析",
+              "content": [
+                "375Hz与900Hz两种频率覆盖不同工作状态，系统需要在保证频率准确性的同时兼顾波形质量和切换响应。"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "references": [
+    "李传海,李峰,曲继圣,等.空间矢量脉宽调制技术特点及其优化方法[J].山东大学学报(工学版),2005(02):27-31.",
+    "Analog Devices.AD9833 Low Power Programmable Waveform Generator Datasheet[EB/OL]."
+  ],
+  "acknowledgement": "感谢指导教师在课题设计、论文写作和实验调试过程中给予的帮助。",
+  "appendix": "附录内容可在论文生成阶段按项目材料继续补充。"
+}

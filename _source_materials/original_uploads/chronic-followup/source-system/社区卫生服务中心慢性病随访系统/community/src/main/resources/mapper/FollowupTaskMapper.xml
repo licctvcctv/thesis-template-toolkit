@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.heath.community.mapper.FollowupTaskMapper">
+
+    <resultMap id="FollowupTaskDTOResultMap" type="com.heath.community.dto.FollowupTaskDTO">
+        <id column="id" property="id"/>
+        <result column="task_no" property="taskNo"/>
+        <result column="patient_id" property="patientId"/>
+        <result column="patient_name" property="patientName"/>
+        <result column="doctor_id" property="doctorId"/>
+        <result column="doctor_name" property="doctorName"/>
+        <result column="task_type" property="taskType"/>
+        <result column="task_content" property="taskContent"/>
+        <result column="plan_date" property="planDate"/>
+        <result column="actual_date" property="actualDate"/>
+        <result column="status" property="status"/>
+        <result column="status_name" property="statusName"/>
+        <result column="priority" property="priority"/>
+        <result column="priority_name" property="priorityName"/>
+        <result column="creator_id" property="creatorId"/>
+        <result column="creator_name" property="creatorName"/>
+        <result column="assign_date" property="assignDate"/>
+        <result column="remarks" property="remarks"/>
+    </resultMap>
+
+    <select id="findPage" resultMap="FollowupTaskDTOResultMap">
+        SELECT ft.id, ft.task_no, ft.patient_id, p.name AS patient_name, ft.doctor_id, u.name AS doctor_name,
+               ft.task_type, ft.task_content, ft.plan_date, ft.actual_date, ft.status, ft.priority,
+               ft.creator_id, u2.name AS creator_name, ft.assign_date, ft.remarks,
+               CASE ft.status
+                   WHEN 'pending' THEN '待办'
+                   WHEN 'in_progress' THEN '进行中'
+                   WHEN 'completed' THEN '已完成'
+                   WHEN 'cancelled' THEN '已取消'
+                   ELSE ft.status
+               END AS status_name,
+               CASE ft.priority
+                   WHEN 'low' THEN '低'
+                   WHEN 'normal' THEN '正常'
+                   WHEN 'high' THEN '高'
+                   ELSE ft.priority
+               END AS priority_name
+        FROM followup_task ft
+        LEFT JOIN patient p ON ft.patient_id = p.id
+        LEFT JOIN doctor d ON ft.doctor_id = d.id
+        LEFT JOIN user u ON d.user_id = u.id
+        LEFT JOIN user u2 ON ft.creator_id = u2.id
+        <where>
+            <if test="patientId != null">
+                AND ft.patient_id = #{patientId}
+            </if>
+            <if test="doctorId != null">
+                AND ft.doctor_id = #{doctorId}
+            </if>
+            <if test="status != null and status != ''">
+                AND ft.status = #{status}
+            </if>
+            <if test="startDate != null">
+                AND ft.plan_date >= #{startDate}
+            </if>
+            <if test="endDate != null">
+                AND ft.plan_date &lt;= #{endDate}
+            </if>
+        </where>
+        ORDER BY ft.plan_date ASC, ft.create_time DESC
+        LIMIT #{offset}, #{limit}
+    </select>
+
+    <select id="count" resultType="Long">
+        SELECT COUNT(*)
+        FROM followup_task ft
+        <where>
+            <if test="patientId != null">
+                AND ft.patient_id = #{patientId}
+            </if>
+            <if test="doctorId != null">
+                AND ft.doctor_id = #{doctorId}
+            </if>
+            <if test="status != null and status != ''">
+                AND ft.status = #{status}
+            </if>
+            <if test="startDate != null">
+                AND ft.plan_date >= #{startDate}
+            </if>
+            <if test="endDate != null">
+                AND ft.plan_date &lt;= #{endDate}
+            </if>
+        </where>
+    </select>
+
+    <select id="findById" resultMap="FollowupTaskDTOResultMap">
+        SELECT ft.id, ft.task_no, ft.patient_id, p.name AS patient_name, ft.doctor_id, u.name AS doctor_name,
+               ft.task_type, ft.task_content, ft.plan_date, ft.actual_date, ft.status, ft.priority,
+               ft.creator_id, u2.name AS creator_name, ft.assign_date, ft.remarks,
+               CASE ft.status
+                   WHEN 'pending' THEN '待办'
+                   WHEN 'in_progress' THEN '进行中'
+                   WHEN 'completed' THEN '已完成'
+                   WHEN 'cancelled' THEN '已取消'
+                   ELSE ft.status
+               END AS status_name,
+               CASE ft.priority
+                   WHEN 'low' THEN '低'
+                   WHEN 'normal' THEN '正常'
+                   WHEN 'high' THEN '高'
+                   ELSE ft.priority
+               END AS priority_name
+        FROM followup_task ft
+        LEFT JOIN patient p ON ft.patient_id = p.id
+        LEFT JOIN doctor d ON ft.doctor_id = d.id
+        LEFT JOIN user u ON d.user_id = u.id
+        LEFT JOIN user u2 ON ft.creator_id = u2.id
+        WHERE ft.id = #{id}
+    </select>
+
+    <select id="findByTaskNo" resultType="com.heath.community.entity.FollowupTask">
+        SELECT * FROM followup_task WHERE task_no = #{taskNo}
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO followup_task (task_no, patient_id, doctor_id, task_type, task_content, plan_date,
+                                  status, priority, creator_id, assign_date, remarks)
+        VALUES (#{taskNo}, #{patientId}, #{doctorId}, #{taskType}, #{taskContent}, #{planDate},
+                #{status}, #{priority}, #{creatorId}, #{assignDate}, #{remarks})
+    </insert>
+
+    <update id="update">
+        UPDATE followup_task
+        <set>
+            <if test="patientId != null">patient_id = #{patientId},</if>
+            <if test="doctorId != null">doctor_id = #{doctorId},</if>
+            <if test="taskType != null">task_type = #{taskType},</if>
+            <if test="taskContent != null">task_content = #{taskContent},</if>
+            <if test="planDate != null">plan_date = #{planDate},</if>
+            <if test="actualDate != null">actual_date = #{actualDate},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="priority != null">priority = #{priority},</if>
+            <if test="assignDate != null">assign_date = #{assignDate},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM followup_task WHERE id = #{id}
+    </delete>
+
+    <update id="updateStatus">
+        UPDATE followup_task
+        SET status = #{status}
+        <if test="status == 'completed'">
+            , actual_date = CURDATE()
+        </if>
+        WHERE id = #{id}
+    </update>
+
+    <select id="countByStatus" resultType="Long">
+        SELECT COUNT(*) FROM followup_task WHERE status = #{status}
+    </select>
+
+    <select id="countByDoctorAndStatus" resultType="Long">
+        SELECT COUNT(*) FROM followup_task
+        WHERE doctor_id = #{doctorId} AND status = #{status}
+    </select>
+
+</mapper>

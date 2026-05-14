@@ -1,0 +1,23 @@
+{
+  "college": "计算机与软件学院",
+  "major": "软件工程",
+  "name": "马东源",
+  "student_id": "XXXXXXXXXX",
+  "advisor": "XXX",
+  "advisor_title": "讲师",
+  "reviewer": "可以在毕业设计系统内查看到",
+  "year": "2026",
+  "month": "05",
+  "major_en": "Software Engineering",
+  "name_en": "Ma Dongyuan",
+  "title_zh": "基于Spark的豆瓣影视数据分析系统的设计与实现",
+  "title_en": "Design and Implementation of a Douban Movie and TV Data Analysis System Based on Spark",
+  "page_count": "49",
+  "table_count": "9",
+  "figure_count": "30",
+  "abstract_zh": "随着豆瓣影视数据规模的持续增长，用户对影视作品的评分、评论、题材分布以及导演与地区特征等信息的分析需求不断提升。为了实现对豆瓣影视数据的统一采集、清洗、统计分析、情感判断、类型预测与相似推荐，系统设计并实现了一套基于Spark的豆瓣影视数据分析系统。系统以Spark分布式计算框架为数据处理核心，结合DataFrame与Spark SQL完成批量清洗、统计汇总和特征构建，再通过Python数据分析技术、Flask Web框架以及ECharts可视化组件构建从数据处理到结果展示的一体化流程。在功能实现上，系统提供了数据概览、影视浏览、评分分析、类型分析、导演分析、地区分析、年份趋势、情感分析、词云展示、类型预测和影视推荐等模块，能够较为完整地反映豆瓣影视数据的统计特征与内容特征。系统为影视数据的教学演示、推荐分析和可视化展示提供了一个可落地的参考系统，也为后续扩展到更大规模的Spark集群分析奠定了基础。",
+  "keywords_zh": "Spark；豆瓣影视；数据分析；影视数据分析；可视化",
+  "abstract_en": "With the continuous growth of Douban movie and TV data, the demand for unified analysis on ratings, reviews, genre distribution, director features and regional characteristics is increasing. This study presents a Douban movie and TV data analysis system based on Spark. The system uses Spark as the core data processing engine and combines DataFrame and Spark SQL for batch cleaning, aggregation and feature construction. It integrates data acquisition, cleaning, statistical analysis, sentiment analysis, genre prediction and similarity recommendation into a single workflow. The workflow further combines Python data analytics, the Flask web framework and ECharts for interactive visualization. The implemented system provides modules for data overview, movie browsing, rating analysis, genre analysis, director analysis, regional analysis, yearly trends, sentiment analysis, word clouds, genre prediction and movie recommendation. The system offers a practical reference for teaching demonstration, recommendation analysis and visual analytics, and can be extended to larger Spark clusters in future work.",
+  "keywords_en": "Spark; Douban movies; data analysis; movie data analysis; visualization",
+  "acknowledgement": "本系统开发、实现与文档整理过程中得到了多方面的帮助和支持。感谢指导老师在选题、结构设计和系统修改过程中给予的指导，使系统设计思路和论文表达方式不断完善；感谢同学与朋友在项目调研、数据整理和功能测试阶段提供的建议，使系统实现中的关键问题更加清晰；感谢家人一直以来的理解、鼓励和支持，为本次系统设计的顺利完成提供了重要保障。"
+}

@@ -1,0 +1,21 @@
+{
+  "paper_id": "chronic-followup",
+  "title_zh": "社区卫生服务中心慢性病随访系统设计与实现",
+  "title_en": "Design and Implementation of Chronic Disease Follow-up System in Community Health Service Center",
+  "student_name": "皮怡欣",
+  "student_id": "2022250017",
+  "major": "医学信息工程",
+  "advisor": "孙尧",
+  "output_docx": "社区卫生服务中心慢性病随访系统设计与实现_论文修改稿.docx",
+  "template": "../../templates/chronic-followup/template.docx",
+  "source_docx": "../../_source_materials/original_uploads/chronic-followup/source.docx",
+  "diagram_style_reference": "../study-buddy/images",
+  "revision_focus": [
+    "摘要精简并保证关键词出现在摘要中",
+    "补充用例图、类图、顺序图、流程图和E-R图",
+    "E-R图主键字段以下划线标识",
+    "数据库设计按课程设计式字段说明和关系说明重写",
+    "测试环境表格化，功能测试表述更贴近系统实际",
+    "替换空泛表述和旧项目残留内容"
+  ]
+}

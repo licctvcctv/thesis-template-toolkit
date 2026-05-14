@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.heath.community.mapper.DoctorAssignmentMapper">
+
+    <resultMap id="DoctorAssignmentDTOResultMap" type="com.heath.community.dto.DoctorAssignmentDTO">
+        <id column="id" property="id"/>
+        <result column="patient_id" property="patientId"/>
+        <result column="patient_name" property="patientName"/>
+        <result column="doctor_id" property="doctorId"/>
+        <result column="doctor_name" property="doctorName"/>
+        <result column="assign_date" property="assignDate"/>
+        <result column="assigner_id" property="assignerId"/>
+        <result column="assigner_name" property="assignerName"/>
+        <result column="status" property="status"/>
+        <result column="remarks" property="remarks"/>
+    </resultMap>
+
+    <resultMap id="DoctorAssignmentResultMap" type="com.heath.community.entity.DoctorAssignment">
+        <id column="id" property="id"/>
+        <result column="patient_id" property="patientId"/>
+        <result column="doctor_id" property="doctorId"/>
+        <result column="assign_date" property="assignDate"/>
+        <result column="assigner_id" property="assignerId"/>
+        <result column="status" property="status"/>
+        <result column="remarks" property="remarks"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+
+    <select id="findPage" resultMap="DoctorAssignmentDTOResultMap">
+        SELECT da.id, da.patient_id, p.name AS patient_name, da.doctor_id, u.name AS doctor_name,
+               da.assign_date, da.assigner_id, u2.name AS assigner_name, da.status, da.remarks
+        FROM doctor_assignment da
+        LEFT JOIN patient p ON da.patient_id = p.id
+        LEFT JOIN doctor d ON da.doctor_id = d.id
+        LEFT JOIN user u ON d.user_id = u.id
+        LEFT JOIN user u2 ON da.assigner_id = u2.id
+        <where>
+            <if test="patientId != null">
+                AND da.patient_id = #{patientId}
+            </if>
+            <if test="doctorId != null">
+                AND da.doctor_id = #{doctorId}
+            </if>
+        </where>
+        ORDER BY da.assign_date DESC, da.create_time DESC
+        LIMIT #{offset}, #{limit}
+    </select>
+
+    <select id="count" resultType="Long">
+        SELECT COUNT(*)
+        FROM doctor_assignment da
+        <where>
+            <if test="patientId != null">
+                AND da.patient_id = #{patientId}
+            </if>
+            <if test="doctorId != null">
+                AND da.doctor_id = #{doctorId}
+            </if>
+        </where>
+    </select>
+
+    <select id="findById" resultMap="DoctorAssignmentDTOResultMap">
+        SELECT da.id, da.patient_id, p.name AS patient_name, da.doctor_id, u.name AS doctor_name,
+               da.assign_date, da.assigner_id, u2.name AS assigner_name, da.status, da.remarks
+        FROM doctor_assignment da
+        LEFT JOIN patient p ON da.patient_id = p.id
+        LEFT JOIN doctor d ON da.doctor_id = d.id
+        LEFT JOIN user u ON d.user_id = u.id
+        LEFT JOIN user u2 ON da.assigner_id = u2.id
+        WHERE da.id = #{id}
+    </select>
+
+    <select id="findCurrentAssignment" resultMap="DoctorAssignmentResultMap">
+        SELECT * FROM doctor_assignment
+        WHERE patient_id = #{patientId} AND status = 1
+        ORDER BY assign_date DESC, create_time DESC
+        LIMIT 1
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO doctor_assignment (patient_id, doctor_id, assign_date, assigner_id, status, remarks)
+        VALUES (#{patientId}, #{doctorId}, #{assignDate}, #{assignerId}, #{status}, #{remarks})
+    </insert>
+
+    <update id="updateStatus">
+        UPDATE doctor_assignment SET status = 0 WHERE patient_id = #{patientId} AND status = 1
+    </update>
+
+</mapper>

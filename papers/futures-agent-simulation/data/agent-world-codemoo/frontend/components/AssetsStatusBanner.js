@@ -1,0 +1,191 @@
+// "Minimal mode" banner + gating for asset-dependent UI.
+//
+// Listens for the `assets-status` CustomEvent dispatched by WorldMap
+// once sprite loading finishes:
+//   { loaded: false, loadedCount: 0 }  → show banner, hide editor/assets
+//   { loaded: true,  loadedCount: N }  → hide banner, show everything
+//
+// The "Assets →" link (asset catalog browser) is hidden in minimal
+// mode because there's nothing to browse without a pack. The World
+// Editor stays accessible — it draws emoji fallback thumbnails and
+// placements render via the procedural fallback path so place/move/
+// delete works end-to-end without external sprite sheets.
+
+const VERSION = 1;
+
+const STYLES = `
+  #assets-minimal-banner {
+    position: fixed;
+    bottom: 72px;
+    right: 12px;
+    max-width: 300px;
+    padding: 10px 12px 11px;
+    background: rgba(15, 23, 42, 0.94);
+    color: #e2e8f0;
+    border: 1px solid rgba(251, 191, 36, 0.45);
+    border-radius: 9px;
+    font: 11px/1.45 Menlo, Monaco, monospace;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.4);
+    z-index: 9;
+    display: none;
+  }
+  #assets-minimal-banner[data-visible="1"] { display: block; }
+  #assets-minimal-banner .banner-title {
+    color: #fbbf24;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    font-size: 10px;
+    margin-bottom: 4px;
+  }
+  #assets-minimal-banner .banner-body {
+    color: #cbd5e1;
+  }
+  #assets-minimal-banner .banner-body b { color: #f1f5f9; }
+  #assets-minimal-banner a {
+    color: #7dd3fc;
+    text-decoration: none;
+  }
+  #assets-minimal-banner a:hover { text-decoration: underline; }
+  #assets-minimal-banner code,
+  #assets-minimal-banner kbd {
+    font-family: inherit;
+    font-size: 10px;
+    padding: 1px 4px;
+    border-radius: 3px;
+    background: rgba(251, 191, 36, 0.15);
+    color: #fde68a;
+    border: 1px solid rgba(251, 191, 36, 0.28);
+  }
+  #assets-minimal-banner .banner-close {
+    float: right;
+    background: none; border: none;
+    color: #64748b;
+    font: inherit; cursor: pointer;
+    padding: 0 2px;
+    margin-left: 8px;
+  }
+  #assets-minimal-banner .banner-close:hover { color: #e2e8f0; }
+`;
+
+function injectStyles(doc) {
+  if (doc.getElementById('assets-banner-styles')) return;
+  const style = doc.createElement('style');
+  style.id = 'assets-banner-styles';
+  style.textContent = STYLES;
+  doc.head.appendChild(style);
+}
+
+const DISMISS_KEY = 'futures-agent-simulation.minimal-banner-dismissed';
+
+export default class AssetsStatusBanner {
+  constructor({ i18n, document: doc = document, window: win = window } = {}) {
+    this.i18n = i18n;
+    this.document = doc;
+    this.window = win;
+    this.dismissed = false;
+    try { this.dismissed = win.localStorage.getItem(DISMISS_KEY) === '1'; } catch (_) {}
+    this._gatedEls = [];
+    console.log(`[AssetsStatusBanner v${VERSION}] init`);
+
+    injectStyles(doc);
+    this._build();
+    this._bind();
+  }
+
+  _build() {
+    const doc = this.document;
+    this.banner = doc.createElement('aside');
+    this.banner.id = 'assets-minimal-banner';
+    this.banner.setAttribute('role', 'status');
+
+    const close = doc.createElement('button');
+    close.className = 'banner-close';
+    close.setAttribute('aria-label', this.i18n ? this.i18n.t('assets.dismiss') : '关闭提示');
+    close.textContent = '✕';
+    close.addEventListener('click', () => this._dismiss());
+    this.banner.appendChild(close);
+
+    const title = doc.createElement('div');
+    title.className = 'banner-title';
+    title.textContent = this.i18n ? this.i18n.t('assets.minimalMode') : '◇ 最小化模式';
+    this.banner.appendChild(title);
+
+    this.titleEl = title;
+    this.bodyEl = doc.createElement('div');
+    this.bodyEl.className = 'banner-body';
+    this.banner.appendChild(this.bodyEl);
+    this._renderBody({ forced: false });
+
+    doc.body.appendChild(this.banner);
+  }
+
+  _bind() {
+    this._onAssets = (ev) => this._apply(ev.detail || {});
+    this.window.addEventListener('assets-status', this._onAssets);
+  }
+
+  // Register DOM elements that should be hidden in minimal mode. Pass a
+  // truthy value for `hard` to remove them entirely instead of just
+  // hiding (useful for the "Assets →" anchor that wouldn't do anything
+  // when the pack is missing).
+  registerGated(el, { hard = false } = {}) {
+    if (!el) return;
+    this._gatedEls.push({ el, hard, originalDisplay: el.style.display });
+  }
+
+  _apply({ loaded, loadedCount = 0, forced = false }) {
+    const minimal = !loaded || loadedCount === 0;
+    // Gate asset-dependent UI.
+    for (const entry of this._gatedEls) {
+      if (!entry.el) continue;
+      if (minimal) {
+        if (entry.hard) entry.el.style.display = 'none';
+        else entry.el.style.display = 'none';
+      } else {
+        entry.el.style.display = entry.originalDisplay || '';
+      }
+    }
+    // Swap banner copy based on whether this is "pack missing" vs
+    // "user toggled preview with M".
+    this._renderBody({ forced });
+    // Title hint changes too: forced preview uses a friendly label.
+    if (this.titleEl) {
+      this.titleEl.textContent = forced
+        ? (this.i18n ? this.i18n.t('assets.minimalPreview') : '◇ 最小化预览（M）')
+        : (this.i18n ? this.i18n.t('assets.minimalMode') : '◇ 最小化模式');
+    }
+    // Banner visibility:
+    //   • pack missing  → respect `dismissed` so reload doesn't nag
+    //   • forced toggle → ALWAYS show (user just asked for the preview)
+    if (minimal && (forced || !this.dismissed)) {
+      this.banner.dataset.visible = '1';
+    } else {
+      this.banner.dataset.visible = '0';
+    }
+  }
+
+  _renderBody({ forced }) {
+    if (!this.bodyEl) return;
+    if (forced) {
+      this.bodyEl.innerHTML = this.i18n
+        ? this.i18n.t('assets.forcedBody')
+        : '正在不加载精灵资源的预览模式下运行。按 <kbd>M</kbd> 恢复完整精灵视图。';
+    } else {
+      this.bodyEl.innerHTML = this.i18n
+        ? this.i18n.t('assets.missingBody')
+        : '当前未加载精灵资源。系统会使用程序化备用画面，智能体决策流程仍可正常观察。';
+    }
+  }
+
+  _dismiss() {
+    this.dismissed = true;
+    try { this.window.localStorage.setItem(DISMISS_KEY, '1'); } catch (_) {}
+    this.banner.dataset.visible = '0';
+  }
+
+  destroy() {
+    this.window.removeEventListener('assets-status', this._onAssets);
+    if (this.banner.parentNode) this.banner.parentNode.removeChild(this.banner);
+  }
+}

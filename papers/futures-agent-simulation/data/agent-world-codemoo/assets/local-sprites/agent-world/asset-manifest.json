@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "generatedAt": "2026-05-04T14:57:07.466Z",
+  "generator": "local-asset-manifest",
+  "assetRoot": "/assets/local-sprites/agent-world",
+  "sprites": [],
+  "note": "No sprite sheets are bundled with this internal prototype. The frontend uses procedural fallback rendering when this manifest is empty."
+}

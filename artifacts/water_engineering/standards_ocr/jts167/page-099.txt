@@ -1,0 +1,34 @@
+码头结构设计规范(JTS 167一2018)
+已 =F IRK Kb peoss                        (6.3. 11-1)
+2t,tané,.tang, (2i,tanO,tang, +, - 1)’
+By alee      3h,   an    Shim hae            (6.3. 11-2)
+FRYE, FRE A Pa ee HR ES AE ot A ELE KN) ;
+YF BEA FF EHS TE HE a EERE (N/m) ;
+bh, Fie EAN FOF EHR Sa ERR (m.) ;
+开,一一被动土压力系数;
+玉一一考虑锚院板位移带动两侧土体滑动使被动士压力增大的系数, 当式(6.3.11-2)
+最后一项的分子小于零时,取该项为零;
+by, SHB BEA PF EHS IT BE (mm) ,对于锚厦板取锚达板宽度,对于锚太墙
+取拉杆间距;
+p一一考虑错莹板和错奉墙顶以上土体不全部参加工作的系数,可根据错奉墙、
+FEE LIER SSR SFE HG .错奉板高度之比,按表6.3.11 HEF; SE HS
+锚秦板前土质不均匀时,可分层计算土压力强度,然后求总被动士压力的
+水平分力;
+5一一填料或土与错奉板和锚达墙之间的摩氛角,可取 w/3 ,且不大于7?,9p 为土
+的内摩擦角;
+8,一一被动土体底面滑动面与垂直面之间的来角(*) Re, =45° ony
+$8 + UE SE AS AIHA (°) Mg, =F
+1 —#i Be tg PD TB] EB (mm) 。
+#6311 p fa
+re
+Eh, SEAR ES EB n.,
+6.3.11.2 FRE HG AF RE HS Oa ae ERT BORER :
+Yo VE t¥ naan +uy,E..) <=               (6.3. 11-3)
+OP y,— Ao BEER PER 3.2.2 RUE,
+Yi: —-$ - EDLEADUWA RM, HR 3.2.6 WUE;
+E,,. Fab ie AB PVF Bee HJ EAR PAE A Eo =e HE oY EE (KN) ,按第
+6.1节有关规定计算 ,计算时土与墙面间的摩擦角取零;
+yu一-拉杆拉力的分项系数,取1.35;
+丸、\一一拉杆拉力水平分力的标准值(EN ) ;
+风一一作用组合系数,取0.7;
+90

@@ -1,0 +1,84 @@
+digraph YOLOv8_Network_Structure {
+	node [fontname=SimHei fontsize=12 shape=box style=filled]
+	rankdir=TB
+	edge [arrowhead=normal arrowsize=0.8]
+	input [label=Input fillcolor="#f8cecc"]
+	subgraph cluster_backbone {
+		fontname=SimHei fontsize=14 label="骨干网络" style=dashed
+		conv1 [label=Conv fillcolor="#fff2cc"]
+		conv2 [label=Conv fillcolor="#fff2cc"]
+		c2f1 [label=C2f fillcolor="#d5e8d4"]
+		conv3 [label=Conv fillcolor="#fff2cc"]
+		c2f2 [label=C2f fillcolor="#d5e8d4"]
+		conv4 [label=Conv fillcolor="#fff2cc"]
+		c2f3 [label=C2f fillcolor="#d5e8d4"]
+		conv5 [label=Conv fillcolor="#fff2cc"]
+		c2f4 [label=C2f fillcolor="#d5e8d4"]
+		sppf [label=SPPF fillcolor="#f8cbad"]
+	}
+	subgraph cluster_neck {
+		fontname=SimHei fontsize=14 label="颈部网络" style=dashed
+		upsample1 [label=Upsample fillcolor="#ffe6cc"]
+		concat1 [label=Concat fillcolor="#e1d5e7"]
+		c2f5 [label=C2f fillcolor="#d5e8d4"]
+		upsample2 [label=Upsample fillcolor="#ffe6cc"]
+		concat2 [label=Concat fillcolor="#e1d5e7"]
+		c2f6 [label=C2f fillcolor="#d5e8d4"]
+		conv6 [label=Conv fillcolor="#fff2cc"]
+		concat3 [label=Concat fillcolor="#e1d5e7"]
+		c2f7 [label=C2f fillcolor="#d5e8d4"]
+		conv7 [label=Conv fillcolor="#fff2cc"]
+		concat4 [label=Concat fillcolor="#e1d5e7"]
+		c2f8 [label=C2f fillcolor="#d5e8d4"]
+	}
+	subgraph cluster_detect {
+		fontname=SimHei fontsize=14 label="检测头" style=dashed
+		detect1 [label=Detect fillcolor="#b2ebf2"]
+		detect2 [label=Detect fillcolor="#b2ebf2"]
+		detect3 [label=Detect fillcolor="#b2ebf2"]
+	}
+	input -> conv1
+	conv1 -> conv2
+	conv2 -> c2f1
+	c2f1 -> conv3
+	conv3 -> c2f2
+	c2f2 -> conv4
+	conv4 -> c2f3
+	c2f3 -> conv5
+	conv5 -> c2f4
+	c2f4 -> sppf
+	sppf -> upsample1
+	upsample1 -> concat1
+	c2f3 -> concat1
+	concat1 -> c2f5
+	c2f5 -> upsample2
+	upsample2 -> concat2
+	c2f2 -> concat2
+	concat2 -> c2f6
+	c2f6 -> detect1
+	c2f6 -> conv6
+	conv6 -> concat3
+	c2f5 -> concat3
+	concat3 -> c2f7
+	c2f7 -> detect2
+	c2f7 -> conv7
+	conv7 -> concat4
+	sppf -> concat4
+	concat4 -> c2f8
+	c2f8 -> detect3
+	{
+		rank=same
+		c2f6
+		detect1
+	}
+	{
+		rank=same
+		c2f7
+		detect2
+	}
+	{
+		rank=same
+		c2f8
+		detect3
+	}
+}

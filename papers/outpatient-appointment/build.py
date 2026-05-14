@@ -15,6 +15,7 @@ ROOT = os.path.join(os.path.dirname(__file__), "../..")
 sys.path.insert(0, ROOT)
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+CONTENT_DIR = os.path.join(HERE, "content")
 IMG_DIR = os.path.join(HERE, "images")
 TPL = os.path.join(ROOT, "templates/outpatient_original/template.docx")
 DEFAULT_OUTPUT = os.path.join(HERE, "基于Spring Boot的门诊预约挂号系统设计与实现_修改版.docx")
@@ -36,7 +37,8 @@ def _ensure_rgb(img_path):
 
 
 def load_json(filename):
-    path = os.path.join(HERE, filename)
+    content_path = os.path.join(CONTENT_DIR, filename)
+    path = content_path if os.path.exists(content_path) else os.path.join(HERE, filename)
     if not os.path.exists(path):
         return None
     with open(path, 'r', encoding='utf-8') as f:

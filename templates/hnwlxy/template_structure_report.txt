@@ -1,0 +1,605 @@
+Document: /Users/a136/vs/45425/thesis_project/templates/hnwlxy/template.docx
+Sections: 2
+Body blocks: paragraphs and tables in source order
+[body]
+  P000 style='Normal' align=None runs=0 num=None text=''
+  P001 style='Normal' align='center' runs=1 num=None text=''
+  P002 style='Normal' align='center' runs=1 num=None text='本科生毕业论文（设计）'
+  P003 style='Normal' align='center' runs=1 num=None text=''
+  T004 rows=6 cols=2 first_cell='题 目：'
+  P005 style='Normal' align=None runs=0 num=None text=''
+  P006 style='Subtitle' align=None runs=3 num=None text='目 录'
+  P007 style='toc 2' align=None runs=3 num=None text='{{ toc_placeholder }}'
+  P008 style='Normal' align=None runs=1 num=None text=''
+  P009 style='Subtitle' align=None runs=3 num=None text='摘 要'
+  P010 style='Normal' align=None runs=1 num=None text='{%p for abs_p in abstract_zh_list %}'
+  P011 style='Normal' align=None runs=3 num=None text='{{ abs_p }}'
+  P012 style='Normal' align=None runs=1 num=None text='{%p endfor %}'
+  P013 style='Normal' align=None runs=8 num=None text='关键词：{{ keywords_zh }}'
+  P014 style='Subtitle' align=None runs=1 num=None text='ABSTRACT'
+  P015 style='Normal' align=None runs=1 num=None text='{%p for abs_p in abstract_en_list %}'
+  P016 style='Normal' align=None runs=1 num=None text='{{ abs_p }}'
+  P017 style='Normal' align=None runs=1 num=None text='{%p endfor %}'
+  P018 style='Normal' align=None runs=4 num=None text='Keywords: {{ keywords_en }}'
+  P019 style='Normal' align=None runs=1 num=None text='{%p for ch in chapters %}'
+  P020 style='Heading 1' align=None runs=2 num=None text='{{ ch.title }}'
+  P021 style='Normal' align=None runs=1 num=None text='{%p for para in ch.content %}'
+  P022 style='Normal' align=None runs=3 num=None text='{{ para }}'
+  P023 style='Normal' align=None runs=1 num=None text='{%p endfor %}'
+  P024 style='Normal' align=None runs=1 num=None text='{%p for sec in ch.sections %}'
+  P025 style='Heading 2' align=None runs=2 num=None text='{{ sec.title }}'
+  P026 style='Normal' align=None runs=1 num=None text='{%p for para in sec.content %}'
+  P027 style='Normal' align=None runs=1 num=None text='{{ para }}'
+  P028 style='Normal' align=None runs=1 num=None text='{%p endfor %}'
+  P029 style='Normal' align=None runs=1 num=None text='{%p for sub in sec.subsections %}'
+  P030 style='Heading 3' align=None runs=3 num=None text='{{ sub.title }}'
+  P031 style='Normal' align=None runs=1 num=None text='{%p for para in sub.content %}'
+  P032 style='Normal' align=None runs=20 num=None text='{{ para }}'
+  P033 style='Normal' align=None runs=1 num=None text='{%p endfor %}'
+  P034 style='Normal' align=None runs=1 num=None text='{%p endfor %}'
+  P035 style='Normal' align=None runs=1 num=None text='{%p endfor %}'
+  P036 style='Normal' align=None runs=1 num=None text='{%p endfor %}'
+  P037 style='Subtitle' align=None runs=1 num=None text='参考文献'
+  P038 style='Normal' align=None runs=1 num=None text='{%p for ref in references %}'
+  P039 style='Normal' align=None runs=6 num={'numId': 8, 'ilvl': 0} text='{{ ref.text if ref.text is defined else ref }}'
+  P040 style='Normal' align=None runs=1 num=None text='{%p endfor %}'
+  P041 style='Subtitle' align=None runs=3 num=None text='致 谢'
+  P042 style='Normal' align=None runs=3 num=None text='{{ acknowledgement }}'
+  P043 style='Subtitle' align='justify' runs=3 num=None text='附 录'
+  P044 style='Normal' align='center' runs=3 num=None text=''
+  P045 style='Normal' align=None runs=1 num=None text=''
+  P046 style='Normal' align=None runs=1 num=None text='{{ appendix }}'
+[section[0].header]
+[section[0].footer]
+[section[1].header]
+[section[1].footer]
+[xml markers]
+  w:txbxContent: 20
+  w:fldSimple: 0
+  w:instrText: 12
+  w:numPr: 4
+  w:bookmarkStart: 55
+  w:drawing: 19
+{
+  "docx": "/Users/a136/vs/45425/thesis_project/templates/hnwlxy/template.docx",
+  "sections": 2,
+  "body_blocks": [
+    {
+      "kind": "paragraph",
+      "index": 0,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 1,
+      "text": "",
+      "style": "Normal",
+      "alignment": "center",
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 2,
+      "text": "本科生毕业论文（设计）",
+      "style": "Normal",
+      "alignment": "center",
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 3,
+      "text": "",
+      "style": "Normal",
+      "alignment": "center",
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "table",
+      "index": 4,
+      "text": "题 目：",
+      "style": null,
+      "alignment": null,
+      "numbering": null,
+      "run_count": null,
+      "runs": null,
+      "table_shape": {
+        "rows": 6,
+        "cols": 2
+      }
+    },
+    {
+      "kind": "paragraph",
+      "index": 5,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 0,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 6,
+      "text": "目 录",
+      "style": "Subtitle",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 7,
+      "text": "{{ toc_placeholder }}",
+      "style": "toc 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 8,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 9,
+      "text": "摘 要",
+      "style": "Subtitle",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 10,
+      "text": "{%p for abs_p in abstract_zh_list %}",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 11,
+      "text": "{{ abs_p }}",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 12,
+      "text": "{%p endfor %}",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 13,
+      "text": "关键词：{{ keywords_zh }}",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 8,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 14,
+      "text": "ABSTRACT",
+      "style": "Subtitle",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 15,
+      "text": "{%p for abs_p in abstract_en_list %}",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 16,
+      "text": "{{ abs_p }}",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 17,
+      "text": "{%p endfor %}",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 18,
+      "text": "Keywords: {{ keywords_en }}",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 4,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 19,
+      "text": "{%p for ch in chapters %}",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 20,
+      "text": "{{ ch.title }}",
+      "style": "Heading 1",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 21,
+      "text": "{%p for para in ch.content %}",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 22,
+      "text": "{{ para }}",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 23,
+      "text": "{%p endfor %}",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 24,
+      "text": "{%p for sec in ch.sections %}",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 25,
+      "text": "{{ sec.title }}",
+      "style": "Heading 2",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 2,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 26,
+      "text": "{%p for para in sec.content %}",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 27,
+      "text": "{{ para }}",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 28,
+      "text": "{%p endfor %}",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 29,
+      "text": "{%p for sub in sec.subsections %}",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 30,
+      "text": "{{ sub.title }}",
+      "style": "Heading 3",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 31,
+      "text": "{%p for para in sub.content %}",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 32,
+      "text": "{{ para }}",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 20,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 33,
+      "text": "{%p endfor %}",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 34,
+      "text": "{%p endfor %}",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 35,
+      "text": "{%p endfor %}",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 36,
+      "text": "{%p endfor %}",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 37,
+      "text": "参考文献",
+      "style": "Subtitle",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 38,
+      "text": "{%p for ref in references %}",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 39,
+      "text": "{{ ref.text if ref.text is defined else ref }}",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": {
+        "numId": 8,
+        "ilvl": 0
+      },
+      "run_count": 6,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 40,
+      "text": "{%p endfor %}",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 41,
+      "text": "致 谢",
+      "style": "Subtitle",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 42,
+      "text": "{{ acknowledgement }}",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 43,
+      "text": "附 录",
+      "style": "Subtitle",
+      "alignment": "justify",
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 44,
+      "text": "",
+      "style": "Normal",
+      "alignment": "center",
+      "numbering": null,
+      "run_count": 3,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 45,
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    },
+    {
+      "kind": "paragraph",
+      "index": 46,
+      "text": "{{ appendix }}",
+      "style": "Normal",
+      "alignment": null,
+      "numbering": null,
+      "run_count": 1,
+      "runs": null,
+      "table_shape": null
+    }
+  ],
+  "headers_footers": {
+    "section_0_header": [],
+    "section_0_footer": [],
+    "section_1_header": [],
+    "section_1_footer": []
+  },
+  "xml_markers": {
+    "w:txbxContent": 20,
+    "w:fldSimple": 0,
+    "w:instrText": 12,
+    "w:numPr": 4,
+    "w:bookmarkStart": 55,
+    "w:drawing": 19
+  }
+}

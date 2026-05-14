@@ -1,0 +1,38 @@
+# YOLOv8s-Ghost: Lightweight Backbone
+# Innovation 1: Replace C2f → C2f_Ghost in backbone (GhostConv reduces params ~38%)
+# Architecture matches YOLOv8s channel sizes (width_multiple=0.50) — no scales block needed.
+# Head uses standard C2f to isolate backbone lightweighting effect in ablation.
+
+nc: 10  # VisDrone classes
+
+backbone:
+  # [from, n, module, args]
+  - [-1, 1, Conv,      [32, 3, 2]]          # 0  P1/2   3→32
+  - [-1, 1, Conv,      [64, 3, 2]]          # 1  P2/4   32→64
+  - [-1, 1, C2f_Ghost, [64, True]]          # 2         64→64   (n=1, depth×0.33 of 3)
+  - [-1, 1, Conv,      [128, 3, 2]]         # 3  P3/8   64→128
+  - [-1, 2, C2f_Ghost, [128, True]]         # 4         128→128 (n=2, depth×0.33 of 6)
+  - [-1, 1, Conv,      [256, 3, 2]]         # 5  P4/16  128→256
+  - [-1, 2, C2f_Ghost, [256, True]]         # 6         256→256 (n=2)
+  - [-1, 1, Conv,      [512, 3, 2]]         # 7  P5/32  256→512
+  - [-1, 1, C2f_Ghost, [512, True]]         # 8         512→512 (n=1)
+  - [-1, 1, SPPF,      [512, 5]]            # 9         512→512
+
+head:
+  - [-1,       1, nn.Upsample, [None, 2, "nearest"]]  # 10  512
+  - [[-1, 6],  1, Concat,      [1]]                   # 11  512+256=768
+  - [-1,       1, C2f,         [256]]                  # 12  768→256
+
+  - [-1,       1, nn.Upsample, [None, 2, "nearest"]]  # 13  256
+  - [[-1, 4],  1, Concat,      [1]]                   # 14  256+128=384
+  - [-1,       1, C2f,         [128]]                  # 15  384→128  ← P3/8
+
+  - [-1,       1, Conv,        [128, 3, 2]]            # 16  128→128
+  - [[-1, 12], 1, Concat,      [1]]                   # 17  128+256=384
+  - [-1,       1, C2f,         [256]]                  # 18  384→256  ← P4/16
+
+  - [-1,       1, Conv,        [256, 3, 2]]            # 19  256→256
+  - [[-1, 9],  1, Concat,      [1]]                   # 20  256+512=768
+  - [-1,       1, C2f,         [512]]                  # 21  768→512  ← P5/32
+
+  - [[15, 18, 21], 1, Detect, [nc]]                   # 22  Detect(P3, P4, P5)

@@ -1,0 +1,19 @@
+{
+  "source": "/Users/a136/vs/45425/thesis_project/templates/water_engineering/source.docx",
+  "template": "/Users/a136/vs/45425/thesis_project/templates/water_engineering/template.docx",
+  "content_source": "/Users/a136/vs/45425/thesis_project/papers/water_engineering/content",
+  "dynamic_regions": [
+    "cover fields",
+    "Chinese abstract and keywords",
+    "English abstract and keywords",
+    "body chapters generated from content/chapters.json",
+    "references generated from content/references.json",
+    "acknowledgement generated from content/meta.json"
+  ],
+  "preserved_regions": [
+    "school cover layout",
+    "declaration page wording",
+    "TOC field/cache region",
+    "heading styles and page/section setup"
+  ]
+}
