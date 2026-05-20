@@ -1,5 +1,5 @@
 """
-基于Android的英语词汇复习系统论文组装器。
+基于安卓的乐背单词APP的设计与实现论文组装器。
 
 内容来源：
 - content/meta.json
@@ -39,7 +39,7 @@ ROOT = Path(__file__).resolve().parents[2]
 HERE = Path(__file__).resolve().parent
 CONTENT = HERE / "content"
 TEMPLATE = ROOT / "templates" / "bistu_2026" / "template.docx"
-DEFAULT_OUTPUT = HERE / "论文_软工2102_2021011175_刘子安_基于Android的英语词汇复习系统设计与实现.docx"
+DEFAULT_OUTPUT = HERE / "论文_软工2102_2021011175_刘子安_基于安卓的乐背单词APP的设计与实现.docx"
 
 
 def load_json(name: str, default=None):

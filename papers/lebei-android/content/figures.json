@@ -1,19 +1,104 @@
 [
-  {"id": "fig3_1", "image": "images/diagrams/fig3_1_use_case.png", "caption": "图 3-1 系统用例图", "source": "diagram"},
-  {"id": "fig3_2", "image": "images/diagrams/fig3_2_requirement_structure.png", "caption": "图 3-2 系统功能需求结构图", "source": "diagram"},
-  {"id": "fig4_1", "image": "images/diagrams/imagegen/fig4_1_system_architecture_imagegen_v2.png", "caption": "图 4-1 系统总体架构图", "source": "imagegen_diagram"},
-  {"id": "fig4_2", "image": "images/diagrams/imagegen/fig4_6_standard_dfd_imagegen.png", "caption": "图 4-2 系统数据流图", "source": "imagegen_diagram"},
-  {"id": "fig4_3", "image": "images/diagrams/fig4_2_login_profile_flow.png", "caption": "图 4-3 登录与资料完善流程图", "source": "diagram"},
-  {"id": "fig4_4", "image": "images/diagrams/fig4_3_daily_learning_flow.png", "caption": "图 4-4 每日学习流程图", "source": "diagram"},
-  {"id": "fig4_5", "image": "images/diagrams/imagegen/fig4_4_er_model_imagegen.png", "caption": "图 4-5 系统E-R模型图", "source": "imagegen_diagram"},
-  {"id": "fig4_6", "image": "images/diagrams/fig4_5_ai_sequence.png", "caption": "图 4-6 AI例句生成时序图", "source": "diagram"},
-  {"id": "fig4_7", "image": "images/diagrams/imagegen/fig4_7_jwt_auth_imagegen_v2.png", "caption": "图 4-7 JWT鉴权流程图", "source": "imagegen_diagram"},
-  {"id": "fig5_1", "image": "images/system_screenshots/fig5_1_auth_profile_runtime.png", "caption": "图 5-1 注册、资料完善与学习计划运行界面", "source": "runtime_video"},
-  {"id": "fig5_2", "image": "images/system_screenshots/fig5_2_learning_runtime.png", "caption": "图 5-2 单词学习与今日计划完成界面", "source": "runtime_video"},
-  {"id": "fig5_3", "image": "images/system_screenshots/fig5_3_spelling_leaderboard_runtime.png", "caption": "图 5-3 拼写挑战、排行榜与今日复习计划界面", "source": "runtime_video"},
-  {"id": "fig5_4", "image": "images/admin_screenshots/fig5_4_admin_login_runtime_v2.png", "caption": "图 5-4 后台管理员登录运行界面", "source": "runtime_browser"},
-  {"id": "fig5_5", "image": "images/admin_screenshots/fig5_5_admin_leaderboard_runtime_v2.png", "caption": "图 5-5 后台排行榜运行界面", "source": "runtime_browser"},
-  {"id": "fig5_6", "image": "images/admin_screenshots/fig5_6_admin_profile_runtime_v2.png", "caption": "图 5-6 后台个人中心运行界面", "source": "runtime_browser"},
-  {"id": "fig5_7", "image": "images/system_screenshots/fig5_6_plan_leaderboard_runtime.png", "caption": "图 5-7 移动端计划与排行榜运行界面", "source": "runtime_video"},
-  {"id": "fig5_8", "image": "images/system_screenshots/fig5_7_ai_completion_runtime.png", "caption": "图 5-8 移动端学习与计划完成运行界面", "source": "runtime_video"}
+  {
+    "id": "fig3_1",
+    "image": "images/diagrams/imagegen/fig3_1_use_case_imagegen_reviewed_nocaption.png",
+    "caption": "图 3-1 系统用例图",
+    "source": "imagegen"
+  },
+  {
+    "id": "fig3_2",
+    "image": "images/diagrams/imagegen/fig3_2_requirement_structure_imagegen_reviewed_nocaption.png",
+    "caption": "图 3-2 系统功能需求结构图",
+    "source": "imagegen"
+  },
+  {
+    "id": "fig4_1",
+    "image": "images/diagrams/imagegen/fig4_1_system_architecture_imagegen_v2.png",
+    "caption": "图 4-1 系统总体架构图",
+    "source": "imagegen_diagram"
+  },
+  {
+    "id": "fig4_2",
+    "image": "images/diagrams/imagegen/fig4_2_dfd_imagegen_reviewed_nocaption.png",
+    "caption": "图 4-2 系统数据流图",
+    "source": "imagegen"
+  },
+  {
+    "id": "fig4_3",
+    "image": "images/diagrams/imagegen/fig4_3_login_profile_flow_imagegen_reviewed_nocaption.png",
+    "caption": "图 4-3 登录与资料完善流程图",
+    "source": "imagegen"
+  },
+  {
+    "id": "fig4_4",
+    "image": "images/diagrams/imagegen/fig4_4_daily_learning_flow_imagegen_reviewed.png",
+    "caption": "图 4-4 每日学习流程图",
+    "source": "imagegen"
+  },
+  {
+    "id": "fig4_5",
+    "image": "images/diagrams/imagegen/fig4_4_er_model_imagegen.png",
+    "caption": "图 4-5 系统E-R模型图",
+    "source": "imagegen_diagram"
+  },
+  {
+    "id": "fig4_6",
+    "image": "images/diagrams/fig4_5_ai_sequence.png",
+    "caption": "图 4-6 AI例句生成时序图",
+    "source": "diagram"
+  },
+  {
+    "id": "fig4_7",
+    "image": "images/diagrams/imagegen/fig4_7_jwt_auth_imagegen_v2.png",
+    "caption": "图 4-7 JWT鉴权流程图",
+    "source": "imagegen_diagram"
+  },
+  {
+    "id": "fig5_1",
+    "image": "images/system_screenshots/fig5_1_auth_profile_runtime.png",
+    "caption": "图 5-1 注册、资料完善与学习计划运行界面",
+    "source": "runtime_video"
+  },
+  {
+    "id": "fig5_2",
+    "image": "images/system_screenshots/fig5_2_learning_runtime.png",
+    "caption": "图 5-2 单词学习与今日计划完成界面",
+    "source": "runtime_video"
+  },
+  {
+    "id": "fig5_3",
+    "image": "images/system_screenshots/fig5_3_spelling_leaderboard_runtime.png",
+    "caption": "图 5-3 拼写挑战、排行榜与今日复习计划界面",
+    "source": "runtime_video"
+  },
+  {
+    "id": "fig5_4",
+    "image": "images/admin_screenshots/fig5_4_admin_login_runtime_v2.png",
+    "caption": "图 5-4 后台管理员登录运行界面",
+    "source": "runtime_browser"
+  },
+  {
+    "id": "fig5_5",
+    "image": "images/admin_screenshots/fig5_5_admin_leaderboard_runtime_v2.png",
+    "caption": "图 5-5 后台排行榜运行界面",
+    "source": "runtime_browser"
+  },
+  {
+    "id": "fig5_6",
+    "image": "images/admin_screenshots/fig5_6_admin_profile_runtime_v2.png",
+    "caption": "图 5-6 后台个人中心运行界面",
+    "source": "runtime_browser"
+  },
+  {
+    "id": "fig5_7",
+    "image": "images/system_screenshots/fig5_7_mobile_plan_stats_leaderboard_runtime_20260520.png",
+    "caption": "图 5-7 移动端计划、统计与排行榜运行界面",
+    "source": "runtime_emulator"
+  },
+  {
+    "id": "fig5_8",
+    "image": "images/system_screenshots/fig5_8_ai_example_essay_runtime_20260520.png",
+    "caption": "图 5-8 移动端 AI 例句与 AI 短文运行界面",
+    "source": "runtime_emulator"
+  }
 ]
