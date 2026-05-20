@@ -1,0 +1,35 @@
+{
+  "title_zh": "基于Android的英语词汇复习系统设计与实现",
+  "title_en": "Design and Implementation of an Android-based English Vocabulary Review System",
+  "college": "计算机学院",
+  "major": "软件工程",
+  "class_name": "软工2102",
+  "name": "刘子安",
+  "student_id": "2021011175",
+  "advisor": "",
+  "advisor_title": "",
+  "advisor_unit": "计算机学院",
+  "start_date": "2025年12月",
+  "end_date": "2026年5月",
+  "start_date_short": "2025.12",
+  "end_date_short": "2026.05",
+  "keywords_zh": "Android；英语词汇复习；Room数据库；Spring Boot；JWT；AI例句",
+  "keywords_en": "Android; English vocabulary review; Room database; Spring Boot; JWT; AI examples",
+  "abstract_zh": [
+    "随着移动互联网和智能终端在学习场景中的持续普及，词汇复习类应用逐渐从单纯的单词列表工具发展为兼具计划管理、个性化复习、数据统计和智能辅助的综合学习系统。传统背词方式容易出现复习节奏不稳定、历史进度难以沉淀、例句内容缺少个性化等问题，影响学习者对词汇的长期记忆效果。针对上述问题，本文结合实际 Android 项目“乐背”，设计并实现了一套基于 Android 的英语词汇复习系统。",
+    "系统采用 Android 原生开发方式实现移动端，使用 Room 持久化词库、每日计划和学习进度数据，使用 OkHttp 与后端进行接口通信；服务端基于 Spring Boot、Spring Security、JPA 和 MySQL 构建，采用 JWT 完成无状态认证与角色鉴权，并提供 App 用户接口、管理员接口、排行榜接口及 AI 内容生成接口；管理端采用 Vue 3 实现管理员登录、排行榜查看和个人中心等功能。系统内置初中、高中、四级、六级、雅思、托福等多套词库，支持资料完善、每日新词计划、到期复习、AI 例句与短文生成、拼写挑战、学习统计和排行榜展示。",
+    "在设计过程中，本文按照需求分析、总体架构设计、功能模块设计、数据库设计、关键功能实现和系统测试的顺序展开。移动端重点解决离线词库导入、每日计划生成、本地学习状态更新、复习权重变化、语音朗读和多账号切换数据隔离等问题；服务端重点解决用户注册登录、学习计划同步、统计数据同步、角色权限控制和千帆大模型接口封装等问题；管理端重点解决管理员登录、路由守卫、排行榜查看和个人资料展示等问题。",
+    "测试结果表明，系统能够完成注册登录、资料设置、学习计划配置、单词学习、AI 例句生成、拼写挑战、排行榜展示和后台管理等主要流程。通过单元测试、接口检查和功能流程验证，系统在核心学习策略、拼写匹配、计划生成和统计同步方面具备较好的正确性与可用性，能够为学习者提供连续、可视化、智能化的英语词汇复习支持。"
+  ],
+  "abstract_en": [
+    "With the wide adoption of mobile devices in learning scenarios, vocabulary review applications have evolved from simple word-list tools into integrated systems that support planning, personalized review, data statistics, and intelligent assistance. Traditional vocabulary learning often suffers from unstable review schedules, weak progress persistence, and insufficiently personalized example sentences. To address these issues, this thesis designs and implements an Android-based English vocabulary review system based on the real project named Lebei.",
+    "The system consists of a native Android client, a Spring Boot backend, and a Vue-based administration client. The Android client uses Room to persist local vocabulary, daily plans, and learning progress, and uses OkHttp to communicate with backend APIs. The backend uses Spring Security, JPA, MySQL, and JWT to provide user authentication, profile management, plan synchronization, statistics synchronization, leaderboard services, and AI content generation. The administration client supports administrator login, route guarding, leaderboard viewing, and profile display.",
+    "The thesis presents the system through requirement analysis, architecture design, module design, database design, implementation, and testing. The client implements vocabulary import, daily plan generation, review weight adjustment, text-to-speech, spelling challenge, and local data isolation when accounts are switched. The backend encapsulates the Baidu Qianfan large language model API for example sentences and short passages. Testing results show that registration, profile setup, plan configuration, word learning, AI example generation, statistics synchronization, leaderboard display, and web administration can meet the expected functional requirements."
+  ],
+  "task_main_content": "围绕“乐背”英语词汇复习系统，完成 Android 客户端、Spring Boot 后端与 Vue 管理端的需求分析、总体架构设计、功能模块设计、数据库设计、关键功能实现和系统测试。系统重点实现用户注册登录、资料完善、词库导入、每日学习计划、到期复习、AI 例句与短文生成、拼写挑战、学习统计、排行榜和后台管理等功能。",
+  "task_outcomes": "形成可运行的 Android App、后端服务和 Web 管理端；完成论文正文、系统架构图、功能流程图、数据模型图、运行截图和测试说明；最终提交符合北京信息科技大学模板要求的毕业设计（论文）文档。",
+  "task_requirements": "系统应以实际源码和运行演示为依据，运行截图必须来自真实项目视频；论文中应说明 Android、Room、OkHttp、Spring Boot、JWT、MySQL、Vue 和 AI 接口等技术选型；数据库、接口与功能模块描述需与项目源码保持一致；正文结构和图表风格参考给定样例论文。",
+  "task_references": "Android 官方文档、Room 官方文档、Spring Boot 官方参考文档、JWT RFC 7519、MySQL 8.0 参考手册、Vue 官方文档、百度千帆接口文档等。",
+  "task_environment": "开发环境包括 Android Studio、JDK 17、Gradle、Maven、Spring Boot 3.2.5、MySQL 8.0、Node.js、Vue 3、Vite 和 Android 模拟器。客户端运行于 Android 8.0 及以上环境，后端默认端口为 8080。",
+  "task_schedule": "2025年12月：完成选题、资料收集与需求分析；2026年1月：完成系统总体设计、数据库设计和接口设计；2026年2月至3月：完成 Android 客户端、Spring Boot 后端与 Vue 管理端主要功能；2026年4月：完成联调、测试、运行截图整理和论文初稿；2026年5月：完成论文格式检查、修改和最终提交。"
+}

@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2500" height="739" viewBox="0 0 2500 739">
+<defs>
+<marker id="arrow" viewBox="0 0 14 10" refX="10" refY="5" markerWidth="14" markerHeight="10" orient="auto" markerUnits="strokeWidth">
+<path d="M 0 0 L 14 5 L 0 10 Z" fill="#323232" stroke="#323232" stroke-width="1"/>
+</marker>
+</defs>
+<rect x="0" y="0" width="2500" height="739" fill="#ffffff"/>
+<rect x="850" y="30" width="800" height="72" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="1250.0" y="76.08" text-anchor="middle" font-family="Microsoft YaHei, SimHei, Arial" font-size="28" font-weight="700" fill="#323232">基于Android的英语词汇复习系统</text>
+<rect x="360" y="196" width="410" height="70" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="565.0" y="241.08" text-anchor="middle" font-family="Microsoft YaHei, SimHei, Arial" font-size="28" font-weight="700" fill="#323232">Android App端</text>
+<rect x="1035" y="196" width="410" height="70" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="1240.0" y="241.08" text-anchor="middle" font-family="Microsoft YaHei, SimHei, Arial" font-size="28" font-weight="700" fill="#323232">Web管理端</text>
+<rect x="1720" y="196" width="410" height="70" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="1925.0" y="241.08" text-anchor="middle" font-family="Microsoft YaHei, SimHei, Arial" font-size="28" font-weight="700" fill="#323232">Spring Boot服务端</text>
+<line x1="1250" y1="102" x2="1250" y2="148" stroke="#323232" stroke-width="2.0" fill="none"/>
+<polyline points="1250,148 565,148 565,189" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<polyline points="1250,148 1240,148 1240,189" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<polyline points="1250,148 1925,148 1925,189" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<line x1="92" y1="306" x2="708" y2="306" stroke="#323232" stroke-width="2.0" fill="none"/>
+<polyline points="92,306 92,342" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<rect x="60" y="350" width="64" height="340" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="92.0" y="455.83000000000004" text-anchor="middle" font-family="Microsoft YaHei, SimHei, Arial" font-size="23" font-weight="700" fill="#323232"><tspan x="92.0" dy="0">登</tspan><tspan x="92.0" dy="27.139999999999997">录</tspan><tspan x="92.0" dy="27.139999999999997">注</tspan><tspan x="92.0" dy="27.139999999999997">册</tspan><tspan x="92.0" dy="27.139999999999997">模</tspan><tspan x="92.0" dy="27.139999999999997">块</tspan></text>
+<polyline points="180,306 180,342" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<rect x="148" y="350" width="64" height="340" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="180.0" y="455.83000000000004" text-anchor="middle" font-family="Microsoft YaHei, SimHei, Arial" font-size="23" font-weight="700" fill="#323232"><tspan x="180.0" dy="0">资</tspan><tspan x="180.0" dy="27.139999999999997">料</tspan><tspan x="180.0" dy="27.139999999999997">完</tspan><tspan x="180.0" dy="27.139999999999997">善</tspan><tspan x="180.0" dy="27.139999999999997">模</tspan><tspan x="180.0" dy="27.139999999999997">块</tspan></text>
+<polyline points="268,306 268,342" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<rect x="236" y="350" width="64" height="340" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="268.0" y="455.83000000000004" text-anchor="middle" font-family="Microsoft YaHei, SimHei, Arial" font-size="23" font-weight="700" fill="#323232"><tspan x="268.0" dy="0">词</tspan><tspan x="268.0" dy="27.139999999999997">库</tspan><tspan x="268.0" dy="27.139999999999997">导</tspan><tspan x="268.0" dy="27.139999999999997">入</tspan><tspan x="268.0" dy="27.139999999999997">模</tspan><tspan x="268.0" dy="27.139999999999997">块</tspan></text>
+<polyline points="356,306 356,342" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<rect x="324" y="350" width="64" height="340" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="356.0" y="455.83000000000004" text-anchor="middle" font-family="Microsoft YaHei, SimHei, Arial" font-size="23" font-weight="700" fill="#323232"><tspan x="356.0" dy="0">每</tspan><tspan x="356.0" dy="27.139999999999997">日</tspan><tspan x="356.0" dy="27.139999999999997">计</tspan><tspan x="356.0" dy="27.139999999999997">划</tspan><tspan x="356.0" dy="27.139999999999997">模</tspan><tspan x="356.0" dy="27.139999999999997">块</tspan></text>
+<polyline points="444,306 444,342" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<rect x="412" y="350" width="64" height="340" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="444.0" y="455.83000000000004" text-anchor="middle" font-family="Microsoft YaHei, SimHei, Arial" font-size="23" font-weight="700" fill="#323232"><tspan x="444.0" dy="0">单</tspan><tspan x="444.0" dy="27.139999999999997">词</tspan><tspan x="444.0" dy="27.139999999999997">学</tspan><tspan x="444.0" dy="27.139999999999997">习</tspan><tspan x="444.0" dy="27.139999999999997">模</tspan><tspan x="444.0" dy="27.139999999999997">块</tspan></text>
+<polyline points="532,306 532,342" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<rect x="500" y="350" width="64" height="340" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="532.0" y="469.4" text-anchor="middle" font-family="Microsoft YaHei, SimHei, Arial" font-size="23" font-weight="700" fill="#323232"><tspan x="532.0" dy="0">AI</tspan><tspan x="532.0" dy="27.139999999999997">例</tspan><tspan x="532.0" dy="27.139999999999997">句</tspan><tspan x="532.0" dy="27.139999999999997">模</tspan><tspan x="532.0" dy="27.139999999999997">块</tspan></text>
+<polyline points="620,306 620,342" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<rect x="588" y="350" width="64" height="340" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="620.0" y="455.83000000000004" text-anchor="middle" font-family="Microsoft YaHei, SimHei, Arial" font-size="23" font-weight="700" fill="#323232"><tspan x="620.0" dy="0">拼</tspan><tspan x="620.0" dy="27.139999999999997">写</tspan><tspan x="620.0" dy="27.139999999999997">挑</tspan><tspan x="620.0" dy="27.139999999999997">战</tspan><tspan x="620.0" dy="27.139999999999997">模</tspan><tspan x="620.0" dy="27.139999999999997">块</tspan></text>
+<polyline points="708,306 708,342" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<rect x="676" y="350" width="64" height="340" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="708.0" y="455.83000000000004" text-anchor="middle" font-family="Microsoft YaHei, SimHei, Arial" font-size="23" font-weight="700" fill="#323232"><tspan x="708.0" dy="0">统</tspan><tspan x="708.0" dy="27.139999999999997">计</tspan><tspan x="708.0" dy="27.139999999999997">排</tspan><tspan x="708.0" dy="27.139999999999997">行</tspan><tspan x="708.0" dy="27.139999999999997">模</tspan><tspan x="708.0" dy="27.139999999999997">块</tspan></text>
+<line x1="977" y1="306" x2="1329" y2="306" stroke="#323232" stroke-width="2.0" fill="none"/>
+<polyline points="977,306 977,342" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<rect x="945" y="350" width="64" height="340" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="977.0" y="469.4" text-anchor="middle" font-family="Microsoft YaHei, SimHei, Arial" font-size="23" font-weight="700" fill="#323232"><tspan x="977.0" dy="0">管</tspan><tspan x="977.0" dy="27.139999999999997">理</tspan><tspan x="977.0" dy="27.139999999999997">员</tspan><tspan x="977.0" dy="27.139999999999997">登</tspan><tspan x="977.0" dy="27.139999999999997">录</tspan></text>
+<polyline points="1065,306 1065,342" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<rect x="1033" y="350" width="64" height="340" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="1065.0" y="469.4" text-anchor="middle" font-family="Microsoft YaHei, SimHei, Arial" font-size="23" font-weight="700" fill="#323232"><tspan x="1065.0" dy="0">排</tspan><tspan x="1065.0" dy="27.139999999999997">行</tspan><tspan x="1065.0" dy="27.139999999999997">榜</tspan><tspan x="1065.0" dy="27.139999999999997">查</tspan><tspan x="1065.0" dy="27.139999999999997">看</tspan></text>
+<polyline points="1153,306 1153,342" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<rect x="1121" y="350" width="64" height="340" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="1153.0" y="482.97" text-anchor="middle" font-family="Microsoft YaHei, SimHei, Arial" font-size="23" font-weight="700" fill="#323232"><tspan x="1153.0" dy="0">个</tspan><tspan x="1153.0" dy="27.139999999999997">人</tspan><tspan x="1153.0" dy="27.139999999999997">中</tspan><tspan x="1153.0" dy="27.139999999999997">心</tspan></text>
+<polyline points="1241,306 1241,342" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<rect x="1209" y="350" width="64" height="340" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="1241.0" y="442.26" text-anchor="middle" font-family="Microsoft YaHei, SimHei, Arial" font-size="23" font-weight="700" fill="#323232"><tspan x="1241.0" dy="0">T</tspan><tspan x="1241.0" dy="27.139999999999997">o</tspan><tspan x="1241.0" dy="27.139999999999997">k</tspan><tspan x="1241.0" dy="27.139999999999997">e</tspan><tspan x="1241.0" dy="27.139999999999997">n</tspan><tspan x="1241.0" dy="27.139999999999997">存</tspan><tspan x="1241.0" dy="27.139999999999997">储</tspan></text>
+<polyline points="1329,306 1329,342" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<rect x="1297" y="350" width="64" height="340" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="1329.0" y="482.97" text-anchor="middle" font-family="Microsoft YaHei, SimHei, Arial" font-size="23" font-weight="700" fill="#323232"><tspan x="1329.0" dy="0">路</tspan><tspan x="1329.0" dy="27.139999999999997">由</tspan><tspan x="1329.0" dy="27.139999999999997">守</tspan><tspan x="1329.0" dy="27.139999999999997">卫</tspan></text>
+<line x1="1642" y1="306" x2="2258" y2="306" stroke="#323232" stroke-width="2.0" fill="none"/>
+<polyline points="1642,306 1642,342" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<rect x="1610" y="350" width="64" height="340" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="1642.0" y="455.83000000000004" text-anchor="middle" font-family="Microsoft YaHei, SimHei, Arial" font-size="23" font-weight="700" fill="#323232"><tspan x="1642.0" dy="0">认</tspan><tspan x="1642.0" dy="27.139999999999997">证</tspan><tspan x="1642.0" dy="27.139999999999997">鉴</tspan><tspan x="1642.0" dy="27.139999999999997">权</tspan><tspan x="1642.0" dy="27.139999999999997">模</tspan><tspan x="1642.0" dy="27.139999999999997">块</tspan></text>
+<polyline points="1730,306 1730,342" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<rect x="1698" y="350" width="64" height="340" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="1730.0" y="455.83000000000004" text-anchor="middle" font-family="Microsoft YaHei, SimHei, Arial" font-size="23" font-weight="700" fill="#323232"><tspan x="1730.0" dy="0">用</tspan><tspan x="1730.0" dy="27.139999999999997">户</tspan><tspan x="1730.0" dy="27.139999999999997">资</tspan><tspan x="1730.0" dy="27.139999999999997">料</tspan><tspan x="1730.0" dy="27.139999999999997">模</tspan><tspan x="1730.0" dy="27.139999999999997">块</tspan></text>
+<polyline points="1818,306 1818,342" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<rect x="1786" y="350" width="64" height="340" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="1818.0" y="455.83000000000004" text-anchor="middle" font-family="Microsoft YaHei, SimHei, Arial" font-size="23" font-weight="700" fill="#323232"><tspan x="1818.0" dy="0">计</tspan><tspan x="1818.0" dy="27.139999999999997">划</tspan><tspan x="1818.0" dy="27.139999999999997">同</tspan><tspan x="1818.0" dy="27.139999999999997">步</tspan><tspan x="1818.0" dy="27.139999999999997">模</tspan><tspan x="1818.0" dy="27.139999999999997">块</tspan></text>
+<polyline points="1906,306 1906,342" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<rect x="1874" y="350" width="64" height="340" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="1906.0" y="455.83000000000004" text-anchor="middle" font-family="Microsoft YaHei, SimHei, Arial" font-size="23" font-weight="700" fill="#323232"><tspan x="1906.0" dy="0">学</tspan><tspan x="1906.0" dy="27.139999999999997">习</tspan><tspan x="1906.0" dy="27.139999999999997">统</tspan><tspan x="1906.0" dy="27.139999999999997">计</tspan><tspan x="1906.0" dy="27.139999999999997">模</tspan><tspan x="1906.0" dy="27.139999999999997">块</tspan></text>
+<polyline points="1994,306 1994,342" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<rect x="1962" y="350" width="64" height="340" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="1994.0" y="469.4" text-anchor="middle" font-family="Microsoft YaHei, SimHei, Arial" font-size="23" font-weight="700" fill="#323232"><tspan x="1994.0" dy="0">AI</tspan><tspan x="1994.0" dy="27.139999999999997">生</tspan><tspan x="1994.0" dy="27.139999999999997">成</tspan><tspan x="1994.0" dy="27.139999999999997">模</tspan><tspan x="1994.0" dy="27.139999999999997">块</tspan></text>
+<polyline points="2082,306 2082,342" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<rect x="2050" y="350" width="64" height="340" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="2082.0" y="469.4" text-anchor="middle" font-family="Microsoft YaHei, SimHei, Arial" font-size="23" font-weight="700" fill="#323232"><tspan x="2082.0" dy="0">排</tspan><tspan x="2082.0" dy="27.139999999999997">行</tspan><tspan x="2082.0" dy="27.139999999999997">榜</tspan><tspan x="2082.0" dy="27.139999999999997">接</tspan><tspan x="2082.0" dy="27.139999999999997">口</tspan></text>
+<polyline points="2170,306 2170,342" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<rect x="2138" y="350" width="64" height="340" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="2170.0" y="482.97" text-anchor="middle" font-family="Microsoft YaHei, SimHei, Arial" font-size="23" font-weight="700" fill="#323232"><tspan x="2170.0" dy="0">后</tspan><tspan x="2170.0" dy="27.139999999999997">台</tspan><tspan x="2170.0" dy="27.139999999999997">接</tspan><tspan x="2170.0" dy="27.139999999999997">口</tspan></text>
+<polyline points="2258,306 2258,342" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<rect x="2226" y="350" width="64" height="340" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="2258.0" y="469.4" text-anchor="middle" font-family="Microsoft YaHei, SimHei, Arial" font-size="23" font-weight="700" fill="#323232"><tspan x="2258.0" dy="0">数</tspan><tspan x="2258.0" dy="27.139999999999997">据</tspan><tspan x="2258.0" dy="27.139999999999997">持</tspan><tspan x="2258.0" dy="27.139999999999997">久</tspan><tspan x="2258.0" dy="27.139999999999997">化</tspan></text>
+</svg>

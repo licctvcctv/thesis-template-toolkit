@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Debug 构建：允许 HTTP 明文，便于真机访问局域网内 Spring Boot（如 192.168.x.x）。Release 仍使用 main 下的受限配置。 -->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+</network-security-config>

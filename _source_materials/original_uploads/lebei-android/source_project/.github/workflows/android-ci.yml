@@ -1,0 +1,48 @@
+name: Android CI
+
+on:
+  pull_request:
+    paths:
+      - "lebei/**"
+      - ".github/workflows/android-ci.yml"
+  push:
+    branches:
+      - main
+      - "feature/**"
+    paths:
+      - "lebei/**"
+      - ".github/workflows/android-ci.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  unit-test:
+    name: Android unit tests
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: lebei
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Set up JDK
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: "17"
+          cache: gradle
+
+      - name: Install Android platform
+        run: |
+          yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses >/dev/null || true
+          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "platforms;android-33" "build-tools;33.0.2"
+
+      - name: Make Gradle executable
+        run: chmod +x ./gradlew
+
+      - name: Run Android unit tests
+        run: ./gradlew :app:testDebugUnitTest --no-daemon

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_learn">
+
+    <fragment
+        android:id="@+id/navigation_learn"
+        android:name="com.example.lebei.LearnFragment"
+        android:label="学习"
+        tools:layout="@layout/fragment_learn" />
+
+    <fragment
+        android:id="@+id/navigation_plan"
+        android:name="com.example.lebei.PlanFragment"
+        android:label="计划"
+        tools:layout="@layout/fragment_plan" />
+
+    <fragment
+        android:id="@+id/navigation_statistics"
+        android:name="com.example.lebei.StatisticsFragment"
+        android:label="统计"
+        tools:layout="@layout/fragment_statistics" />
+
+    <fragment
+        android:id="@+id/navigation_daily_review"
+        android:name="com.example.lebei.DailyHistoryFragment"
+        android:label="回顾"
+        tools:layout="@layout/fragment_daily_history">
+
+        <action
+            android:id="@+id/action_navigation_daily_review_to_navigation_daily_review_detail"
+            app:destination="@id/navigation_daily_review_detail" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_daily_review_detail"
+        android:name="com.example.lebei.DailyReviewDetailFragment"
+        android:label="当日内容"
+        tools:layout="@layout/fragment_daily_review_detail">
+
+        <argument
+            android:name="planId"
+            app:argType="long" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.example.lebei.ProfileFragment"
+        android:label="我的"
+        tools:layout="@layout/fragment_profile" />
+</navigation>

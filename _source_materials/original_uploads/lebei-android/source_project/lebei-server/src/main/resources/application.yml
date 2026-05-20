@@ -1,0 +1,31 @@
+spring:
+  config:
+    import: optional:classpath:application-secrets.yml
+  datasource:
+    url: jdbc:mysql://localhost:3306/lebei?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    username: root
+    password: qaz1234567
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+
+server:
+  port: 8080
+
+lebei:
+  ai:
+    # 千帆 v2：仅需 IAM「API Key」整串（bce-v3/ALTAK-...），见 application-secrets.example.yml
+    qianfan-api-key: ${QIANFAN_API_KEY:}
+    # 模型 ID 以千帆文档/控制台已开通为准，例如 ernie-3.5-8k、ernie-speed-8k
+    qianfan-model: ernie-3.5-8k
+  jwt:
+    secret: "ChangeThisToAtLeast256BitsSecretKeyForProductionUseRandomBytes!!"
+    expiration-ms: 86400000
+  admin:
+    username: admin
+    initial-password: Admin123456!

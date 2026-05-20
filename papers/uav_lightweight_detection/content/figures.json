@@ -42,72 +42,176 @@
       "width_in": 5.8,
       "source": "project_result"
     },
+    "dataset_distribution": {
+      "image": "generated:dataset_distribution",
+      "caption": "图4.2 VisDrone目标类别实例数量分布图",
+      "width_in": 6.0,
+      "source": "generated_chart"
+    },
     "preprocess_samples": {
       "image": "images/source_results/improved_prediction_samples_detect.jpg",
-      "caption": "图4.2 数据预处理与检测样例",
+      "caption": "图4.3 数据预处理与检测样例",
       "width_in": 5.8,
       "source": "project_result"
     },
     "best_metrics": {
       "image": "generated:best_metrics",
-      "caption": "图4.3 各模型最佳Epoch性能指标对比",
+      "caption": "图4.4 各模型最佳Epoch性能指标对比",
       "width_in": 5.9,
+      "source": "generated_chart"
+    },
+    "best_epoch": {
+      "image": "generated:best_epoch",
+      "caption": "图4.5 各模型最佳Epoch对比图",
+      "width_in": 5.8,
+      "source": "generated_chart"
+    },
+    "complexity_comparison": {
+      "image": "generated:complexity_comparison",
+      "caption": "图4.6 各模型参数量与计算量对比图",
+      "width_in": 5.9,
+      "source": "generated_chart"
+    },
+    "precision_recall_scatter": {
+      "image": "generated:precision_recall_scatter",
+      "caption": "图4.7 验证集Precision-Recall平衡图",
+      "width_in": 5.8,
       "source": "generated_chart"
     },
     "module_delta": {
       "image": "generated:module_delta",
-      "caption": "图4.4 三类改进模块关键指标变化图",
+      "caption": "图4.8 三类改进模块关键指标变化图",
       "width_in": 6.2,
       "source": "generated_chart"
     },
     "class_ap": {
       "image": "generated:class_ap",
-      "caption": "图4.5 各类别AP50对比图",
+      "caption": "图4.9 各类别AP50对比图",
       "width_in": 6.0,
       "source": "generated_chart"
     },
     "small_object_ap": {
       "image": "generated:small_object_ap",
-      "caption": "图4.6 小目标类别AP50对比图",
+      "caption": "图4.10 小目标类别AP50对比图",
       "width_in": 6.1,
+      "source": "generated_chart"
+    },
+    "small_object_mean_ap": {
+      "image": "generated:small_object_mean_ap",
+      "caption": "图4.11 小目标类别平均AP50对比图",
+      "width_in": 5.8,
+      "source": "generated_chart"
+    },
+    "ap_heatmap": {
+      "image": "generated:ap_heatmap",
+      "caption": "图4.12 各模型类别AP50热力图",
+      "width_in": 6.2,
       "source": "generated_chart"
     },
     "loss_curves": {
       "image": "generated:loss_curves",
-      "caption": "图4.7 四类模型损失曲线图",
+      "caption": "图4.13 四类模型损失曲线图",
       "width_in": 6.2,
       "source": "generated_chart"
     },
     "final_loss": {
       "image": "generated:final_loss",
-      "caption": "图4.8 四类模型末轮验证损失对比图",
+      "caption": "图4.14 四类模型末轮验证损失对比图",
       "width_in": 5.9,
       "source": "generated_chart"
     },
     "map_curves": {
       "image": "generated:map_curves",
-      "caption": "图4.9 四类模型mAP曲线图",
+      "caption": "图4.15 四类模型mAP曲线图",
       "width_in": 6.1,
       "source": "generated_chart"
     },
     "fps_chart": {
       "image": "generated:fps_chart",
-      "caption": "图4.10 各模型推理速度对比图",
+      "caption": "图4.16 各模型推理速度对比图",
       "width_in": 5.6,
+      "source": "generated_chart"
+    },
+    "tradeoff_scatter": {
+      "image": "generated:tradeoff_scatter",
+      "caption": "图4.17 测试集精度与速度权衡图",
+      "width_in": 5.8,
       "source": "generated_chart"
     },
     "test_metrics": {
       "image": "generated:test_metrics",
-      "caption": "图4.11 测试集综合评价图",
+      "caption": "图4.18 测试集综合评价图",
       "width_in": 6.2,
       "source": "generated_chart"
     }
   },
   "generated_charts": {
+    "dataset_distribution": {
+      "type": "dataset_distribution",
+      "path": "images/source_results/dataset_class_distribution_zh.png",
+      "title": "VisDrone目标类别实例数量分布",
+      "counts": [
+        {
+          "label": "行人",
+          "count": 79335
+        },
+        {
+          "label": "人群",
+          "count": 27059
+        },
+        {
+          "label": "自行车",
+          "count": 10480
+        },
+        {
+          "label": "轿车",
+          "count": 144866
+        },
+        {
+          "label": "面包车",
+          "count": 24956
+        },
+        {
+          "label": "卡车",
+          "count": 12875
+        },
+        {
+          "label": "三轮车",
+          "count": 4812
+        },
+        {
+          "label": "遮篷三轮",
+          "count": 3246
+        },
+        {
+          "label": "公交车",
+          "count": 5926
+        },
+        {
+          "label": "摩托车",
+          "count": 29646
+        }
+      ]
+    },
     "best_metrics": {
       "type": "metrics_bar",
       "path": "images/source_results/model_best_metrics_corrected.png",
       "title": "各模型最佳Epoch性能指标对比"
+    },
+    "best_epoch": {
+      "type": "best_epoch_bar",
+      "path": "images/source_results/best_epoch_comparison_zh.png",
+      "title": "各模型最佳Epoch对比"
+    },
+    "complexity_comparison": {
+      "type": "complexity_comparison",
+      "path": "images/source_results/complexity_comparison_zh.png",
+      "title": "各模型参数量与计算量对比"
+    },
+    "precision_recall_scatter": {
+      "type": "precision_recall_scatter",
+      "path": "images/source_results/precision_recall_balance_zh.png",
+      "title": "验证集Precision-Recall平衡"
     },
     "module_delta": {
       "type": "module_delta_chart",
@@ -124,6 +228,18 @@
       "type": "small_object_ap_bar",
       "path": "images/source_results/small_object_ap50_comparison_zh.png",
       "title": "小目标类别AP50对比",
+      "evaluation_csv": "/Users/a136/vs/45425/thesis_project/experiments/uav_lightweight_detection/source_zip/yolo__v82 - 副本 (2)/results/evaluation_results.csv"
+    },
+    "small_object_mean_ap": {
+      "type": "small_object_mean_ap",
+      "path": "images/source_results/small_object_mean_ap50_zh.png",
+      "title": "小目标类别平均AP50对比",
+      "evaluation_csv": "/Users/a136/vs/45425/thesis_project/experiments/uav_lightweight_detection/source_zip/yolo__v82 - 副本 (2)/results/evaluation_results.csv"
+    },
+    "ap_heatmap": {
+      "type": "ap_heatmap",
+      "path": "images/source_results/ap50_heatmap_zh.png",
+      "title": "各模型类别AP50热力图",
       "evaluation_csv": "/Users/a136/vs/45425/thesis_project/experiments/uav_lightweight_detection/source_zip/yolo__v82 - 副本 (2)/results/evaluation_results.csv"
     },
     "loss_curves": {
@@ -145,6 +261,12 @@
       "type": "fps_bar",
       "path": "images/source_results/fps_comparison_zh.png",
       "title": "各模型推理速度对比"
+    },
+    "tradeoff_scatter": {
+      "type": "tradeoff_scatter",
+      "path": "images/source_results/tradeoff_scatter_zh.png",
+      "title": "测试集精度与速度权衡",
+      "evaluation_csv": "/Users/a136/vs/45425/thesis_project/experiments/uav_lightweight_detection/source_zip/yolo__v82 - 副本 (2)/results/evaluation_results.csv"
     },
     "test_metrics": {
       "type": "test_metrics_chart",

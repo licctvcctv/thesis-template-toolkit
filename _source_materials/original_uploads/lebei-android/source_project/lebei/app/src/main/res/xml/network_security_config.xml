@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Release：仅允许下列主机使用 HTTP。真机调试请用 Debug 包，或在 debug 变体中覆盖本文件。 -->
+<network-security-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">10.0.2.2</domain>
+        <domain includeSubdomains="true">localhost</domain>
+        <domain includeSubdomains="true">127.0.0.1</domain>
+        <!-- 真机连本机后端时，把下面改成你电脑在局域网中的 IP（与 build.gradle.kts 里 API_BASE_URL 一致） -->
+        <domain includeSubdomains="true">192.168.31.71</domain>
+    </domain-config>
+</network-security-config>

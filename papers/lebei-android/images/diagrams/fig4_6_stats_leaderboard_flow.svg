@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1700" height="980" viewBox="0 0 1700 980">
+<defs>
+<marker id="arrow" viewBox="0 0 14 10" refX="10" refY="5" markerWidth="14" markerHeight="10" orient="auto" markerUnits="strokeWidth">
+<path d="M 0 0 L 14 5 L 0 10 Z" fill="#323232" stroke="#323232" stroke-width="1"/>
+</marker>
+</defs>
+<rect x="0" y="0" width="1700" height="980" fill="#ffffff"/>
+<rect x="90" y="155" width="330" height="92" rx="10" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="255.0" y="194.39999999999998" text-anchor="middle" font-family="Microsoft YaHei, SimSun, Arial" font-size="22" font-weight="700" fill="#323232"><tspan x="255.0" dy="0">学习行为</tspan><tspan x="255.0" dy="29.040000000000003">简单/困难、拼写答题</tspan></text>
+<rect x="90" y="435" width="330" height="92" rx="10" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="255.0" y="474.40000000000003" text-anchor="middle" font-family="Microsoft YaHei, SimSun, Arial" font-size="22" font-weight="700" fill="#323232"><tspan x="255.0" dy="0">本地Room统计</tspan><tspan x="255.0" dy="29.040000000000003">已学、掌握、复习次数</tspan></text>
+<rect x="625" y="285" width="360" height="100" rx="10" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="805.0" y="328.40000000000003" text-anchor="middle" font-family="Microsoft YaHei, SimSun, Arial" font-size="22" font-weight="700" fill="#323232"><tspan x="805.0" dy="0">Spring Boot统计接口</tspan><tspan x="805.0" dy="29.040000000000003">study-word / learned-words</tspan></text>
+<rect x="1200" y="155" width="330" height="92" rx="10" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="1365.0" y="194.39999999999998" text-anchor="middle" font-family="Microsoft YaHei, SimSun, Arial" font-size="22" font-weight="700" fill="#323232"><tspan x="1365.0" dy="0">MySQL users表</tspan><tspan x="1365.0" dy="29.040000000000003">积分、今日学习、掌握词</tspan></text>
+<rect x="1200" y="435" width="330" height="92" rx="10" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="1365.0" y="474.40000000000003" text-anchor="middle" font-family="Microsoft YaHei, SimSun, Arial" font-size="22" font-weight="700" fill="#323232"><tspan x="1365.0" dy="0">排行榜接口</tspan><tspan x="1365.0" dy="29.040000000000003">按积分和已学数排序</tspan></text>
+<rect x="625" y="660" width="360" height="100" rx="10" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="805.0" y="703.4" text-anchor="middle" font-family="Microsoft YaHei, SimSun, Arial" font-size="22" font-weight="700" fill="#323232"><tspan x="805.0" dy="0">App与后台展示</tspan><tspan x="805.0" dy="29.040000000000003">排行榜/统计页/管理端</tspan></text>
+<line x1="255" y1="247" x2="255" y2="429" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<polyline points="420,480 625,335" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<polyline points="255,247 625,335" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<polyline points="985,335 1200,200" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<line x1="1365" y1="247" x2="1365" y2="429" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<polyline points="1200,480 985,710" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<polyline points="625,710 420,480" stroke="#323232" stroke-width="2.0" fill="none" stroke-dasharray="10,6" marker-end="url(#arrow)"/>
+<text x="430" y="300" text-anchor="start" font-family="Microsoft YaHei, SimSun, Arial" font-size="19" font-weight="700" fill="#323232">同步统计</text>
+<text x="1060" y="190" text-anchor="start" font-family="Microsoft YaHei, SimSun, Arial" font-size="19" font-weight="700" fill="#323232">写入/更新</text>
+<text x="1070" y="590" text-anchor="start" font-family="Microsoft YaHei, SimSun, Arial" font-size="19" font-weight="700" fill="#323232">查询排行</text>
+<text x="410" y="640" text-anchor="start" font-family="Microsoft YaHei, SimSun, Arial" font-size="19" font-weight="700" fill="#323232">统计页读取</text>
+</svg>

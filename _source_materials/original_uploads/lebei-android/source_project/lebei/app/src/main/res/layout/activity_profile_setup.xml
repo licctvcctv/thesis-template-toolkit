@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="欢迎！完善信息"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="以下英语水平与年龄段将用于学习页例句与短文（服务端调用百度千帆文心大模型生成）。"
+            android:textSize="14sp"
+            android:textColor="#868e96"
+            android:layout_marginBottom="24dp"/>
+
+        <!-- 年龄组 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1. 请选择你的年龄段"
+            android:textSize="18sp"
+            android:layout_marginBottom="10dp"/>
+
+        <RadioGroup
+            android:id="@+id/rg_age_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp">
+            <RadioButton android:id="@+id/rb_child" android:text="儿童 (6-12岁)"/>
+            <RadioButton android:id="@+id/rb_teen" android:text="青少年 (13-17岁)"/>
+            <RadioButton android:id="@+id/rb_adult" android:text="成人 (18岁及以上)"/>
+        </RadioGroup>
+
+        <!-- 水平自评 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="2. 请自评你的英语水平"
+            android:textSize="18sp"
+            android:layout_marginBottom="10dp"/>
+
+        <RadioGroup
+            android:id="@+id/rg_level"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp">
+            <RadioButton android:id="@+id/rb_junior" android:text="初中水平"/>
+            <RadioButton android:id="@+id/rb_senior" android:text="高中水平"/>
+            <RadioButton android:id="@+id/rb_cet4" android:text="大学英语四级"/>
+            <RadioButton android:id="@+id/rb_cet6" android:text="大学英语六级"/>
+        </RadioGroup>
+
+        <!-- 词库选择 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="3. 请选择你要学习的词库"
+            android:textSize="18sp"
+            android:layout_marginBottom="10dp"/>
+
+        <Spinner
+            android:id="@+id/spinner_book"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginBottom="40dp"/>
+
+        <Button
+            android:id="@+id/btn_finish_setup"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="开始学习之旅"
+            android:textSize="18sp"/>
+
+    </LinearLayout>
+</ScrollView>

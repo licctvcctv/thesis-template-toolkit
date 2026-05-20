@@ -128,6 +128,7 @@ def add_figure(doc, figure: dict, generated_assets: dict[str, Path]):
         raise FileNotFoundError(image_path)
     paragraph = doc.add_paragraph()
     paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    paragraph.paragraph_format.keep_with_next = True
     run = paragraph.add_run()
     run.add_picture(str(image_path), width=Inches(figure.get("width_in", 6.0)))
     add_caption(doc, figure["caption"])
@@ -575,12 +576,197 @@ def generate_test_metrics_chart(metrics: dict, config: dict) -> Path:
     return out
 
 
+def generate_dataset_distribution(config: dict) -> Path:
+    configure_plot_fonts()
+    out = resolve_asset(config["path"])
+    counts = config["counts"]
+    ordered = sorted(counts, key=lambda item: item["count"], reverse=True)
+    labels = [item["label"] for item in ordered]
+    values = [int(item["count"]) for item in ordered]
+
+    fig, ax = plt.subplots(figsize=(10.6, 5.4))
+    colors = ["#2563EB", "#0EA5E9", "#14B8A6", "#22C55E", "#84CC16", "#F59E0B", "#F97316", "#EF4444", "#A855F7", "#64748B"]
+    bars = ax.barh(labels, values, color=colors[: len(labels)])
+    ax.invert_yaxis()
+    ax.set_xlabel("目标实例数量")
+    ax.set_title(config.get("title", "数据集类别实例数量分布"))
+    ax.grid(axis="x", alpha=0.25)
+    for bar, value in zip(bars, values):
+        ax.text(value + max(values) * 0.012, bar.get_y() + bar.get_height() / 2, f"{value:,}", va="center", fontsize=8)
+    ax.set_xlim(0, max(values) * 1.18)
+    save_plot(out)
+    return out
+
+
+def read_evaluation_rows(config: dict) -> list[dict]:
+    csv_path = Path(config["evaluation_csv"])
+    with csv_path.open(encoding="utf-8") as f:
+        return list(csv.DictReader(f))
+
+
+def generate_tradeoff_scatter(config: dict) -> Path:
+    configure_plot_fonts()
+    out = resolve_asset(config["path"])
+    rows = read_evaluation_rows(config)
+    labels = ["基准模型", "Ghost轻量化", "Ghost-CBAM", "完整模型"]
+    colors = ["#3B82F6", "#22A06B", "#F59E0B", "#EF4444"]
+
+    fig, ax = plt.subplots(figsize=(8.4, 5.2))
+    for row, label, color in zip(rows, labels, colors):
+        fps = float(row["FPS"])
+        map50 = float(row["mAP50"])
+        params = float(row["Params(M)"])
+        ax.scatter(fps, map50, s=params * 55, color=color, alpha=0.78, edgecolor="#1F2937", linewidth=0.8, label=label)
+        ax.text(fps + 1.0, map50 + 0.0015, label, fontsize=8)
+    ax.set_xlabel("推理速度（FPS）")
+    ax.set_ylabel("测试集 mAP@50")
+    ax.set_title(config.get("title", "测试集精度与速度权衡"))
+    ax.grid(alpha=0.25)
+    ax.legend(fontsize=8, loc="lower right", title="气泡大小表示参数量", title_fontsize=8)
+    save_plot(out)
+    return out
+
+
+def generate_ap_heatmap(config: dict) -> Path:
+    configure_plot_fonts()
+    out = resolve_asset(config["path"])
+    rows = read_evaluation_rows(config)
+    models = ["基准模型", "Ghost轻量化", "Ghost-CBAM", "完整模型"]
+    classes = [
+        ("pedestrian", "行人"),
+        ("people", "人群"),
+        ("bicycle", "自行车"),
+        ("car", "轿车"),
+        ("van", "面包车"),
+        ("truck", "卡车"),
+        ("tricycle", "三轮车"),
+        ("awning-tricycle", "遮篷三轮"),
+        ("bus", "公交车"),
+        ("motor", "摩托车"),
+    ]
+    data = [[float(row[f"AP50_{name}"]) for name, _ in classes] for row in rows]
+    labels = [label for _, label in classes]
+
+    fig, ax = plt.subplots(figsize=(11.2, 4.8))
+    image = ax.imshow(data, cmap="YlGnBu", vmin=0, vmax=max(max(row) for row in data))
+    ax.set_xticks(range(len(labels)), labels, rotation=25, ha="right")
+    ax.set_yticks(range(len(models)), models)
+    ax.set_title(config.get("title", "各模型类别AP50热力图"))
+    for i, row in enumerate(data):
+        for j, value in enumerate(row):
+            color = "white" if value > 0.46 else "#111827"
+            ax.text(j, i, f"{value:.2f}", ha="center", va="center", fontsize=7, color=color)
+    colorbar = fig.colorbar(image, ax=ax, fraction=0.026, pad=0.02)
+    colorbar.set_label("AP50")
+    save_plot(out)
+    return out
+
+
+def generate_best_epoch_chart(metrics: dict, config: dict) -> Path:
+    configure_plot_fonts()
+    out = resolve_asset(config["path"])
+    rows = metrics["validation_best_map50"]
+    labels = ["基准模型", "Ghost轻量化", "Ghost-CBAM", "完整模型"]
+    values = [int(row["best_epoch"]) for row in rows]
+    colors = ["#3B82F6", "#22A06B", "#F59E0B", "#EF4444"]
+
+    plt.figure(figsize=(8.8, 4.8))
+    bars = plt.bar(labels, values, color=colors)
+    for bar, value in zip(bars, values):
+        plt.text(bar.get_x() + bar.get_width() / 2, value + 2, f"{value}", ha="center", fontsize=9)
+    plt.ylabel("最佳Epoch")
+    plt.ylim(0, max(values) + 24)
+    plt.title(config.get("title", "各模型最佳Epoch对比"))
+    plt.grid(axis="y", alpha=0.25)
+    save_plot(out)
+    return out
+
+
+def generate_complexity_comparison(metrics: dict, config: dict) -> Path:
+    configure_plot_fonts()
+    out = resolve_asset(config["path"])
+    rows = metrics["validation_best_map50"]
+    labels = ["基准模型", "Ghost轻量化", "Ghost-CBAM", "完整模型"]
+    params = [float(row["params_m"]) for row in rows]
+    gflops = [float(row["gflops"]) for row in rows]
+    x = range(len(labels))
+    width = 0.34
+
+    plt.figure(figsize=(9.2, 4.9))
+    bars1 = plt.bar([i - width / 2 for i in x], params, width=width, label="参数量(M)", color="#60A5FA")
+    bars2 = plt.bar([i + width / 2 for i in x], gflops, width=width, label="GFLOPs", color="#34D399")
+    for bars in (bars1, bars2):
+        for bar in bars:
+            value = bar.get_height()
+            plt.text(bar.get_x() + bar.get_width() / 2, value + 0.35, f"{value:.2f}", ha="center", fontsize=8)
+    plt.xticks(list(x), labels)
+    plt.ylabel("复杂度数值")
+    plt.ylim(0, max(gflops) + 5.5)
+    plt.title(config.get("title", "模型复杂度对比"))
+    plt.grid(axis="y", alpha=0.25)
+    plt.legend(fontsize=8)
+    save_plot(out)
+    return out
+
+
+def generate_small_object_mean_ap(config: dict) -> Path:
+    configure_plot_fonts()
+    out = resolve_asset(config["path"])
+    rows = read_evaluation_rows(config)
+    labels = ["基准模型", "Ghost轻量化", "Ghost-CBAM", "完整模型"]
+    small_classes = ["pedestrian", "people", "bicycle", "tricycle", "awning-tricycle", "motor"]
+    values = []
+    for row in rows:
+        values.append(sum(float(row[f"AP50_{name}"]) for name in small_classes) / len(small_classes))
+    colors = ["#3B82F6", "#22A06B", "#F59E0B", "#EF4444"]
+
+    plt.figure(figsize=(8.8, 4.8))
+    bars = plt.bar(labels, values, color=colors)
+    for bar, value in zip(bars, values):
+        plt.text(bar.get_x() + bar.get_width() / 2, value + 0.004, f"{value:.4f}", ha="center", fontsize=8)
+    plt.ylabel("小目标平均AP50")
+    plt.ylim(0, max(values) + 0.045)
+    plt.title(config.get("title", "小目标类别平均AP50对比"))
+    plt.grid(axis="y", alpha=0.25)
+    save_plot(out)
+    return out
+
+
+def generate_precision_recall_scatter(metrics: dict, config: dict) -> Path:
+    configure_plot_fonts()
+    out = resolve_asset(config["path"])
+    rows = metrics["validation_best_map50"]
+    labels = ["基准模型", "Ghost轻量化", "Ghost-CBAM", "完整模型"]
+    colors = ["#3B82F6", "#22A06B", "#F59E0B", "#EF4444"]
+
+    fig, ax = plt.subplots(figsize=(8.8, 5.0))
+    for row, label, color in zip(rows, labels, colors):
+        precision = float(row["precision"])
+        recall = float(row["recall"])
+        map50 = float(row["map50"])
+        ax.scatter(recall, precision, s=map50 * 1200, color=color, alpha=0.78, edgecolor="#1F2937", linewidth=0.8, label=label)
+        ax.text(recall + 0.0008, precision + 0.001, label, fontsize=8)
+    ax.set_xlabel("Recall")
+    ax.set_ylabel("Precision")
+    ax.set_title(config.get("title", "验证集Precision-Recall平衡"))
+    ax.grid(alpha=0.25)
+    ax.legend(fontsize=8, loc="lower right", title="气泡大小表示mAP@50", title_fontsize=8)
+    save_plot(out)
+    return out
+
+
 def generate_charts(figures: dict, metrics: dict) -> dict[str, Path]:
     generated = {}
     for key, config in figures.get("generated_charts", {}).items():
         chart_type = config["type"]
         if chart_type == "metrics_bar":
             generated[key] = generate_metrics_bar(metrics, config)
+        elif chart_type == "best_epoch_bar":
+            generated[key] = generate_best_epoch_chart(metrics, config)
+        elif chart_type == "complexity_comparison":
+            generated[key] = generate_complexity_comparison(metrics, config)
+        elif chart_type == "dataset_distribution":
+            generated[key] = generate_dataset_distribution(config)
         elif chart_type == "training_loss_curves":
             generated[key] = generate_loss_curves(figures, config)
         elif chart_type == "map_curves":
@@ -589,6 +775,14 @@ def generate_charts(figures: dict, metrics: dict) -> dict[str, Path]:
             generated[key] = generate_class_ap(config)
         elif chart_type == "small_object_ap_bar":
             generated[key] = generate_small_object_ap(config)
+        elif chart_type == "small_object_mean_ap":
+            generated[key] = generate_small_object_mean_ap(config)
+        elif chart_type == "tradeoff_scatter":
+            generated[key] = generate_tradeoff_scatter(config)
+        elif chart_type == "precision_recall_scatter":
+            generated[key] = generate_precision_recall_scatter(metrics, config)
+        elif chart_type == "ap_heatmap":
+            generated[key] = generate_ap_heatmap(config)
         elif chart_type == "fps_bar":
             generated[key] = generate_fps_bar(metrics, config)
         elif chart_type == "module_delta_chart":

@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="1160" viewBox="0 0 1500 1160">
+<defs>
+<marker id="arrow" viewBox="0 0 14 10" refX="10" refY="5" markerWidth="14" markerHeight="10" orient="auto" markerUnits="strokeWidth">
+<path d="M 0 0 L 14 5 L 0 10 Z" fill="#323232" stroke="#323232" stroke-width="1"/>
+</marker>
+</defs>
+<rect x="0" y="0" width="1500" height="1160" fill="#ffffff"/>
+<rect x="585" y="35" width="330" height="62" rx="10" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="750.0" y="73.56" text-anchor="middle" font-family="Microsoft YaHei, SimHei, Arial" font-size="21" font-weight="700" fill="#323232">开始学习页</text>
+<rect x="585" y="145" width="330" height="70" rx="10" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="750.0" y="187.56" text-anchor="middle" font-family="Microsoft YaHei, SimHei, Arial" font-size="21" font-weight="700" fill="#323232">读取本地资料与Token</text>
+<rect x="585" y="265" width="330" height="70" rx="10" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="750.0" y="307.56" text-anchor="middle" font-family="Microsoft YaHei, SimHei, Arial" font-size="21" font-weight="700" fill="#323232">导入/补全本地词库</text>
+<rect x="585" y="385" width="330" height="70" rx="10" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="750.0" y="427.56" text-anchor="middle" font-family="Microsoft YaHei, SimHei, Arial" font-size="21" font-weight="700" fill="#323232">查询今日计划</text>
+<rect x="585" y="505" width="330" height="70" rx="10" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="750.0" y="547.56" text-anchor="middle" font-family="Microsoft YaHei, SimHei, Arial" font-size="21" font-weight="700" fill="#323232">抽取新词与到期复习词</text>
+<rect x="585" y="625" width="330" height="70" rx="10" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="750.0" y="667.56" text-anchor="middle" font-family="Microsoft YaHei, SimHei, Arial" font-size="21" font-weight="700" fill="#323232">展示单词卡片</text>
+<rect x="180" y="760" width="330" height="70" rx="10" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="345.0" y="802.56" text-anchor="middle" font-family="Microsoft YaHei, SimHei, Arial" font-size="21" font-weight="700" fill="#323232">生成AI例句/短文</text>
+<rect x="585" y="760" width="330" height="70" rx="10" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="750.0" y="802.56" text-anchor="middle" font-family="Microsoft YaHei, SimHei, Arial" font-size="21" font-weight="700" fill="#323232">用户选择简单/困难</text>
+<rect x="990" y="760" width="330" height="70" rx="10" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="1155.0" y="802.56" text-anchor="middle" font-family="Microsoft YaHei, SimHei, Arial" font-size="21" font-weight="700" fill="#323232">拼写复习挑战</text>
+<rect x="585" y="900" width="330" height="70" rx="10" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="750.0" y="942.56" text-anchor="middle" font-family="Microsoft YaHei, SimHei, Arial" font-size="21" font-weight="700" fill="#323232">更新Room学习进度</text>
+<rect x="585" y="1020" width="330" height="70" rx="10" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="750.0" y="1062.56" text-anchor="middle" font-family="Microsoft YaHei, SimHei, Arial" font-size="21" font-weight="700" fill="#323232">同步服务端统计</text>
+<line x1="750" y1="97" x2="750" y2="139" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<line x1="750" y1="215" x2="750" y2="259" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<line x1="750" y1="335" x2="750" y2="379" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<line x1="750" y1="455" x2="750" y2="499" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<line x1="750" y1="575" x2="750" y2="619" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<polyline points="750,695 345,695 345,754" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<line x1="750" y1="695" x2="750" y2="754" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<polyline points="750,695 1155,695 1155,754" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<polyline points="345,830 345,935 585,935" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<line x1="750" y1="830" x2="750" y2="894" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<polyline points="1155,830 1155,935 915,935" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<line x1="750" y1="970" x2="750" y2="1014" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+</svg>

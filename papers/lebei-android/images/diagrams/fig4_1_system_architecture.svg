@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="980" viewBox="0 0 1800 980">
+<defs>
+<marker id="arrow" viewBox="0 0 14 10" refX="10" refY="5" markerWidth="14" markerHeight="10" orient="auto" markerUnits="strokeWidth">
+<path d="M 0 0 L 14 5 L 0 10 Z" fill="#323232" stroke="#323232" stroke-width="1"/>
+</marker>
+</defs>
+<rect x="0" y="0" width="1800" height="980" fill="#ffffff"/>
+<rect x="650" y="35" width="500" height="64" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="900.0" y="77.08" text-anchor="middle" font-family="Microsoft YaHei, SimHei, Arial" font-size="28" font-weight="700" fill="#323232">系统总体架构</text>
+<rect x="70" y="175" width="360" height="130" rx="10" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="250.0" y="232.8" text-anchor="middle" font-family="Microsoft YaHei, SimSun, Arial" font-size="24" font-weight="700" fill="#323232"><tspan x="250.0" dy="0">Android App</tspan><tspan x="250.0" dy="31.68">原生页面 / Room / OkHttp</tspan></text>
+<rect x="70" y="520" width="360" height="115" rx="10" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="250.0" y="570.9" text-anchor="middle" font-family="Microsoft YaHei, SimSun, Arial" font-size="22" font-weight="700" fill="#323232"><tspan x="250.0" dy="0">Vue管理端</tspan><tspan x="250.0" dy="29.040000000000003">登录 / 排行榜 / 个人中心</tspan></text>
+<rect x="630" y="170" width="500" height="110" rx="10" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="880.0" y="218.1" text-anchor="middle" font-family="Microsoft YaHei, SimSun, Arial" font-size="23" font-weight="700" fill="#323232"><tspan x="880.0" dy="0">REST接口层</tspan><tspan x="880.0" dy="30.360000000000003">App接口 / 后台接口</tspan></text>
+<rect x="630" y="330" width="500" height="110" rx="10" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="880.0" y="378.09999999999997" text-anchor="middle" font-family="Microsoft YaHei, SimSun, Arial" font-size="23" font-weight="700" fill="#323232"><tspan x="880.0" dy="0">安全控制层</tspan><tspan x="880.0" dy="30.360000000000003">JWT鉴权过滤器</tspan></text>
+<rect x="630" y="490" width="500" height="110" rx="10" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="880.0" y="538.1" text-anchor="middle" font-family="Microsoft YaHei, SimSun, Arial" font-size="23" font-weight="700" fill="#323232"><tspan x="880.0" dy="0">业务服务层</tspan><tspan x="880.0" dy="30.360000000000003">用户服务 / AI服务</tspan></text>
+<rect x="630" y="650" width="500" height="110" rx="10" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="880.0" y="698.1" text-anchor="middle" font-family="Microsoft YaHei, SimSun, Arial" font-size="23" font-weight="700" fill="#323232"><tspan x="880.0" dy="0">数据访问层</tspan><tspan x="880.0" dy="30.360000000000003">JPA仓库 / Room DAO</tspan></text>
+<path d="M1360,193 C1360,169 1660,169 1660,193 L1660,302 C1660,326 1360,326 1360,302 Z" fill="#ffffff" stroke="#212930" stroke-width="2"/><ellipse cx="1510.0" cy="193" rx="150.0" ry="18" fill="#ffffff" stroke="#212930" stroke-width="2"/>
+<text x="1510.0" y="240.6" text-anchor="middle" font-family="Microsoft YaHei, SimSun, Arial" font-size="23" font-weight="700" fill="#323232"><tspan x="1510.0" dy="0">MySQL</tspan><tspan x="1510.0" dy="30.360000000000003">users表</tspan></text>
+<path d="M1360,448 C1360,424 1660,424 1660,448 L1660,557 C1660,581 1360,581 1360,557 Z" fill="#ffffff" stroke="#212930" stroke-width="2"/><ellipse cx="1510.0" cy="448" rx="150.0" ry="18" fill="#ffffff" stroke="#212930" stroke-width="2"/>
+<text x="1510.0" y="495.59999999999997" text-anchor="middle" font-family="Microsoft YaHei, SimSun, Arial" font-size="23" font-weight="700" fill="#323232"><tspan x="1510.0" dy="0">本地Room</tspan><tspan x="1510.0" dy="30.360000000000003">词库与每日计划</tspan></text>
+<rect x="1340" y="690" width="340" height="120" rx="10" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="1510.0" y="743.1" text-anchor="middle" font-family="Microsoft YaHei, SimSun, Arial" font-size="23" font-weight="700" fill="#323232"><tspan x="1510.0" dy="0">百度千帆</tspan><tspan x="1510.0" dy="30.360000000000003">例句与短文生成</tspan></text>
+<polyline points="430,240 630,225" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<polyline points="430,575 630,225" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<polyline points="880,280 880,330" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<polyline points="880,440 880,490" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<polyline points="880,600 880,650" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<polyline points="1130,705 1360,250" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<polyline points="430,265 1360,500" stroke="#323232" stroke-width="2.0" fill="none" stroke-dasharray="10,6" marker-end="url(#arrow)"/>
+<polyline points="1130,545 1340,750" stroke="#323232" stroke-width="2.0" fill="none" stroke-dasharray="10,6" marker-end="url(#arrow)"/>
+<text x="485" y="220" text-anchor="start" font-family="Microsoft YaHei, SimSun, Arial" font-size="18" font-weight="400" fill="#323232">HTTPS/JSON</text>
+<text x="1160" y="230" text-anchor="start" font-family="Microsoft YaHei, SimSun, Arial" font-size="18" font-weight="400" fill="#323232">JPA访问</text>
+<text x="1165" y="505" text-anchor="start" font-family="Microsoft YaHei, SimSun, Arial" font-size="18" font-weight="400" fill="#323232">离线学习数据</text>
+<text x="1162" y="725" text-anchor="start" font-family="Microsoft YaHei, SimSun, Arial" font-size="18" font-weight="400" fill="#323232">AI请求</text>
+</svg>

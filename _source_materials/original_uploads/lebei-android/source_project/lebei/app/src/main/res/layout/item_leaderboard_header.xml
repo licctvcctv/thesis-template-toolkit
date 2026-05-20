@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="#F1F3F5"
+    android:orientation="horizontal"
+    android:paddingHorizontal="12dp"
+    android:paddingVertical="10dp">
+
+    <TextView
+        android:layout_width="@dimen/leaderboard_col_rank"
+        android:layout_height="wrap_content"
+        android:text="排名"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="@dimen/leaderboard_col_username"
+        android:layout_height="wrap_content"
+        android:text="用户名"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="@dimen/leaderboard_col_learned"
+        android:layout_height="wrap_content"
+        android:text="已学习单词数"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="@dimen/leaderboard_col_mastered"
+        android:layout_height="wrap_content"
+        android:text="掌握词汇"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="@dimen/leaderboard_col_points"
+        android:layout_height="wrap_content"
+        android:text="积分"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="@dimen/leaderboard_col_today"
+        android:layout_height="wrap_content"
+        android:text="今日学习"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+</LinearLayout>

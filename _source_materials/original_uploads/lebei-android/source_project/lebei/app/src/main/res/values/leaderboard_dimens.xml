@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="leaderboard_col_rank">52dp</dimen>
+    <dimen name="leaderboard_col_username">120dp</dimen>
+    <dimen name="leaderboard_col_learned">112dp</dimen>
+    <dimen name="leaderboard_col_mastered">92dp</dimen>
+    <dimen name="leaderboard_col_points">64dp</dimen>
+    <dimen name="leaderboard_col_today">88dp</dimen>
+</resources>

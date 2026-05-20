@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1650" height="980" viewBox="0 0 1650 980">
+<defs>
+<marker id="arrow" viewBox="0 0 14 10" refX="10" refY="5" markerWidth="14" markerHeight="10" orient="auto" markerUnits="strokeWidth">
+<path d="M 0 0 L 14 5 L 0 10 Z" fill="#323232" stroke="#323232" stroke-width="1"/>
+</marker>
+</defs>
+<rect x="0" y="0" width="1650" height="980" fill="#ffffff"/>
+<rect x="80" y="110" width="310" height="76" rx="10" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="235.0" y="155.56" text-anchor="middle" font-family="Microsoft YaHei, SimHei, Arial" font-size="21" font-weight="700" fill="#323232">assets CSV词库</text>
+<rect x="80" y="350" width="310" height="76" rx="10" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="235.0" y="395.56" text-anchor="middle" font-family="Microsoft YaHei, SimHei, Arial" font-size="21" font-weight="700" fill="#323232">DataProvider导入</text>
+<rect x="520" y="350" width="310" height="76" rx="10" fill="#f3f5f7" stroke="#212930" stroke-width="2.0"/>
+<text x="675.0" y="395.56" text-anchor="middle" font-family="Microsoft YaHei, SimHei, Arial" font-size="21" font-weight="700" fill="#323232">word_table</text>
+<rect x="520" y="595" width="310" height="76" rx="10" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="675.0" y="640.56" text-anchor="middle" font-family="Microsoft YaHei, SimHei, Arial" font-size="21" font-weight="700" fill="#323232">DailyWordPicker</text>
+<rect x="960" y="595" width="310" height="76" rx="10" fill="#f3f5f7" stroke="#212930" stroke-width="2.0"/>
+<text x="1115.0" y="640.56" text-anchor="middle" font-family="Microsoft YaHei, SimHei, Arial" font-size="21" font-weight="700" fill="#323232">daily_plan</text>
+<rect x="960" y="350" width="310" height="76" rx="10" fill="#f3f5f7" stroke="#212930" stroke-width="2.0"/>
+<text x="1115.0" y="395.56" text-anchor="middle" font-family="Microsoft YaHei, SimHei, Arial" font-size="21" font-weight="700" fill="#323232">daily_plan_word</text>
+<rect x="520" y="110" width="310" height="76" rx="10" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="675.0" y="155.56" text-anchor="middle" font-family="Microsoft YaHei, SimHei, Arial" font-size="21" font-weight="700" fill="#323232">WordReviewPolicy</text>
+<rect x="960" y="110" width="310" height="76" rx="10" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="1115.0" y="155.56" text-anchor="middle" font-family="Microsoft YaHei, SimHei, Arial" font-size="21" font-weight="700" fill="#323232">学习页/拼写挑战</text>
+<rect x="1330" y="350" width="240" height="76" rx="10" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="1450.0" y="395.56" text-anchor="middle" font-family="Microsoft YaHei, SimHei, Arial" font-size="21" font-weight="700" fill="#323232">统计同步</text>
+<line x1="235" y1="186" x2="235" y2="344" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<line x1="390" y1="388" x2="514" y2="388" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<line x1="675" y1="426" x2="675" y2="589" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<line x1="830" y1="633" x2="954" y2="633" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<line x1="1115" y1="595" x2="1115" y2="432" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<polyline points="960,148 830,148 830,388" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<line x1="675" y1="186" x2="675" y2="344" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<polyline points="1270,388 1330,388" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<polyline points="1115,186 1115,344" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<text x="270" y="280" text-anchor="start" font-family="Microsoft YaHei, SimSun, Arial" font-size="18" font-weight="400" fill="#323232">首次/增量写入</text>
+<text x="710" y="525" text-anchor="start" font-family="Microsoft YaHei, SimSun, Arial" font-size="18" font-weight="400" fill="#323232">按日期与词库抽取</text>
+<text x="1140" y="525" text-anchor="start" font-family="Microsoft YaHei, SimSun, Arial" font-size="18" font-weight="400" fill="#323232">生成计划明细</text>
+<text x="1160" y="255" text-anchor="start" font-family="Microsoft YaHei, SimSun, Arial" font-size="18" font-weight="400" fill="#323232">学习动作更新</text>
+<rect x="95" y="815" width="1460" height="58" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="825.0" y="851.56" text-anchor="middle" font-family="Microsoft YaHei, SimHei, Arial" font-size="21" font-weight="400" fill="#323232">本地数据流重点：词库导入、计划生成、学习权重更新和统计同步相互独立，但通过 Room 表保持状态连续。</text>
+</svg>

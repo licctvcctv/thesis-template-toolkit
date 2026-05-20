@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1700" height="1050" viewBox="0 0 1700 1050">
+<defs>
+<marker id="arrow" viewBox="0 0 14 10" refX="10" refY="5" markerWidth="14" markerHeight="10" orient="auto" markerUnits="strokeWidth">
+<path d="M 0 0 L 14 5 L 0 10 Z" fill="#323232" stroke="#323232" stroke-width="1"/>
+</marker>
+</defs>
+<rect x="0" y="0" width="1700" height="1050" fill="#ffffff"/>
+<rect x="405" y="70" width="890" height="835" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="430" y="118" text-anchor="start" font-family="Microsoft YaHei, SimSun, Arial" font-size="26" font-weight="700" fill="#323232">乐背英语词汇复习系统</text>
+<ellipse cx="170" cy="210" rx="34" ry="34" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<line x1="170" y1="244" x2="170" y2="330" stroke="#323232" stroke-width="2.0" fill="none"/>
+<line x1="125" y1="278" x2="215" y2="278" stroke="#323232" stroke-width="2.0" fill="none"/>
+<line x1="170" y1="330" x2="130" y2="405" stroke="#323232" stroke-width="2.0" fill="none"/>
+<line x1="170" y1="330" x2="210" y2="405" stroke="#323232" stroke-width="2.0" fill="none"/>
+<text x="170" y="462.92" text-anchor="middle" font-family="Microsoft YaHei, SimSun, Arial" font-size="22" font-weight="700" fill="#323232">App用户</text>
+<ellipse cx="1530" cy="260" rx="34" ry="34" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<line x1="1530" y1="294" x2="1530" y2="380" stroke="#323232" stroke-width="2.0" fill="none"/>
+<line x1="1485" y1="328" x2="1575" y2="328" stroke="#323232" stroke-width="2.0" fill="none"/>
+<line x1="1530" y1="380" x2="1490" y2="455" stroke="#323232" stroke-width="2.0" fill="none"/>
+<line x1="1530" y1="380" x2="1570" y2="455" stroke="#323232" stroke-width="2.0" fill="none"/>
+<text x="1530" y="512.92" text-anchor="middle" font-family="Microsoft YaHei, SimSun, Arial" font-size="22" font-weight="700" fill="#323232">管理员</text>
+<ellipse cx="660" cy="165" rx="135" ry="42" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="660" y="172.56" text-anchor="middle" font-family="Microsoft YaHei, SimSun, Arial" font-size="21" font-weight="400" fill="#323232">注册/登录</text>
+<ellipse cx="995" cy="165" rx="135" ry="42" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="995" y="172.56" text-anchor="middle" font-family="Microsoft YaHei, SimSun, Arial" font-size="21" font-weight="400" fill="#323232">完善资料</text>
+<ellipse cx="660" cy="305" rx="135" ry="42" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="660" y="312.56" text-anchor="middle" font-family="Microsoft YaHei, SimSun, Arial" font-size="21" font-weight="400" fill="#323232">设置学习计划</text>
+<ellipse cx="995" cy="305" rx="135" ry="42" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="995" y="312.56" text-anchor="middle" font-family="Microsoft YaHei, SimSun, Arial" font-size="21" font-weight="400" fill="#323232">导入本地词库</text>
+<ellipse cx="660" cy="445" rx="135" ry="42" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="660" y="452.56" text-anchor="middle" font-family="Microsoft YaHei, SimSun, Arial" font-size="21" font-weight="400" fill="#323232">单词学习</text>
+<ellipse cx="995" cy="445" rx="135" ry="42" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="995" y="452.56" text-anchor="middle" font-family="Microsoft YaHei, SimSun, Arial" font-size="21" font-weight="400" fill="#323232">AI例句与短文</text>
+<ellipse cx="660" cy="585" rx="135" ry="42" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="660" y="592.56" text-anchor="middle" font-family="Microsoft YaHei, SimSun, Arial" font-size="21" font-weight="400" fill="#323232">拼写挑战</text>
+<ellipse cx="995" cy="585" rx="135" ry="42" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="995" y="592.56" text-anchor="middle" font-family="Microsoft YaHei, SimSun, Arial" font-size="21" font-weight="400" fill="#323232">统计与排行</text>
+<ellipse cx="995" cy="735" rx="135" ry="42" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="995" y="742.56" text-anchor="middle" font-family="Microsoft YaHei, SimSun, Arial" font-size="21" font-weight="400" fill="#323232">后台登录</text>
+<ellipse cx="660" cy="735" rx="135" ry="42" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="660" y="742.56" text-anchor="middle" font-family="Microsoft YaHei, SimSun, Arial" font-size="21" font-weight="400" fill="#323232">查看排行榜</text>
+<ellipse cx="830" cy="845" rx="135" ry="42" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="830" y="852.56" text-anchor="middle" font-family="Microsoft YaHei, SimSun, Arial" font-size="21" font-weight="400" fill="#323232">查看个人信息</text>
+<line x1="220" y1="300" x2="525" y2="165" stroke="#323232" stroke-width="2.0" fill="none" stroke-dasharray="10,6"/>
+<line x1="220" y1="300" x2="860" y2="165" stroke="#323232" stroke-width="2.0" fill="none" stroke-dasharray="10,6"/>
+<line x1="220" y1="300" x2="525" y2="305" stroke="#323232" stroke-width="2.0" fill="none" stroke-dasharray="10,6"/>
+<line x1="220" y1="300" x2="860" y2="305" stroke="#323232" stroke-width="2.0" fill="none" stroke-dasharray="10,6"/>
+<line x1="220" y1="300" x2="525" y2="445" stroke="#323232" stroke-width="2.0" fill="none" stroke-dasharray="10,6"/>
+<line x1="220" y1="300" x2="860" y2="445" stroke="#323232" stroke-width="2.0" fill="none" stroke-dasharray="10,6"/>
+<line x1="220" y1="300" x2="525" y2="585" stroke="#323232" stroke-width="2.0" fill="none" stroke-dasharray="10,6"/>
+<line x1="220" y1="300" x2="860" y2="585" stroke="#323232" stroke-width="2.0" fill="none" stroke-dasharray="10,6"/>
+<line x1="1480" y1="360" x2="1130" y2="735" stroke="#323232" stroke-width="2.0" fill="none" stroke-dasharray="10,6"/>
+<line x1="1480" y1="360" x2="795" y2="735" stroke="#323232" stroke-width="2.0" fill="none" stroke-dasharray="10,6"/>
+<line x1="1480" y1="360" x2="965" y2="845" stroke="#323232" stroke-width="2.0" fill="none" stroke-dasharray="10,6"/>
+<text x="470" y="945" text-anchor="start" font-family="Microsoft YaHei, SimSun, Arial" font-size="22" font-weight="400" fill="#323232">说明：App用户以移动端学习流程为主，管理员通过Web端查看统计结果。</text>
+</svg>

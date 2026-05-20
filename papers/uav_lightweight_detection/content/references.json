@@ -11,5 +11,22 @@
   "ZHENG Z H, WANG P, LIU W, et al. Distance-IoU loss: Faster and better learning for bounding box regression[C]//Proceedings of the AAAI Conference on Artificial Intelligence. 2020,34(07):12993-13000.",
   "TONG Z J, CHEN Y H, XU Z W, et al. Wise-IoU: Bounding Box Regression Loss with Dynamic Focusing Mechanism[EB/OL]. arXiv:2301.10051,2023.",
   "ZHU P F, WEN L Y, DU D W, et al. Detection and Tracking Meet Drones Challenge[J]. IEEE Transactions on Pattern Analysis and Machine Intelligence,2022,44(11):7380-7399.",
-  "陈金林,吴一全,苑玉彬. 无人机视角下目标检测的YOLO系列算法研究进展[J/OL]. 北京航空航天大学学报,1-33[2026-04-27]. https://doi.org/10.13700/j.bh.1001-5965.2024.0420."
+  "陈金林,吴一全,苑玉彬. 无人机视角下目标检测的YOLO系列算法研究进展[J/OL]. 北京航空航天大学学报,1-33[2026-04-27]. https://doi.org/10.13700/j.bh.1001-5965.2024.0420.",
+  "宋谱怡,陈红,苟浩波. 改进YOLOv5s的无人机目标检测算法[J]. 计算机工程与应用,2023:9.",
+  "谢椿辉,吴金明,徐怀宇. 改进YOLOv5的无人机影像小目标检测算法[J]. 计算机工程与应用,2023:11.",
+  "黄文斌,陈仁文,袁婷婷. 改进YOLOv3-SPP的无人机目标检测模型压缩方案[J]. 计算机工程与应用,2021:9.",
+  "吴靖,韩禄欣,沈英,等. 基于改进YOLOv4-tiny的无人机航拍目标检测[J]. 电光与控制,2021:8.",
+  "TIAN G, LIU J, YANG W. A dual neural network for object detection in UAV images[J]. Neurocomputing,2021,443:292-301. DOI:10.1016/j.neucom.2021.03.016.",
+  "FAN Y, LI O, LIU G. An Object Detection Algorithm for Rotary-Wing UAV Based on AWin Transformer[J]. IEEE Access,2022,10:13139-13150. DOI:10.1109/access.2022.3147264.",
+  "YANG C, CAO Y, LU X. Towards better small object detection in UAV scenes: Aggregating more object-oriented information[J]. Pattern Recognition Letters,2024,182:24-30. DOI:10.1016/j.patrec.2024.04.002.",
+  "XIAO N, HONG X, ZHENG Z. BDK-YOLOv8: An Enhanced Algorithm for UAV Infrared Image Object Detection[J]. IEEE Access,2024:1-1. DOI:10.1109/access.2024.3511547.",
+  "LUO W, YUAN S. Enhanced YOLOv8 for small-object detection in multiscale UAV imagery: Innovations in detection accuracy and efficiency[J]. Digital Signal Processing,2025,158:104964. DOI:10.1016/j.dsp.2024.104964.",
+  "QIAN R, DING Y. An Efficient UAV Image Object Detection Algorithm Based on Global Attention and Multi-Scale Feature Fusion[J]. Electronics,2024,13(20):3989. DOI:10.3390/electronics13203989.",
+  "TANG L, ZHOU S, WANG X. A Lightweight Object Detection Network for UAV Aerial Images[J]. Frontiers in Computing and Intelligent Systems,2024,8(1):35-42. DOI:10.54097/c5q8fv57.",
+  "ALHASSAN M A M, YILMAZ E. Evaluating YOLOv4 and YOLOv5 for Enhanced Object Detection in UAV-Based Surveillance[J]. Processes,2025,13(1):254. DOI:10.3390/pr13010254.",
+  "ARRAHMAH A I, RAHMANIA R, SAPUTRA D E. Evaluation of SSD Architecture for Small Size Object Detection: A Case Study on UAV Oil Pipeline Monitoring[J]. Journal of Image and Graphics,2023,11(4):384-390. DOI:10.18178/joig.11.4.384-390.",
+  "MARTINELLI F, MERCALDO F, SANTONE A. Damage Detection and Localisation using UAV/ Drone with Object Detection[J]. Procedia Computer Science,2023,225:118-127. DOI:10.1016/j.procs.2023.09.098.",
+  "MA M. Optimization of YOLOv8 for UAV-Based Object Detection: A Literature Review[J]. Applied and Computational Engineering,2025,191(1):65-74. DOI:10.54254/2755-2721/2025.ld27858.",
+  "KIM D Y, CHONG H. Trend Analysis of Academic Research on Object Detection Based on UAV Data[J]. Journal of Digital Contents Society,2024,25(6):1525-1534. DOI:10.9728/dcs.2024.25.6.1525.",
+  "LYU S. UAV Image Object Detection Based on Attention Mechanism and Dilated Convolution[J]. Applied and Computational Engineering,2025,173(1):15-21. DOI:10.54254/2755-2721/2025.24679."
 ]

@@ -1,0 +1,37 @@
+# macOS / IDE
+.DS_Store
+.idea/
+*.iml
+
+# Local machine configuration
+local.properties
+**/local.properties
+
+# Secrets
+application-secrets.yml
+**/application-secrets.yml
+.env
+.env.*
+
+# Android / Gradle build output
+.gradle/
+**/.gradle/
+build/
+**/build/
+captures/
+.externalNativeBuild/
+.cxx/
+
+# Java / Maven build output
+target/
+**/target/
+
+# Node / Vite build output
+node_modules/
+**/node_modules/
+dist/
+**/dist/
+
+# Local exports not needed in source control
+/lebei.sql
+/聊天

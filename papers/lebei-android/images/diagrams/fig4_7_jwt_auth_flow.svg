@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="930" viewBox="0 0 1500 930">
+<defs>
+<marker id="arrow" viewBox="0 0 14 10" refX="10" refY="5" markerWidth="14" markerHeight="10" orient="auto" markerUnits="strokeWidth">
+<path d="M 0 0 L 14 5 L 0 10 Z" fill="#323232" stroke="#323232" stroke-width="1"/>
+</marker>
+</defs>
+<rect x="0" y="0" width="1500" height="930" fill="#ffffff"/>
+<rect x="560" y="45" width="380" height="58" rx="10" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="750.0" y="81.56" text-anchor="middle" font-family="Microsoft YaHei, SimHei, Arial" font-size="21" font-weight="700" fill="#323232">携带 Bearer Token 请求</text>
+<rect x="560" y="165" width="380" height="64" rx="10" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="750.0" y="204.56" text-anchor="middle" font-family="Microsoft YaHei, SimHei, Arial" font-size="21" font-weight="700" fill="#323232">JwtAuthenticationFilter</text>
+<rect x="560" y="285" width="380" height="64" rx="10" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="750.0" y="324.56" text-anchor="middle" font-family="Microsoft YaHei, SimHei, Arial" font-size="21" font-weight="700" fill="#323232">解析 token 与用户角色</text>
+<rect x="560" y="405" width="380" height="64" rx="10" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="750.0" y="444.56" text-anchor="middle" font-family="Microsoft YaHei, SimHei, Arial" font-size="21" font-weight="700" fill="#323232">写入 SecurityContext</text>
+<rect x="165" y="555" width="330" height="64" rx="10" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="330.0" y="594.56" text-anchor="middle" font-family="Microsoft YaHei, SimHei, Arial" font-size="21" font-weight="700" fill="#323232">访问 /api/app/**</text>
+<rect x="585" y="555" width="330" height="64" rx="10" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="750.0" y="594.56" text-anchor="middle" font-family="Microsoft YaHei, SimHei, Arial" font-size="21" font-weight="700" fill="#323232">访问 /api/admin/**</text>
+<rect x="1005" y="555" width="330" height="64" rx="10" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="1170.0" y="594.56" text-anchor="middle" font-family="Microsoft YaHei, SimHei, Arial" font-size="21" font-weight="700" fill="#323232">认证失败或角色不符</text>
+<rect x="165" y="725" width="330" height="64" rx="10" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="330.0" y="764.56" text-anchor="middle" font-family="Microsoft YaHei, SimHei, Arial" font-size="21" font-weight="700" fill="#323232">APP_USER 放行</text>
+<rect x="585" y="725" width="330" height="64" rx="10" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="750.0" y="764.56" text-anchor="middle" font-family="Microsoft YaHei, SimHei, Arial" font-size="21" font-weight="700" fill="#323232">ADMIN 放行</text>
+<rect x="1005" y="725" width="330" height="64" rx="10" fill="#ffffff" stroke="#212930" stroke-width="2.0"/>
+<text x="1170.0" y="764.56" text-anchor="middle" font-family="Microsoft YaHei, SimHei, Arial" font-size="21" font-weight="700" fill="#323232">返回 401/403</text>
+<line x1="750" y1="103" x2="750" y2="159" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<line x1="750" y1="229" x2="750" y2="279" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<line x1="750" y1="349" x2="750" y2="399" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<polyline points="750,469 330,469 330,549" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<polyline points="750,469 750,549" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<polyline points="750,469 1170,469 1170,549" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<line x1="330" y1="619" x2="330" y2="719" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<line x1="750" y1="619" x2="750" y2="719" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<line x1="1170" y1="619" x2="1170" y2="719" stroke="#323232" stroke-width="2.0" fill="none" marker-end="url(#arrow)"/>
+<text x="360" y="505" text-anchor="start" font-family="Microsoft YaHei, SimSun, Arial" font-size="19" font-weight="700" fill="#323232">App接口</text>
+<text x="775" y="505" text-anchor="start" font-family="Microsoft YaHei, SimSun, Arial" font-size="19" font-weight="700" fill="#323232">后台接口</text>
+<text x="1195" y="505" text-anchor="start" font-family="Microsoft YaHei, SimSun, Arial" font-size="19" font-weight="700" fill="#323232">异常分支</text>
+</svg>
