@@ -3,6 +3,16 @@ output/
 __pycache__/
 */__pycache__/
 
+# Office/editor temporaries
+.~*
+.~lock.*#
+
+# thesis render/debug outputs
+papers/*/render_check*/
+artifacts/lo_*_export/
+artifacts/smbu_*_render/
+artifacts/*_lo/
+
 # excluded
 papers/helmet-detection/
 tmp_format_check/

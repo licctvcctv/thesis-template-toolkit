@@ -1,0 +1,63 @@
+[
+  {
+    "id": "schema_sql",
+    "caption": "TopLib SQLite 核心表定义片段",
+    "language": "sql",
+    "code": [
+      "CREATE TABLE IF NOT EXISTS files (",
+      "    file_id INTEGER PRIMARY KEY AUTOINCREMENT,",
+      "    file_name VARCHAR(50), experiment_id INTEGER,",
+      "    cluster_flag INTEGER,",
+      "    single_representative VARCHAR(50),",
+      "    average_representative VARCHAR(50)",
+      ");",
+      "CREATE TABLE IF NOT EXISTS spectra (",
+      "    spectrum_id INTEGER PRIMARY KEY AUTOINCREMENT,",
+      "    file_id INTEGER, scan INTEGER, retention_time DOUBLE,",
+      "    precursor_mass DOUBLE, precursor_intensity DOUBLE,",
+      "    precursor_charge INTEGER, num_mass INTEGER,",
+      "    proteoform_id INTEGER, cluster_id INTEGER,",
+      "    protein_accession VARCHAR(50), proteoform VARCHAR(1024),",
+      "    e_value DOUBLE, spectrum_level_q_value DOUBLE",
+      ");",
+      "CREATE TABLE IF NOT EXISTS masses (",
+      "    mass_id INTEGER PRIMARY KEY AUTOINCREMENT,",
+      "    spectrum_id INTEGER, mass DOUBLE, intensity DOUBLE, charge INTEGER",
+      ");"
+    ]
+  },
+  {
+    "id": "filter_sql",
+    "caption": "TopLib 前体质量与荷电状态候选匹配片段",
+    "language": "python",
+    "code": [
+      "for i in range(len(pre_mass_query_all)):",
+      "    pre_mass_query = pre_mass_query_all[i]",
+      "    pre_ch_query = pre_ch_query_all[i]",
+      "    for j in range(len(pre_mass_lib)):",
+      "        tol2 = max(0.0, ppm * pre_mass_lib[j] * 1e-6)",
+      "        same_charge = (pre_ch_query == pre_ch_lib[j])",
+      "        mass_close = abs(pre_mass_lib[j] - pre_mass_query) <= tol2",
+      "        isotope_shift = abs(abs(pre_mass_lib[j] - pre_mass_query) - 1.00235) <= tol2",
+      "        if (pre_ch_use != 'yes' or same_charge) and (mass_close or isotope_shift):",
+      "            idx1.append(spectra_mass_rep_index[j])"
+    ]
+  },
+  {
+    "id": "union_find",
+    "caption": "TopCluster 层次聚类核心流程片段",
+    "language": "python",
+    "code": [
+      "cluster_index2 = clustering_precursor_mass_index(ms_df, precursor_tol=2.2)",
+      "cluster_index = clustering_index_50peaks(",
+      "    sorted_mass_int_ch_df['mass'],",
+      "    sorted_mass_int_ch_df['intensity'],",
+      "    sorted_mass_int_ch_df['charge'],",
+      "    err=0.0, ppm=10, thre=0.7,",
+      "    idx1=cluster_index2, metric='cosine'",
+      ")",
+      "for i, temp_idx in enumerate(cluster_index):",
+      "    cluster_id[temp_idx] = i"
+    ]
+  }
+]

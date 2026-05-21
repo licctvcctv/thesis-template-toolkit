@@ -1,0 +1,136 @@
+[
+  {
+    "id": "spectrum_similarity_principle",
+    "source": "imagegen",
+    "path": "images/imagegen/spectrum_similarity_principle_imagegen.png",
+    "caption": "谱图向量化与余弦相似度计算示意图",
+    "width_cm": 15.2
+  },
+  {
+    "id": "spectrum_vectorization_detail",
+    "source": "imagegen",
+    "path": "images/imagegen/spectrum_vectorization_detail_imagegen.png",
+    "caption": "谱图峰列表预处理与向量化示意图",
+    "width_cm": 15.2
+  },
+  {
+    "id": "clustering_algorithm_principles",
+    "source": "imagegen",
+    "path": "images/imagegen/clustering_algorithm_principles_imagegen.png",
+    "caption": "常见聚类算法原理对比示意图",
+    "width_cm": 15.2
+  },
+  {
+    "id": "database_filter_principle",
+    "source": "imagegen",
+    "path": "images/imagegen/database_filter_principle_imagegen.png",
+    "caption": "数据库过滤候选压缩原理示意图",
+    "width_cm": 15.2
+  },
+  {
+    "id": "sqlite_schema_runtime",
+    "source": "imagegen",
+    "path": "images/imagegen/sqlite_schema_runtime_imagegen.png",
+    "caption": "实验原型 SQLite 数据结构与索引关系图",
+    "width_cm": 15.2
+  },
+  {
+    "id": "experiment_data_setup",
+    "source": "imagegen",
+    "path": "images/imagegen/experiment_data_setup_imagegen.png",
+    "caption": "模拟谱图数据生成与评价设置示意图",
+    "width_cm": 15.2
+  },
+  {
+    "id": "db_filter_algorithm_flow",
+    "source": "imagegen",
+    "path": "images/imagegen/db_filter_algorithm_flow_imagegen.png",
+    "caption": "数据库过滤谱图聚类算法总体流程图",
+    "width_cm": 15.2
+  },
+  {
+    "id": "sqlite_candidate_filtering",
+    "source": "imagegen",
+    "path": "images/imagegen/sqlite_candidate_filtering_imagegen.png",
+    "caption": "SQLite 候选谱图对过滤机制示意图",
+    "width_cm": 15.2
+  },
+  {
+    "id": "candidate_graph_components",
+    "source": "imagegen",
+    "path": "images/imagegen/candidate_graph_components_imagegen.png",
+    "caption": "候选相似图与连通分量聚类示意图",
+    "width_cm": 15.2
+  },
+  {
+    "id": "experiment_runtime_modules",
+    "source": "imagegen",
+    "path": "images/imagegen/experiment_runtime_modules_imagegen.png",
+    "caption": "实验程序运行模块与指标输出流程图",
+    "width_cm": 15.2
+  },
+  {
+    "id": "algorithm_metrics",
+    "kind": "image",
+    "source": "experiment",
+    "path": "images/experiments/algorithm_metrics.png",
+    "caption": "聚类质量指标对比",
+    "width_cm": 14.2
+  },
+  {
+    "id": "runtime_comparison",
+    "kind": "image",
+    "source": "experiment",
+    "path": "images/experiments/runtime_comparison.png",
+    "caption": "聚类算法运行时间对比",
+    "width_cm": 14.2
+  },
+  {
+    "id": "candidate_reduction",
+    "kind": "image",
+    "source": "experiment",
+    "path": "images/experiments/candidate_reduction.png",
+    "caption": "数据库过滤前后的候选谱图对数量",
+    "width_cm": 14.2
+  },
+  {
+    "id": "cluster_projection",
+    "kind": "image",
+    "source": "experiment",
+    "path": "images/experiments/cluster_projection.png",
+    "caption": "数据库过滤聚类结果二维投影",
+    "width_cm": 14.2
+  },
+  {
+    "id": "memory_comparison",
+    "kind": "image",
+    "source": "experiment",
+    "path": "images/experiments/memory_comparison.png",
+    "caption": "聚类算法峰值内存占用对比",
+    "width_cm": 14.2
+  },
+  {
+    "id": "filter_sensitivity_chart",
+    "kind": "image",
+    "source": "experiment",
+    "path": "images/experiments/filter_sensitivity.png",
+    "caption": "候选过滤参数敏感性指标变化",
+    "width_cm": 14.2
+  },
+  {
+    "id": "cluster_size_distribution",
+    "kind": "image",
+    "source": "experiment",
+    "path": "images/experiments/cluster_size_distribution.png",
+    "caption": "真实簇与数据库过滤聚类簇规模分布",
+    "width_cm": 14.2
+  },
+  {
+    "id": "similarity_histogram",
+    "kind": "image",
+    "source": "experiment",
+    "path": "images/experiments/similarity_histogram.png",
+    "caption": "过滤候选对与随机谱图对相似度分布",
+    "width_cm": 14.2
+  }
+]
