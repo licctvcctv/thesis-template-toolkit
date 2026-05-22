@@ -1,1 +1,2 @@
-/Users/a136/.homebrew/bin/soffice
+#!/bin/sh
+'/Applications/LibreOffice.app/Contents/MacOS/soffice' "$@"

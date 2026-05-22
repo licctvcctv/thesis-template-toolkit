@@ -7,8 +7,8 @@
   },
   {
     "id": "fig3_2",
-    "image": "images/diagrams/imagegen/fig3_2_requirement_structure_imagegen_reviewed_nocaption.png",
-    "caption": "图 3-2 系统功能需求结构图",
+    "image": "images/diagrams/imagegen/fig3_2_function_modules_imagegen_20260522.png",
+    "caption": "图 3-2 系统功能模块图",
     "source": "imagegen"
   },
   {
@@ -31,15 +31,15 @@
   },
   {
     "id": "fig4_4",
-    "image": "images/diagrams/imagegen/fig4_4_daily_learning_flow_imagegen_reviewed.png",
+    "image": "images/diagrams/imagegen/fig4_4_daily_learning_flow_imagegen_20260522.png",
     "caption": "图 4-4 每日学习流程图",
     "source": "imagegen"
   },
   {
     "id": "fig4_5",
-    "image": "images/diagrams/imagegen/fig4_4_er_model_imagegen.png",
+    "image": "images/diagrams/imagegen/fig4_5_er_model_imagegen_20260522.png",
     "caption": "图 4-5 系统E-R模型图",
-    "source": "imagegen_diagram"
+    "source": "imagegen"
   },
   {
     "id": "fig4_6",
@@ -49,9 +49,9 @@
   },
   {
     "id": "fig4_7",
-    "image": "images/diagrams/imagegen/fig4_7_jwt_auth_imagegen_v2.png",
+    "image": "images/diagrams/imagegen/fig4_7_jwt_auth_imagegen_20260522.png",
     "caption": "图 4-7 JWT鉴权流程图",
-    "source": "imagegen_diagram"
+    "source": "imagegen"
   },
   {
     "id": "fig5_1",
@@ -97,7 +97,7 @@
   },
   {
     "id": "fig5_8",
-    "image": "images/system_screenshots/fig5_8_ai_example_essay_runtime_20260520.png",
+    "image": "images/system_screenshots/fig5_8_ai_example_real_essay_runtime_20260520.png",
     "caption": "图 5-8 移动端 AI 例句与 AI 短文运行界面",
     "source": "runtime_emulator"
   }

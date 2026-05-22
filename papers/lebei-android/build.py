@@ -293,7 +293,7 @@ def add_table(doc, table_data):
         p_cap.paragraph_format.space_before = Pt(3)
         p_cap.paragraph_format.space_after = Pt(0)
         run = p_cap.add_run(caption)
-        fmt_run(run, size=10.5, bold=True)
+        fmt_run(run, size=9, bold=True)
 
     widths = table_data.get("col_widths") or [13.5 / len(headers)] * len(headers)
     total = sum(widths)
@@ -374,7 +374,7 @@ def add_code(doc, code, caption=""):
         p_cap = doc.add_paragraph()
         p_cap.alignment = WD_ALIGN_PARAGRAPH.CENTER
         run = p_cap.add_run(caption)
-        fmt_run(run, size=10.5, bold=True)
+        fmt_run(run, size=9, bold=True)
     p = doc.add_paragraph()
     p.paragraph_format.left_indent = Cm(0.5)
     p.paragraph_format.line_spacing = Pt(12)

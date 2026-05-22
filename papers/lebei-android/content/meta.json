@@ -16,17 +16,17 @@
   "keywords_zh": "安卓；乐背单词APP；Room数据库；Spring Boot；JWT；AI例句与短文",
   "keywords_en": "Android; Lebei vocabulary APP; Room database; Spring Boot; JWT; AI examples and essays",
   "abstract_zh": [
-    "传统英语词汇学习中存在复习计划不稳定、学习记录难以连续保存、例句语境缺少个性化等问题。本文设计并实现了一款基于安卓的乐背单词APP。系统采用 Android 原生开发实现移动端学习界面，使用 Room 保存内置词库、每日计划和学习进度，使用 OkHttp 与 Spring Boot 后端通信；后端结合 Spring Security、JWT、JPA 和 MySQL 完成账号认证、资料配置、计划同步、统计排行和 AI 内容生成接口，管理端使用 Vue 3 展示后台排行榜与个人信息。",
-    "系统主要实现注册登录、资料完善、内置词库选择、每日学习计划、单词学习、到期复习、AI 例句与短文生成、拼写挑战、学习统计、排行榜和后台查看等功能。测试结果表明，乐背单词APP能够完成从账号认证、计划配置、学习记录更新到统计同步和排行榜展示的完整流程，核心功能运行稳定，界面操作较为直观，能够为学习者提供连续、可视化并带有智能语境辅助的英语词汇学习支持。"
+    "乐背单词APP的设计从移动端背词场景出发，重点处理每日计划、学习痕迹和例句语境之间的衔接问题。Android 客户端作为主要使用入口，词库、当日计划和单词进度写入 Room，本地页面通过 OkHttp 与 Spring Boot 服务端交换登录、资料和统计数据。服务端使用 Spring Security 与 JWT 区分 App 用户和管理员角色，JPA 访问 MySQL 保存账号、计划配置和排行统计；AI 例句、短文请求在服务端封装后调用百度千帆接口，Vue 管理端用于管理员登录、排行榜查看和资料页展示。",
+    "在当前工程中，用户先注册登录并完成年龄段、英语水平和词库设置，随后在学习页查看当日单词、标记简单或困难、触发到期复习、请求 AI 例句或今日短文，并通过统计页和排行榜查看结果。测试阶段核对了策略类单元测试、App 与服务端接口、管理端页面和模拟器截图，登录态、计划保存、本地学习记录、统计上传和排行读取能够按预期衔接。系统把学习明细留在移动端，把账号与汇总数据交给服务端处理，为词汇复习提供了可追踪的实现基础。"
   ],
   "abstract_en": [
-    "To address unstable review schedules, discontinuous learning records, and insufficient personalized context in traditional vocabulary learning, this thesis designs and implements Lebei, an Android-based vocabulary learning APP. The Android client is developed natively, uses Room to store built-in vocabulary books, daily plans, and learning progress, and communicates with a Spring Boot backend through OkHttp. The backend uses Spring Security, JWT, JPA, and MySQL to provide authentication, profile configuration, plan synchronization, statistics, leaderboard, and AI content generation APIs, while the Vue 3 administration client displays leaderboard and profile information.",
-    "The system implements registration and login, profile completion, built-in vocabulary selection, daily learning plans, word learning, due review, AI example and essay generation, spelling challenge, learning statistics, leaderboard display, and background management. Testing shows that the APP can complete the full workflow from authentication and plan configuration to learning record updates, statistics synchronization, and leaderboard display. The main functions run stably and provide a clear, continuous, and intelligent vocabulary learning experience."
+    "Lebei was built around a practical mobile vocabulary-review workflow. On the Android side, the app keeps vocabulary books, daily plans, and per-word progress in Room, and uses OkHttp to send login, profile, statistics, and AI-content requests to a Spring Boot service. The service separates app users from administrators with Spring Security and JWT, stores account and leaderboard data in MySQL through JPA, and wraps the Baidu Qianfan calls used for examples and short essays. A Vue 3 client is used for administrator login, leaderboard viewing, and profile display.",
+    "The implemented workflow starts with account login and profile setup, then moves to book selection, daily learning, due review, AI-assisted examples or essays, spelling practice, statistics, and leaderboards. Unit tests, interface checks, browser tests, and emulator screenshots were used to verify the main paths. The results show that plan saving, Room record updates, backend statistics synchronization, and leaderboard queries can run together without breaking the user's learning process."
   ],
-  "task_main_content": "围绕“乐背单词APP”，完成安卓客户端、Spring Boot 后端与 Vue 管理端的需求分析、概要设计、详细设计、系统实现和测试验证。系统重点实现用户注册登录、资料完善、内置词库选择、每日学习计划、到期复习、AI 例句与短文生成、拼写挑战、学习统计、排行榜和后台管理等功能。",
+  "task_main_content": "基于现有“乐背”工程整理毕业设计内容，完成移动端学习流程、服务端接口、管理端页面和数据库结构的分析与说明。正文围绕账号登录、资料与计划保存、词库导入、单词学习、AI 语境内容、拼写练习、统计排行等已实现功能，给出设计依据、关键代码、运行截图和测试结果。",
   "task_outcomes": "形成可运行的乐背单词APP、后端服务和 Web 管理端；完成论文正文、系统架构图、功能流程图、数据模型图、真实运行截图和测试说明；最终提交符合北京信息科技大学模板要求的毕业设计（论文）文档。",
-  "task_requirements": "系统应以实际源码和运行演示为依据，运行截图必须来自真实安卓模拟器或浏览器页面；论文中应说明 Android、Room、OkHttp、Spring Boot、JWT、MySQL、Vue 和 AI 接口等技术选型；数据库、接口与功能模块描述需与项目源码保持一致。",
-  "task_references": "Android 官方文档、Room 官方文档、Spring Boot 官方参考文档、JWT RFC 7519、MySQL 8.0 参考手册、Vue 官方文档、百度千帆接口文档等。",
-  "task_environment": "开发环境包括 Android Studio、JDK 17、Gradle、Maven、Spring Boot 3.2.5、MySQL 8.0、Node.js、Vue 3、Vite 和 Android 模拟器。客户端运行于 Android 8.0 及以上环境，后端默认端口为 8080。",
-  "task_schedule": "2025年12月：完成选题、资料收集与需求分析；2026年1月：完成系统总体设计、数据库设计和接口设计；2026年2月至3月：完成 Android 客户端、Spring Boot 后端与 Vue 管理端主要功能；2026年4月：完成联调、测试、运行截图整理和论文初稿；2026年5月：完成论文格式检查、修改和最终提交。"
+  "task_requirements": "论文写作以源码、数据库表和运行演示为准，截图只采用安卓模拟器或浏览器中的真实页面。技术章节需说明 Android、Room、OkHttp、Spring Boot、JWT、MySQL、Vue 及 AI 接口在工程中的具体位置；涉及接口、表字段和模块职责时，以现有项目为边界，不加入未实现功能。",
+  "task_references": "资料查阅以 Android、Room、Spring Boot、Vue、MySQL 8.0 官方文档和 JWT RFC 7519 为主，同时参考百度千帆接口说明，以及移动学习、词汇复习、在线教育系统测试等相关论文。",
+  "task_environment": "开发调试在本地环境完成，主要工具为 Android Studio、JDK 17、Gradle、Maven、MySQL 8.0、Node.js、Vue 3、Vite 与 Android 模拟器。Spring Boot 服务运行在 8080 端口，客户端按 Android 8.0 及以上版本进行适配。",
+  "task_schedule": "2025年12月完成选题确认和资料整理，2026年1月梳理总体结构、数据库和接口方案。2月至3月集中完成移动端、后端和管理端开发，4月进行联调、测试和运行截图归档，并同步整理论文初稿。5月根据格式和内容意见完成修改后提交。"
 }
