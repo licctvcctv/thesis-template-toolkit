@@ -1,0 +1,32 @@
+[
+  {
+    "id": "fig4-1",
+    "source_category": "user_provided",
+    "path": "images/user_provided/G-01_general_layout_revised_rail_road.png",
+    "caption": "图4-1 集装箱码头总平面布置图"
+  },
+  {
+    "id": "fig6-1",
+    "source_category": "user_provided",
+    "path": "images/user_provided/S-01_caisson_plan_elevation_revised.png",
+    "caption": "图6-1 沉箱结构平面及立面图"
+  },
+  {
+    "id": "fig6-2",
+    "source_category": "user_provided",
+    "path": "images/user_provided/S-02_caisson_section_detail_rebar_combined.png",
+    "caption": "图6-2 沉箱结构断面、细部构造及代表配筋图"
+  },
+  {
+    "id": "fig6-3",
+    "source_category": "user_provided",
+    "path": "images/user_provided/C-01_large_cylinder_plan.png",
+    "caption": "图6-3 大圆筒结构平面及立面图"
+  },
+  {
+    "id": "fig6-4",
+    "source_category": "user_provided",
+    "path": "images/user_provided/C-02_large_cylinder_section_detail_rebar.png",
+    "caption": "图6-4 大圆筒结构断面、细部构造及代表配筋图"
+  }
+]
