@@ -73,6 +73,30 @@ def replace_runs(paragraph, text: str) -> None:
         run.text = ""
 
 
+def replace_runs_preserve(paragraph, text: str) -> None:
+    if not paragraph.runs:
+        paragraph.add_run(text)
+        return
+    paragraph.runs[0].text = text
+    for run in paragraph.runs[1:]:
+        run.text = ""
+
+
+def replace_keyword_line(paragraph, label: str, keywords: str) -> None:
+    if not paragraph.runs:
+        paragraph.add_run(label)
+        paragraph.add_run(keywords)
+        return
+    paragraph.runs[0].text = label
+    if len(paragraph.runs) == 1:
+        paragraph.add_run(keywords)
+    else:
+        paragraph.runs[1].text = keywords
+    paragraph.runs[1].bold = False
+    for run in paragraph.runs[2:]:
+        run.text = ""
+
+
 def render_template_text(text: str, meta: dict[str, Any]) -> str:
     def repl(match: re.Match[str]) -> str:
         key = match.group(1).strip()
@@ -88,54 +112,26 @@ def apply_front_matter(doc: Document, meta: dict[str, Any]) -> None:
     for paragraph in doc.paragraphs:
         text = p_text(paragraph).strip()
         compact = re.sub(r"\s+", "", text)
-        if "{{" in text:
-            replace_runs(paragraph, render_template_text(text, meta))
+        if "{{ keywords_zh }}" in text:
+            replace_keyword_line(paragraph, "关键词：", str(meta["keywords_zh"]))
+        elif "{{ keywords_en }}" in text:
+            replace_keyword_line(paragraph, "KEY WORDS:", " " + str(meta["keywords_en"]))
+        elif "{{" in text:
+            replace_runs_preserve(paragraph, render_template_text(text, meta))
         elif text.startswith("题目："):
-            replace_runs(paragraph, f"题目：{meta['title_zh']}")
+            replace_runs_preserve(paragraph, f"题目：{meta['title_zh']}")
         elif compact == "学院":
-            replace_runs(paragraph, f"学 院 {meta['college']}")
+            replace_runs_preserve(paragraph, f"学 院 {meta['college']}")
         elif compact == "专业":
-            replace_runs(paragraph, f"专 业 {meta['major']}")
+            replace_runs_preserve(paragraph, f"专 业 {meta['major']}")
         elif compact == "年级":
-            replace_runs(paragraph, f"年 级 {meta['grade']}")
+            replace_runs_preserve(paragraph, f"年 级 {meta['grade']}")
         elif compact == "姓名":
-            replace_runs(paragraph, f"姓 名 {meta['student_name']}")
+            replace_runs_preserve(paragraph, f"姓 名 {meta['student_name']}")
         elif compact == "学号":
-            replace_runs(paragraph, f"学 号 {meta['student_id']}")
+            replace_runs_preserve(paragraph, f"学 号 {meta['student_id']}")
         elif compact == "指导教师":
-            replace_runs(paragraph, f"指导教师 {meta['advisor']}")
-            if not str(meta.get("advisor", "")).strip():
-                clear_paragraph(paragraph)
-                paragraph.paragraph_format.space_before = Pt(0)
-                paragraph.paragraph_format.space_after = Pt(0)
-                paragraph.paragraph_format.line_spacing = 1.0
-
-    # Long engineering titles can push the lower cover fields onto page 2.
-    # Keep the source cover layout, but reclaim the two blank rows below the title.
-    for idx in (0, 1, 2, 3, 4, 5, 6, 7, 9, 10):
-        if idx < len(doc.paragraphs) and not p_text(doc.paragraphs[idx]).strip():
-            doc.paragraphs[idx].paragraph_format.space_before = Pt(0)
-            doc.paragraphs[idx].paragraph_format.space_after = Pt(0)
-            doc.paragraphs[idx].paragraph_format.line_spacing = 1.0
-        elif idx < len(doc.paragraphs) and idx == 1:
-            doc.paragraphs[idx].paragraph_format.space_before = Pt(0)
-            doc.paragraphs[idx].paragraph_format.space_after = Pt(0)
-            doc.paragraphs[idx].paragraph_format.line_spacing = 1.0
-    for paragraph in doc.paragraphs[:12]:
-        if p_text(paragraph).strip().startswith("题目："):
-            paragraph.paragraph_format.space_before = Pt(0)
-            paragraph.paragraph_format.space_after = Pt(0)
-            paragraph.paragraph_format.line_spacing = 1.0
-            for run in paragraph.runs:
-                run.font.size = Pt(12)
-    for paragraph in doc.paragraphs[11:17]:
-        if p_text(paragraph).strip() == "指导教师" and not str(meta.get("advisor", "")).strip():
-            clear_paragraph(paragraph)
-        paragraph.paragraph_format.space_before = Pt(0)
-        paragraph.paragraph_format.space_after = Pt(0)
-        paragraph.paragraph_format.line_spacing = 1.0
-        for run in paragraph.runs:
-            run.font.size = Pt(12)
+            replace_runs_preserve(paragraph, f"指导教师 {meta['advisor']}")
 
 
 def remove_body_from_anchor(doc: Document, anchor_text: str = "绪论") -> None:
