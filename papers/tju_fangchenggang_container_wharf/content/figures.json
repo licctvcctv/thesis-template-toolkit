@@ -1,9 +1,27 @@
 [
   {
+    "id": "fig3-1",
+    "source_category": "imagegen",
+    "path": "images/imagegen/fig3-1-scheme-comparison-imagegen.png",
+    "caption": "图3-1 沉箱方案与大圆筒方案比选逻辑"
+  },
+  {
     "id": "fig4-1",
+    "source_category": "imagegen",
+    "path": "images/imagegen/fig4-1-yard-traffic-imagegen.png",
+    "caption": "图4-1 码头陆域功能分区与交通组织示意"
+  },
+  {
+    "id": "fig4-2",
     "source_category": "user_provided",
     "path": "images/user_provided/G-01_general_layout_revised_rail_road.png",
-    "caption": "图4-1 集装箱码头总平面布置图"
+    "caption": "图4-2 集装箱码头总平面布置图"
+  },
+  {
+    "id": "fig5-1",
+    "source_category": "imagegen",
+    "path": "images/imagegen/fig5-1-handling-flow-imagegen.png",
+    "caption": "图5-1 集装箱进口卸船作业流程"
   },
   {
     "id": "fig6-1",
@@ -28,5 +46,11 @@
     "source_category": "user_provided",
     "path": "images/user_provided/C-02_large_cylinder_section_detail_rebar.png",
     "caption": "图6-4 大圆筒结构断面、细部构造及代表配筋图"
+  },
+  {
+    "id": "fig7-1",
+    "source_category": "imagegen",
+    "path": "images/imagegen/fig7-1-caisson-loads-imagegen.png",
+    "caption": "图7-1 沉箱重力式码头主要作用与稳定验算示意"
   }
 ]
