@@ -44,8 +44,86 @@ def linear_omml(text: str):
     return omath
 
 
+SUPERSCRIPTS = str.maketrans("0123456789+-=()n", "⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻⁼⁽⁾ⁿ")
+SUBSCRIPTS = str.maketrans(
+    "0123456789+-=()aehijklmnoprstuvx",
+    "₀₁₂₃₄₅₆₇₈₉₊₋₌₍₎ₐₑₕᵢⱼₖₗₘₙₒₚᵣₛₜᵤᵥₓ",
+)
+
+
+def _read_group(text: str, start: int) -> tuple[str, int]:
+    if start >= len(text) or text[start] != "{":
+        return "", start
+    depth = 0
+    chars: list[str] = []
+    for idx in range(start, len(text)):
+        ch = text[idx]
+        if ch == "{":
+            if depth:
+                chars.append(ch)
+            depth += 1
+        elif ch == "}":
+            depth -= 1
+            if depth == 0:
+                return "".join(chars), idx + 1
+            chars.append(ch)
+        else:
+            chars.append(ch)
+    return "".join(chars), len(text)
+
+
+def _replace_frac(text: str) -> str:
+    while "\\frac" in text:
+        idx = text.find("\\frac")
+        before = text[:idx]
+        num, after_num = _read_group(text, idx + len("\\frac"))
+        den, after_den = _read_group(text, after_num)
+        if not num or not den:
+            break
+        text = before + f"({_replace_frac(num)})/({_replace_frac(den)})" + text[after_den:]
+    return text
+
+
+def _to_super(value: str) -> str:
+    if value in {"\\circ", "circ"}:
+        return "°"
+    if value in {"\\prime", "prime"}:
+        return "′"
+    return value.translate(SUPERSCRIPTS)
+
+
+def _to_sub(value: str) -> str:
+    return value.translate(SUBSCRIPTS)
+
+
+def _apply_scripts(text: str) -> str:
+    result: list[str] = []
+    i = 0
+    while i < len(text):
+        ch = text[i]
+        if ch in {"^", "_"} and i + 1 < len(text):
+            target_super = ch == "^"
+            if text[i + 1] == "{":
+                value, end = _read_group(text, i + 1)
+                i = end
+            elif text.startswith("\\prime", i + 1):
+                value = "\\prime"
+                i += len("\\prime") + 1
+            elif text.startswith("\\circ", i + 1):
+                value = "\\circ"
+                i += len("\\circ") + 1
+            else:
+                value = text[i + 1]
+                i += 2
+            result.append(_to_super(value) if target_super else _to_sub(value))
+            continue
+        result.append(ch)
+        i += 1
+    return "".join(result)
+
+
 def readable_latex(latex: str) -> str:
-    text = re.sub(r"\\frac\{([^{}]+)\}\{([^{}]+)\}", r"(\1)/(\2)", latex)
+    text = _replace_frac(latex)
     text = re.sub(r"\\mathrm\{([^{}]+)\}", r"\1", text)
     replacements = {
         "\\times": "×",
@@ -57,12 +135,25 @@ def readable_latex(latex: str) -> str:
         "\\sigma": "σ",
         "\\Delta": "Δ",
         "\\eta": "η",
+        "\\rho": "ρ",
+        "\\theta": "θ",
+        "\\tau": "τ",
+        "\\delta": "δ",
+        "\\pi": "π",
+        "\\sin": "sin",
+        "\\left\\lceil": "ceil(",
+        "\\right\\rceil": ")",
+        "\\left": "",
+        "\\right": "",
         "\\cdot": "·",
+        "\\circ": "°",
+        "\\%": "%",
         "\\,": "",
         "\\ ": " ",
     }
     for old, new in replacements.items():
         text = text.replace(old, new)
+    text = _apply_scripts(text)
     return text.replace("{", "").replace("}", "").replace("\\", "")
 
 
@@ -256,22 +347,6 @@ def latex_to_omml(latex: str):
 
     pandoc = shutil.which("pandoc")
     if not pandoc:
-        global _OMML_SEQUENCE, _OMML_SEQUENCE_INDEX
-        if _OMML_SEQUENCE is None:
-            existing_docx = ROOT / load_json("meta.json")["output_name"]
-            if existing_docx.exists():
-                with zipfile.ZipFile(existing_docx) as zf:
-                    xml = zf.read("word/document.xml")
-                root = etree.fromstring(xml)
-                ns = {"m": MATH_NS}
-                _OMML_SEQUENCE = [deepcopy(node) for node in root.findall(".//m:oMath", ns)]
-            else:
-                _OMML_SEQUENCE = []
-        if _OMML_SEQUENCE_INDEX < len(_OMML_SEQUENCE):
-            omath = deepcopy(_OMML_SEQUENCE[_OMML_SEQUENCE_INDEX])
-            _OMML_SEQUENCE_INDEX += 1
-            _OMML_CACHE[latex] = deepcopy(omath)
-            return omath
         omath = linear_omml(readable_latex(latex))
         _OMML_CACHE[latex] = deepcopy(omath)
         return omath

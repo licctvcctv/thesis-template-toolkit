@@ -903,7 +903,7 @@
                 {
                   "type": "formula",
                   "latex": "P_b=365\\times P_t\\times t_d\\times \\eta=365\\times1500\\times21\\times0.55=6.32\\times10^6\\ \\mathrm{t/a}",
-                  "text": "Pb = 365×Pt×td×η = 6.32×10^6t/a",
+                  "text": "Pb = 365×Pt×td×η = 6.32×10⁶t/a",
                   "number": "（4.4）"
                 },
                 {
@@ -1044,7 +1044,7 @@
                 {
                   "type": "formula",
                   "latex": "A_0=\\frac{C}{\\rho h\\eta}=\\frac{180{,}000}{0.85\\times10\\times0.65}=32{,}579\\ \\mathrm{m^2}",
-                  "text": "A0 = C/(rho h eta) = 32579m2",
+                  "text": "A0 = C/(rho h eta) = 32579m²",
                   "number": "（4.6）"
                 },
                 {
@@ -1285,19 +1285,19 @@
                 },
                 {
                   "type": "formula",
-                  "text": "软基换填量：Vr=260×18×4=18720m3",
+                  "text": "软基换填量：Vr=260×18×4=18720m³",
                   "latex": "V_r=L_bB_rh_r=260\\times18\\times4=18720\\ \\mathrm{m^3}",
                   "number": "（5.2）"
                 },
                 {
                   "type": "formula",
-                  "text": "抛石基床量：Vb=260×16×2=8320m3",
+                  "text": "抛石基床量：Vb=260×16×2=8320m³",
                   "latex": "V_b=L_bB_bh_b=260\\times16\\times2=8320\\ \\mathrm{m^3}",
                   "number": "（5.3）"
                 },
                 {
                   "type": "formula",
-                  "text": "主动土压力估算：Ea=0.5Kaγ′H2l=6468kN",
+                  "text": "主动土压力估算：Ea=0.5Kaγ′H²l=6468kN",
                   "latex": "E_a=0.5K_a\\gamma^\\prime H^2l=0.5\\times0.33\\times10\\times14^2\\times20=6468\\ \\mathrm{kN}",
                   "number": "（5.4）"
                 },
@@ -1615,7 +1615,7 @@
                 {
                   "type": "formula",
                   "latex": "g_1=\\gamma_c h=25\\times0.35=8.75\\ \\mathrm{kN/m^2}",
-                  "text": "g1 = 25×0.35 = 8.75kN/m2",
+                  "text": "g1 = 25×0.35 = 8.75kN/m²",
                   "number": "（6.1）"
                 },
                 {
@@ -1638,7 +1638,7 @@
                 {
                   "type": "formula",
                   "latex": "q_k=g_k+q_c=10.75+60=70.75\\ \\mathrm{kN/m^2}",
-                  "text": "qk = gk + qc = 70.75kN/m2",
+                  "text": "qk = gk + qc = 70.75kN/m²",
                   "number": "（6.2）"
                 },
                 {
@@ -1648,7 +1648,7 @@
                 {
                   "type": "formula",
                   "latex": "q_d=1.2g_k+1.4q_c=1.2\\times10.75+1.4\\times60=96.9\\ \\mathrm{kN/m^2}",
-                  "text": "qd = 96.9kN/m2",
+                  "text": "qd = 96.9kN/m²",
                   "number": "（6.3）"
                 },
                 {
@@ -1775,7 +1775,7 @@
                 {
                   "type": "formula",
                   "latex": "M=\\frac{q_d l^2}{8}=\\frac{96.9\\times3.0^2}{8}=109.0\\ \\mathrm{kN\\cdot m/m}",
-                  "text": "M = qdl2/8 = 109.0kN·m/m",
+                  "text": "M = qd l²/8 = 109.0kN·m/m",
                   "number": "（6.4）"
                 }
               ]
@@ -1790,7 +1790,7 @@
                 {
                   "type": "formula",
                   "latex": "A_s=\\frac{M}{0.87 f_y h_0}=\\frac{109.0\\times10^6}{0.87\\times360\\times300}=1160\\ \\mathrm{mm^2/m}",
-                  "text": "As = 1160mm2/m",
+                  "text": "As = 1160mm²/m",
                   "number": "（6.5）"
                 },
                 {
@@ -1910,7 +1910,7 @@
                 {
                   "type": "formula",
                   "latex": "A_{sl}=\\frac{M_l}{0.87 f_y h_0}=\\frac{2446\\times10^6}{0.87\\times360\\times900}=8680\\ \\mathrm{mm^2}",
-                  "text": "Asl = 8680mm2",
+                  "text": "Asl = 8680mm²",
                   "number": "（6.14）"
                 },
                 {
@@ -2413,7 +2413,7 @@
                 {
                   "type": "formula",
                   "latex": "V_s=260\\times18\\times0.35=1638\\ \\mathrm{m^3}",
-                  "text": "Vs = 1638m3",
+                  "text": "Vs = 1638m³",
                   "number": "（7.4）"
                 },
                 {
@@ -2423,7 +2423,7 @@
                 {
                   "type": "formula",
                   "latex": "V_c=1638+1450=3088\\ \\mathrm{m^3}",
-                  "text": "Vc = 3088m3",
+                  "text": "Vc = 3088m³",
                   "number": "（7.5）"
                 },
                 {
@@ -2442,7 +2442,7 @@
                 },
                 {
                   "type": "formula",
-                  "text": "单位岸线混凝土量：vc=3088/260=11.88m3/m",
+                  "text": "单位岸线混凝土量：vc=3088/260=11.88m³/m",
                   "latex": "v_c=\\frac{V_c}{L_b}=\\frac{3088}{260}=11.88\\ \\mathrm{m^3/m}",
                   "number": "（7.7）"
                 },
