@@ -209,6 +209,18 @@ def set_section_header(section, text: str) -> None:
     pf.line_spacing = 1.0
     pf.space_before = Pt(0)
     pf.space_after = Pt(0)
+    p_pr = p._p.get_or_add_pPr()
+    old_border = p_pr.find(qn("w:pBdr"))
+    if old_border is not None:
+        p_pr.remove(old_border)
+    p_border = OxmlElement("w:pBdr")
+    bottom = OxmlElement("w:bottom")
+    bottom.set(qn("w:val"), "single")
+    bottom.set(qn("w:sz"), "4")
+    bottom.set(qn("w:space"), "1")
+    bottom.set(qn("w:color"), "auto")
+    p_border.append(bottom)
+    p_pr.append(p_border)
     run = p.add_run(text)
     set_mixed_font(run, 10)
 
@@ -407,7 +419,8 @@ def add_formula(doc: Document, block: dict[str, str]) -> None:
     pf.tab_stops.add_tab_stop(Pt(410), WD_TAB_ALIGNMENT.RIGHT)
     p.add_run("\t")
     p._p.append(latex_to_omml(block["latex"]))
-    run = p.add_run("\t" + block["number"])
+    formula_number = block["number"].replace("（", "(").replace("）", ")")
+    run = p.add_run("\t" + formula_number)
     set_mixed_font(run)
 
 

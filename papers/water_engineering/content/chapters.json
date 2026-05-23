@@ -2900,8 +2900,8 @@
             },
             {
               "type": "formula",
-              "text": "施工废水沉淀池容积估算：Vs=30×2=60m³",
-              "latex": "V_{sed}=Q_w t=30\\times2=60\\ \\mathrm{m^3}",
+              "text": "施工废水沉淀池容积估算：V=Qw×t=30×2=60m³",
+              "latex": "V=Qw\\times t=30\\times2=60\\ \\mathrm{m^3}",
               "number": "（7.20）"
             },
             {
