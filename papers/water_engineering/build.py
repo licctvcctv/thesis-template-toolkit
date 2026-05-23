@@ -379,9 +379,7 @@ def latex_to_omml(latex: str):
 
     pandoc = shutil.which("pandoc")
     if not pandoc:
-        omath = linear_omml(readable_latex(latex))
-        _OMML_CACHE[latex] = deepcopy(omath)
-        return omath
+        raise RuntimeError("缺少 pandoc，无法把 LaTeX 公式转换为 Word/WPS 原生 OMML 公式")
 
     with tempfile.TemporaryDirectory() as tmp:
         tmp_path = Path(tmp)
