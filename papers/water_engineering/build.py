@@ -34,6 +34,38 @@ _OMML_SEQUENCE: list[Any] | None = None
 _OMML_SEQUENCE_INDEX = 0
 
 
+def linear_omml(text: str):
+    omath = OxmlElement("m:oMath")
+    run = OxmlElement("m:r")
+    t = OxmlElement("m:t")
+    t.text = text
+    run.append(t)
+    omath.append(run)
+    return omath
+
+
+def readable_latex(latex: str) -> str:
+    text = re.sub(r"\\frac\{([^{}]+)\}\{([^{}]+)\}", r"(\1)/(\2)", latex)
+    text = re.sub(r"\\mathrm\{([^{}]+)\}", r"\1", text)
+    replacements = {
+        "\\times": "×",
+        "\\approx": "≈",
+        "\\geq": "≥",
+        "\\leq": "≤",
+        "\\sum": "Σ",
+        "\\gamma": "γ",
+        "\\sigma": "σ",
+        "\\Delta": "Δ",
+        "\\eta": "η",
+        "\\cdot": "·",
+        "\\,": "",
+        "\\ ": " ",
+    }
+    for old, new in replacements.items():
+        text = text.replace(old, new)
+    return text.replace("{", "").replace("}", "").replace("\\", "")
+
+
 def load_json(name: str) -> Any:
     return json.loads((CONTENT / name).read_text(encoding="utf-8"))
 
@@ -240,7 +272,9 @@ def latex_to_omml(latex: str):
             _OMML_SEQUENCE_INDEX += 1
             _OMML_CACHE[latex] = deepcopy(omath)
             return omath
-        raise RuntimeError("Pandoc is unavailable and no reusable OMML formula exists in the current DOCX")
+        omath = linear_omml(readable_latex(latex))
+        _OMML_CACHE[latex] = deepcopy(omath)
+        return omath
 
     with tempfile.TemporaryDirectory() as tmp:
         tmp_path = Path(tmp)

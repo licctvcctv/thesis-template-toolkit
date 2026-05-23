@@ -37,24 +37,36 @@
   },
   {
     "id": "fig-7",
+    "source_category": "imagegen",
+    "path": "images/imagegen/fig5-4-caisson-stability-check.png",
+    "caption": "图5-4 沉箱方案稳定验算受力示意"
+  },
+  {
+    "id": "fig-8",
     "source_category": "user_provided",
     "path": "images/user_provided/S-01_high_pile_plan_elevation.png",
     "caption": "图6-1 推荐高桩梁板式方案结构平面及立面图"
   },
   {
-    "id": "fig-8",
+    "id": "fig-9",
     "source_category": "user_provided",
     "path": "images/user_provided/S-02_high_pile_section_detail_rebar.png",
     "caption": "图6-2 高桩方案断面、细部构造及代表配筋图"
   },
   {
-    "id": "fig-9",
+    "id": "fig-10",
     "source_category": "imagegen",
     "path": "images/fig6-2-load-model.png",
     "caption": "图6-3 高桩梁板式码头荷载与桩基传力示意"
   },
   {
-    "id": "fig-10",
+    "id": "fig-11",
+    "source_category": "imagegen",
+    "path": "images/imagegen/fig6-4-high-pile-load-transfer.png",
+    "caption": "图6-4 高桩排架受力与桩基传力示意"
+  },
+  {
+    "id": "fig-12",
     "source_category": "imagegen",
     "path": "images/fig7-1-construction-sequence.png",
     "caption": "图7-1 高桩煤码头主要施工流程"
