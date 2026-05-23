@@ -58,11 +58,5 @@
     "source_category": "imagegen",
     "path": "images/imagegen/fig7-2-large-cylinder-loads-imagegen.png",
     "caption": "图7-2 大圆筒重力式码头主要作用与稳定验算示意"
-  },
-  {
-    "id": "fig7-3",
-    "source_category": "imagegen",
-    "path": "images/imagegen/fig7-3-calculation-workflow-imagegen.png",
-    "caption": "图7-3 两种结构方案稳定计算流程对照"
   }
 ]
