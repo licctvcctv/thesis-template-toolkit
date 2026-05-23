@@ -198,6 +198,28 @@ def replace_runs(paragraph, text: str) -> None:
         run.text = ""
 
 
+def set_keyword_line(paragraph, label: str, content: str, english: bool = False) -> None:
+    clear_paragraph(paragraph)
+    paragraph.alignment = WD_ALIGN_PARAGRAPH.LEFT
+    pf = paragraph.paragraph_format
+    pf.first_line_indent = None
+    pf.left_indent = Pt(0)
+    pf.line_spacing_rule = WD_LINE_SPACING.MULTIPLE
+    pf.line_spacing = 1.5
+    pf.space_before = Pt(0)
+    pf.space_after = Pt(0)
+
+    label_run = paragraph.add_run(label)
+    set_mixed_font(label_run, 14, True)
+    if english:
+        label_run.font.name = "Times New Roman"
+
+    content_run = paragraph.add_run(content)
+    set_mixed_font(content_run, 14, False)
+    if english:
+        content_run.font.name = "Times New Roman"
+
+
 def set_section_header(section, text: str) -> None:
     section.header.is_linked_to_previous = False
     for paragraph in section.header.paragraphs:
@@ -245,7 +267,11 @@ def apply_front_matter(doc: Document, meta: dict[str, Any]) -> None:
     for paragraph in doc.paragraphs:
         text = p_text(paragraph).strip()
         compact = re.sub(r"\s+", "", text)
-        if "{{" in text:
+        if "关键词" in text and "keywords_zh" in text:
+            set_keyword_line(paragraph, "关键词：", meta.get("keywords_zh", ""))
+        elif "KEY WORDS" in text and "keywords_en" in text:
+            set_keyword_line(paragraph, "KEY WORDS: ", meta.get("keywords_en", ""), english=True)
+        elif "{{" in text:
             replace_runs(paragraph, render_template_text(text, meta))
         elif text.startswith("题目："):
             replace_runs(paragraph, f"题目：{meta['title_zh']}")
