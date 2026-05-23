@@ -1,1 +1,62 @@
-[]
+[
+  {
+    "id": "fig-1",
+    "source_category": "imagegen",
+    "path": "images/fig1-1-technical-route.png",
+    "caption": "图1-1 论文研究技术路线"
+  },
+  {
+    "id": "fig-2",
+    "source_category": "user_provided",
+    "path": "images/user_provided/G-01_general_layout.png",
+    "caption": "图3-1 煤码头总平面布置图"
+  },
+  {
+    "id": "fig-3",
+    "source_category": "imagegen",
+    "path": "images/imagegen/fig4-1-coal-handling-environmental-control.png",
+    "caption": "图4-1 煤码头卸船、输送及环保控制流程示意"
+  },
+  {
+    "id": "fig-4",
+    "source_category": "user_provided",
+    "path": "images/user_provided/S-01_high_pile_plan_elevation.png",
+    "caption": "图5-1 高桩梁板式方案平面及立面图"
+  },
+  {
+    "id": "fig-5",
+    "source_category": "user_provided",
+    "path": "images/user_provided/S-03_caisson_plan_elevation.png",
+    "caption": "图5-2 重力式沉箱方案平面及立面图"
+  },
+  {
+    "id": "fig-6",
+    "source_category": "user_provided",
+    "path": "images/user_provided/S-04_caisson_section_detail_rebar.png",
+    "caption": "图5-3 重力式沉箱方案断面、细部构造及代表配筋图"
+  },
+  {
+    "id": "fig-7",
+    "source_category": "user_provided",
+    "path": "images/user_provided/S-01_high_pile_plan_elevation.png",
+    "caption": "图6-1 推荐高桩梁板式方案结构平面及立面图"
+  },
+  {
+    "id": "fig-8",
+    "source_category": "user_provided",
+    "path": "images/user_provided/S-02_high_pile_section_detail_rebar.png",
+    "caption": "图6-2 高桩方案断面、细部构造及代表配筋图"
+  },
+  {
+    "id": "fig-9",
+    "source_category": "imagegen",
+    "path": "images/fig6-2-load-model.png",
+    "caption": "图6-3 高桩梁板式码头荷载与桩基传力示意"
+  },
+  {
+    "id": "fig-10",
+    "source_category": "imagegen",
+    "path": "images/fig7-1-construction-sequence.png",
+    "caption": "图7-1 高桩煤码头主要施工流程"
+  }
+]

@@ -17,3 +17,5 @@
 ```
 
 当前工程以 `2026本科毕业设计.docx` 为学校格式母版，任务书和开题报告为身份与设计条件来源，正文从 `content/chapters.json` 生成，参考文献从 `content/references.json` 生成。
+
+2026-05-23 更新：已归档并接入 `final_five_drawing_package` 五张最终图纸，总平面、高桩方案和沉箱比选方案均从项目内 `images/user_provided/` 引用；第四章煤流与环保控制说明图使用 ImageGen 生成。图纸包参数中回旋水域直径为 270m，正文按 2L 规范估算保留 450m，后续图纸深化时需统一该标注或补充通航论证。

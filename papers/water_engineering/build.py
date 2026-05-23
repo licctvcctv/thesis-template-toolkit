@@ -30,6 +30,8 @@ CITATION_RE = re.compile(r"\[\[(\d+)\]\]")
 CHAPTER_PREFIX_RE = re.compile(r"^第[一二三四五六七八九十]+章\s*")
 NUMBER_PREFIX_RE = re.compile(r"^\d+(?:\.\d+)*\s*")
 _OMML_CACHE: dict[str, Any] = {}
+_OMML_SEQUENCE: list[Any] | None = None
+_OMML_SEQUENCE_INDEX = 0
 
 
 def load_json(name: str) -> Any:
@@ -220,13 +222,33 @@ def latex_to_omml(latex: str):
     if latex in _OMML_CACHE:
         return deepcopy(_OMML_CACHE[latex])
 
+    pandoc = shutil.which("pandoc")
+    if not pandoc:
+        global _OMML_SEQUENCE, _OMML_SEQUENCE_INDEX
+        if _OMML_SEQUENCE is None:
+            existing_docx = ROOT / load_json("meta.json")["output_name"]
+            if existing_docx.exists():
+                with zipfile.ZipFile(existing_docx) as zf:
+                    xml = zf.read("word/document.xml")
+                root = etree.fromstring(xml)
+                ns = {"m": MATH_NS}
+                _OMML_SEQUENCE = [deepcopy(node) for node in root.findall(".//m:oMath", ns)]
+            else:
+                _OMML_SEQUENCE = []
+        if _OMML_SEQUENCE_INDEX < len(_OMML_SEQUENCE):
+            omath = deepcopy(_OMML_SEQUENCE[_OMML_SEQUENCE_INDEX])
+            _OMML_SEQUENCE_INDEX += 1
+            _OMML_CACHE[latex] = deepcopy(omath)
+            return omath
+        raise RuntimeError("Pandoc is unavailable and no reusable OMML formula exists in the current DOCX")
+
     with tempfile.TemporaryDirectory() as tmp:
         tmp_path = Path(tmp)
         md_path = tmp_path / "formula.md"
         docx_path = tmp_path / "formula.docx"
         md_path.write_text(f"$$\n{latex}\n$$\n", encoding="utf-8")
         subprocess.run(
-            ["pandoc", str(md_path), "-f", "markdown+tex_math_dollars", "-o", str(docx_path)],
+            [pandoc, str(md_path), "-f", "markdown+tex_math_dollars", "-o", str(docx_path)],
             check=True,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
@@ -279,6 +301,8 @@ def add_figure(doc: Document, block: dict[str, Any]) -> None:
     if not image_path.exists():
         raise RuntimeError(f"missing figure image: {image_path}")
     p = doc.add_paragraph()
+    if block.get("page_break_before"):
+        p.paragraph_format.page_break_before = True
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     p.paragraph_format.space_before = Pt(6)
     p.paragraph_format.space_after = Pt(0)
