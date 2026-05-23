@@ -198,6 +198,26 @@ def replace_runs(paragraph, text: str) -> None:
         run.text = ""
 
 
+def set_section_header(section, text: str) -> None:
+    section.header.is_linked_to_previous = False
+    for paragraph in section.header.paragraphs:
+        clear_paragraph(paragraph)
+    p = section.header.paragraphs[0]
+    p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    pf = p.paragraph_format
+    pf.line_spacing_rule = WD_LINE_SPACING.MULTIPLE
+    pf.line_spacing = 1.0
+    pf.space_before = Pt(0)
+    pf.space_after = Pt(0)
+    run = p.add_run(text)
+    set_mixed_font(run, 10)
+
+
+def apply_header_after_cover(doc: Document, text: str) -> None:
+    for section in list(doc.sections)[1:]:
+        set_section_header(section, text)
+
+
 def render_template_text(text: str, meta: dict[str, Any]) -> str:
     def repl(match: re.Match[str]) -> str:
         key = match.group(1).strip()
@@ -422,7 +442,7 @@ def add_figure(doc: Document, block: dict[str, Any]) -> None:
 
 def add_table_block(doc: Document, block: dict[str, Any]) -> None:
     caption = add_caption(doc, block["caption"], keep_with_next=True)
-    if block.get("page_break_before"):
+    if block.get("page_break_before") or len(block.get("rows", [])) >= 8:
         caption.paragraph_format.page_break_before = True
     headers = block["headers"]
     rows = block["rows"]
@@ -462,6 +482,15 @@ def add_table_block(doc: Document, block: dict[str, Any]) -> None:
         bottom.set(qn("w:color"), "000000")
         tc_borders.append(bottom)
 
+    def keep_row_together(row, repeat_header: bool = False) -> None:
+        tr_pr = row._tr.get_or_add_trPr()
+        if tr_pr.find(qn("w:cantSplit")) is None:
+            tr_pr.append(OxmlElement("w:cantSplit"))
+        if repeat_header and tr_pr.find(qn("w:tblHeader")) is None:
+            tbl_header = OxmlElement("w:tblHeader")
+            tbl_header.set(qn("w:val"), "true")
+            tr_pr.append(tbl_header)
+
     def fill_cell(cell, text: Any, bold: bool = False) -> None:
         cell.vertical_alignment = WD_CELL_VERTICAL_ALIGNMENT.CENTER
         for paragraph in cell.paragraphs:
@@ -469,15 +498,18 @@ def add_table_block(doc: Document, block: dict[str, Any]) -> None:
             paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
             paragraph.paragraph_format.line_spacing_rule = WD_LINE_SPACING.MULTIPLE
             paragraph.paragraph_format.line_spacing = 1.15
+            paragraph.paragraph_format.keep_together = True
             run = paragraph.add_run(str(text))
             set_mixed_font(run, 9, bold)
 
+    keep_row_together(table.rows[0], repeat_header=True)
     for idx, text in enumerate(headers):
         table.columns[idx].width = Inches(float(widths[idx]))
         set_header_bottom(table.rows[0].cells[idx])
         fill_cell(table.rows[0].cells[idx], text, True)
     for row_data in rows:
         row = table.add_row()
+        keep_row_together(row)
         for idx, text in enumerate(row_data):
             table.columns[idx].width = Inches(float(widths[idx]))
             fill_cell(row.cells[idx], text)
@@ -647,6 +679,7 @@ def main() -> None:
     if len(doc.sections) >= 2:
         set_front_matter_toc_numbering(doc.sections[-2])
     set_body_section_numbering(body_section)
+    apply_header_after_cover(doc, f"天津大学{meta.get('year', '2026')}届本科生毕业设计")
     render_chapters(doc, chapters)
     add_references(doc, references)
     add_ack(doc, meta)
