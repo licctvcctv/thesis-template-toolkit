@@ -32,3 +32,16 @@ tmp_format_check/
 
 # large datasets
 **/kaggle_data/*.csv
+
+# antigravity cli settings
+.antigravitycli/
+artifacts/
+.claude/
+
+# large files rejected by GitHub
+汕尾电厂配套煤码头工程_全套材料.zip
+_source_materials/original_uploads/tju_fangchenggang_container_wharf/港口与海岸水工建筑物_港口航道与海岸工程专业_14157744.pdf
+
+
+
+
