@@ -249,24 +249,7 @@ def latex_to_omml(latex: str):
         return deepcopy(_OMML_CACHE[latex])
 
     if not shutil.which("pandoc"):
-        readable = (
-            latex.replace("\\times", "×")
-            .replace("\\cdot", "·")
-            .replace("\\geq", "≥")
-            .replace("\\leq", "≤")
-            .replace("\\%", "%")
-            .replace("\\", "")
-            .replace("{", "")
-            .replace("}", "")
-        )
-        omath = OxmlElement("m:oMath")
-        mr = OxmlElement("m:r")
-        mt = OxmlElement("m:t")
-        mt.text = readable
-        mr.append(mt)
-        omath.append(mr)
-        _OMML_CACHE[latex] = deepcopy(omath)
-        return deepcopy(omath)
+        raise RuntimeError("缺少 pandoc，无法把 LaTeX 公式转换为 Word/WPS 原生 OMML 公式")
 
     with tempfile.TemporaryDirectory() as tmp:
         tmp_path = Path(tmp)
