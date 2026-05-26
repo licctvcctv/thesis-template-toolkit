@@ -62,6 +62,47 @@ def set_para_body(paragraph) -> None:
     pf.space_after = Pt(0)
 
 
+def set_outline_level(paragraph, level: int) -> None:
+    p_pr = paragraph._p.get_or_add_pPr()
+    for old in p_pr.findall(qn("w:outlineLvl")):
+        p_pr.remove(old)
+    outline = OxmlElement("w:outlineLvl")
+    outline.set(qn("w:val"), str(level))
+    p_pr.append(outline)
+
+
+def set_section_header(section, text: str) -> None:
+    section.header.is_linked_to_previous = False
+    for paragraph in section.header.paragraphs:
+        clear_paragraph(paragraph)
+    p = section.header.paragraphs[0]
+    p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    pf = p.paragraph_format
+    pf.line_spacing_rule = WD_LINE_SPACING.MULTIPLE
+    pf.line_spacing = 1.0
+    pf.space_before = Pt(0)
+    pf.space_after = Pt(0)
+    p_pr = p._p.get_or_add_pPr()
+    old_border = p_pr.find(qn("w:pBdr"))
+    if old_border is not None:
+        p_pr.remove(old_border)
+    p_border = OxmlElement("w:pBdr")
+    bottom = OxmlElement("w:bottom")
+    bottom.set(qn("w:val"), "single")
+    bottom.set(qn("w:sz"), "4")
+    bottom.set(qn("w:space"), "1")
+    bottom.set(qn("w:color"), "auto")
+    p_border.append(bottom)
+    p_pr.append(p_border)
+    run = p.add_run(text)
+    set_mixed_font(run, 10)
+
+
+def apply_header_after_cover(doc: Document, text: str) -> None:
+    for section in list(doc.sections)[1:]:
+        set_section_header(section, text)
+
+
 def replace_runs(paragraph, text: str) -> None:
     if not paragraph.runs:
         run = paragraph.add_run(text)
@@ -313,9 +354,12 @@ def add_figure(doc: Document, block: dict[str, Any]) -> None:
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     p.paragraph_format.space_before = Pt(6)
     p.paragraph_format.space_after = Pt(0)
+    p.paragraph_format.keep_with_next = True
+    p.paragraph_format.keep_together = True
     run = p.add_run()
     run.add_picture(str(image_path), width=Inches(float(block.get("width_in", 5.8))))
-    add_caption(doc, block["caption"])
+    caption = add_caption(doc, block["caption"])
+    caption.paragraph_format.keep_together = True
 
 
 def add_table_block(doc: Document, block: dict[str, Any]) -> None:
@@ -412,6 +456,7 @@ def render_chapters(doc: Document, chapters: dict[str, Any]) -> None:
 
 def add_references(doc: Document, references: list[str]) -> None:
     p = doc.add_paragraph()
+    set_outline_level(p, 0)
     p.paragraph_format.page_break_before = True
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     run = p.add_run("参考文献")
@@ -432,6 +477,7 @@ def add_references(doc: Document, references: list[str]) -> None:
 
 def add_ack(doc: Document, meta: dict[str, Any]) -> None:
     p = doc.add_paragraph()
+    set_outline_level(p, 0)
     p.paragraph_format.page_break_before = True
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     run = p.add_run("致 谢")
@@ -477,9 +523,11 @@ def rebuild_toc(doc: Document, chapters: dict[str, Any], toc_pages: dict[str, in
         if deleting:
             paragraph._element.getparent().remove(paragraph._element)
 
+    toc_paragraphs = []
     for level, title in collect_toc_entries(chapters):
         page = str(toc_pages.get(title, ""))
         p = insert_paragraph_before(anchor)
+        toc_paragraphs.append(p)
         p.paragraph_format.line_spacing_rule = WD_LINE_SPACING.MULTIPLE
         p.paragraph_format.line_spacing = 1.0
         p.paragraph_format.space_before = Pt(0)
@@ -490,20 +538,47 @@ def rebuild_toc(doc: Document, chapters: dict[str, Any], toc_pages: dict[str, in
         run = p.add_run(f"{title}\t{page}")
         set_mixed_font(run, 12 if level == 1 else 10, level == 1)
 
+    if toc_paragraphs:
+        begin_run = toc_paragraphs[0].insert_paragraph_before().add_run()
+        fld_begin = OxmlElement("w:fldChar")
+        fld_begin.set(qn("w:fldCharType"), "begin")
+        fld_begin.set(qn("w:dirty"), "true")
+        instr = OxmlElement("w:instrText")
+        instr.set(qn("xml:space"), "preserve")
+        instr.text = r'TOC \o "1-3" \h \z \u'
+        fld_sep = OxmlElement("w:fldChar")
+        fld_sep.set(qn("w:fldCharType"), "separate")
+        begin_run._r.append(fld_begin)
+        begin_run._r.append(instr)
+        begin_run._r.append(fld_sep)
+        begin_run.font.hidden = True
+
+        end_run = toc_paragraphs[-1].add_run()
+        fld_end = OxmlElement("w:fldChar")
+        fld_end.set(qn("w:fldCharType"), "end")
+        end_run._r.append(fld_end)
+        end_run.font.hidden = True
+
 
 def set_update_fields(docx_path: Path) -> None:
     with tempfile.TemporaryDirectory() as tmp:
         tmp_path = Path(tmp)
-        shutil.unpack_archive(str(docx_path), tmp_path, "zip")
+        with zipfile.ZipFile(docx_path) as zf:
+            zf.extractall(tmp_path)
         settings = tmp_path / "word" / "settings.xml"
         if settings.exists():
             text = settings.read_text(encoding="utf-8")
             if "w:updateFields" not in text:
                 text = text.replace("</w:settings>", '<w:updateFields w:val="true"/></w:settings>')
-                settings.write_text(text, encoding="utf-8")
+            else:
+                text = re.sub(r'<w:updateFields[^>]*/>', '<w:updateFields w:val="true"/>', text)
+            settings.write_text(text, encoding="utf-8")
         rebuilt = docx_path.with_suffix(".tmp.docx")
-        shutil.make_archive(str(rebuilt.with_suffix("")), "zip", tmp_path)
-        rebuilt.with_suffix(".zip").replace(docx_path)
+        with zipfile.ZipFile(rebuilt, "w", zipfile.ZIP_DEFLATED) as zf:
+            for file in tmp_path.rglob("*"):
+                if file.is_file():
+                    zf.write(file, file.relative_to(tmp_path).as_posix())
+        rebuilt.replace(docx_path)
 
 
 def validate_citations(chapters: dict[str, Any], ref_count: int) -> None:
@@ -545,6 +620,7 @@ def main() -> None:
     if len(doc.sections) >= 2:
         set_front_matter_toc_numbering(doc.sections[-2])
     set_body_section_numbering(body_section)
+    apply_header_after_cover(doc, f"天津大学{meta.get('year', '2026')}届本科生毕业设计")
     render_chapters(doc, chapters)
     add_references(doc, references)
     add_ack(doc, meta)

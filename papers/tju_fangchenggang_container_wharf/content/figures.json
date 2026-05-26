@@ -1,62 +1,98 @@
 [
   {
-    "id": "fig3-1",
-    "source_category": "imagegen",
-    "path": "images/imagegen/fig3-1-scheme-comparison-imagegen.png",
-    "caption": "图3-1 沉箱方案与大圆筒方案比选逻辑"
+    "id": "fig1",
+    "source_category": "cad_detail",
+    "path": "images/cad_details/expanded/fig3-2-yard-functional-zone-cad.png",
+    "caption": "图3-1 堆场功能分区局部CAD图"
   },
   {
-    "id": "fig4-1",
-    "source_category": "imagegen",
-    "path": "images/imagegen/fig4-1-yard-traffic-imagegen.png",
-    "caption": "图4-1 码头陆域功能分区与交通组织示意"
-  },
-  {
-    "id": "fig4-2",
+    "id": "fig2",
     "source_category": "user_provided",
     "path": "images/user_provided/G-01_general_layout_revised_rail_road.png",
-    "caption": "图4-2 集装箱码头总平面布置图"
+    "caption": "图3-2 集装箱码头总平面布置图"
   },
   {
-    "id": "fig5-1",
-    "source_category": "imagegen",
-    "path": "images/imagegen/fig5-1-handling-flow-imagegen.png",
-    "caption": "图5-1 集装箱进口卸船作业流程"
+    "id": "fig3",
+    "source_category": "cad_detail",
+    "path": "images/cad_details/expanded/fig3-3-quay-apron-road-cad.png",
+    "caption": "图3-3 前沿作业带与道路衔接局部CAD图"
   },
   {
-    "id": "fig6-1",
+    "id": "fig4",
+    "source_category": "cad_detail",
+    "path": "images/cad_details/expanded/fig3-4-gate-rail-interface-cad.png",
+    "caption": "图3-4 闸口与铁路换装区局部CAD图"
+  },
+  {
+    "id": "fig5",
     "source_category": "user_provided",
     "path": "images/user_provided/S-01_caisson_plan_elevation_revised.png",
-    "caption": "图6-1 沉箱结构平面及立面图"
+    "caption": "图4-1 沉箱结构平面及立面图"
   },
   {
-    "id": "fig6-2",
+    "id": "fig6",
     "source_category": "user_provided",
     "path": "images/user_provided/S-02_caisson_section_detail_rebar_combined.png",
-    "caption": "图6-2 沉箱结构断面、细部构造及代表配筋图"
+    "caption": "图4-2 沉箱断面、细部构造及代表配筋图"
   },
   {
-    "id": "fig6-3",
+    "id": "fig7",
+    "source_category": "cad_detail",
+    "path": "images/cad_details/fig4-1-caisson-local-cad.png",
+    "caption": "图4-3 沉箱码头局部构造CAD图"
+  },
+  {
+    "id": "fig8",
+    "source_category": "cad_detail",
+    "path": "images/cad_details/expanded/fig4-7-caisson-section-enlarged-cad.png",
+    "caption": "图4-4 沉箱断面局部放大CAD图"
+  },
+  {
+    "id": "fig9",
     "source_category": "user_provided",
     "path": "images/user_provided/C-01_large_cylinder_plan.png",
-    "caption": "图6-3 大圆筒结构平面及立面图"
+    "caption": "图4-5 大圆筒结构平面及立面图"
   },
   {
-    "id": "fig6-4",
+    "id": "fig10",
     "source_category": "user_provided",
     "path": "images/user_provided/C-02_large_cylinder_section_detail_rebar.png",
-    "caption": "图6-4 大圆筒结构断面、细部构造及代表配筋图"
+    "caption": "图4-6 大圆筒断面、细部构造及代表配筋图"
   },
   {
-    "id": "fig7-1",
-    "source_category": "imagegen",
-    "path": "images/imagegen/fig7-1-caisson-loads-imagegen.png",
-    "caption": "图7-1 沉箱重力式码头主要作用与稳定验算示意"
+    "id": "fig11",
+    "source_category": "cad_detail",
+    "path": "images/cad_details/fig4-2-cylinder-local-cad.png",
+    "caption": "图4-7 大圆筒码头局部构造CAD图"
   },
   {
-    "id": "fig7-2",
-    "source_category": "imagegen",
-    "path": "images/imagegen/fig7-2-large-cylinder-loads-imagegen.png",
-    "caption": "图7-2 大圆筒重力式码头主要作用与稳定验算示意"
+    "id": "fig12",
+    "source_category": "cad_detail",
+    "path": "images/cad_details/expanded/fig4-8-cylinder-section-enlarged-cad.png",
+    "caption": "图4-8 大圆筒断面局部放大CAD图"
+  },
+  {
+    "id": "fig13",
+    "source_category": "cad_detail",
+    "path": "images/cad_details/fig5-1-caisson-rebar-local-cad.png",
+    "caption": "图5-1 沉箱码头节点配筋CAD图"
+  },
+  {
+    "id": "fig14",
+    "source_category": "cad_detail",
+    "path": "images/cad_details/expanded/fig5-2-caisson-rebar-enlarged-cad.png",
+    "caption": "图5-2 沉箱配筋局部放大CAD图"
+  },
+  {
+    "id": "fig15",
+    "source_category": "cad_detail",
+    "path": "images/cad_details/expanded/fig5-3-cylinder-detail-rebar-cad.png",
+    "caption": "图5-3 大圆筒细部与配筋局部CAD图"
+  },
+  {
+    "id": "fig16",
+    "source_category": "cad_detail",
+    "path": "images/cad_details/expanded/fig6-1-caisson-parameter-table-cad.png",
+    "caption": "图6-1 沉箱方案参数与施工控制表局部CAD图"
   }
 ]
