@@ -200,24 +200,32 @@ def fig_wind_error() -> None:
 
 
 def fig_drop_scatter() -> None:
-    a, b = simulate_errors(90, 12, 7, n=220)
-    angles_a = RNG.uniform(0, 2 * np.pi, len(a))
-    angles_b = RNG.uniform(0, 2 * np.pi, len(b))
-    xa, ya = a * np.cos(angles_a) + 6.5, a * np.sin(angles_a) + 4.5
-    xb, yb = b * np.cos(angles_b), b * np.sin(angles_b)
+    before_cloud = RNG.normal(loc=(7.8, 4.9), scale=(1.85, 1.35), size=(170, 2))
+    after_cloud = RNG.normal(loc=(0.1, -0.1), scale=(1.15, 1.05), size=(190, 2))
+    xa, ya = before_cloud[:, 0], before_cloud[:, 1]
+    xb, yb = after_cloud[:, 0], after_cloud[:, 1]
 
     img, draw = canvas()
     draw_title(draw, "参数优化前后落点分布对比", 1400)
     sx, sy = draw_axes(draw, 180, 130, 1130, 750, "横向偏差 / m", "纵向偏差 / m", [-12, -6, 0, 6, 12, 18], [-12, -6, 0, 6, 12], -14, 20, -14, 14)
-    draw.ellipse([sx(-3), sy(3), sx(3), sy(-3)], outline=GREEN, width=3)
-    draw.text((sx(3.4), sy(3)), "3m 目标区", fill=GREEN, font=FONT_SMALL)
-    for x, y in zip(xa, ya):
-        draw.ellipse([sx(float(x)) - 3, sy(float(y)) - 3, sx(float(x)) + 3, sy(float(y)) + 3], fill=(185, 185, 185))
+    draw.ellipse([sx(-3), sy(3), sx(3), sy(-3)], outline=(35, 35, 35), width=3)
+    draw.text((sx(3.4), sy(3)), "3m 目标区", fill=DARK, font=FONT_SMALL)
     for x, y in zip(xb, yb):
-        draw.ellipse([sx(float(x)) - 3, sy(float(y)) - 3, sx(float(x)) + 3, sy(float(y)) + 3], fill=(65, 65, 65))
-    draw.ellipse([sx(0) - 8, sy(0) - 8, sx(0) + 8, sy(0) + 8], fill=RED)
-    draw.text((990, 175), "浅灰：优化前", fill=ORANGE, font=FONT_LABEL)
-    draw.text((990, 215), "深灰：优化后", fill=GREEN, font=FONT_LABEL)
+        px, py = sx(float(x)), sy(float(y))
+        draw.polygon([(px, py - 5), (px - 5, py + 5), (px + 5, py + 5)], fill=(25, 25, 25))
+    for x, y in zip(xa, ya):
+        px, py = sx(float(x)), sy(float(y))
+        draw.line([px - 6, py - 6, px + 6, py + 6], fill=(95, 95, 95), width=3)
+        draw.line([px - 6, py + 6, px + 6, py - 6], fill=(95, 95, 95), width=3)
+    cx, cy = sx(0), sy(0)
+    draw.line([cx - 12, cy, cx + 12, cy], fill=RED, width=3)
+    draw.line([cx, cy - 12, cx, cy + 12], fill=RED, width=3)
+    draw.text((cx + 14, cy + 8), "目标点", fill=RED, font=FONT_SMALL)
+    draw.line([990, 178, 1008, 196], fill=(95, 95, 95), width=3)
+    draw.line([990, 196, 1008, 178], fill=(95, 95, 95), width=3)
+    draw.text((1020, 172), "叉号：优化前", fill=DARK, font=FONT_LABEL)
+    draw.polygon([(999, 224), (989, 244), (1009, 244)], fill=(25, 25, 25))
+    draw.text((1020, 216), "实心三角：优化后", fill=DARK, font=FONT_LABEL)
     save(img, "sim_drop_scatter.png")
 
 
