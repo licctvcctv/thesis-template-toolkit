@@ -1,50 +1,90 @@
 #!/usr/bin/env python3
-"""Reproducible experiment for database-filtered mass spectrum clustering.
+"""Run a real-data experiment for database-filtered spectrum clustering.
 
-The script builds a small SQLite-backed synthetic top-down spectrum library,
-compares several clustering strategies, and exports paper-ready metrics and
-figures. It intentionally avoids external ML packages so the experiment can run
-in a clean thesis workspace.
+The input is the PRIDE data set PXD019368, one of the public data sets listed
+in the TopLib paper data-availability statement.  The downloaded files already
+contain msalign spectra and TopPIC search output tables, so this script can run
+on macOS without reprocessing RAW files through TopFD.
 """
 
 from __future__ import annotations
 
+import csv
 import json
 import math
 import os
+import shutil
 import sqlite3
+import sys
 import time
 import tracemalloc
 from collections import Counter, defaultdict
 from dataclasses import dataclass
 from pathlib import Path
 
-import numpy as np
-from PIL import Image, ImageDraw, ImageFont
+try:
+    from PIL import Image, ImageDraw, ImageFont
+except ModuleNotFoundError:
+    bundled_python = Path.home() / ".cache" / "codex-runtimes" / "codex-primary-runtime" / "dependencies" / "python" / "bin" / "python3"
+    if bundled_python.exists() and Path(sys.executable) != bundled_python:
+        os.execv(str(bundled_python), [str(bundled_python), *sys.argv])
+    raise
 
 
 ROOT = Path(__file__).resolve().parents[2]
 EXP_DIR = Path(__file__).resolve().parent
+SOURCE_DIR = ROOT / "_source_materials" / "pride" / "PXD019368"
+PXD029703_DIR = ROOT / "_source_materials" / "pride" / "PXD029703"
 OUT_DIR = EXP_DIR / "outputs"
 PAPER_DIR = ROOT / "papers" / "db_filter_spectrum_clustering"
 PAPER_IMG_DIR = PAPER_DIR / "images" / "experiments"
 PAPER_DATA_DIR = PAPER_DIR / "data"
-DB_PATH = OUT_DIR / "spectrum_library.sqlite"
+DB_PATH = OUT_DIR / "toplib_real_spectra.sqlite"
 
 
-RNG = np.random.default_rng(20260519)
-N_CLUSTERS = 10
-SPECTRA_PER_CLUSTER = 44
-N_SPECTRA = N_CLUSTERS * SPECTRA_PER_CLUSTER
-TOP_PEAKS = 56
-VECTOR_BINS = 260
+TOP_PEAKS = 50
+PRECURSOR_WINDOW_DA = 2.2
+FRAGMENT_TOLERANCE_PPM = 10.0
+BASELINE_THRESHOLD = 0.30
 
 
 @dataclass
-class ExperimentData:
-    spectra: list[dict]
-    vectors: np.ndarray
-    labels_true: np.ndarray
+class Spectrum:
+    row_id: int
+    source_file: str
+    spectrum_id: int
+    scan: str
+    precursor_mass: float
+    precursor_charge: int
+    label: str
+    protein: str
+    peaks: list[tuple[float, float, int]]
+
+
+class UnionFind:
+    def __init__(self, n: int) -> None:
+        self.parent = list(range(n))
+
+    def find(self, x: int) -> int:
+        while self.parent[x] != x:
+            self.parent[x] = self.parent[self.parent[x]]
+            x = self.parent[x]
+        return x
+
+    def union(self, a: int, b: int) -> None:
+        ra, rb = self.find(a), self.find(b)
+        if ra != rb:
+            self.parent[rb] = ra
+
+    def labels(self) -> list[int]:
+        root_to_label: dict[int, int] = {}
+        out = []
+        for idx in range(len(self.parent)):
+            root = self.find(idx)
+            if root not in root_to_label:
+                root_to_label[root] = len(root_to_label)
+            out.append(root_to_label[root])
+        return out
 
 
 def ensure_dirs() -> None:
@@ -52,73 +92,143 @@ def ensure_dirs() -> None:
         path.mkdir(parents=True, exist_ok=True)
 
 
-def normalize(v: np.ndarray) -> np.ndarray:
-    norm = np.linalg.norm(v)
-    return v / norm if norm else v
+def load_font(size: int, bold: bool = False):
+    candidates = [
+        "/System/Library/Fonts/PingFang.ttc",
+        "/System/Library/Fonts/STHeiti Light.ttc",
+        "/Library/Fonts/Arial Unicode.ttf",
+    ]
+    for item in candidates:
+        try:
+            return ImageFont.truetype(item, size=size)
+        except OSError:
+            continue
+    return ImageFont.load_default()
 
 
-def mass_bin(mass: float) -> int:
-    return int(mass // 20)
+def draw_text(draw: ImageDraw.ImageDraw, pos, text: str, size=22, fill=(30, 40, 50), bold=False):
+    draw.text(pos, text, font=load_font(size, bold=bold), fill=fill)
 
 
-def vector_index(mass: float) -> int:
-    return int(mass // 18) % VECTOR_BINS
+def text_size(draw: ImageDraw.ImageDraw, text: str, size=22):
+    box = draw.textbbox((0, 0), text, font=load_font(size))
+    return box[2] - box[0], box[3] - box[1]
 
 
-def generate_spectra() -> ExperimentData:
-    spectra: list[dict] = []
-    vectors = np.zeros((N_SPECTRA, VECTOR_BINS), dtype=float)
-    labels = np.zeros(N_SPECTRA, dtype=int)
-
-    cluster_precursors = np.linspace(5200, 18200, N_CLUSTERS)
-    cluster_charges = RNG.integers(4, 10, size=N_CLUSTERS)
-    base_masses = []
-    base_intensities = []
-    for cluster_idx in range(N_CLUSTERS):
-        masses = np.sort(RNG.uniform(220, 4800, size=TOP_PEAKS))
-        intensities = RNG.gamma(3.0, 1.0, size=TOP_PEAKS)
-        base_masses.append(masses)
-        base_intensities.append(normalize(intensities))
-
-    for cluster_idx in range(N_CLUSTERS):
-        for local_idx in range(SPECTRA_PER_CLUSTER):
-            spec_id = cluster_idx * SPECTRA_PER_CLUSTER + local_idx
-            labels[spec_id] = cluster_idx
-            precursor = float(cluster_precursors[cluster_idx] + RNG.normal(0, 8.0))
-            charge = int(cluster_charges[cluster_idx] + RNG.choice([-1, 0, 0, 0, 1]))
-            charge = max(2, charge)
-
-            keep_mask = RNG.random(TOP_PEAKS) > 0.16
-            masses = base_masses[cluster_idx][keep_mask] + RNG.normal(0, 1.8, keep_mask.sum())
-            intensities = base_intensities[cluster_idx][keep_mask] * RNG.lognormal(0, 0.20, keep_mask.sum())
-            noise_count = int(RNG.integers(5, 12))
-            masses = np.concatenate([masses, RNG.uniform(180, 5000, size=noise_count)])
-            intensities = np.concatenate([intensities, RNG.gamma(1.6, 0.35, size=noise_count)])
-            order = np.argsort(intensities)[::-1][:TOP_PEAKS]
-            masses = masses[order]
-            intensities = normalize(intensities[order])
-
-            vec = np.zeros(VECTOR_BINS, dtype=float)
-            for mass, inten in zip(masses, intensities):
-                vec[vector_index(float(mass))] += float(inten)
-            vectors[spec_id] = normalize(vec)
-
-            top_bins = [mass_bin(float(m)) for m in masses[:8]]
-            spectra.append(
-                {
-                    "id": spec_id,
-                    "cluster_id": cluster_idx,
-                    "precursor_mass": precursor,
-                    "charge": charge,
-                    "peak_count": int(len(masses)),
-                    "top_bins": top_bins,
-                    "peaks": [(float(m), float(i)) for m, i in zip(masses, intensities)],
-                }
-            )
-    return ExperimentData(spectra=spectra, vectors=vectors, labels_true=labels)
+def save_chart(title: str, painter, path: Path, width=1400, height=850) -> None:
+    img = Image.new("RGB", (width, height), "white")
+    draw = ImageDraw.Draw(img)
+    draw.rectangle([0, 0, width - 1, height - 1], outline=(220, 226, 232), width=2)
+    draw_text(draw, (56, 38), title, size=34, fill=(23, 43, 77), bold=True)
+    painter(draw, width, height)
+    img.save(path)
 
 
-def build_sqlite(data: ExperimentData) -> None:
+def parse_float(value: str | None, default: float = 0.0) -> float:
+    if value is None or value in {"", "-"}:
+        return default
+    try:
+        return float(value)
+    except ValueError:
+        return default
+
+
+def parse_int(value: str | None, default: int = 0) -> int:
+    try:
+        return int(float(value or default))
+    except ValueError:
+        return default
+
+
+def label_from_row(row: dict[str, str]) -> tuple[str, str]:
+    protein = (row.get("Protein name") or "UNKNOWN").split()[0]
+    first = row.get("First residue") or "0"
+    last = row.get("Last residue") or "0"
+    charge = row.get("Charge") or "0"
+    adjusted_mass = parse_float(row.get("Adjusted precursor mass"), parse_float(row.get("Precursor mass")))
+    mass_bin = round(adjusted_mass / PRECURSOR_WINDOW_DA)
+    label = f"{protein}|{first}|{last}|{mass_bin}|z{charge}"
+    return protein, label
+
+
+def read_identifications() -> dict[tuple[str, int], tuple[str, str]]:
+    labels: dict[tuple[str, int], tuple[str, str]] = {}
+    for table_path in sorted(SOURCE_DIR.glob("*.OUTPUT_TABLE")):
+        lines = table_path.read_text(encoding="utf-8", errors="ignore").splitlines()
+        header_idx = next((i for i, line in enumerate(lines) if line.startswith("Data file name\tPrsm ID")), None)
+        if header_idx is None:
+            continue
+        reader = csv.DictReader(lines[header_idx:], delimiter="\t")
+        for row in reader:
+            spectrum_id = parse_int(row.get("Spectrum ID"), -1)
+            if spectrum_id < 0:
+                continue
+            protein, label = label_from_row(row)
+            labels[(table_path.stem, spectrum_id)] = (protein, label)
+    return labels
+
+
+def normalize_top_peaks(peaks: list[tuple[float, float, int]]) -> list[tuple[float, float, int]]:
+    selected = sorted(peaks, key=lambda x: x[1], reverse=True)[:TOP_PEAKS]
+    converted = [(mass, math.log2(max(intensity, 1e-6)), charge) for mass, intensity, charge in selected]
+    norm = math.sqrt(sum(intensity * intensity for _, intensity, _ in converted)) or 1.0
+    return sorted([(mass, intensity / norm, charge) for mass, intensity, charge in converted], key=lambda x: x[0])
+
+
+def read_spectra(labels: dict[tuple[str, int], tuple[str, str]]) -> list[Spectrum]:
+    spectra: list[Spectrum] = []
+    for msalign_path in sorted(SOURCE_DIR.glob("*.msalign")):
+        current: dict | None = None
+        with msalign_path.open(encoding="utf-8", errors="ignore") as fh:
+            for raw in fh:
+                line = raw.strip()
+                if line == "BEGIN IONS":
+                    current = {"source_file": msalign_path.stem, "peaks": []}
+                    continue
+                if line == "END IONS":
+                    if not current:
+                        continue
+                    key = (current["source_file"], current.get("spectrum_id"))
+                    if key in labels and current.get("precursor_mass") and current.get("precursor_charge"):
+                        peaks = normalize_top_peaks(current["peaks"])
+                        if len(peaks) > 1:
+                            protein, label = labels[key]
+                            spectra.append(
+                                Spectrum(
+                                    row_id=len(spectra),
+                                    source_file=current["source_file"],
+                                    spectrum_id=int(current["spectrum_id"]),
+                                    scan=str(current.get("scan", "")),
+                                    precursor_mass=float(current["precursor_mass"]),
+                                    precursor_charge=int(current["precursor_charge"]),
+                                    label=label,
+                                    protein=protein,
+                                    peaks=peaks,
+                                )
+                            )
+                    current = None
+                    continue
+                if current is None:
+                    continue
+                if line.startswith("ID="):
+                    current["spectrum_id"] = parse_int(line.split("=", 1)[1])
+                elif line.startswith("SCANS="):
+                    current["scan"] = line.split("=", 1)[1]
+                elif line.startswith("PRECURSOR_MASS="):
+                    current["precursor_mass"] = parse_float(line.split("=", 1)[1])
+                elif line.startswith("PRECURSOR_CHARGE="):
+                    current["precursor_charge"] = parse_int(line.split("=", 1)[1])
+                elif line and "=" not in line:
+                    parts = line.split()
+                    if len(parts) >= 3:
+                        try:
+                            current["peaks"].append((float(parts[0]), float(parts[1]), int(float(parts[2]))))
+                        except ValueError:
+                            pass
+    return spectra
+
+
+def build_database(spectra: list[Spectrum]) -> None:
     if DB_PATH.exists():
         DB_PATH.unlink()
     con = sqlite3.connect(DB_PATH)
@@ -126,623 +236,523 @@ def build_sqlite(data: ExperimentData) -> None:
     cur.execute(
         """
         CREATE TABLE spectrum (
-            id INTEGER PRIMARY KEY,
-            cluster_id INTEGER,
+            row_id INTEGER PRIMARY KEY,
+            source_file TEXT,
+            spectrum_id INTEGER,
+            scan TEXT,
             precursor_mass REAL,
-            charge INTEGER,
-            peak_count INTEGER,
-            top_bin_1 INTEGER,
-            top_bin_2 INTEGER,
-            top_bin_3 INTEGER,
-            top_bin_4 INTEGER
+            precursor_charge INTEGER,
+            protein TEXT,
+            ground_truth_label TEXT
         )
         """
     )
     cur.execute(
         """
         CREATE TABLE peak (
-            spectrum_id INTEGER,
+            row_id INTEGER,
+            rank INTEGER,
             mass REAL,
-            intensity REAL,
-            FOREIGN KEY (spectrum_id) REFERENCES spectrum(id)
+            norm_intensity REAL,
+            charge INTEGER,
+            FOREIGN KEY(row_id) REFERENCES spectrum(row_id)
         )
         """
     )
-    cur.execute("CREATE INDEX idx_spectrum_filter ON spectrum(charge, precursor_mass)")
-    cur.execute("CREATE INDEX idx_peak_spectrum ON peak(spectrum_id)")
-
-    for spec in data.spectra:
-        bins = spec["top_bins"][:4]
+    cur.execute("CREATE INDEX idx_spectrum_precursor ON spectrum(precursor_charge, precursor_mass)")
+    cur.execute("CREATE INDEX idx_peak_row ON peak(row_id)")
+    for spec in spectra:
         cur.execute(
             """
             INSERT INTO spectrum
-            (id, cluster_id, precursor_mass, charge, peak_count, top_bin_1, top_bin_2, top_bin_3, top_bin_4)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            (row_id, source_file, spectrum_id, scan, precursor_mass, precursor_charge, protein, ground_truth_label)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
             """,
             (
-                spec["id"],
-                spec["cluster_id"],
-                spec["precursor_mass"],
-                spec["charge"],
-                spec["peak_count"],
-                bins[0],
-                bins[1],
-                bins[2],
-                bins[3],
+                spec.row_id,
+                spec.source_file,
+                spec.spectrum_id,
+                spec.scan,
+                spec.precursor_mass,
+                spec.precursor_charge,
+                spec.protein,
+                spec.label,
             ),
         )
         cur.executemany(
-            "INSERT INTO peak(spectrum_id, mass, intensity) VALUES (?, ?, ?)",
-            [(spec["id"], mass, inten) for mass, inten in spec["peaks"]],
+            "INSERT INTO peak(row_id, rank, mass, norm_intensity, charge) VALUES (?, ?, ?, ?, ?)",
+            [(spec.row_id, rank, mass, inten, charge) for rank, (mass, inten, charge) in enumerate(spec.peaks, start=1)],
         )
     con.commit()
     con.close()
 
 
-def cosine_matrix(vectors: np.ndarray) -> np.ndarray:
-    sim = vectors @ vectors.T
-    np.fill_diagonal(sim, 1.0)
-    return np.clip(sim, 0.0, 1.0)
+def precursor_candidates(spectra: list[Spectrum], mass_window_da: float = PRECURSOR_WINDOW_DA) -> list[tuple[int, int]]:
+    by_charge: dict[int, list[int]] = defaultdict(list)
+    for idx, spec in enumerate(spectra):
+        by_charge[spec.precursor_charge].append(idx)
+    for values in by_charge.values():
+        values.sort(key=lambda idx: spectra[idx].precursor_mass)
+
+    pairs: list[tuple[int, int]] = []
+    for values in by_charge.values():
+        for pos, left in enumerate(values):
+            mass = spectra[left].precursor_mass
+            scan = pos + 1
+            while scan < len(values) and spectra[values[scan]].precursor_mass - mass <= mass_window_da:
+                pairs.append((left, values[scan]))
+                scan += 1
+    return pairs
 
 
-def kmeans(vectors: np.ndarray, k: int, iterations: int = 60) -> np.ndarray:
-    rng = np.random.default_rng(42)
-    centers = vectors[rng.choice(len(vectors), size=k, replace=False)].copy()
-    labels = np.zeros(len(vectors), dtype=int)
-    for _ in range(iterations):
-        sims = vectors @ centers.T
-        new_labels = sims.argmax(axis=1)
-        if np.array_equal(labels, new_labels):
-            break
-        labels = new_labels
-        for idx in range(k):
-            members = vectors[labels == idx]
-            if len(members):
-                centers[idx] = normalize(members.mean(axis=0))
-    return labels
+def fragment_cosine(left: Spectrum, right: Spectrum, ppm: float = FRAGMENT_TOLERANCE_PPM) -> float:
+    a, b = left.peaks, right.peaks
+    i = j = 0
+    score = 0.0
+    while i < len(a) and j < len(b):
+        mass_a, intensity_a, charge_a = a[i]
+        mass_b, intensity_b, charge_b = b[j]
+        tolerance = max(mass_a, mass_b) * ppm * 1e-6
+        delta = mass_a - mass_b
+        if abs(delta) <= tolerance:
+            if charge_a == charge_b:
+                score += intensity_a * intensity_b
+            i += 1
+            j += 1
+        elif delta < 0:
+            i += 1
+        else:
+            j += 1
+    return score
 
 
-def spectral_clustering(sim: np.ndarray, k: int) -> np.ndarray:
-    affinity = np.where(sim >= 0.22, sim, 0.0)
-    degree = affinity.sum(axis=1)
-    degree[degree == 0] = 1.0
-    d_inv_sqrt = np.diag(1.0 / np.sqrt(degree))
-    lap = np.eye(len(sim)) - d_inv_sqrt @ affinity @ d_inv_sqrt
-    _, eigvecs = np.linalg.eigh(lap)
-    embed = eigvecs[:, :k]
-    row_norm = np.linalg.norm(embed, axis=1, keepdims=True)
-    row_norm[row_norm == 0] = 1.0
-    embed = embed / row_norm
-    return kmeans(embed, k)
+def cluster_by_edges(n: int, edges: list[tuple[int, int]]) -> list[int]:
+    uf = UnionFind(n)
+    for left, right in edges:
+        uf.union(left, right)
+    return uf.labels()
 
 
-def agglomerative_average(sim: np.ndarray, k: int) -> np.ndarray:
-    """Fast single-link agglomerative baseline.
-
-    A full average-link implementation is unnecessarily slow for repeated thesis
-    builds. This baseline still follows the hierarchical merge idea: pairs are
-    processed from high to low similarity until the target cluster count is
-    reached.
-    """
-
-    n = len(sim)
-    parent = np.arange(n)
-    components = n
-
-    def find(x: int) -> int:
-        while parent[x] != x:
-            parent[x] = parent[parent[x]]
-            x = parent[x]
-        return x
-
-    def union(a: int, b: int) -> None:
-        nonlocal components
-        ra, rb = find(a), find(b)
-        if ra != rb:
-            parent[rb] = ra
-            components -= 1
-
-    tri_i, tri_j = np.triu_indices(n, k=1)
-    order = np.argsort(sim[tri_i, tri_j])[::-1]
-    for pos in order:
-        union(int(tri_i[pos]), int(tri_j[pos]))
-        if components <= k:
-            break
-
-    root_to_label: dict[int, int] = {}
-    labels = np.zeros(n, dtype=int)
-    for idx in range(n):
-        root = find(idx)
-        if root not in root_to_label:
-            root_to_label[root] = len(root_to_label)
-        labels[idx] = root_to_label[root]
-    return labels
+def comb2(value: int) -> int:
+    return value * (value - 1) // 2
 
 
-def dbscan_cosine(sim: np.ndarray, eps: float = 0.61, min_samples: int = 3) -> np.ndarray:
-    n = len(sim)
-    visited = np.zeros(n, dtype=bool)
-    labels = np.full(n, -1, dtype=int)
-    cluster_id = 0
-    threshold = 1.0 - eps
-    neighbors = [np.where(sim[i] >= threshold)[0].tolist() for i in range(n)]
-    for point in range(n):
-        if visited[point]:
-            continue
-        visited[point] = True
-        if len(neighbors[point]) < min_samples:
-            continue
-        labels[point] = cluster_id
-        seeds = list(neighbors[point])
-        while seeds:
-            candidate = seeds.pop()
-            if not visited[candidate]:
-                visited[candidate] = True
-                if len(neighbors[candidate]) >= min_samples:
-                    seeds.extend([x for x in neighbors[candidate] if x not in seeds])
-            if labels[candidate] == -1:
-                labels[candidate] = cluster_id
-        cluster_id += 1
-    # Metrics are easier to compare when unclustered spectra remain distinct.
-    next_label = cluster_id
-    for idx in np.where(labels == -1)[0]:
-        labels[idx] = next_label
-        next_label += 1
-    return labels
-
-
-def database_filtered_clustering(data: ExperimentData, threshold: float = 0.20, mass_window: float = 80.0) -> tuple[np.ndarray, dict]:
-    con = sqlite3.connect(DB_PATH)
-    cur = con.cursor()
-    parent = np.arange(len(data.spectra))
-    compared: set[tuple[int, int]] = set()
-
-    def find(x: int) -> int:
-        while parent[x] != x:
-            parent[x] = parent[parent[x]]
-            x = parent[x]
-        return x
-
-    def union(a: int, b: int) -> None:
-        ra, rb = find(a), find(b)
-        if ra != rb:
-            parent[rb] = ra
-
-    for spec in data.spectra:
-        bins = spec["top_bins"][:4]
-        clauses = " OR ".join([f"top_bin_{i} IN ({','.join(['?'] * len(bins))})" for i in range(1, 5)])
-        sql = f"""
-            SELECT id FROM spectrum
-            WHERE id > ?
-              AND charge BETWEEN ? AND ?
-              AND precursor_mass BETWEEN ? AND ?
-              AND ({clauses})
-        """
-        params = [
-            spec["id"],
-            max(1, spec["charge"] - 1),
-            spec["charge"] + 1,
-            spec["precursor_mass"] - mass_window,
-            spec["precursor_mass"] + mass_window,
-        ]
-        for _ in range(4):
-            params.extend(bins)
-        for (candidate_id,) in cur.execute(sql, params):
-            a, b = spec["id"], int(candidate_id)
-            if a > b:
-                a, b = b, a
-            compared.add((a, b))
-            if float(data.vectors[a] @ data.vectors[b]) >= threshold:
-                union(a, b)
-    con.close()
-
-    root_to_label: dict[int, int] = {}
-    labels = np.zeros(len(data.spectra), dtype=int)
-    for idx in range(len(data.spectra)):
-        root = find(idx)
-        if root not in root_to_label:
-            root_to_label[root] = len(root_to_label)
-        labels[idx] = root_to_label[root]
-    stats = {
-        "candidate_pairs": len(compared),
-        "candidate_pairs_set": compared,
-        "all_pairs": len(data.spectra) * (len(data.spectra) - 1) // 2,
-        "reduction_rate": 1.0 - len(compared) / (len(data.spectra) * (len(data.spectra) - 1) / 2),
-        "similarity_threshold": threshold,
-        "mass_window": mass_window,
-    }
-    return labels, stats
-
-
-def adjusted_rand_index(true: np.ndarray, pred: np.ndarray) -> float:
-    contingency: dict[tuple[int, int], int] = Counter(zip(true.tolist(), pred.tolist()))
-    true_counts = Counter(true.tolist())
-    pred_counts = Counter(pred.tolist())
-
-    def comb2(n: int) -> int:
-        return n * (n - 1) // 2
-
-    sum_comb = sum(comb2(v) for v in contingency.values())
-    sum_true = sum(comb2(v) for v in true_counts.values())
-    sum_pred = sum(comb2(v) for v in pred_counts.values())
-    total = comb2(len(true))
-    expected = sum_true * sum_pred / total if total else 0.0
-    max_index = 0.5 * (sum_true + sum_pred)
-    denom = max_index - expected
-    return float((sum_comb - expected) / denom) if denom else 0.0
-
-
-def normalized_mutual_info(true: np.ndarray, pred: np.ndarray) -> float:
-    n = len(true)
-    true_counts = Counter(true.tolist())
-    pred_counts = Counter(pred.tolist())
-    joint = Counter(zip(true.tolist(), pred.tolist()))
-
-    mi = 0.0
-    for (a, b), count in joint.items():
-        mi += count / n * math.log((count * n) / (true_counts[a] * pred_counts[b]) + 1e-12)
-    h_true = -sum((count / n) * math.log(count / n) for count in true_counts.values())
-    h_pred = -sum((count / n) * math.log(count / n) for count in pred_counts.values())
-    denom = math.sqrt(h_true * h_pred)
-    return float(mi / denom) if denom else 0.0
-
-
-def silhouette_cosine(sim: np.ndarray, labels: np.ndarray) -> float:
-    unique = [label for label in sorted(set(labels.tolist())) if np.sum(labels == label) > 1]
-    if len(unique) < 2:
+def adjusted_rand_index(true_labels: list[str], predicted: list[int]) -> float:
+    n = len(true_labels)
+    contingency = Counter(zip(true_labels, predicted))
+    true_count = Counter(true_labels)
+    pred_count = Counter(predicted)
+    sum_contingency = sum(comb2(v) for v in contingency.values())
+    sum_true = sum(comb2(v) for v in true_count.values())
+    sum_pred = sum(comb2(v) for v in pred_count.values())
+    total = comb2(n)
+    if total == 0:
         return 0.0
-    dist = 1.0 - sim
-    values = []
-    for idx in range(len(labels)):
-        same = np.where(labels == labels[idx])[0]
-        same = same[same != idx]
-        if len(same) == 0:
+    expected = sum_true * sum_pred / total
+    maximum = (sum_true + sum_pred) / 2
+    return (sum_contingency - expected) / (maximum - expected) if maximum != expected else 0.0
+
+
+def normalized_mutual_information(true_labels: list[str], predicted: list[int]) -> float:
+    n = len(true_labels)
+    true_count = Counter(true_labels)
+    pred_count = Counter(predicted)
+    joint = Counter(zip(true_labels, predicted))
+    mutual_info = 0.0
+    for (true_label, pred_label), count in joint.items():
+        mutual_info += (count / n) * math.log((count * n) / (true_count[true_label] * pred_count[pred_label]) + 1e-15)
+    true_entropy = -sum((count / n) * math.log(count / n) for count in true_count.values())
+    pred_entropy = -sum((count / n) * math.log(count / n) for count in pred_count.values())
+    return mutual_info / math.sqrt(true_entropy * pred_entropy) if true_entropy and pred_entropy else 0.0
+
+
+def cluster_error_rate(true_labels: list[str], predicted: list[int]) -> float:
+    clusters: dict[int, list[str]] = defaultdict(list)
+    for label, cluster in zip(true_labels, predicted):
+        clusters[cluster].append(label)
+    wrong = 0
+    clustered = 0
+    for labels in clusters.values():
+        if len(labels) <= 1:
             continue
-        a = float(dist[idx, same].mean())
-        b = min(float(dist[idx, np.where(labels == other)[0]].mean()) for other in unique if other != labels[idx])
-        denom = max(a, b)
-        if denom:
-            values.append((b - a) / denom)
-    return float(np.mean(values)) if values else 0.0
+        clustered += len(labels)
+        majority = Counter(labels).most_common(1)[0][1]
+        wrong += len(labels) - majority
+    return wrong / clustered if clustered else 0.0
 
 
-def evaluate(name: str, labels: np.ndarray, true: np.ndarray, sim: np.ndarray, elapsed: float, peak_mb: float, extra: dict | None = None) -> dict:
-    clusters = Counter(labels.tolist())
-    valid = sum(1 for size in clusters.values() if size >= 2)
-    result = {
+def clustered_ratio(predicted: list[int]) -> float:
+    counts = Counter(predicted)
+    clustered = sum(count for count in counts.values() if count > 1)
+    return clustered / len(predicted) if predicted else 0.0
+
+
+def evaluate(name: str, true_labels: list[str], predicted: list[int], elapsed: float, peak_mb: float, candidate_pairs: int, edges: int):
+    return {
         "algorithm": name,
-        "clusters": len(clusters),
-        "valid_clusters": valid,
-        "ari": round(adjusted_rand_index(true, labels), 4),
-        "nmi": round(normalized_mutual_info(true, labels), 4),
-        "silhouette": round(silhouette_cosine(sim, labels), 4),
-        "runtime_sec": round(elapsed, 4),
-        "peak_memory_mb": round(peak_mb, 3),
+        "clusters": len(set(predicted)),
+        "ari": adjusted_rand_index(true_labels, predicted),
+        "nmi": normalized_mutual_information(true_labels, predicted),
+        "incorrect_rate": cluster_error_rate(true_labels, predicted),
+        "clustered_ratio": clustered_ratio(predicted),
+        "runtime_sec": elapsed,
+        "peak_memory_mb": peak_mb,
+        "candidate_pairs": candidate_pairs,
+        "retained_edges": edges,
     }
-    if extra:
-        result.update(extra)
-    return result
 
 
-def run_measured(func, *args):
+def measure(func):
     tracemalloc.start()
     start = time.perf_counter()
-    output = func(*args)
+    result = func()
     elapsed = time.perf_counter() - start
     _, peak = tracemalloc.get_traced_memory()
     tracemalloc.stop()
-    return output, elapsed, peak / (1024 * 1024)
+    return result, elapsed, peak / 1024 / 1024
 
 
-def load_font(size: int, bold: bool = False) -> ImageFont.ImageFont:
-    candidates = [
-        "/System/Library/Fonts/PingFang.ttc",
-        "/System/Library/Fonts/STHeiti Light.ttc",
-        "/Library/Fonts/Arial Unicode.ttf",
-    ]
-    for path in candidates:
-        if os.path.exists(path):
-            try:
-                return ImageFont.truetype(path, size=size)
-            except OSError:
-                continue
-    return ImageFont.load_default()
+def run_methods(spectra: list[Spectrum], candidates: list[tuple[int, int]], pair_scores: list[tuple[int, int, float]]):
+    true_labels = [spec.label for spec in spectra]
+    n = len(spectra)
+    all_pairs = comb2(n)
+    results = []
+
+    labels, elapsed, peak = measure(lambda: list(range(n)))
+    results.append(evaluate("全部单谱图基线", true_labels, labels, elapsed, peak, 0, 0))
+
+    labels, elapsed, peak = measure(lambda: cluster_by_edges(n, candidates))
+    results.append(evaluate("前体质量-荷电过滤", true_labels, labels, elapsed, peak, len(candidates), len(candidates)))
+
+    for threshold in [0.30, 0.50, 0.70]:
+        def make_labels(th=threshold):
+            edges = [(i, j) for i, j, score in pair_scores if score >= th]
+            return cluster_by_edges(n, edges), len(edges)
+
+        (labels, edge_count), elapsed, peak = measure(make_labels)
+        results.append(
+            evaluate(
+                f"数据库过滤+碎片峰相似度≥{threshold:.2f}",
+                true_labels,
+                labels,
+                elapsed,
+                peak,
+                len(candidates),
+                edge_count,
+            )
+        )
+    return results, all_pairs
 
 
-def draw_bar_chart(path: Path, title: str, labels: list[str], series: list[tuple[str, list[float], tuple[int, int, int]]], y_max: float) -> None:
-    width, height = 1300, 760
-    img = Image.new("RGB", (width, height), "white")
-    draw = ImageDraw.Draw(img)
-    font_title = load_font(34, True)
-    font = load_font(22)
-    small = load_font(18)
-    left, right, top, bottom = 110, 70, 90, 120
-    chart_w = width - left - right
-    chart_h = height - top - bottom
-    draw.text((left, 28), title, fill=(20, 32, 44), font=font_title)
-    draw.line((left, top, left, top + chart_h), fill=(40, 40, 40), width=2)
-    draw.line((left, top + chart_h, left + chart_w, top + chart_h), fill=(40, 40, 40), width=2)
-    for tick in range(6):
-        y = top + chart_h - chart_h * tick / 5
-        val = y_max * tick / 5
-        draw.line((left - 6, y, left + chart_w, y), fill=(226, 232, 238), width=1)
-        draw.text((25, y - 11), f"{val:.2f}", fill=(60, 70, 80), font=small)
-    group_w = chart_w / len(labels)
-    bar_w = min(46, group_w / (len(series) + 1))
-    for i, label in enumerate(labels):
-        x0 = left + i * group_w + group_w * 0.18
-        for j, (series_name, values, color) in enumerate(series):
-            value = values[i]
-            bar_h = chart_h * value / y_max
-            x = x0 + j * (bar_w + 7)
-            y = top + chart_h - bar_h
-            draw.rounded_rectangle((x, y, x + bar_w, top + chart_h), radius=4, fill=color)
-            draw.text((x - 6, y - 25), f"{value:.2f}", fill=color, font=small)
-        draw.text((left + i * group_w + 5, top + chart_h + 18), label, fill=(30, 40, 50), font=small)
-    legend_x = left
-    for name, _, color in series:
-        draw.rectangle((legend_x, height - 58, legend_x + 26, height - 32), fill=color)
-        draw.text((legend_x + 34, height - 60), name, fill=(30, 40, 50), font=font)
-        legend_x += 150
-    img.save(path)
+def write_csv(path: Path, rows: list[dict], fields: list[str]) -> None:
+    with path.open("w", encoding="utf-8", newline="") as fh:
+        writer = csv.DictWriter(fh, fieldnames=fields)
+        writer.writeheader()
+        for row in rows:
+            writer.writerow({field: row.get(field, "") for field in fields})
 
 
-def draw_runtime_chart(path: Path, results: list[dict]) -> None:
-    labels = [r["algorithm"] for r in results]
-    runtimes = [r["runtime_sec"] for r in results]
-    pairs = [r.get("candidate_pairs", r.get("all_pairs", 0)) for r in results]
-    max_runtime = max(runtimes) * 1.18
-    draw_bar_chart(path, "聚类算法运行时间对比", labels, [("运行时间/s", runtimes, (68, 114, 196))], max_runtime)
+def draw_grouped_bars(path: Path, results: list[dict]) -> None:
+    names = [item["algorithm"] for item in results]
+    ari = [item["ari"] for item in results]
+    nmi = [item["nmi"] for item in results]
 
-    pair_path = path.with_name("candidate_reduction.png")
-    max_pairs = max(pairs) * 1.18
-    draw_bar_chart(pair_path, "数据库过滤前后的候选谱图对数量", labels, [("候选对数量", pairs, (66, 151, 115))], max_pairs)
+    def painter(draw, width, height):
+        left, bottom, top = 120, height - 170, 150
+        axis_h = bottom - top
+        draw.line([left, top, left, bottom, width - 80, bottom], fill=(80, 95, 115), width=2)
+        for tick in range(0, 6):
+            y = bottom - axis_h * tick / 5
+            draw.line([left - 8, y, width - 80, y], fill=(235, 239, 244), width=1)
+            draw_text(draw, (48, int(y - 13)), f"{tick / 5:.1f}", size=20, fill=(90, 100, 115))
+        group_w = (width - left - 120) / len(names)
+        colors = [(53, 120, 198), (231, 145, 55)]
+        for idx, name in enumerate(names):
+            gx = left + idx * group_w + 18
+            for offset, value in enumerate([ari[idx], nmi[idx]]):
+                bar_w = group_w * 0.28
+                x0 = gx + offset * (bar_w + 8)
+                y0 = bottom - value * axis_h
+                draw.rounded_rectangle([x0, y0, x0 + bar_w, bottom], radius=8, fill=colors[offset])
+                draw_text(draw, (int(x0), int(y0 - 28)), f"{value:.3f}", size=17, fill=colors[offset])
+            label = name.replace("数据库过滤+", "过滤+\n").replace("前体质量-", "前体\n")
+            draw_text(draw, (int(gx - 6), bottom + 18), label, size=17, fill=(40, 50, 65))
+        draw.rectangle([width - 300, 90, width - 270, 116], fill=colors[0])
+        draw_text(draw, (width - 260, 86), "ARI", size=20)
+        draw.rectangle([width - 190, 90, width - 160, 116], fill=colors[1])
+        draw_text(draw, (width - 150, 86), "NMI", size=20)
 
-
-def draw_scatter(path: Path, vectors: np.ndarray, true: np.ndarray, pred: np.ndarray) -> None:
-    centered = vectors - vectors.mean(axis=0, keepdims=True)
-    u, s, _ = np.linalg.svd(centered, full_matrices=False)
-    coords = u[:, :2] * s[:2]
-    x = coords[:, 0]
-    y = coords[:, 1]
-    x = (x - x.min()) / (x.max() - x.min() + 1e-12)
-    y = (y - y.min()) / (y.max() - y.min() + 1e-12)
-    width, height = 1200, 760
-    img = Image.new("RGB", (width, height), "white")
-    draw = ImageDraw.Draw(img)
-    font_title = load_font(34, True)
-    font = load_font(20)
-    palette = [
-        (54, 96, 146),
-        (202, 93, 61),
-        (68, 151, 115),
-        (134, 103, 179),
-        (196, 150, 66),
-        (83, 144, 176),
-        (180, 82, 116),
-        (112, 132, 58),
-        (72, 72, 72),
-        (48, 132, 132),
-    ]
-    draw.text((70, 30), "数据库过滤聚类结果二维投影", fill=(20, 32, 44), font=font_title)
-    draw.rectangle((80, 100, width - 70, height - 95), outline=(44, 54, 66), width=2)
-    for idx in range(len(vectors)):
-        px = 90 + x[idx] * (width - 180)
-        py = 110 + (1 - y[idx]) * (height - 220)
-        color = palette[int(true[idx]) % len(palette)]
-        radius = 5 if pred[idx] == true[idx] else 7
-        draw.ellipse((px - radius, py - radius, px + radius, py + radius), fill=color, outline=(255, 255, 255))
-    draw.text((80, height - 70), "颜色表示真实谱图组；点云分离度用于辅助观察聚类结构", fill=(65, 75, 88), font=font)
-    img.save(path)
+    save_chart("谱图聚类质量对比", painter, path)
 
 
-def draw_memory_chart(path: Path, results: list[dict]) -> None:
-    draw_bar_chart(
-        path,
-        "聚类算法峰值内存占用对比",
-        [r["algorithm"] for r in results],
-        [("峰值内存/MB", [r["peak_memory_mb"] for r in results], (134, 103, 179))],
-        max(r["peak_memory_mb"] for r in results) * 1.18,
-    )
+def draw_candidate_reduction(path: Path, all_pairs: int, candidates: int, edges: int) -> None:
+    labels = ["全部谱图对", "前体候选对", "相似度保留边"]
+    values = [all_pairs, candidates, edges]
+    max_log = math.log10(max(values) + 1)
+
+    def painter(draw, width, height):
+        left, top, bottom = 180, 170, height - 145
+        draw.line([left, top, left, bottom, width - 110, bottom], fill=(80, 95, 115), width=2)
+        bar_h = 94
+        colors = [(151, 166, 183), (58, 127, 204), (39, 159, 125)]
+        for idx, (label, value) in enumerate(zip(labels, values)):
+            y = top + idx * 155
+            bar_w = (width - left - 210) * math.log10(value + 1) / max_log
+            draw_text(draw, (42, y + 26), label, size=24)
+            draw.rounded_rectangle([left, y, left + bar_w, y + bar_h], radius=12, fill=colors[idx])
+            draw_text(draw, (int(left + bar_w + 20), y + 29), f"{value:,}", size=26, fill=(30, 40, 50), bold=True)
+        reduction = 1 - candidates / all_pairs
+        draw_text(draw, (left, height - 88), f"候选过滤率：{reduction * 100:.2f}%", size=28, fill=(28, 112, 84), bold=True)
+
+    save_chart("数据库过滤前后的候选空间压缩", painter, path)
 
 
-def draw_sensitivity_chart(path: Path, sensitivity: list[dict]) -> None:
-    labels = [item["setting"] for item in sensitivity]
-    draw_bar_chart(
-        path,
-        "候选过滤参数敏感性分析",
-        labels,
-        [
-            ("ARI", [item["ari"] for item in sensitivity], (54, 96, 146)),
-            ("NMI", [item["nmi"] for item in sensitivity], (68, 151, 115)),
-        ],
-        1.05,
-    )
+def draw_runtime(path: Path, results: list[dict]) -> None:
+    labels = [item["algorithm"] for item in results[1:]]
+    times = [item["runtime_sec"] for item in results[1:]]
+    pairs = [max(item["retained_edges"], 1) for item in results[1:]]
+    max_time = max(times) if times else 1
+    max_pair = max(pairs) if pairs else 1
+
+    def painter(draw, width, height):
+        left, bottom, top = 110, height - 160, 145
+        group_w = (width - left - 100) / len(labels)
+        draw.line([left, top, left, bottom, width - 80, bottom], fill=(80, 95, 115), width=2)
+        for idx, label in enumerate(labels):
+            gx = left + idx * group_w + 40
+            time_h = (bottom - top) * times[idx] / max_time if max_time else 0
+            pair_h = (bottom - top) * math.log10(pairs[idx] + 1) / math.log10(max_pair + 1)
+            draw.rounded_rectangle([gx, bottom - time_h, gx + 56, bottom], radius=8, fill=(62, 130, 204))
+            draw.rounded_rectangle([gx + 76, bottom - pair_h, gx + 132, bottom], radius=8, fill=(231, 145, 55))
+            draw_text(draw, (int(gx - 8), int(bottom - time_h - 30)), f"{times[idx]:.4f}s", size=17, fill=(62, 130, 204))
+            draw_text(draw, (int(gx + 62), int(bottom - pair_h - 30)), f"{pairs[idx]:,}", size=17, fill=(180, 95, 32))
+            draw_text(draw, (int(gx - 25), bottom + 18), label.replace("数据库过滤+", "过滤+\n").replace("前体质量-", "前体\n"), size=17)
+        draw.rectangle([width - 360, 92, width - 332, 118], fill=(62, 130, 204))
+        draw_text(draw, (width - 322, 88), "运行时间", size=20)
+        draw.rectangle([width - 210, 92, width - 182, 118], fill=(231, 145, 55))
+        draw_text(draw, (width - 172, 88), "保留边数", size=20)
+
+    save_chart("运行时间与保留边数量", painter, path)
 
 
-def draw_cluster_size_chart(path: Path, true: np.ndarray, pred: np.ndarray) -> None:
-    true_sizes = sorted(Counter(true.tolist()).values(), reverse=True)
-    pred_sizes = sorted(Counter(pred.tolist()).values(), reverse=True)[:18]
-    labels = [f"C{i + 1}" for i in range(max(len(true_sizes), len(pred_sizes)))]
-    true_values = true_sizes + [0] * (len(labels) - len(true_sizes))
-    pred_values = pred_sizes + [0] * (len(labels) - len(pred_sizes))
-    draw_bar_chart(
-        path,
-        "真实簇与数据库过滤聚类簇规模分布",
-        labels,
-        [
-            ("真实簇规模", true_values, (54, 96, 146)),
-            ("预测簇规模", pred_values, (202, 93, 61)),
-        ],
-        max(max(true_values), max(pred_values)) * 1.18,
-    )
+def draw_sensitivity(path: Path, rows: list[dict]) -> None:
+    thresholds = [row["threshold"] for row in rows]
+    ari = [row["ari"] for row in rows]
+    edges = [row["retained_edges"] for row in rows]
+    max_edges = max(edges) if edges else 1
+
+    def painter(draw, width, height):
+        left, bottom, top = 115, height - 155, 145
+        draw.line([left, top, left, bottom, width - 95, bottom], fill=(80, 95, 115), width=2)
+        plot_w = width - left - 170
+        prev_ari = None
+        prev_edge = None
+        for idx, th in enumerate(thresholds):
+            x = left + plot_w * idx / (len(thresholds) - 1)
+            y_ari = bottom - (bottom - top) * ari[idx]
+            y_edge = bottom - (bottom - top) * (edges[idx] / max_edges)
+            if prev_ari:
+                draw.line([prev_ari[0], prev_ari[1], x, y_ari], fill=(53, 120, 198), width=4)
+                draw.line([prev_edge[0], prev_edge[1], x, y_edge], fill=(231, 145, 55), width=4)
+            draw.ellipse([x - 7, y_ari - 7, x + 7, y_ari + 7], fill=(53, 120, 198))
+            draw.ellipse([x - 7, y_edge - 7, x + 7, y_edge + 7], fill=(231, 145, 55))
+            draw_text(draw, (int(x - 24), bottom + 18), f"{th:.2f}", size=20)
+            prev_ari = (x, y_ari)
+            prev_edge = (x, y_edge)
+        draw_text(draw, (left, height - 82), "横轴：碎片峰相似度阈值", size=22)
+        draw.rectangle([width - 360, 92, width - 332, 118], fill=(53, 120, 198))
+        draw_text(draw, (width - 322, 88), "ARI", size=20)
+        draw.rectangle([width - 250, 92, width - 222, 118], fill=(231, 145, 55))
+        draw_text(draw, (width - 212, 88), "保留边归一化", size=20)
+
+    save_chart("碎片峰相似度阈值敏感性分析", painter, path)
 
 
-def draw_similarity_histogram(path: Path, sim: np.ndarray, candidate_pairs: set[tuple[int, int]]) -> None:
-    rng = np.random.default_rng(20260520)
-    all_i, all_j = np.triu_indices(len(sim), k=1)
-    sample_idx = rng.choice(len(all_i), size=min(5000, len(all_i)), replace=False)
-    background = sim[all_i[sample_idx], all_j[sample_idx]]
-    candidate_values = np.array([sim[a, b] for a, b in candidate_pairs], dtype=float)
-    bins = np.linspace(0, 1, 21)
-    bg_hist, _ = np.histogram(background, bins=bins)
-    cand_hist, _ = np.histogram(candidate_values, bins=bins)
-    bg_hist = bg_hist / max(1, bg_hist.max())
-    cand_hist = cand_hist / max(1, cand_hist.max())
-    labels = [f"{bins[i]:.2f}" for i in range(len(bins) - 1)]
-    draw_bar_chart(
-        path,
-        "候选谱图对与随机谱图对相似度分布",
-        labels,
-        [
-            ("随机谱图对", bg_hist.tolist(), (150, 158, 170)),
-            ("过滤候选对", cand_hist.tolist(), (66, 151, 115)),
-        ],
-        1.05,
-    )
+def draw_histogram(path: Path, pair_scores: list[tuple[int, int, float]], spectra: list[Spectrum]) -> None:
+    bins = [i / 10 for i in range(11)]
+    same = [0] * 10
+    diff = [0] * 10
+    for left, right, score in pair_scores:
+        idx = min(9, max(0, int(score * 10)))
+        if spectra[left].label == spectra[right].label:
+            same[idx] += 1
+        else:
+            diff[idx] += 1
+    max_v = max(same + diff) or 1
+
+    def painter(draw, width, height):
+        left, bottom, top = 110, height - 155, 145
+        draw.line([left, top, left, bottom, width - 90, bottom], fill=(80, 95, 115), width=2)
+        group_w = (width - left - 145) / 10
+        for idx in range(10):
+            gx = left + idx * group_w + 10
+            h1 = (bottom - top) * same[idx] / max_v
+            h2 = (bottom - top) * diff[idx] / max_v
+            draw.rectangle([gx, bottom - h1, gx + group_w * 0.35, bottom], fill=(39, 159, 125))
+            draw.rectangle([gx + group_w * 0.42, bottom - h2, gx + group_w * 0.77, bottom], fill=(202, 83, 76))
+            draw_text(draw, (int(gx - 2), bottom + 18), f"{bins[idx]:.1f}", size=17)
+        draw.rectangle([width - 360, 92, width - 332, 118], fill=(39, 159, 125))
+        draw_text(draw, (width - 322, 88), "同标注谱图对", size=20)
+        draw.rectangle([width - 190, 92, width - 162, 118], fill=(202, 83, 76))
+        draw_text(draw, (width - 152, 88), "异标注谱图对", size=20)
+
+    save_chart("候选谱图对碎片峰相似度分布", painter, path)
 
 
-def run_filter_sensitivity(data: ExperimentData, sim: np.ndarray) -> list[dict]:
-    settings = [
-        ("质量窗口过窄", 10.0, 0.20),
-        ("质量窗口适中", 20.0, 0.20),
-        ("基准设置", 80.0, 0.20),
-        ("相似度阈值降低", 80.0, 0.15),
-        ("相似度阈值提高", 80.0, 0.25),
-    ]
-    rows = []
-    for name, mass_window, threshold in settings:
-        labels, stats = database_filtered_clustering(data, threshold=threshold, mass_window=mass_window)
-        serializable_stats = {k: v for k, v in stats.items() if k != "candidate_pairs_set"}
-        item = evaluate(name, labels, data.labels_true, sim, 0.0, 0.0, serializable_stats)
-        item["setting"] = name
-        rows.append(item)
-    return rows
+def draw_cluster_distribution(path: Path, true_labels: list[str], predicted: list[int]) -> None:
+    true_sizes = sorted(Counter(true_labels).values(), reverse=True)[:20]
+    pred_sizes = sorted(Counter(predicted).values(), reverse=True)[:20]
+    max_v = max(true_sizes + pred_sizes) if true_sizes or pred_sizes else 1
+
+    def painter(draw, width, height):
+        left, bottom, top = 110, height - 155, 145
+        draw.line([left, top, left, bottom, width - 90, bottom], fill=(80, 95, 115), width=2)
+        group_w = (width - left - 145) / 20
+        for idx in range(20):
+            gx = left + idx * group_w + 4
+            h1 = (bottom - top) * (true_sizes[idx] if idx < len(true_sizes) else 0) / max_v
+            h2 = (bottom - top) * (pred_sizes[idx] if idx < len(pred_sizes) else 0) / max_v
+            draw.rectangle([gx, bottom - h1, gx + group_w * 0.34, bottom], fill=(53, 120, 198))
+            draw.rectangle([gx + group_w * 0.42, bottom - h2, gx + group_w * 0.76, bottom], fill=(39, 159, 125))
+        draw_text(draw, (left, height - 88), "显示规模最大的前 20 个簇", size=22)
+        draw.rectangle([width - 360, 92, width - 332, 118], fill=(53, 120, 198))
+        draw_text(draw, (width - 322, 88), "TopPIC 标注组", size=20)
+        draw.rectangle([width - 190, 92, width - 162, 118], fill=(39, 159, 125))
+        draw_text(draw, (width - 152, 88), "聚类结果", size=20)
+
+    save_chart("参考标注组与聚类簇规模分布", painter, path)
 
 
-def export_tables(results: list[dict], data: ExperimentData, filter_stats: dict, sensitivity: list[dict]) -> None:
+def draw_precursor_map(path: Path, spectra: list[Spectrum], predicted: list[int]) -> None:
+    masses = [s.precursor_mass for s in spectra]
+    charges = [s.precursor_charge for s in spectra]
+    min_m, max_m = min(masses), max(masses)
+    min_z, max_z = min(charges), max(charges)
+    colors = [(53, 120, 198), (39, 159, 125), (231, 145, 55), (202, 83, 76), (126, 87, 194)]
+
+    def painter(draw, width, height):
+        left, right, top, bottom = 120, width - 95, 145, height - 145
+        draw.rectangle([left, top, right, bottom], outline=(80, 95, 115), width=2)
+        for spec, cluster in zip(spectra, predicted):
+            x = left + (spec.precursor_mass - min_m) / (max_m - min_m) * (right - left)
+            y = bottom - (spec.precursor_charge - min_z) / max(1, (max_z - min_z)) * (bottom - top)
+            c = colors[cluster % len(colors)]
+            draw.ellipse([x - 2, y - 2, x + 2, y + 2], fill=c)
+        draw_text(draw, (left, height - 90), "横轴：前体质量；纵轴：前体荷电状态；颜色：预测簇编号取模", size=22)
+
+    save_chart("谱图前体质量与荷电状态分布", painter, path)
+
+
+def draw_memory(path: Path, results: list[dict]) -> None:
+    labels = [item["algorithm"] for item in results]
+    values = [max(item["peak_memory_mb"], 0.001) for item in results]
+    max_v = max(values) if values else 1
+
+    def painter(draw, width, height):
+        left, bottom, top = 130, height - 165, 145
+        draw.line([left, top, left, bottom, width - 90, bottom], fill=(80, 95, 115), width=2)
+        group_w = (width - left - 125) / len(labels)
+        for idx, label in enumerate(labels):
+            gx = left + idx * group_w + 28
+            h = (bottom - top) * values[idx] / max_v
+            draw.rounded_rectangle([gx, bottom - h, gx + group_w * 0.45, bottom], radius=8, fill=(115, 135, 156))
+            draw_text(draw, (int(gx - 6), int(bottom - h - 30)), f"{values[idx]:.3f}", size=17)
+            draw_text(draw, (int(gx - 18), bottom + 18), label.replace("数据库过滤+", "过滤+\n").replace("前体质量-", "前体\n"), size=16)
+        draw_text(draw, (left, height - 88), "单位：MB；使用 tracemalloc 记录算法阶段峰值", size=22)
+
+    save_chart("算法阶段峰值内存对比", painter, path)
+
+
+def create_outputs(spectra: list[Spectrum], candidates: list[tuple[int, int]], pair_scores: list[tuple[int, int, float]], results: list[dict], all_pairs: int) -> None:
+    baseline_result = next(item for item in results if item["algorithm"].startswith("数据库过滤+碎片峰相似度≥0.30"))
+    sensitivity = []
+    for threshold in [0.10, 0.20, 0.30, 0.40, 0.50, 0.60, 0.70]:
+        edges = [(i, j) for i, j, score in pair_scores if score >= threshold]
+        labels = cluster_by_edges(len(spectra), edges)
+        sensitivity.append(
+            {
+                "threshold": threshold,
+                "retained_edges": len(edges),
+                "clusters": len(set(labels)),
+                "ari": adjusted_rand_index([s.label for s in spectra], labels),
+                "nmi": normalized_mutual_information([s.label for s in spectra], labels),
+                "incorrect_rate": cluster_error_rate([s.label for s in spectra], labels),
+            }
+        )
+
+    raw_count = 0
+    for path in SOURCE_DIR.glob("*.msalign"):
+        with path.open(encoding="utf-8", errors="ignore") as fh:
+            raw_count += sum(1 for line in fh if line.startswith("BEGIN IONS"))
+
     metrics = {
         "dataset": {
-            "spectrum_count": len(data.spectra),
-            "true_cluster_count": N_CLUSTERS,
-            "spectra_per_cluster": SPECTRA_PER_CLUSTER,
-            "peaks_per_spectrum": TOP_PEAKS,
-            "vector_bins": VECTOR_BINS,
+            "source": "PRIDE PXD019368",
+            "msalign_files": len(list(SOURCE_DIR.glob("*.msalign"))),
+            "search_output_tables": len(list(SOURCE_DIR.glob("*.OUTPUT_TABLE"))),
+            "raw_spectra_in_msalign": raw_count,
+            "identified_spectra_used": len(spectra),
+            "ground_truth_groups": len(set(s.label for s in spectra)),
+            "top_peaks": TOP_PEAKS,
+            "precursor_window_da": PRECURSOR_WINDOW_DA,
+            "fragment_tolerance_ppm": FRAGMENT_TOLERANCE_PPM,
+            "all_pairs": all_pairs,
+            "precursor_candidate_pairs": len(candidates),
+            "baseline_retained_edges": baseline_result["retained_edges"],
+            "candidate_reduction_rate": 1 - len(candidates) / all_pairs,
             "sqlite_path": str(DB_PATH.relative_to(ROOT)),
+            "pxd029703_raw_sample": str((PXD029703_DIR / "CRC_SW480_SEC4_RPLC1.raw").relative_to(ROOT))
+            if (PXD029703_DIR / "CRC_SW480_SEC4_RPLC1.raw").exists()
+            else "",
         },
-        "filter": filter_stats,
         "results": results,
+        "filter_sensitivity": sensitivity,
     }
-    for path in (OUT_DIR / "metrics.json", PAPER_DATA_DIR / "experiment_metrics.json"):
-        path.write_text(json.dumps(metrics, ensure_ascii=False, indent=2), encoding="utf-8")
 
-    lines = ["算法,聚类数,ARI,NMI,轮廓系数,运行时间(s),峰值内存(MB),候选对数量"]
-    for r in results:
-        lines.append(
-            ",".join(
-                [
-                    r["algorithm"],
-                    str(r["clusters"]),
-                    str(r["ari"]),
-                    str(r["nmi"]),
-                    str(r["silhouette"]),
-                    str(r["runtime_sec"]),
-                    str(r["peak_memory_mb"]),
-                    str(r.get("candidate_pairs", r.get("all_pairs", ""))),
-                ]
-            )
-        )
-    (OUT_DIR / "algorithm_comparison.csv").write_text("\n".join(lines), encoding="utf-8")
+    (OUT_DIR / "metrics.json").write_text(json.dumps(metrics, ensure_ascii=False, indent=2), encoding="utf-8")
+    (PAPER_DATA_DIR / "experiment_metrics.json").write_text(json.dumps(metrics, ensure_ascii=False, indent=2), encoding="utf-8")
+    (PAPER_DATA_DIR / "toplib_dataset_summary.json").write_text(json.dumps(metrics["dataset"], ensure_ascii=False, indent=2), encoding="utf-8")
 
-    for path in (OUT_DIR / "filter_sensitivity.json", PAPER_DATA_DIR / "filter_sensitivity.json"):
-        path.write_text(json.dumps(sensitivity, ensure_ascii=False, indent=2), encoding="utf-8")
-    sens_lines = ["设置,质量窗口/Da,阈值,候选对,过滤率,ARI,NMI,轮廓系数,聚类数"]
-    for item in sensitivity:
-        sens_lines.append(
-            ",".join(
-                [
-                    item["setting"],
-                    f"{item['mass_window']:.0f}",
-                    f"{item['similarity_threshold']:.2f}",
-                    str(item["candidate_pairs"]),
-                    f"{item['reduction_rate']:.4f}",
-                    f"{item['ari']:.4f}",
-                    f"{item['nmi']:.4f}",
-                    f"{item['silhouette']:.4f}",
-                    str(item["clusters"]),
-                ]
-            )
-        )
-    for path in (OUT_DIR / "filter_sensitivity.csv", PAPER_DATA_DIR / "filter_sensitivity.csv"):
-        path.write_text("\n".join(sens_lines), encoding="utf-8")
+    write_csv(
+        OUT_DIR / "algorithm_comparison.csv",
+        results,
+        ["algorithm", "clusters", "ari", "nmi", "incorrect_rate", "clustered_ratio", "runtime_sec", "peak_memory_mb", "candidate_pairs", "retained_edges"],
+    )
+    shutil.copy2(OUT_DIR / "algorithm_comparison.csv", PAPER_DATA_DIR / "algorithm_comparison.csv")
+    write_csv(
+        OUT_DIR / "filter_sensitivity.csv",
+        sensitivity,
+        ["threshold", "retained_edges", "clusters", "ari", "nmi", "incorrect_rate"],
+    )
+    (OUT_DIR / "filter_sensitivity.json").write_text(json.dumps(sensitivity, ensure_ascii=False, indent=2), encoding="utf-8")
+    shutil.copy2(OUT_DIR / "filter_sensitivity.csv", PAPER_DATA_DIR / "filter_sensitivity.csv")
+
+    draw_grouped_bars(OUT_DIR / "algorithm_metrics.png", results)
+    draw_runtime(OUT_DIR / "runtime_comparison.png", results)
+    draw_candidate_reduction(OUT_DIR / "candidate_reduction.png", all_pairs, len(candidates), baseline_result["retained_edges"])
+    draw_memory(OUT_DIR / "memory_comparison.png", results)
+    draw_sensitivity(OUT_DIR / "filter_sensitivity.png", sensitivity)
+    draw_histogram(OUT_DIR / "similarity_histogram.png", pair_scores, spectra)
+    baseline_labels = cluster_by_edges(len(spectra), [(i, j) for i, j, score in pair_scores if score >= BASELINE_THRESHOLD])
+    draw_cluster_distribution(OUT_DIR / "cluster_size_distribution.png", [s.label for s in spectra], baseline_labels)
+    draw_precursor_map(OUT_DIR / "cluster_projection.png", spectra, baseline_labels)
+
+    for image in OUT_DIR.glob("*.png"):
+        shutil.copy2(image, PAPER_IMG_DIR / image.name)
 
 
 def main() -> None:
     ensure_dirs()
-    data = generate_spectra()
-    build_sqlite(data)
-    sim, sim_elapsed, sim_mem = run_measured(cosine_matrix, data.vectors)
-
-    results = []
-    all_pairs = len(data.spectra) * (len(data.spectra) - 1) // 2
-
-    labels, elapsed, peak = run_measured(kmeans, data.vectors, N_CLUSTERS)
-    results.append(evaluate("K-Means", labels, data.labels_true, sim, elapsed, peak, {"candidate_pairs": all_pairs, "all_pairs": all_pairs}))
-
-    labels, elapsed, peak = run_measured(spectral_clustering, sim, N_CLUSTERS)
-    results.append(evaluate("谱聚类", labels, data.labels_true, sim, elapsed + sim_elapsed, peak + sim_mem, {"candidate_pairs": all_pairs, "all_pairs": all_pairs}))
-
-    labels, elapsed, peak = run_measured(agglomerative_average, sim, N_CLUSTERS)
-    results.append(evaluate("层次聚类", labels, data.labels_true, sim, elapsed + sim_elapsed, peak + sim_mem, {"candidate_pairs": all_pairs, "all_pairs": all_pairs}))
-
-    labels, elapsed, peak = run_measured(dbscan_cosine, sim)
-    results.append(evaluate("DBSCAN", labels, data.labels_true, sim, elapsed + sim_elapsed, peak + sim_mem, {"candidate_pairs": all_pairs, "all_pairs": all_pairs}))
-
-    output, elapsed, peak = run_measured(database_filtered_clustering, data)
-    labels, filter_stats = output
-    serializable_filter_stats = {k: v for k, v in filter_stats.items() if k != "candidate_pairs_set"}
-    proposed = evaluate("数据库过滤聚类", labels, data.labels_true, sim, elapsed, peak, serializable_filter_stats)
-    results.append(proposed)
-
-    result_order = ["K-Means", "谱聚类", "层次聚类", "DBSCAN", "数据库过滤聚类"]
-    results = sorted(results, key=lambda r: result_order.index(r["algorithm"]))
-
-    draw_bar_chart(
-        PAPER_IMG_DIR / "algorithm_metrics.png",
-        "聚类质量指标对比",
-        [r["algorithm"] for r in results],
-        [
-            ("ARI", [r["ari"] for r in results], (54, 96, 146)),
-            ("NMI", [r["nmi"] for r in results], (68, 151, 115)),
-            ("轮廓系数", [r["silhouette"] for r in results], (202, 93, 61)),
-        ],
-        1.05,
-    )
-    draw_runtime_chart(PAPER_IMG_DIR / "runtime_comparison.png", results)
-    draw_scatter(PAPER_IMG_DIR / "cluster_projection.png", data.vectors, data.labels_true, labels)
-    draw_memory_chart(PAPER_IMG_DIR / "memory_comparison.png", results)
-    sensitivity = run_filter_sensitivity(data, sim)
-    draw_sensitivity_chart(PAPER_IMG_DIR / "filter_sensitivity.png", sensitivity)
-    draw_cluster_size_chart(PAPER_IMG_DIR / "cluster_size_distribution.png", data.labels_true, labels)
-    draw_similarity_histogram(PAPER_IMG_DIR / "similarity_histogram.png", sim, filter_stats["candidate_pairs_set"])
-
-    for image_name in [
-        "algorithm_metrics.png",
-        "runtime_comparison.png",
-        "candidate_reduction.png",
-        "cluster_projection.png",
-        "memory_comparison.png",
-        "filter_sensitivity.png",
-        "cluster_size_distribution.png",
-        "similarity_histogram.png",
-    ]:
-        src = PAPER_IMG_DIR / image_name
-        dst = OUT_DIR / image_name
-        if src.exists():
-            dst.write_bytes(src.read_bytes())
-
-    export_tables(results, data, serializable_filter_stats, sensitivity)
-    print(json.dumps({"results": results, "filter": serializable_filter_stats, "sensitivity": sensitivity}, ensure_ascii=False, indent=2))
+    labels = read_identifications()
+    spectra = read_spectra(labels)
+    if not spectra:
+        raise RuntimeError(f"No usable spectra found in {SOURCE_DIR}")
+    build_database(spectra)
+    candidates = precursor_candidates(spectra)
+    pair_scores = [(left, right, fragment_cosine(spectra[left], spectra[right])) for left, right in candidates]
+    results, all_pairs = run_methods(spectra, candidates, pair_scores)
+    create_outputs(spectra, candidates, pair_scores, results, all_pairs)
+    print(json.dumps({"spectra": len(spectra), "candidate_pairs": len(candidates), "all_pairs": all_pairs}, ensure_ascii=False))
 
 
 if __name__ == "__main__":

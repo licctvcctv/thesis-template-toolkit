@@ -29,17 +29,11 @@
   },
   {
     "id": "sqlite_schema_runtime",
-    "source": "imagegen",
+    "source": "experiment",
     "path": "images/imagegen/sqlite_schema_runtime_imagegen.png",
-    "caption": "实验原型 SQLite 数据结构与索引关系图",
-    "width_cm": 15.2
-  },
-  {
-    "id": "experiment_data_setup",
-    "source": "imagegen",
-    "path": "images/imagegen/experiment_data_setup_imagegen.png",
-    "caption": "模拟谱图数据生成与评价设置示意图",
-    "width_cm": 15.2
+    "caption": "SQLite 数据结构与索引关系图",
+    "width_cm": 15.2,
+    "kind": "image"
   },
   {
     "id": "db_filter_algorithm_flow",
@@ -63,18 +57,11 @@
     "width_cm": 15.2
   },
   {
-    "id": "experiment_runtime_modules",
-    "source": "imagegen",
-    "path": "images/imagegen/experiment_runtime_modules_imagegen.png",
-    "caption": "实验程序运行模块与指标输出流程图",
-    "width_cm": 15.2
-  },
-  {
     "id": "algorithm_metrics",
     "kind": "image",
     "source": "experiment",
     "path": "images/experiments/algorithm_metrics.png",
-    "caption": "聚类质量指标对比",
+    "caption": "谱图聚类质量指标对比",
     "width_cm": 14.2
   },
   {
@@ -82,7 +69,7 @@
     "kind": "image",
     "source": "experiment",
     "path": "images/experiments/runtime_comparison.png",
-    "caption": "聚类算法运行时间对比",
+    "caption": "实验运行时间与保留边数量",
     "width_cm": 14.2
   },
   {
@@ -90,7 +77,7 @@
     "kind": "image",
     "source": "experiment",
     "path": "images/experiments/candidate_reduction.png",
-    "caption": "数据库过滤前后的候选谱图对数量",
+    "caption": "公开数据候选谱图对过滤效果",
     "width_cm": 14.2
   },
   {
@@ -98,7 +85,7 @@
     "kind": "image",
     "source": "experiment",
     "path": "images/experiments/cluster_projection.png",
-    "caption": "数据库过滤聚类结果二维投影",
+    "caption": "谱图前体质量与荷电状态分布",
     "width_cm": 14.2
   },
   {
@@ -106,7 +93,7 @@
     "kind": "image",
     "source": "experiment",
     "path": "images/experiments/memory_comparison.png",
-    "caption": "聚类算法峰值内存占用对比",
+    "caption": "算法阶段峰值内存占用对比",
     "width_cm": 14.2
   },
   {
@@ -114,7 +101,7 @@
     "kind": "image",
     "source": "experiment",
     "path": "images/experiments/filter_sensitivity.png",
-    "caption": "候选过滤参数敏感性指标变化",
+    "caption": "碎片峰相似度阈值敏感性分析",
     "width_cm": 14.2
   },
   {
@@ -122,7 +109,7 @@
     "kind": "image",
     "source": "experiment",
     "path": "images/experiments/cluster_size_distribution.png",
-    "caption": "真实簇与数据库过滤聚类簇规模分布",
+    "caption": "参考标注组与聚类簇规模分布",
     "width_cm": 14.2
   },
   {
@@ -130,7 +117,7 @@
     "kind": "image",
     "source": "experiment",
     "path": "images/experiments/similarity_histogram.png",
-    "caption": "过滤候选对与随机谱图对相似度分布",
+    "caption": "候选谱图对碎片峰相似度分布",
     "width_cm": 14.2
   }
 ]

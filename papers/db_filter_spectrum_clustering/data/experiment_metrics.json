@@ -1,82 +1,139 @@
 {
   "dataset": {
-    "spectrum_count": 440,
-    "true_cluster_count": 10,
-    "spectra_per_cluster": 44,
-    "peaks_per_spectrum": 56,
-    "vector_bins": 260,
-    "sqlite_path": "experiments/db_filter_spectrum_clustering/outputs/spectrum_library.sqlite"
-  },
-  "filter": {
-    "candidate_pairs": 848,
-    "all_pairs": 96580,
-    "reduction_rate": 0.991219714226548,
-    "similarity_threshold": 0.2,
-    "mass_window": 80.0
+    "source": "PRIDE PXD019368",
+    "msalign_files": 31,
+    "search_output_tables": 31,
+    "raw_spectra_in_msalign": 27475,
+    "identified_spectra_used": 4480,
+    "ground_truth_groups": 2505,
+    "top_peaks": 50,
+    "precursor_window_da": 2.2,
+    "fragment_tolerance_ppm": 10.0,
+    "all_pairs": 10032960,
+    "precursor_candidate_pairs": 14614,
+    "baseline_retained_edges": 10872,
+    "candidate_reduction_rate": 0.9985434009504672,
+    "sqlite_path": "experiments/db_filter_spectrum_clustering/outputs/toplib_real_spectra.sqlite",
+    "pxd029703_raw_sample": "_source_materials/pride/PXD029703/CRC_SW480_SEC4_RPLC1.raw"
   },
   "results": [
     {
-      "algorithm": "K-Means",
-      "clusters": 10,
-      "valid_clusters": 10,
-      "ari": 0.7167,
-      "nmi": 0.8027,
-      "silhouette": 0.085,
-      "runtime_sec": 0.0029,
-      "peak_memory_mb": 0.298,
-      "candidate_pairs": 96580,
-      "all_pairs": 96580
+      "algorithm": "全部单谱图基线",
+      "clusters": 4480,
+      "ari": 0.0,
+      "nmi": 0.9373837317425013,
+      "incorrect_rate": 0.0,
+      "clustered_ratio": 0.0,
+      "runtime_sec": 0.0004937920020893216,
+      "peak_memory_mb": 0.1632232666015625,
+      "candidate_pairs": 0,
+      "retained_edges": 0
     },
     {
-      "algorithm": "谱聚类",
-      "clusters": 10,
-      "valid_clusters": 10,
-      "ari": 0.731,
-      "nmi": 0.8025,
-      "silhouette": 0.0886,
-      "runtime_sec": 0.0175,
-      "peak_memory_mb": 10.345,
-      "candidate_pairs": 96580,
-      "all_pairs": 96580
+      "algorithm": "前体质量-荷电过滤",
+      "clusters": 2220,
+      "ari": 0.8658852228681144,
+      "nmi": 0.9874063484417314,
+      "incorrect_rate": 0.1322123310253874,
+      "clustered_ratio": 0.6770089285714286,
+      "runtime_sec": 0.00432304200148792,
+      "peak_memory_mb": 0.3082275390625,
+      "candidate_pairs": 14614,
+      "retained_edges": 14614
     },
     {
-      "algorithm": "层次聚类",
-      "clusters": 10,
-      "valid_clusters": 2,
-      "ari": -0.0,
-      "nmi": 0.0819,
-      "silhouette": 0.0235,
-      "runtime_sec": 0.0174,
-      "peak_memory_mb": 5.912,
-      "candidate_pairs": 96580,
-      "all_pairs": 96580
+      "algorithm": "数据库过滤+碎片峰相似度≥0.30",
+      "clusters": 2565,
+      "ari": 0.8434529017325773,
+      "nmi": 0.9837163090988392,
+      "incorrect_rate": 0.109765625,
+      "clustered_ratio": 0.5714285714285714,
+      "runtime_sec": 0.005970791000436293,
+      "peak_memory_mb": 0.9052772521972656,
+      "candidate_pairs": 14614,
+      "retained_edges": 10872
     },
     {
-      "algorithm": "DBSCAN",
-      "clusters": 59,
-      "valid_clusters": 1,
-      "ari": 0.0001,
-      "nmi": 0.2091,
-      "silhouette": 0.0,
-      "runtime_sec": 0.0045,
-      "peak_memory_mb": 3.024,
-      "candidate_pairs": 96580,
-      "all_pairs": 96580
+      "algorithm": "数据库过滤+碎片峰相似度≥0.50",
+      "clusters": 3400,
+      "ari": 0.6875840876935341,
+      "nmi": 0.9652788699832576,
+      "incorrect_rate": 0.09008379888268156,
+      "clustered_ratio": 0.3196428571428571,
+      "runtime_sec": 0.0040565419985796325,
+      "peak_memory_mb": 0.7083587646484375,
+      "candidate_pairs": 14614,
+      "retained_edges": 4963
     },
     {
-      "algorithm": "数据库过滤聚类",
-      "clusters": 71,
-      "valid_clusters": 18,
-      "ari": 0.8059,
-      "nmi": 0.8707,
-      "silhouette": 0.0549,
-      "runtime_sec": 0.0271,
-      "peak_memory_mb": 0.094,
-      "candidate_pairs": 848,
-      "all_pairs": 96580,
-      "reduction_rate": 0.991219714226548,
-      "similarity_threshold": 0.2,
-      "mass_window": 80.0
+      "algorithm": "数据库过滤+碎片峰相似度≥0.70",
+      "clusters": 4139,
+      "ari": 0.2701430304691498,
+      "nmi": 0.9466331103111433,
+      "incorrect_rate": 0.05747126436781609,
+      "clustered_ratio": 0.09709821428571429,
+      "runtime_sec": 0.002919709000707371,
+      "peak_memory_mb": 0.5600433349609375,
+      "candidate_pairs": 14614,
+      "retained_edges": 1028
+    }
+  ],
+  "filter_sensitivity": [
+    {
+      "threshold": 0.1,
+      "retained_edges": 14244,
+      "clusters": 2257,
+      "ari": 0.8693188601724724,
+      "nmi": 0.9882323732262523,
+      "incorrect_rate": 0.12336573918873617
+    },
+    {
+      "threshold": 0.2,
+      "retained_edges": 13058,
+      "clusters": 2331,
+      "ari": 0.8664297488208166,
+      "nmi": 0.9875403129137884,
+      "incorrect_rate": 0.11930434782608695
+    },
+    {
+      "threshold": 0.3,
+      "retained_edges": 10872,
+      "clusters": 2565,
+      "ari": 0.8434529017325773,
+      "nmi": 0.9837163090988392,
+      "incorrect_rate": 0.109765625
+    },
+    {
+      "threshold": 0.4,
+      "retained_edges": 7942,
+      "clusters": 2956,
+      "ari": 0.7923638692813479,
+      "nmi": 0.9753509810383838,
+      "incorrect_rate": 0.10801393728222997
+    },
+    {
+      "threshold": 0.5,
+      "retained_edges": 4963,
+      "clusters": 3400,
+      "ari": 0.6875840876935341,
+      "nmi": 0.9652788699832576,
+      "incorrect_rate": 0.09008379888268156
+    },
+    {
+      "threshold": 0.6,
+      "retained_edges": 2591,
+      "clusters": 3821,
+      "ari": 0.5223984655033563,
+      "nmi": 0.9552570281576751,
+      "incorrect_rate": 0.08156028368794327
+    },
+    {
+      "threshold": 0.7,
+      "retained_edges": 1028,
+      "clusters": 4139,
+      "ari": 0.2701430304691498,
+      "nmi": 0.9466331103111433,
+      "incorrect_rate": 0.05747126436781609
     }
   ]
 }

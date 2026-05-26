@@ -934,24 +934,30 @@ def add_table_from_data(doc, table_data, caption_no):
 
 
 def make_experiment_results_table(metrics):
+    display_names = {
+        "全部单谱图基线": "单谱图基线",
+        "前体质量-荷电过滤": "前体过滤",
+        "数据库过滤+碎片峰相似度≥0.30": "过滤+相似度0.30",
+        "数据库过滤+碎片峰相似度≥0.50": "过滤+相似度0.50",
+        "数据库过滤+碎片峰相似度≥0.70": "过滤+相似度0.70",
+    }
     rows = []
     for item in metrics["results"]:
         rows.append(
             [
-                item["algorithm"],
+                display_names.get(item["algorithm"], item["algorithm"]),
                 item["clusters"],
                 f"{item['ari']:.4f}",
                 f"{item['nmi']:.4f}",
-                f"{item['silhouette']:.4f}",
-                f"{item['runtime_sec']:.4f}",
-                item.get("candidate_pairs", item.get("all_pairs", "")),
+                f"{item.get('incorrect_rate', 0):.2%}",
+                item.get("retained_edges", item.get("candidate_pairs", item.get("all_pairs", ""))),
             ]
         )
     return {
-        "caption": "聚类算法实验结果对比",
-        "headers": ["算法", "聚类数", "ARI", "NMI", "轮廓系数", "时间/s", "候选对"],
+        "caption": "谱图聚类质量结果对比",
+        "headers": ["设置", "簇数", "ARI", "NMI", "错误率", "保留边数"],
         "rows": rows,
-        "widths": [3.0, 2.0, 2.0, 2.0, 2.3, 2.1, 2.3],
+        "widths": [4.6, 2.0, 1.8, 1.8, 2.1, 2.2],
     }
 
 

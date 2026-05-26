@@ -1,0 +1,17 @@
+{
+  "source": "PRIDE PXD019368",
+  "msalign_files": 31,
+  "search_output_tables": 31,
+  "raw_spectra_in_msalign": 27475,
+  "identified_spectra_used": 4480,
+  "ground_truth_groups": 2505,
+  "top_peaks": 50,
+  "precursor_window_da": 2.2,
+  "fragment_tolerance_ppm": 10.0,
+  "all_pairs": 10032960,
+  "precursor_candidate_pairs": 14614,
+  "baseline_retained_edges": 10872,
+  "candidate_reduction_rate": 0.9985434009504672,
+  "sqlite_path": "experiments/db_filter_spectrum_clustering/outputs/toplib_real_spectra.sqlite",
+  "pxd029703_raw_sample": "_source_materials/pride/PXD029703/CRC_SW480_SEC4_RPLC1.raw"
+}

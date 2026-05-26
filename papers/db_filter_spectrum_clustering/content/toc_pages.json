@@ -37,171 +37,166 @@
   {
     "level": 2,
     "title": "1.4 研究内容与论文结构",
-    "page": 17
+    "page": 16
   },
   {
     "level": 1,
     "title": "第2章 相关技术与理论基础",
-    "page": 19
+    "page": 18
   },
   {
     "level": 2,
     "title": "2.1 谱图数据与向量化表示",
-    "page": 19
+    "page": 18
   },
   {
     "level": 2,
     "title": "2.2 谱图相似度计算",
-    "page": 21
+    "page": 20
   },
   {
     "level": 2,
     "title": "2.3 常见聚类算法",
-    "page": 22
+    "page": 21
   },
   {
     "level": 2,
     "title": "2.4 数据库过滤思想",
-    "page": 24
+    "page": 23
   },
   {
     "level": 1,
     "title": "第3章 需求分析与总体设计",
-    "page": 27
+    "page": 26
   },
   {
     "level": 2,
     "title": "3.1 问题定义",
-    "page": 27
+    "page": 26
   },
   {
     "level": 2,
     "title": "3.2 功能需求",
+    "page": 26
+  },
+  {
+    "level": 2,
+    "title": "3.3 总体流程设计",
     "page": 27
-  },
-  {
-    "level": 2,
-    "title": "3.3 非功能需求",
-    "page": 29
-  },
-  {
-    "level": 2,
-    "title": "3.4 总体流程设计",
-    "page": 29
   },
   {
     "level": 1,
     "title": "第4章 数据库过滤谱图聚类算法设计",
-    "page": 31
+    "page": 30
   },
   {
     "level": 2,
     "title": "4.1 数据库结构设计",
-    "page": 31
+    "page": 30
   },
   {
     "level": 2,
     "title": "4.2 候选过滤算法设计",
-    "page": 33
+    "page": 32
   },
   {
     "level": 2,
     "title": "4.3 TopCluster 聚类策略",
-    "page": 36
+    "page": 35
   },
   {
     "level": 2,
     "title": "4.4 复杂度分析",
-    "page": 39
+    "page": 38
   },
   {
     "level": 1,
     "title": "第5章 系统实现",
-    "page": 42
+    "page": 41
   },
   {
     "level": 2,
-    "title": "5.1 实验原型结构",
-    "page": 42
+    "title": "5.1 实验程序结构",
+    "page": 41
   },
   {
     "level": 2,
-    "title": "5.2 谱图生成与入库实现",
-    "page": 43
+    "title": "5.2 谱图读取与入库实现",
+    "page": 41
   },
   {
     "level": 2,
     "title": "5.3 算法模块实现",
-    "page": 44
+    "page": 42
   },
   {
     "level": 2,
-    "title": "5.4 结果导出实现",
-    "page": 46
+    "title": "5.4 结果记录实现",
+    "page": 43
   },
   {
     "level": 1,
     "title": "第6章 实验测试与结果分析",
-    "page": 47
+    "page": 45
   },
   {
     "level": 2,
     "title": "6.1 实验环境与数据设置",
-    "page": 47
+    "page": 45
   },
   {
     "level": 2,
     "title": "6.2 评价指标",
-    "page": 49
+    "page": 46
   },
   {
     "level": 2,
     "title": "6.3 聚类质量对比",
-    "page": 51
+    "page": 48
   },
   {
     "level": 2,
     "title": "6.4 效率与候选过滤效果",
-    "page": 54
+    "page": 51
   },
   {
     "level": 2,
     "title": "6.5 候选过滤参数敏感性分析",
-    "page": 57
+    "page": 54
   },
   {
     "level": 2,
     "title": "6.6 聚类结果可视化",
-    "page": 59
+    "page": 56
   },
   {
     "level": 2,
-    "title": "6.7 实验流程与功能测试",
-    "page": 60
+    "title": "6.7 复现性与结果核对",
+    "page": 57
   },
   {
     "level": 1,
     "title": "第7章 总结与展望",
-    "page": 63
+    "page": 59
   },
   {
     "level": 2,
     "title": "7.1 研究总结",
-    "page": 63
+    "page": 59
   },
   {
     "level": 2,
     "title": "7.2 不足与改进方向",
-    "page": 63
+    "page": 59
   },
   {
     "level": 1,
     "title": "参考文献",
-    "page": 65
+    "page": 61
   },
   {
     "level": 1,
     "title": "致谢",
-    "page": 69
+    "page": 65
   }
 ]
