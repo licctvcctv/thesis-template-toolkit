@@ -26,7 +26,7 @@ IMG_DIR = HERE / "images"
 sys.path.insert(0, str(ROOT))
 
 from docx.enum.table import WD_CELL_VERTICAL_ALIGNMENT
-from docx.enum.text import WD_ALIGN_PARAGRAPH
+from docx.enum.text import WD_ALIGN_PARAGRAPH, WD_TAB_ALIGNMENT, WD_TAB_LEADER
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
 from docx.shared import Cm, Pt
@@ -307,7 +307,7 @@ def build_body(doc, chapters):
     return sd
 
 
-def build_refs(doc, refs):
+def build_refs(doc, refs, meta=None):
     sd = doc.new_subdoc()
     for i, ref in enumerate(refs, 1):
         text = re.sub(r"^\[\d+\]\s*", "", str(ref).strip())
@@ -317,6 +317,11 @@ def build_refs(doc, refs):
         p.paragraph_format.line_spacing = 1.5
         r = p.add_run(f"[{i}] {text}")
         fmt_run(r, 12)
+    acknowledgement = (meta or {}).get("acknowledgement") or []
+    if acknowledgement:
+        add_heading(sd, "致    谢", level=1, page_break=True)
+        for para in acknowledgement:
+            add_text(sd, para)
     return sd
 
 
@@ -545,6 +550,70 @@ def fix_abstract_styles(docx_path, meta):
         else:
             p.paragraph_format.first_line_indent = Cm(0.85)
             _replace_runs(p, [(text_value, "Times New Roman", "Times New Roman", 12, False)])
+    doc.save(docx_path)
+
+
+def fix_back_matter_styles(docx_path):
+    from docx import Document
+
+    doc = Document(docx_path)
+    for p in doc.paragraphs:
+        key = re.sub(r"\s+", "", p.text or "")
+        if key == "参考文献":
+            p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+            p.paragraph_format.page_break_before = True
+            p.paragraph_format.line_spacing = 1.5
+            p.paragraph_format.space_after = Pt(8)
+            p.style = "Heading 1"
+            pPr = p._p.get_or_add_pPr()
+            outline = pPr.find(qn("w:outlineLvl"))
+            if outline is None:
+                outline = OxmlElement("w:outlineLvl")
+                pPr.append(outline)
+            outline.set(qn("w:val"), "0")
+            for r in p.runs:
+                fmt_run(r, size=16, bold=True)
+    doc.save(docx_path)
+
+
+def _insert_paragraph_after(paragraph):
+    new_p = OxmlElement("w:p")
+    paragraph._p.addnext(new_p)
+    from docx.text.paragraph import Paragraph
+    return Paragraph(new_p, paragraph._parent)
+
+
+def fix_toc_entries(docx_path, toc_entries):
+    if not toc_entries:
+        return
+    from docx import Document
+
+    doc = Document(docx_path)
+    paragraphs = list(doc.paragraphs)
+    placeholder = next((p for p in paragraphs if "目录更新后显示" in (p.text or "")), None)
+    if placeholder is None:
+        doc.save(docx_path)
+        return
+
+    current = placeholder
+    for idx, entry in enumerate(toc_entries):
+        if idx > 0:
+            current = _insert_paragraph_after(current)
+        _clear_runs(current)
+        level = int(entry.get("level", 1))
+        title = str(entry.get("title", "")).strip()
+        page = str(entry.get("page", "")).strip()
+        current.alignment = WD_ALIGN_PARAGRAPH.LEFT
+        current.paragraph_format.first_line_indent = None
+        current.paragraph_format.left_indent = Cm({1: 0.0, 2: 0.6, 3: 1.2}.get(level, 0.0))
+        current.paragraph_format.line_spacing = 1.15
+        current.paragraph_format.space_after = Pt(0)
+        current.paragraph_format.tab_stops.clear_all()
+        current.paragraph_format.tab_stops.add_tab_stop(
+            Cm(14.6), alignment=WD_TAB_ALIGNMENT.RIGHT, leader=WD_TAB_LEADER.DOTS
+        )
+        run = current.add_run(f"{title}\t{page}")
+        fmt_run(run, 11 if level == 1 else 10.5, bold=False)
     doc.save(docx_path)
 
 
@@ -781,9 +850,11 @@ def build_data(doc):
     refs = load_json("references.json") or []
     if isinstance(refs, dict):
         refs = refs.get("references", [])
+    toc_entries = load_json("toc_pages.json") or []
 
     meta["body"] = build_body(doc, chapters)
-    meta["references_doc"] = build_refs(doc, refs)
+    meta["references_doc"] = build_refs(doc, refs, meta)
+    meta["toc_entries"] = toc_entries
     return meta
 
 
@@ -804,7 +875,7 @@ def verify_docx(docx_path):
 
 
 def main():
-    output = Path(sys.argv[1]) if len(sys.argv) > 1 else HERE / "基于HadoopSparkHive的智能出行交通数据可视化分析系统毕业设计.docx"
+    output = Path(sys.argv[1]) if len(sys.argv) > 1 else HERE / "基于HadoopSparkHive的智能出行交通数据可视化分析系统的设计与实现_毕业设计.docx"
     doc = DocxTemplate(TPL)
     print("组装论文数据...")
     data = build_data(doc)
@@ -813,6 +884,8 @@ def main():
     doc.save(output)
     fix_front_matter(output, data)
     fix_abstract_styles(output, data)
+    fix_toc_entries(output, data.get("toc_entries"))
+    fix_back_matter_styles(output)
     fix_headers_footers(output, data)
     patch_update_fields(output)
     errors = verify_docx(output)

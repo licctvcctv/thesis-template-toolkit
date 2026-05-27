@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 from pathlib import Path
 
 
@@ -924,6 +925,13 @@ references = [
     "赵泽铖,汤运凯,匡仙丹.基于SSM的前后端分离式藏文学习系统设计[J].信息与电脑(理论版),2022:5.",
     "孙鉴;刘凇佐;武晓晓;巫思敏.基于Spark的并行模拟退火算法求解TSP[J].电子测量技术,2022:7.",
 ]
+
+
+if os.environ.get("REGENERATE_TRAFFIC_BIGDATA_CONTENT") != "1":
+    raise SystemExit(
+        "write_content.py 是早期内容生成脚本，当前论文以 ch*.json 和 meta.json 为准。"
+        "如确需重生成，请先同步最新章节修改后设置 REGENERATE_TRAFFIC_BIGDATA_CONTENT=1。"
+    )
 
 
 for name, data in [

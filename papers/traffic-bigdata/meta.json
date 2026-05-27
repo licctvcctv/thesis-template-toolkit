@@ -23,5 +23,10 @@
     "With the diversification of urban travel modes, taxi trips, subway ridership, shared-bike orders and road congestion records show clear spatial and temporal correlations. A statistical system based on a single data source can hardly describe the overall structure of urban traffic or support integrated applications such as hotspot detection, OD flow analysis, congestion ranking and transfer analysis. This thesis designs and implements an intelligent travel traffic data visualization and analysis system based on Hadoop, Spark and Hive for a Tianjin-oriented traffic scenario.",
     "The system adopts a separated front-end and back-end architecture. The back end uses Django REST Framework to provide unified APIs, while the front end uses Vue3, TypeScript, Naive UI and ECharts for interactive visualization. In the big data layer, HDFS stores raw files, Hive organizes ODS, DWD, DWS and ADS tables, and Spark SQL with PySpark implements unified trip cleaning, hourly trend aggregation, OD flow statistics, hotspot identification, road congestion ranking and model feature construction. The experiment uses high-realism simulated traffic data generated from public sample distributions, Tianjin public geographic facts and common traffic rules.",
     "The results show that the system can support data source management, visualization dashboard, hotspot analysis, trend analysis, OD analysis, congestion analysis, model training and prediction query. The interface structure is clear, the pages run stably, and the layered data warehouse design reduces the coupling between offline computation and online query. The system provides a practical reference for teaching experiments, graduation project demonstration and prototype verification of multi-source urban traffic analysis."
+  ],
+  "acknowledgement": [
+    "本毕业设计在选题、系统实现和论文撰写过程中得到了指导教师的耐心指导。老师在研究思路、系统结构、论文格式和运行材料整理等方面提出了许多具体建议，使本文能够围绕交通数据处理、可视化展示和模型预测形成较为完整的设计过程。在此向指导教师表示诚挚感谢。",
+    "感谢信息技术工程学院各位老师在本科阶段给予的课程教学和实践训练。数据仓库、分布式计算、数据库、Web开发和机器学习等课程为本课题的完成奠定了基础。感谢同学在系统调试、页面演示和论文检查过程中提供的帮助。",
+    "最后，感谢家人在学习和毕业设计阶段给予的理解与支持。今后将继续在数据分析和大数据系统开发方向学习，进一步提高工程实践能力。"
   ]
 }
