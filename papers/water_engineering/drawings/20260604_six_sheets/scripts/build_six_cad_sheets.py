@@ -544,7 +544,7 @@ def component_detail(app):
 
     # 4. Berthing component section, copied in spirit from the reference figure and adjusted for this wharf.
     bx, by = 10500, 10500
-    s.text(bx + 6200, by + 21500, "靠船构件断面", 460, "TEXT", "C")
+    s.text(bx + 6200, by - 1700, "靠船构件断面", 430, "TEXT", "C")
     kc_pts = [
         (bx + 1250, by),
         (bx + 2500, by),
@@ -565,8 +565,6 @@ def component_detail(app):
     s.hatch_diag_rect(bx + 3150, by + 12700, 1800, 6100, 850)
     s.hatch_diag_rect(bx + 5350, by + 12600, 4800, 1100, 850)
     s.rect(bx + 3000, by + 19000, 1400, 900, "THIN")
-    s.text(bx + 3700, by + 19300, "护轮坎", 300, "TEXT", "C")
-    s.text(bx + 7800, by + 12980, "靠船横撑", 330, "TEXT", "C")
     s.dimh(bx + 5200, by + 13750, bx + 10500, "1000", -900)
     s.dimh(bx + 1250, by, bx + 2500, "250", 1000)
     s.dimv(bx - 700, by, by + 20000, "4000", 1200)
@@ -576,18 +574,7 @@ def component_detail(app):
     s.dimh(bx + 4300, by + 20000, bx + 5400, "200", -850)
     s.dimh(bx + 3500, by + 19000, bx + 4300, "150", -850)
 
-    # 5. PHC pile section as an auxiliary detail.
-    cx, cy = 51000, 15500
-    s.text(cx, cy + 8200, "PHC管桩断面", 460, "TEXT", "C")
-    s.circle(cx, cy, 4000, "THICK")
-    s.circle(cx, cy, 2700, "THIN")
-    s.hatch_diag_ring(cx, cy, 4000, 2700, 700)
-    s.line(cx - 5000, cy, cx + 5000, cy, "CENTER")
-    s.line(cx, cy - 5000, cx, cy + 5000, "CENTER")
-    s.dimh(cx - 4000, cy + 4000, cx + 4000, "800", 1000)
-    s.text(cx, cy - 5700, "壁厚约130", 360, "TEXT", "C")
-
-    s.mtext(56500, 24500, 12500, "说明：\\P1. 图中尺寸单位为mm。\\P2. 纵梁按800×1200绘制，横梁按1800×2200控制。\\P3. 靠船构件按前沿局部受力构件绘制，护舷和系船柱连接区施工时应加强配筋。\\P4. PHC管桩按D800、壁厚约130绘制。", 380)
+    s.mtext(53500, 19500, 16000, "说明：\\P1. 图中尺寸单位为mm。\\P2. 纵梁及轨道梁按800×1200绘制，轨道梁中部预留槽不作混凝土剖面填充。\\P3. 横梁按1800×2200控制，底部加宽段与桩帽整体连接。\\P4. 靠船构件按前沿局部受力构件绘制，护舷和系船柱连接区应按构造加强。", 380)
     return s.save()
 
 
