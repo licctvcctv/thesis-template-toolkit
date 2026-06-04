@@ -50,6 +50,7 @@ def inspect_one(app, path):
     doc = retry(docs.Open, str(path))
     retry(app.ActiveDocument.SetVariable, "FILEDIA", 0)
     texts = []
+    dimensions = []
     counts = {}
     minp = maxp = None
     try:
@@ -74,8 +75,23 @@ def inspect_one(app, path):
                 ins = None
             if text.strip():
                 texts.append({"object": obj, "text": text, "point": ins})
+        if "Dimension" in obj:
+            dim_data = {"object": obj}
+            for attr in ("TextOverride", "Measurement"):
+                try:
+                    value = getattr(ent, attr)
+                except Exception:
+                    continue
+                try:
+                    if isinstance(value, float):
+                        value = round(value, 4)
+                except Exception:
+                    pass
+                dim_data[attr] = value
+            if len(dim_data) > 1:
+                dimensions.append(dim_data)
     retry(doc.Close, False)
-    return {"path": str(path), "extmin": minp, "extmax": maxp, "counts": counts, "texts": texts}
+    return {"path": str(path), "extmin": minp, "extmax": maxp, "counts": counts, "texts": texts, "dimensions": dimensions}
 
 
 def main():
@@ -84,7 +100,7 @@ def main():
     OUT.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
     print(str(OUT))
     for item in data:
-        print(Path(item["path"]).name, "texts", len(item["texts"]), "counts", item["counts"])
+        print(Path(item["path"]).name, "texts", len(item["texts"]), "dims", len(item.get("dimensions", [])), "counts", item["counts"])
 
 
 if __name__ == "__main__":
