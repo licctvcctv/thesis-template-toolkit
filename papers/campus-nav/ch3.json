@@ -28,7 +28,7 @@
       "number": "3.3",
       "content": [
         "系统的核心业务流程是：用户打开系统 → 登录或游客浏览 → 浏览地图 → 搜索兴趣点 → 选择起终点 → 路径规划 → 显示路线和步行时间。系统业务流程图如图3-3所示。",
-        {"type": "image", "path": "business-flow.png", "width": 120, "caption": "图3-3　系统业务流程图"},
+        {"type": "image", "path": "business-flow-imagegen.png", "width": 68, "caption": "图3-3　系统业务流程图"},
         "路径规划流程分三步执行：第一步加载建筑物轮廓数据，对多边形做外扩缓冲生成避障区域；第二步构建可视图，将起点、终点和缓冲多边形的顶点作为图的节点，检查每对节点之间的连线是否穿过障碍物；第三步在可视图上搜索最短路径，得到坐标序列后渲染到地图上。如果可视图算法未能返回有效路径，系统自动回退到Dijkstra算法在道路网络上搜索。"
       ],
       "subsections": []
@@ -46,19 +46,19 @@
           "content": [
             "系统涉及七个实体：用户、兴趣点、兴趣点分类、建筑物、公告、导航日志和收藏记录。",
             "（1）用户实体。属性包括用户编号（主键）、用户名、密码（bcrypt哈希）、角色和注册时间。用户实体E-R图如图3-4所示。",
-            {"type": "image", "path": "er-user.png", "width": 100, "caption": "图3-4　用户实体E-R图"},
+            {"type": "image", "path": "er-user-imagegen.png", "width": 92, "caption": "图3-4　用户实体E-R图"},
             "（2）兴趣点实体。属性包括编号（主键）、名称、类型、经度、纬度、描述、创建者ID和创建时间。系统预置了29个兴趣点。兴趣点实体E-R图如图3-5所示。",
-            {"type": "image", "path": "er-poi.png", "width": 110, "caption": "图3-5　兴趣点实体E-R图"},
+            {"type": "image", "path": "er-poi-imagegen.png", "width": 100, "caption": "图3-5　兴趣点实体E-R图"},
             "（3）兴趣点分类实体。属性包括分类编号（主键）、分类名称、图标、颜色和排序号。兴趣点分类实体E-R图如图3-6所示。",
-            {"type": "image", "path": "er-category.png", "width": 100, "caption": "图3-6　兴趣点分类实体E-R图"},
+            {"type": "image", "path": "er-category-imagegen.png", "width": 92, "caption": "图3-6　兴趣点分类实体E-R图"},
             "（4）建筑物实体。属性包括建筑编号（主键）、建筑名称、轮廓坐标（GeoJSON多边形）、层数和用途。建筑物实体E-R图如图3-7所示。",
-            {"type": "image", "path": "er-building.png", "width": 100, "caption": "图3-7　建筑物实体E-R图"},
+            {"type": "image", "path": "er-building-imagegen.png", "width": 92, "caption": "图3-7　建筑物实体E-R图"},
             "（5）公告实体。属性包括公告编号（主键）、标题、内容、类型、激活状态、发布者ID和创建时间。公告实体E-R图如图3-8所示。",
-            {"type": "image", "path": "er-announcement.png", "width": 110, "caption": "图3-8　公告实体E-R图"},
+            {"type": "image", "path": "er-announcement-imagegen.png", "width": 100, "caption": "图3-8　公告实体E-R图"},
             "（6）导航日志实体。属性包括日志编号（主键）、用户ID、起点、终点、距离、时长和创建时间。导航日志实体E-R图如图3-9所示。",
-            {"type": "image", "path": "er-navlog.png", "width": 100, "caption": "图3-9　导航日志实体E-R图"},
+            {"type": "image", "path": "er-navlog-imagegen.png", "width": 100, "caption": "图3-9　导航日志实体E-R图"},
             "（7）收藏记录实体。属性包括收藏编号（主键）、用户ID、兴趣点ID和收藏时间。收藏记录实体E-R图如图3-10所示。",
-            {"type": "image", "path": "er-favorite.png", "width": 100, "caption": "图3-10　收藏记录实体E-R图"},
+            {"type": "image", "path": "er-favorite-imagegen.png", "width": 92, "caption": "图3-10　收藏记录实体E-R图"},
             "实体间关系：用户与兴趣点一对多，用户与公告一对多，用户与导航日志一对多，用户与收藏记录一对多。兴趣点与分类多对一。建筑物与导航日志存在避障关系。系统总体E-R图如图3-11所示。",
             {"type": "image", "path": "er-summary.png", "width": 130, "caption": "图3-11　系统总体E-R图"}
           ]

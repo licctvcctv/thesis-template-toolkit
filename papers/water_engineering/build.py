@@ -161,6 +161,17 @@ def load_json(name: str) -> Any:
     return json.loads((CONTENT / name).read_text(encoding="utf-8"))
 
 
+def load_chapters() -> dict[str, Any]:
+    data = load_json("chapters.json")
+    if isinstance(data, dict) and "chapter_files" in data:
+        chapters = []
+        for item in data["chapter_files"]:
+            path = CONTENT / item
+            chapters.append(json.loads(path.read_text(encoding="utf-8")))
+        return {"chapters": chapters}
+    return data
+
+
 def p_text(paragraph) -> str:
     return "".join(run.text for run in paragraph.runs)
 
@@ -176,6 +187,37 @@ def set_mixed_font(run, size: int = 12, bold: bool | None = None) -> None:
     run.font.size = Pt(size)
     if bold is not None:
         run.bold = bold
+
+
+def set_math_font(run, size: int = 10) -> None:
+    run.font.name = "Cambria Math"
+    r_fonts = run._element.get_or_add_rPr().get_or_add_rFonts()
+    r_fonts.set(qn("w:ascii"), "Cambria Math")
+    r_fonts.set(qn("w:hAnsi"), "Cambria Math")
+    r_fonts.set(qn("w:eastAsia"), "Cambria Math")
+    run.font.size = Pt(size)
+
+
+def normalize_term_symbol(symbol: str) -> str:
+    replacements = {
+        "σmax": "σ_max",
+        "σmin": "σ_min",
+    }
+    return replacements.get(symbol, symbol)
+
+
+def add_math_symbol_runs(paragraph, symbol: str, size: int = 10) -> None:
+    symbol = normalize_term_symbol(str(symbol))
+    if "_" not in symbol:
+        run = paragraph.add_run(symbol)
+        set_math_font(run, size)
+        return
+    base, subscript = symbol.split("_", 1)
+    run = paragraph.add_run(base)
+    set_math_font(run, size)
+    sub_run = paragraph.add_run(subscript)
+    set_math_font(sub_run, size)
+    sub_run.font.subscript = True
 
 
 def set_para_body(paragraph) -> None:
@@ -448,6 +490,37 @@ def add_formula(doc: Document, block: dict[str, str]) -> None:
     set_mixed_font(run)
 
 
+def add_formula_terms(doc: Document, block: dict[str, Any]) -> None:
+    p = doc.add_paragraph()
+    pf = p.paragraph_format
+    pf.first_line_indent = Pt(24)
+    pf.line_spacing_rule = WD_LINE_SPACING.MULTIPLE
+    pf.line_spacing = 1.25
+    pf.space_before = Pt(0)
+    pf.space_after = Pt(0)
+    run = p.add_run(block.get("intro", "式中："))
+    set_mixed_font(run, 10)
+
+    for item in block.get("items", []):
+        symbol, meaning = item[0], item[1]
+        unit = item[2] if len(item) > 2 else ""
+        p = doc.add_paragraph()
+        pf = p.paragraph_format
+        pf.left_indent = Pt(48)
+        pf.first_line_indent = Pt(-24)
+        pf.line_spacing_rule = WD_LINE_SPACING.MULTIPLE
+        pf.line_spacing = 1.25
+        pf.space_before = Pt(0)
+        pf.space_after = Pt(0)
+        add_math_symbol_runs(p, symbol, 10)
+        text = f"——{meaning}"
+        if unit:
+            text += f"，{unit}"
+        text += "；"
+        run = p.add_run(text)
+        set_mixed_font(run, 10)
+
+
 def add_caption(doc: Document, text: str, keep_with_next: bool = False):
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
@@ -559,6 +632,8 @@ def render_blocks(doc: Document, blocks: list[dict[str, Any]]) -> None:
             add_body_p(doc, block["text"])
         elif block["type"] == "formula":
             add_formula(doc, block)
+        elif block["type"] == "terms":
+            add_formula_terms(doc, block)
         elif block["type"] == "figure":
             add_figure(doc, block)
         elif block["type"] == "table":
@@ -702,7 +777,7 @@ def validate_citations(chapters: dict[str, Any], ref_count: int) -> None:
 
 def main() -> None:
     meta = load_json("meta.json")
-    chapters = load_json("chapters.json")
+    chapters = load_chapters()
     references = load_json("references.json")
     toc_pages_path = CONTENT / "toc_pages.json"
     toc_pages = json.loads(toc_pages_path.read_text(encoding="utf-8")) if toc_pages_path.exists() else {}

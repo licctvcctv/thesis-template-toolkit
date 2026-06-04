@@ -1,0 +1,204 @@
+{
+  "app": {
+    "title": "期货智能体模拟系统",
+    "subtitle": "智能体记忆 · 决策 · 策略演化",
+    "connecting": "连接中..."
+  },
+  "connection": {
+    "live": "在线",
+    "reconnecting": "重新连接中...",
+    "error": "连接错误"
+  },
+  "roster": {
+    "title": "智能体",
+    "tradingTitle": "交易智能体",
+    "count": "{count} 个",
+    "empty": "暂无活跃智能体"
+  },
+  "agentPrompt": {
+    "aria": "Prompt 迭代面板",
+    "title": "Prompt 迭代",
+    "subtitle": "每 3 轮训练迭代一次：初始 prompt → promptv1 → promptv2，块内 prompt 保持不变。",
+    "empty": "等待仿真启动…",
+    "noIterations": "当前仍为初始 prompt，完成 3 轮训练后将出现 promptv1。",
+    "currentPrompt": "当前 Prompt",
+    "currentVersion": "当前 {label}",
+    "changedFields": "本次改动：",
+    "tabIterations": "{count} 次迭代",
+    "iterationCount": "累计 {count} 次迭代（每 3 轮一次）",
+    "versionStackHint": "自上而下：promptv2 → promptv1 → prompt"
+  },
+  "session": {
+    "status": {
+      "working": "工作中",
+      "waiting": "等待中",
+      "errored": "出错",
+      "idle": "空闲",
+      "idleStale": "过期",
+      "finished": "已完成"
+    },
+    "labels": {
+      "noLongerActive": "会话 {id}… 已不再活跃。"
+    },
+    "actions": {
+      "close": "关闭"
+    }
+  },
+  "trading": {
+    "decision": "决策",
+    "memory": "检索记忆",
+    "strategy": "策略补丁",
+    "noDecision": "暂无决策。",
+    "confidence": "置信度 {value}%",
+    "pnl": "盈亏 {value}",
+    "drawdown": "回撤 {value}",
+    "promptVersion": "提示词版本 v{version}",
+    "actions": {
+      "BUY": "买入",
+      "SELL": "卖出",
+      "HOLD": "观望"
+    },
+    "source": {
+      "llm": "真实模型 · {model}",
+      "pending": "等待真实模型",
+      "simulated": "模拟回退"
+    }
+  },
+  "tradingHud": {
+    "aria": "期货智能体模拟系统简报",
+    "scoreAria": "策略得分面板",
+    "reportAria": "预测结果统计分析",
+    "flowAria": "智能体决策流程",
+    "unknown": "未知阶段",
+    "trainingSlice": "训练切片：{regime} · 按交易日做长线决策",
+    "marketBoard": "行情面板",
+    "newsMemory": "进入记忆库的资讯",
+    "scoreTitle": "策略得分",
+    "scoreSubtitle": "多智能体累计评分 · 训练修正 · 固定测试验证",
+    "scoreMethod": "评分口径",
+    "trainingWindow": "训练段",
+    "testWindow": "测试段",
+    "agentScores": "智能体排名",
+    "score": "总分",
+    "trainingScore": "训练",
+    "testScore": "测试",
+    "hitRate": "胜率",
+    "drawdown": "回撤 {value}",
+    "lastTrade": "最近：{action} {symbol} / {score}",
+    "noTrade": "暂无完成交易",
+    "noScores": "暂无评分数据",
+    "reportTitle": "预测结果统计分析",
+    "reportSubtitle": "{date} · 累计 {rounds}/{total} 轮 · {decisions} 条决策",
+    "reportCached": "刷新恢复快照",
+    "reportCollapse": "收起",
+    "reportExpand": "展开",
+    "reportKpi": "关键指标",
+    "bestAgent": "最佳智能体",
+    "sampleCount": "已评估交易",
+    "cumulativeRounds": "累计回合",
+    "agentDecisionCount": "智能体决策",
+    "avgHitRate": "平均胜率",
+    "avgDrawdown": "平均回撤",
+    "alphaSpread": "Alpha 差距",
+    "scoreChart": "训练/测试得分对比",
+    "equityChart": "最佳策略权益曲线",
+    "actionDistribution": "动作分布",
+    "equityAxis": "权益范围 {min} 到 {max}",
+    "reportScope": "累计统计至第 {rounds} 轮，共 {decisions} 条智能体交易决策。",
+    "agentBreakdownTitle": "每个智能体的累计表现",
+    "agentBreakdownHint": "累计 {rounds} 轮 · {decisions} 条决策",
+    "tradeCount": "{count} 轮交易",
+    "winsLosses": "胜/负",
+    "failureRate": "失分率",
+    "bestTrade": "最好",
+    "worstTrade": "最差",
+    "failurePoints": "失败点",
+    "repairPlan": "修正策略",
+    "noFailures": "当前没有亏损交易，继续观察后续轮次稳定性。",
+    "defaultRepairPlan": "保留当前策略骨架，继续累计样本后再调整 prompt。",
+    "steps": {
+      "news": "资讯",
+      "memory": "记忆",
+      "debate": "辩论",
+      "trade": "交易",
+      "patch": "修正"
+    }
+  },
+  "eventLog": {
+    "panelTitle": "运行日志",
+    "title": "事件",
+    "aria": "运行日志",
+    "empty": "暂无事件",
+    "toggle": "展开或收起日志",
+    "systemGroup": "系统事件",
+    "roundLabel": "第 {n} 轮",
+    "toolFallback": "工具",
+    "filters": {
+      "all": "全部",
+      "decision": "决策",
+      "debate": "辩论",
+      "execution": "执行",
+      "system": "系统"
+    },
+    "categories": {
+      "decision": "决策",
+      "debate": "辩论",
+      "execution": "执行",
+      "system": "系统"
+    },
+    "phase": {
+      "training": "训练段",
+      "test": "测试段"
+    },
+    "stations": {
+      "debate": "辩论场",
+      "execution": "交易执行门"
+    },
+    "detail": {
+      "roundTitle": "第 {n} 轮详情",
+      "decisionTitle": "{role} · 决策",
+      "evidence": "决策依据",
+      "debateSummary": "辩论摘要",
+      "debateEntries": "各智能体论点",
+      "dissent": "异议观点",
+      "executionSummary": "执行摘要",
+      "executionOrders": "各智能体指令",
+      "orderStatus": {
+        "approved": "已放行",
+        "held": "挂起复核",
+        "pending": "等待中"
+      }
+    },
+    "kinds": {
+      "sessionStarted": "会话已启动",
+      "sessionEnded": "会话已结束",
+      "statusChanged": "状态已改变",
+      "toolInvoked": "工具已调用",
+      "debateRound": "辩论轮次",
+      "tradeExecuted": "交易执行",
+      "llmDecision": "模型决策"
+    },
+    "labels": {
+      "sessionStarted": "{name} 已启动",
+      "sessionEnded": "{name} 已离线",
+      "statusChanged": "{name} · {from} → {to}",
+      "toolInvoked": "{name} · {icon} {tool}"
+    },
+    "time": {
+      "now": "刚刚",
+      "seconds": "{n}秒前",
+      "minutes": "{n}分钟前",
+      "hours": "{n}小时前"
+    }
+  },
+  "timeline": {
+    "title": "轮次回放",
+    "live": "当前轮",
+    "paused": "历史轮",
+    "returnLive": "回到当前轮"
+  },
+  "language": {
+    "selector": "语言选择",
+    "select": "选择语言"
+  }
+}

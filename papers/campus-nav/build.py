@@ -236,6 +236,7 @@ def _post_process(docx_path):
     _keep_figures_with_captions(doc, fig_cap_pat)
     _format_references(doc)
     _superscript_citations(doc)
+    _add_body_page_numbers(doc)
 
     doc.save(docx_path)
     print(f"  后处理: {len(_pending_tables)} 个表格, {len(_pending_code_blocks)} 个代码块, 清理{removed_blank}个空白段")
@@ -586,6 +587,65 @@ def _superscript_citations(doc):
                 run.font.size = Pt(9)
         p.style = style
         p.alignment = alignment
+
+
+def _add_body_page_numbers(doc):
+    """Add centered PAGE fields from the body section onward."""
+    from docx.enum.text import WD_ALIGN_PARAGRAPH
+    from docx.oxml import OxmlElement
+    from docx.oxml.ns import qn
+
+    if len(doc.sections) < 6:
+        return
+
+    for idx, section in enumerate(doc.sections):
+        if idx < 5:
+            continue
+
+        section.footer.is_linked_to_previous = False
+        footer = section.footer
+        for old_p in list(footer.paragraphs):
+            parent = old_p._p.getparent()
+            if parent is not None:
+                parent.remove(old_p._p)
+
+        p = footer.add_paragraph()
+        p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        p.paragraph_format.first_line_indent = None
+        run = p.add_run()
+        _set_run_font(run, 10.5)
+        _append_page_field(run)
+
+        if idx == 5:
+            sect_pr = section._sectPr
+            for pg in sect_pr.findall(qn('w:pgNumType')):
+                sect_pr.remove(pg)
+            pg = OxmlElement('w:pgNumType')
+            pg.set(qn('w:start'), '1')
+            sect_pr.append(pg)
+        else:
+            sect_pr = section._sectPr
+            for pg in sect_pr.findall(qn('w:pgNumType')):
+                sect_pr.remove(pg)
+
+
+def _append_page_field(run):
+    from docx.oxml import OxmlElement
+    from docx.oxml.ns import qn
+
+    for tag, attrs, text in [
+        ('w:fldChar', {'w:fldCharType': 'begin'}, None),
+        ('w:instrText', {'xml:space': 'preserve'}, ' PAGE '),
+        ('w:fldChar', {'w:fldCharType': 'separate'}, None),
+        ('w:t', {}, '1'),
+        ('w:fldChar', {'w:fldCharType': 'end'}, None),
+    ]:
+        el = OxmlElement(tag)
+        for key, val in attrs.items():
+            el.set(qn(key), val)
+        if text is not None:
+            el.text = text
+        run._r.append(el)
 
 
 def _verify(docx_path):

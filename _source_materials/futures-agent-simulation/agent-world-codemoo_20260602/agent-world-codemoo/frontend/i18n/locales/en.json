@@ -1,0 +1,204 @@
+{
+  "app": {
+    "title": "Futures Agent Simulation System",
+    "subtitle": "agent memory · decision · strategy evolution",
+    "connecting": "Connecting..."
+  },
+  "connection": {
+    "live": "Live",
+    "reconnecting": "Reconnecting...",
+    "error": "Connection Error"
+  },
+  "roster": {
+    "title": "Agents",
+    "tradingTitle": "Trading Agents",
+    "count": "{count}",
+    "empty": "No active agents"
+  },
+  "agentPrompt": {
+    "aria": "Prompt evolution panel",
+    "title": "Prompt evolution",
+    "subtitle": "One iteration every 3 training rounds: prompt → promptv1 → promptv2; unchanged within each block.",
+    "empty": "Waiting for simulation…",
+    "noIterations": "Still on the initial prompt; promptv1 appears after 3 training rounds.",
+    "currentPrompt": "Current prompt",
+    "currentVersion": "{label}",
+    "changedFields": "Changed:",
+    "tabIterations": "{count} iteration(s)",
+    "iterationCount": "{count} iteration(s) · every 3 rounds",
+    "versionStackHint": "Top to bottom: promptv2 → promptv1 → prompt"
+  },
+  "session": {
+    "status": {
+      "working": "Working",
+      "waiting": "Waiting",
+      "errored": "Errored",
+      "idle": "Idle",
+      "idleStale": "Stale",
+      "finished": "Done"
+    },
+    "labels": {
+      "noLongerActive": "Session {id}… is no longer active."
+    },
+    "actions": {
+      "close": "Close"
+    }
+  },
+  "trading": {
+    "decision": "decision",
+    "memory": "memory retrieved",
+    "strategy": "strategy patch",
+    "noDecision": "No decision yet.",
+    "confidence": "confidence {value}%",
+    "pnl": "PnL {value}",
+    "drawdown": "DD {value}",
+    "promptVersion": "prompt v{version}",
+    "actions": {
+      "BUY": "BUY",
+      "SELL": "SELL",
+      "HOLD": "HOLD"
+    },
+    "source": {
+      "llm": "Live model · {model}",
+      "pending": "Waiting for live model",
+      "simulated": "Simulated fallback"
+    }
+  },
+  "tradingHud": {
+    "aria": "Trading simulation briefing",
+    "scoreAria": "Strategy score panel",
+    "reportAria": "Prediction result statistics",
+    "flowAria": "Agent decision flow",
+    "unknown": "unknown",
+    "trainingSlice": "Training slice: {regime} · long-horizon daily decisions",
+    "marketBoard": "Market board",
+    "newsMemory": "News entering memory",
+    "scoreTitle": "Strategy Scores",
+    "scoreSubtitle": "multi-agent cumulative scoring · train · fixed test",
+    "scoreMethod": "Scoring method",
+    "trainingWindow": "Training",
+    "testWindow": "Test",
+    "agentScores": "Agent ranking",
+    "score": "score",
+    "trainingScore": "train",
+    "testScore": "test",
+    "hitRate": "hit",
+    "drawdown": "DD {value}",
+    "lastTrade": "last: {action} {symbol} / {score}",
+    "noTrade": "no completed trade",
+    "noScores": "No score data yet",
+    "reportTitle": "Prediction Result Analysis",
+    "reportSubtitle": "{date} · cumulative {rounds}/{total} rounds · {decisions} decisions",
+    "reportCached": "restored after refresh",
+    "reportCollapse": "Collapse",
+    "reportExpand": "Expand",
+    "reportKpi": "Key metrics",
+    "bestAgent": "Best agent",
+    "sampleCount": "trades scored",
+    "cumulativeRounds": "cumulative rounds",
+    "agentDecisionCount": "agent decisions",
+    "avgHitRate": "avg hit rate",
+    "avgDrawdown": "avg drawdown",
+    "alphaSpread": "alpha spread",
+    "scoreChart": "Train/test score comparison",
+    "equityChart": "Best strategy equity curve",
+    "actionDistribution": "Action mix",
+    "equityAxis": "Equity range {min} to {max}",
+    "reportScope": "Cumulative statistics through round {rounds}, covering {decisions} agent trade decisions.",
+    "agentBreakdownTitle": "Cumulative agent performance",
+    "agentBreakdownHint": "{rounds} rounds · {decisions} decisions",
+    "tradeCount": "{count} trades",
+    "winsLosses": "W/L",
+    "failureRate": "loss rate",
+    "bestTrade": "best",
+    "worstTrade": "worst",
+    "failurePoints": "Failure points",
+    "repairPlan": "Strategy repair",
+    "noFailures": "No losing trades yet; keep watching stability across later rounds.",
+    "defaultRepairPlan": "Keep the current strategy frame and adjust the prompt after more samples accumulate.",
+    "steps": {
+      "news": "News",
+      "memory": "Memory",
+      "debate": "Debate",
+      "trade": "Trade",
+      "patch": "Patch"
+    }
+  },
+  "eventLog": {
+    "panelTitle": "Event log",
+    "title": "Events",
+    "aria": "Event log",
+    "empty": "No events yet",
+    "toggle": "Expand or collapse log",
+    "systemGroup": "System",
+    "roundLabel": "Round {n}",
+    "toolFallback": "tool",
+    "filters": {
+      "all": "All",
+      "decision": "Decision",
+      "debate": "Debate",
+      "execution": "Execution",
+      "system": "System"
+    },
+    "categories": {
+      "decision": "Decision",
+      "debate": "Debate",
+      "execution": "Execution",
+      "system": "System"
+    },
+    "phase": {
+      "training": "Training",
+      "test": "Test"
+    },
+    "stations": {
+      "debate": "Debate",
+      "execution": "Execution gate"
+    },
+    "detail": {
+      "roundTitle": "Round {n} detail",
+      "decisionTitle": "{role} · decision",
+      "evidence": "Evidence",
+      "debateSummary": "Debate summary",
+      "debateEntries": "Agent arguments",
+      "dissent": "Dissenting views",
+      "executionSummary": "Execution summary",
+      "executionOrders": "Agent orders",
+      "orderStatus": {
+        "approved": "Approved",
+        "held": "Held for review",
+        "pending": "Pending"
+      }
+    },
+    "kinds": {
+      "sessionStarted": "session started",
+      "sessionEnded": "session ended",
+      "statusChanged": "status changed",
+      "toolInvoked": "tool invoked",
+      "debateRound": "debate round",
+      "tradeExecuted": "trade execution",
+      "llmDecision": "model decision"
+    },
+    "labels": {
+      "sessionStarted": "{name} started",
+      "sessionEnded": "{name} signed off",
+      "statusChanged": "{name} · {from} → {to}",
+      "toolInvoked": "{name} · {icon} {tool}"
+    },
+    "time": {
+      "now": "now",
+      "seconds": "{n}s",
+      "minutes": "{n}m",
+      "hours": "{n}h"
+    }
+  },
+  "timeline": {
+    "title": "Timeline",
+    "live": "LIVE",
+    "paused": "PAUSED",
+    "returnLive": "Return to live (Space)"
+  },
+  "language": {
+    "selector": "Language selector",
+    "select": "Select language"
+  }
+}

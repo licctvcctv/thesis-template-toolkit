@@ -31,15 +31,15 @@
   },
   {
     "id": "fig4_4",
-    "image": "images/diagrams/imagegen/fig4_4_daily_learning_flow_imagegen_20260522.png",
+    "image": "images/diagrams/imagegen/fig4_4_daily_learning_flow_imagegen_20260526.png",
     "caption": "图 4-4 每日学习流程图",
     "source": "imagegen"
   },
   {
     "id": "fig4_5",
-    "image": "images/diagrams/imagegen/fig4_5_er_model_imagegen_20260522.png",
+    "image": "images/diagrams/imagegen/fig4_5_er_model_linefix_precise_v3_20260528.png",
     "caption": "图 4-5 系统E-R模型图",
-    "source": "imagegen"
+    "source": "imagegen_precise_redraw"
   },
   {
     "id": "fig4_6",
@@ -73,7 +73,7 @@
   },
   {
     "id": "fig5_4",
-    "image": "images/admin_screenshots/fig5_4_admin_login_runtime_v2.png",
+    "image": "images/admin_screenshots/runtime_recapture_20260528/admin_login_clean_runtime_20260528.png",
     "caption": "图 5-4 后台管理员登录运行界面",
     "source": "runtime_browser"
   },
