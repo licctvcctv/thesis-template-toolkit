@@ -73,7 +73,7 @@
           "type": "formula",
           "number": "（7.1）",
           "latex": "\\begin{aligned}\nC=\\sum C_i+C_o+C_r\\\\\nC_{d1}=5292\\ \\mathrm{万元},\\quad C_{o1}=1208\\ \\mathrm{万元}\\\\\nC_1=C_{d1}+C_{o1}=5292+1208=6500\\ \\mathrm{万元}\\\\\nC_{d2}=9995\\ \\mathrm{万元},\\quad C_{o2}=2205\\ \\mathrm{万元}\\\\\nC_2=C_{d2}+C_{o2}=9995+2205=12200\\ \\mathrm{万元}\n\\end{aligned}",
-          "text": "C=\\sum C_i+C_o+C_r\\\\; C_{d1=5292\\ 万元,\\quad C_{o1=1208\\ 万元\\\\; C_1=C_{d1+C_{o1=5292+1208=6500\\ 万元\\\\; C_{d2=9995\\ 万元,\\quad C_{o2=2205\\ 万元\\\\; C_2=C_{d2+C_{o2=9995+2205=12200\\ 万元"
+          "text": "beginaligned\nC=Σ Cᵢ+Cₒ+Cᵣ\nCd₁=5292 万元,quad Cₒ₁=1208 万元\nC₁=Cd₁+Cₒ₁=5292+1208=6500 万元\nCd₂=9995 万元,quad Cₒ₂=2205 万元\nC₂=Cd₂+Cₒ₂=9995+2205=12200 万元\nendaligned"
         },
         {
           "type": "terms",
@@ -171,7 +171,7 @@
           "type": "formula",
           "number": "（7.2）",
           "latex": "\\begin{aligned}\nn_r=10\\ \\mathrm{个标准结构段}\\\\\nn_{pr}=12\\ \\mathrm{根/段}\\\\\nn_p=n_rn_{pr}=10\\times12=120\\ \\mathrm{根}\n\\end{aligned}",
-          "text": "np=nr*npr=10*12=120"
+          "text": "beginaligned\nnᵣ=10 个标准结构段\nnₚᵣ=12 根/段\nnₚ=nᵣnₚᵣ=10×12=120 根\nendaligned"
         },
         {
           "type": "terms",
@@ -197,7 +197,7 @@
           "type": "formula",
           "number": "（7.3）",
           "latex": "\\begin{aligned}\nn_p=120\\ \\mathrm{根}\\\\\nL_p=32\\ \\mathrm{m/根}\\\\\nQ_p=n_pL_p=120\\times32\\\\\nQ_p=3840\\ \\mathrm{m}\n\\end{aligned}",
-          "text": "n_p=120\\ 根\\\\; L_p=32\\ m/根\\\\; Q_p=n_pL_p=120\\times32\\\\; Q_p=3840\\ m"
+          "text": "beginaligned\nnₚ=120 根\nLₚ=32 m/根\nQₚ=nₚLₚ=120×32\nQₚ=3840 m\nendaligned"
         },
         {
           "type": "terms",
@@ -267,7 +267,7 @@
           "type": "formula",
           "number": "（7.4）",
           "latex": "\\begin{aligned}\nV_b+V_l=1850+2350=4200\\ \\mathrm{m^3}\\\\\nV_s+V_t=2600+2600=5200\\ \\mathrm{m^3}\\\\\nV_{c1}=4200+5200=9400\\ \\mathrm{m^3}\n\\end{aligned}",
-          "text": "Vc1=Vb+Vl+Vs+Vt=1850+2350+2600+2600=9400m3"
+          "text": "beginaligned\nVb+Vₗ=1850+2350=4200 m³\nVₛ+Vₜ=2600+2600=5200 m³\nVc₁=4200+5200=9400 m³\nendaligned"
         },
         {
           "type": "terms",
@@ -352,13 +352,13 @@
           "type": "formula",
           "number": "（7.5）",
           "latex": "\\begin{aligned}\nM_{sb}=0.12V_b=0.12\\times1850=222\\ \\mathrm{t}\\\\\nM_{sl}=0.16V_l=0.16\\times2350=376\\ \\mathrm{t}\\\\\nM_{ss}=0.15V_s=0.15\\times2600=390\\ \\mathrm{t}\\\\\nM_{st}=0.15V_t=0.15\\times2600=390\\ \\mathrm{t}\n\\end{aligned}",
-          "text": "Ms=0.12Vb+0.16Vl+0.15Vs+0.15Vt"
+          "text": "beginaligned\nMₛb=0.12Vb=0.12×1850=222 t\nMₛₗ=0.16Vₗ=0.16×2350=376 t\nMₛₛ=0.15Vₛ=0.15×2600=390 t\nMₛₜ=0.15Vₜ=0.15×2600=390 t\nendaligned"
         },
         {
           "type": "formula",
           "number": "（7.6）",
           "latex": "\\begin{aligned}\nM_{sb}+M_{sl}=222+376=598\\ \\mathrm{t}\\\\\nM_{ss}+M_{st}=390+390=780\\ \\mathrm{t}\\\\\nM_s=598+780=1378\\ \\mathrm{t}\n\\end{aligned}",
-          "text": "Ms=0.12*1850+0.16*2350+0.15*2600+0.15*2600=1378t"
+          "text": "beginaligned\nMₛb+Mₛₗ=222+376=598 t\nMₛₛ+Mₛₜ=390+390=780 t\nMₛ=598+780=1378 t\nendaligned"
         },
         {
           "type": "p",
@@ -368,7 +368,7 @@
           "type": "formula",
           "number": "（7.7）",
           "latex": "\\begin{aligned}\nM_s=1378\\ \\mathrm{t}\\\\\n1.05M_s=1.05\\times1378=1447\\ \\mathrm{t}\\\\\nM_{s,d}\\approx1450\\ \\mathrm{t}\n\\end{aligned}",
-          "text": "Msd=1.05Ms=1.05*1378=1447t≈1450t"
+          "text": "beginaligned\nMₛ=1378 t\n1.05Mₛ=1.05×1378=1447 t\nMₛ,d≈1450 t\nendaligned"
         },
         {
           "type": "table",
@@ -431,7 +431,7 @@
         {
           "type": "formula",
           "latex": "\\begin{aligned}\nL_bl_t=260\\times1.0=260\\ \\mathrm{m^2}\\\\\n2L_bl_t=520\\ \\mathrm{m^2}\\\\\nV_{tr}=2L_bl_tb_t=520\\times1.6=832\\ \\mathrm{m^3}\n\\end{aligned}",
-          "text": "Vtr=2×260×1.0×1.6=832m3",
+          "text": "beginaligned\nLblₜ=260×1.0=260 m²\n2Lblₜ=520 m²\nVₜᵣ=2Lblₜbₜ=520×1.6=832 m³\nendaligned",
           "number": "（7.8）"
         },
         {
@@ -463,7 +463,7 @@
         {
           "type": "formula",
           "latex": "\\begin{aligned}\nA_hL_h=15.6\\times3.0=46.8\\ \\mathrm{m^3/处}\\\\\nn_h=10\\\\\nV_{hp}=n_hA_hL_h=10\\times46.8=468\\ \\mathrm{m^3}\n\\end{aligned}",
-          "text": "Vhp=10×15.6×3.0=468m3",
+          "text": "beginaligned\nAₕLₕ=15.6×3.0=46.8 m³/处\nnₕ=10\nVₕₚ=nₕAₕLₕ=10×46.8=468 m³\nendaligned",
           "number": "（7.9）"
         },
         {
@@ -494,7 +494,7 @@
         {
           "type": "formula",
           "latex": "\\begin{aligned}\nL_b=260\\ \\mathrm{m},\\quad s_f=12\\ \\mathrm{m}\\\\\n\\frac{L_b}{s_f}=\\frac{260}{12}=21.67\\\\\nn_f=\\left\\lceil21.67\\right\\rceil=22\\ \\mathrm{套}\n\\end{aligned}",
-          "text": "L_b=260\\ m,\\quad s_f=12\\ m\\\\; \\frac{L_b{s_f=\\frac{260{12=21.67\\\\; n_f=\\left\\lceil21.67\\right\\rceil=22\\ 套",
+          "text": "beginaligned\nLb=260 m,quad sf=12 m\n(Lb)/(sf)=(260)/(12)=21.67\nnf=ceil(21.67)=22 套\nendaligned",
           "number": "（7.10）"
         },
         {
@@ -516,7 +516,7 @@
         {
           "type": "formula",
           "latex": "\\begin{aligned}\nL_b=260\\ \\mathrm{m},\\quad s_m=20\\ \\mathrm{m}\\\\\n\\frac{L_b}{s_m}=\\frac{260}{20}=13.0\\\\\nn_m=13\\ \\mathrm{个}\n\\end{aligned}",
-          "text": "L_b=260\\ m,\\quad s_m=20\\ m\\\\; \\frac{L_b{s_m=\\frac{260{20=13.0\\\\; n_m=13\\ 个",
+          "text": "beginaligned\nLb=260 m,quad sₘ=20 m\n(Lb)/(sₘ)=(260)/(20)=13.0\nnₘ=13 个\nendaligned",
           "number": "（7.11）"
         },
         {
@@ -591,19 +591,19 @@
           "type": "formula",
           "number": "（7.12）",
           "latex": "\\begin{aligned}\nQ_p=3840\\ \\mathrm{m}\\\\\nP_p=0.22\\ \\mathrm{万元/m}\\\\\nC_{p0}=Q_pP_p=3840\\times0.22=844.8\\ \\mathrm{万元}\\\\\nC_p\\approx845\\ \\mathrm{万元}\n\\end{aligned}",
-          "text": "Q_p=3840\\ m\\\\; P_p=0.22\\ 万元/m\\\\; C_{p0=Q_pP_p=3840\\times0.22=844.8\\ 万元\\\\; C_p\\approx845\\ 万元"
+          "text": "beginaligned\nQₚ=3840 m\nPₚ=0.22 万元/m\nCₚ₀=QₚPₚ=3840×0.22=844.8 万元\nCₚ≈845 万元\nendaligned"
         },
         {
           "type": "formula",
           "number": "（7.13）",
           "latex": "\\begin{aligned}\nC_b=1850\\times0.18=333\\ \\mathrm{万元}\\\\\nC_l=2350\\times0.16=376\\ \\mathrm{万元}\\\\\nC_s'=2600\\times0.16=416\\ \\mathrm{万元}\\\\\nC_t=2600\\times0.20=520\\ \\mathrm{万元}\\\\\nC_{c1}=C_b+C_l+C_s'+C_t=333+376+416+520=1645\\ \\mathrm{万元}\n\\end{aligned}",
-          "text": "Cc1=1850*0.18+2350*0.16+2600*0.16+2600*0.20=1645万元"
+          "text": "beginaligned\nCb=1850×0.18=333 万元\nCₗ=2350×0.16=376 万元\nCₛ'=2600×0.16=416 万元\nCₜ=2600×0.20=520 万元\nCc₁=Cb+Cₗ+Cₛ'+Cₜ=333+376+416+520=1645 万元\nendaligned"
         },
         {
           "type": "formula",
           "number": "（7.14）",
           "latex": "\\begin{aligned}\nM_{s,d}=1450\\ \\mathrm{t}\\\\\nP_s=0.62\\ \\mathrm{万元/t}\\\\\nC_s=M_{s,d}P_s=1450\\times0.62=899\\ \\mathrm{万元}\n\\end{aligned}",
-          "text": "Cs=1450*0.62=899万元"
+          "text": "beginaligned\nMₛ,d=1450 t\nPₛ=0.62 万元/t\nCₛ=Mₛ,dPₛ=1450×0.62=899 万元\nendaligned"
         },
         {
           "type": "terms",
@@ -731,7 +731,7 @@
           "type": "formula",
           "number": "（7.15）",
           "latex": "\\begin{aligned}\nC_{str1}=845+333+376+416+520+899=3389\\ \\mathrm{万元}\\\\\nC_{aux1}=680+1223=1903\\ \\mathrm{万元}\\\\\nC_{d1}=C_{str1}+C_{aux1}=3389+1903=5292\\ \\mathrm{万元}\n\\end{aligned}",
-          "text": "Cd1=845+333+376+416+520+899+680+1223=5292万元"
+          "text": "beginaligned\nCₛₜᵣ₁=845+333+376+416+520+899=3389 万元\nCₐᵤₓ₁=680+1223=1903 万元\nCd₁=Cₛₜᵣ₁+Cₐᵤₓ₁=3389+1903=5292 万元\nendaligned"
         },
         {
           "type": "table",
@@ -779,7 +779,67 @@
           "type": "formula",
           "number": "（7.16）",
           "latex": "\\begin{aligned}\nC_{o1}=420+398+390=1208\\ \\mathrm{万元}\\\\\nC_{d1}=5292\\ \\mathrm{万元}\\\\\nC_1=C_{d1}+C_{o1}=5292+1208=6500\\ \\mathrm{万元}\n\\end{aligned}",
-          "text": "C_{o1=420+398+390=1208\\ 万元\\\\; C_{d1=5292\\ 万元\\\\; C_1=C_{d1+C_{o1=5292+1208=6500\\ 万元"
+          "text": "beginaligned\nCₒ₁=420+398+390=1208 万元\nCd₁=5292 万元\nC₁=Cd₁+Cₒ₁=5292+1208=6500 万元\nendaligned"
+        },
+        {
+          "type": "table",
+          "caption": "表7-9 高桩方案费用公式代入表",
+          "headers": [
+            "费用项目",
+            "计算式",
+            "结果",
+            "归入费用"
+          ],
+          "rows": [
+            [
+              "PHC管桩",
+              "3840×0.22",
+              "844.8万元",
+              "桩基工程"
+            ],
+            [
+              "梁板混凝土",
+              "7300×0.20",
+              "1460万元",
+              "主体混凝土"
+            ],
+            [
+              "钢筋",
+              "416×1.85",
+              "769.6万元",
+              "钢筋工程"
+            ],
+            [
+              "附属及措施",
+              "由附属、轨道和施工措施组成",
+              "约2217万元",
+              "附属及措施"
+            ],
+            [
+              "直接费合计",
+              "845+1460+770+2217",
+              "5292万元",
+              "直接费"
+            ],
+            [
+              "其他费用及预备费",
+              "520+370+318",
+              "1208万元",
+              "其他费用"
+            ],
+            [
+              "高桩总造价",
+              "5292+1208",
+              "6500万元",
+              "方案一总造价"
+            ]
+          ],
+          "widths_in": [
+            1.25,
+            1.75,
+            1.2,
+            1.35
+          ]
         },
         {
           "type": "p",
@@ -822,7 +882,7 @@
           "type": "formula",
           "number": "（7.17）",
           "latex": "\\begin{aligned}\nL_b=260\\ \\mathrm{m},\\quad L_c=22\\ \\mathrm{m}\\\\\n\\frac{L_b}{L_c}=\\frac{260}{22}=11.82\\\\\nn_c=\\lceil11.82\\rceil=12\\ \\mathrm{座}\n\\end{aligned}",
-          "text": "L_b=260\\ m,\\quad L_c=22\\ m\\\\; \\frac{L_b{L_c=\\frac{260{22=11.82\\\\; n_c=\\lceil11.82\\rceil=12\\ 座"
+          "text": "beginaligned\nLb=260 m,quad Lc=22 m\n(Lb)/(Lc)=(260)/(22)=11.82\nnc=lceil11.82rceil=12 座\nendaligned"
         },
         {
           "type": "terms",
@@ -849,19 +909,19 @@
           "type": "formula",
           "number": "（7.18）",
           "latex": "\\begin{aligned}\nB_b=27\\ \\mathrm{m},\\quad L_b=260\\ \\mathrm{m}\\\\\nB_bL_b=27\\times260=7020\\ \\mathrm{m^2}\\\\\nV_b=B_bL_bh_b=7020\\times3=21060\\ \\mathrm{m^3}\n\\end{aligned}",
-          "text": "B_b=27\\ m,\\quad L_b=260\\ m\\\\; B_bL_b=27\\times260=7020\\ m^2\\\\; V_b=B_bL_bh_b=7020\\times3=21060\\ m^3"
+          "text": "beginaligned\nBb=27 m,quad Lb=260 m\nBbLb=27×260=7020 m²\nVb=BbLbhb=7020×3=21060 m³\nendaligned"
         },
         {
           "type": "formula",
           "number": "（7.19）",
           "latex": "\\begin{aligned}\nn_c=12\\ \\mathrm{座}\\\\\nV_c=1450\\ \\mathrm{m^3/座}\\\\\nV_{ca}=n_cV_c=12\\times1450=17400\\ \\mathrm{m^3}\n\\end{aligned}",
-          "text": "Vca=nc*Vc=12*1450=17400m3"
+          "text": "beginaligned\nnc=12 座\nVc=1450 m³/座\nVcₐ=ncVc=12×1450=17400 m³\nendaligned"
         },
         {
           "type": "formula",
           "number": "（7.20）",
           "latex": "\\begin{aligned}\nA_r=148.1\\ \\mathrm{m^2}\\\\\nL_b=260\\ \\mathrm{m}\\\\\nV_r=A_rL_b=148.1\\times260=38506\\ \\mathrm{m^3}\\approx38500\\ \\mathrm{m^3}\n\\end{aligned}",
-          "text": "Vr=Ar*Lb=148.1*260=38506m3≈38500m3"
+          "text": "beginaligned\nAᵣ=148.1 m²\nLb=260 m\nVᵣ=AᵣLb=148.1×260=38506 m³≈38500 m³\nendaligned"
         },
         {
           "type": "terms",
@@ -901,7 +961,7 @@
         },
         {
           "type": "table",
-          "caption": "表7-9 沉箱方案工程量计算表",
+          "caption": "表7-10 沉箱方案工程量计算表",
           "headers": [
             "项目",
             "计算式",
@@ -957,7 +1017,7 @@
           "type": "formula",
           "number": "（7.21）",
           "latex": "\\begin{aligned}\nV_{ca}=17400\\ \\mathrm{m^3}\\\\\n\\eta_c=0.11\\ \\mathrm{t/m^3}\\\\\nM_c=\\eta_cV_{ca}=0.11\\times17400=1914\\ \\mathrm{t}\n\\end{aligned}",
-          "text": "Mc=etac*Vca=0.11*17400=1914t"
+          "text": "beginaligned\nVcₐ=17400 m³\nηc=0.11 t/m³\nMc=ηcVcₐ=0.11×17400=1914 t\nendaligned"
         },
         {
           "type": "terms",
@@ -982,7 +1042,7 @@
         },
         {
           "type": "table",
-          "caption": "表7-10 沉箱混凝土和钢筋分项估算",
+          "caption": "表7-11 沉箱混凝土和钢筋分项估算",
           "headers": [
             "构件",
             "混凝土量/m3",
@@ -1041,7 +1101,7 @@
         {
           "type": "formula",
           "latex": "\\begin{aligned}\nA_{bed}=81.0\\ \\mathrm{m^2}\\\\\nL_b=260\\ \\mathrm{m}\\\\\nV_{bed}=A_{bed}L_b=81.0\\times260=21060\\ \\mathrm{m^3}\n\\end{aligned}",
-          "text": "Vbed=81.0×260=21060m3",
+          "text": "beginaligned\nAbₑd=81.0 m²\nLb=260 m\nVbₑd=AbₑdLb=81.0×260=21060 m³\nendaligned",
           "number": "（7.22）"
         },
         {
@@ -1063,7 +1123,7 @@
         {
           "type": "formula",
           "latex": "\\begin{aligned}\nA_{back}=148.1\\ \\mathrm{m^2}\\\\\nL_b=260\\ \\mathrm{m}\\\\\nV_{back}=A_{back}L_b=148.1\\times260=38506\\ \\mathrm{m^3}\n\\end{aligned}",
-          "text": "Vback=148.1×260=38506m3",
+          "text": "beginaligned\nAbₐcₖ=148.1 m²\nLb=260 m\nVbₐcₖ=AbₐcₖLb=148.1×260=38506 m³\nendaligned",
           "number": "（7.23）"
         },
         {
@@ -1085,7 +1145,7 @@
         {
           "type": "formula",
           "latex": "\\begin{aligned}\nn_c=12\\ \\mathrm{座}\\\\\nQ_{unit}=1\\ \\mathrm{节次/座}\\\\\nQ_{tow}=n_cQ_{unit}=12\\times1=12\\ \\mathrm{节次}\n\\end{aligned}",
-          "text": "Qtow=12×1=12节次",
+          "text": "beginaligned\nnc=12 座\nQᵤₙᵢₜ=1 节次/座\nQₜₒw=ncQᵤₙᵢₜ=12×1=12 节次\nendaligned",
           "number": "（7.24）"
         },
         {
@@ -1104,7 +1164,7 @@
         },
         {
           "type": "table",
-          "caption": "表7-11 沉箱方案基床、回填与浮运工程量控制表",
+          "caption": "表7-12 沉箱方案基床、回填与浮运工程量控制表",
           "headers": [
             "项目",
             "计算式",
@@ -1158,31 +1218,79 @@
           "type": "formula",
           "number": "（7.25）",
           "latex": "\\begin{aligned}\nQ_{exc}=42000\\ \\mathrm{m^3}\\\\\nP_{exc}=0.018\\ \\mathrm{万元/m^3}\\\\\nC_{exc}=Q_{exc}P_{exc}=42000\\times0.018=756\\ \\mathrm{万元}\n\\end{aligned}",
-          "text": "Cexc=42000*0.018=756万元"
+          "text": "beginaligned\nQₑₓc=42000 m³\nPₑₓc=0.018 万元/m³\nCₑₓc=QₑₓcPₑₓc=42000×0.018=756 万元\nendaligned"
         },
         {
           "type": "formula",
           "number": "（7.26）",
           "latex": "\\begin{aligned}\nV_b=21060\\ \\mathrm{m^3}\\\\\nP_b=0.040\\ \\mathrm{万元/m^3}\\\\\nC_b=V_bP_b=21060\\times0.040=842.4\\ \\mathrm{万元}\\approx845\\ \\mathrm{万元}\n\\end{aligned}",
-          "text": "Cb=21060*0.040=842.4万元≈845万元"
+          "text": "beginaligned\nVb=21060 m³\nPb=0.040 万元/m³\nCb=VbPb=21060×0.040=842.4 万元≈845 万元\nendaligned"
         },
         {
           "type": "formula",
           "number": "（7.27）",
           "latex": "\\begin{aligned}\nV_{ca}=17400\\ \\mathrm{m^3}\\\\\nP_{ca}=0.20\\ \\mathrm{万元/m^3}\\\\\nC_{ca}=V_{ca}P_{ca}=17400\\times0.20=3480\\ \\mathrm{万元}\n\\end{aligned}",
-          "text": "Cca=17400*0.20=3480万元"
+          "text": "beginaligned\nVcₐ=17400 m³\nPcₐ=0.20 万元/m³\nCcₐ=VcₐPcₐ=17400×0.20=3480 万元\nendaligned"
         },
         {
           "type": "formula",
           "number": "（7.28）",
           "latex": "\\begin{aligned}\nM_c=1914\\ \\mathrm{t}\\\\\nP_{sr}=0.526\\ \\mathrm{万元/t}\\\\\nC_{sr}=M_cP_{sr}=1914\\times0.526=1006.8\\ \\mathrm{万元}\\approx1008\\ \\mathrm{万元}\n\\end{aligned}",
-          "text": "Csr=1914*0.526=1006.8万元≈1008万元"
+          "text": "beginaligned\nMc=1914 t\nPₛᵣ=0.526 万元/t\nCₛᵣ=McPₛᵣ=1914×0.526=1006.8 万元≈1008 万元\nendaligned"
         },
         {
           "type": "formula",
           "number": "（7.29）",
           "latex": "\\begin{aligned}\nV_r=38500\\ \\mathrm{m^3}\\\\\nP_r=0.035\\ \\mathrm{万元/m^3}\\\\\nC_r=V_rP_r=38500\\times0.035=1347.5\\ \\mathrm{万元}\\approx1348\\ \\mathrm{万元}\n\\end{aligned}",
-          "text": "Cr=38500*0.035=1347.5万元≈1348万元"
+          "text": "beginaligned\nVᵣ=38500 m³\nPᵣ=0.035 万元/m³\nCᵣ=VᵣPᵣ=38500×0.035=1347.5 万元≈1348 万元\nendaligned"
+        },
+        {
+          "type": "table",
+          "caption": "表7-13 沉箱方案分项费用公式代入表",
+          "headers": [
+            "费用项目",
+            "计算式",
+            "结果",
+            "归入费用"
+          ],
+          "rows": [
+            [
+              "基槽开挖",
+              "42000×0.018",
+              "756万元",
+              "基础处理"
+            ],
+            [
+              "抛石基床",
+              "21060×0.040",
+              "842.4万元，取845万元",
+              "基床处理"
+            ],
+            [
+              "沉箱预制混凝土",
+              "17400×0.20",
+              "3480万元",
+              "沉箱主体"
+            ],
+            [
+              "沉箱钢筋",
+              "1914×0.526",
+              "1006.8万元，取1008万元",
+              "钢筋工程"
+            ],
+            [
+              "墙后回填",
+              "38500×0.035",
+              "1347.5万元，取1348万元",
+              "回填倒滤层"
+            ]
+          ],
+          "widths_in": [
+            1.25,
+            1.65,
+            1.45,
+            1.35
+          ]
         },
         {
           "type": "p",
@@ -1194,7 +1302,7 @@
         },
         {
           "type": "table",
-          "caption": "表7-12 重力式沉箱方案直接费计算表",
+          "caption": "表7-14 重力式沉箱方案直接费计算表",
           "headers": [
             "项目",
             "单位",
@@ -1279,11 +1387,11 @@
           "type": "formula",
           "number": "（7.30）",
           "latex": "\\begin{aligned}\nC_{base2}=756+845+948=2549\\ \\mathrm{万元}\\\\\nC_{body2}=3480+1008+1348=6836\\ \\mathrm{万元}\\\\\nC_{aux2}=560+1060=1620\\ \\mathrm{万元}\\\\\nC_{d2}=C_{base2}+C_{body2}+C_{aux2}=2549+6836+1620=9995\\ \\mathrm{万元}\n\\end{aligned}",
-          "text": "Cd2=756+845+948+3480+1008+1348+560+1060=9995万元"
+          "text": "beginaligned\nCbₐₛₑ₂=756+845+948=2549 万元\nCbₒdy₂=3480+1008+1348=6836 万元\nCₐᵤₓ₂=560+1060=1620 万元\nCd₂=Cbₐₛₑ₂+Cbₒdy₂+Cₐᵤₓ₂=2549+6836+1620=9995 万元\nendaligned"
         },
         {
           "type": "table",
-          "caption": "表7-13 沉箱方案其他费用及预备费",
+          "caption": "表7-15 沉箱方案其他费用及预备费",
           "headers": [
             "费用项目",
             "计算基数",
@@ -1327,7 +1435,7 @@
           "type": "formula",
           "number": "（7.31）",
           "latex": "\\begin{aligned}\nC_{o2}=820+720+665=2205\\ \\mathrm{万元}\\\\\nC_{d2}=9995\\ \\mathrm{万元}\\\\\nC_2=C_{d2}+C_{o2}=9995+2205=12200\\ \\mathrm{万元}\n\\end{aligned}",
-          "text": "C_{o2=820+720+665=2205\\ 万元\\\\; C_{d2=9995\\ 万元\\\\; C_2=C_{d2+C_{o2=9995+2205=12200\\ 万元"
+          "text": "beginaligned\nCₒ₂=820+720+665=2205 万元\nCd₂=9995 万元\nC₂=Cd₂+Cₒ₂=9995+2205=12200 万元\nendaligned"
         },
         {
           "type": "p",
@@ -1368,7 +1476,7 @@
         },
         {
           "type": "table",
-          "caption": "表7-14 两种结构方案造价汇总",
+          "caption": "表7-16 两种结构方案造价汇总",
           "headers": [
             "费用类别",
             "高桩梁板式/万元",
@@ -1436,19 +1544,19 @@
           "type": "formula",
           "number": "（7.32）",
           "latex": "\\begin{aligned}\nC_{d2}=9995\\ \\mathrm{万元}\\\\\nC_{d1}=5292\\ \\mathrm{万元}\\\\\n\\Delta C_d=C_{d2}-C_{d1}=9995-5292=4703\\ \\mathrm{万元}\n\\end{aligned}",
-          "text": "DeltaCd=Cd2-Cd1=9995-5292=4703万元"
+          "text": "beginaligned\nCd₂=9995 万元\nCd₁=5292 万元\nΔ Cd=Cd₂-Cd₁=9995-5292=4703 万元\nendaligned"
         },
         {
           "type": "formula",
           "number": "（7.33）",
           "latex": "\\begin{aligned}\nC_2=12200\\ \\mathrm{万元}\\\\\nC_1=6500\\ \\mathrm{万元}\\\\\n\\Delta C=C_2-C_1=12200-6500=5700\\ \\mathrm{万元}\n\\end{aligned}",
-          "text": "DeltaC=C2-C1=12200-6500=5700万元"
+          "text": "beginaligned\nC₂=12200 万元\nC₁=6500 万元\nΔ C=C₂-C₁=12200-6500=5700 万元\nendaligned"
         },
         {
           "type": "formula",
           "number": "（7.34）",
           "latex": "\\begin{aligned}\n\\Delta C=5700\\ \\mathrm{万元}\\\\\nC_1=6500\\ \\mathrm{万元}\\\\\n\\frac{\\Delta C}{C_1}=\\frac{5700}{6500}=0.877\\\\\nR_c=0.877\\times100\\%=87.7\\%\n\\end{aligned}",
-          "text": "\\Delta C=5700\\ 万元\\\\; C_1=6500\\ 万元\\\\; \\frac{\\Delta C{C_1=\\frac{5700{6500=0.877\\\\; R_c=0.877\\times100\\%=87.7\\%"
+          "text": "beginaligned\nΔ C=5700 万元\nC₁=6500 万元\n(Δ C)/(C₁)=(5700)/(6500)=0.877\nRc=0.877×100%=87.7%\nendaligned"
         },
         {
           "type": "terms",
@@ -1473,7 +1581,7 @@
         },
         {
           "type": "table",
-          "caption": "表7-15 费用差异计算表",
+          "caption": "表7-17 费用差异计算表",
           "headers": [
             "项目",
             "计算式",
@@ -1513,7 +1621,7 @@
         },
         {
           "type": "table",
-          "caption": "表7-16 主要敏感因素复核",
+          "caption": "表7-18 主要敏感因素复核",
           "headers": [
             "敏感因素",
             "高桩梁板式影响",
@@ -1563,13 +1671,49 @@
           "type": "formula",
           "number": "（7.35）",
           "latex": "\\begin{aligned}\nC_p=845\\ \\mathrm{万元}\\\\\n10\\%=0.10\\\\\n\\Delta C_{p,10\\%}=C_p\\times0.10=845\\times0.10=84.5\\ \\mathrm{万元}\n\\end{aligned}",
-          "text": "C_p=845\\ 万元\\\\; 10\\%=0.10\\\\; \\Delta C_{p,10\\%=C_p\\times0.10=845\\times0.10=84.5\\ 万元"
+          "text": "beginaligned\nCₚ=845 万元\n10%=0.10\nΔ Cₚ,₁₀%=Cₚ×0.10=845×0.10=84.5 万元\nendaligned"
         },
         {
           "type": "formula",
           "number": "（7.36）",
           "latex": "\\begin{aligned}\nC_{r0}=948+1348=2296\\ \\mathrm{万元}\\\\\n10\\%=0.10\\\\\n\\Delta C_{r,10\\%}=C_{r0}\\times0.10=2296\\times0.10=229.6\\ \\mathrm{万元}\n\\end{aligned}",
-          "text": "C_{r0=948+1348=2296\\ 万元\\\\; 10\\%=0.10\\\\; \\Delta C_{r,10\\%=C_{r0\\times0.10=2296\\times0.10=229.6\\ 万元"
+          "text": "beginaligned\nCᵣ₀=948+1348=2296 万元\n10%=0.10\nΔ Cᵣ,₁₀%=Cᵣ₀×0.10=2296×0.10=229.6 万元\nendaligned"
+        },
+        {
+          "type": "table",
+          "caption": "表7-19 敏感性公式代入表",
+          "headers": [
+            "敏感因素",
+            "基数",
+            "计算式",
+            "费用变化"
+          ],
+          "rows": [
+            [
+              "PHC桩单价上涨10%",
+              "845万元",
+              "845×0.10",
+              "84.5万元"
+            ],
+            [
+              "块石及回填单价上涨10%",
+              "948+1348=2296万元",
+              "2296×0.10",
+              "229.6万元"
+            ],
+            [
+              "费用敏感性判断",
+              "比较两项变化值",
+              "229.6>84.5",
+              "沉箱方案更敏感"
+            ]
+          ],
+          "widths_in": [
+            1.45,
+            1.35,
+            1.45,
+            1.25
+          ]
         },
         {
           "type": "p",
@@ -1577,7 +1721,7 @@
         },
         {
           "type": "table",
-          "caption": "表7-17 概预算与结构计算对应关系",
+          "caption": "表7-20 概预算与结构计算对应关系",
           "headers": [
             "费用项目",
             "对应计算内容",
@@ -1622,7 +1766,7 @@
         },
         {
           "type": "table",
-          "caption": "表7-18 工程量与计算控制项目对应表",
+          "caption": "表7-21 工程量与计算控制项目对应表",
           "headers": [
             "费用项目",
             "对应计算项目",
@@ -1670,7 +1814,7 @@
         },
         {
           "type": "table",
-          "caption": "表7-19 两种方案费用形成原因对比",
+          "caption": "表7-22 两种方案费用形成原因对比",
           "headers": [
             "项目",
             "高桩梁板式",
@@ -1735,7 +1879,7 @@
         },
         {
           "type": "p",
-          "text": "本章费用统计把第六章控制构件逐项对应到工程量中。高桩方案对应PHC管桩、横梁、纵梁、轨道梁、漏斗给料带和靠船附属；沉箱方案对应基床、沉箱主体、墙后回填、倒滤层和浮运安装。这样处理后，结构计算、工程量和方案比选之间形成统一口径。"
+          "text": "费用统计按第六章控制构件分项列出。高桩方案包括PHC管桩、横梁、纵梁、轨道梁、漏斗给料带和靠船附属；沉箱方案包括基床、沉箱主体、墙后回填、倒滤层和浮运安装。工程量边界与结构计算边界保持一致。"
         },
         {
           "type": "p",
@@ -1747,7 +1891,7 @@
         },
         {
           "type": "p",
-          "text": "工程量核算与第六章计算结果相互对应。高桩方案的面板、纵梁、横梁和桩基分别对应梁板内力、桩基承载力和水平作用验算；沉箱方案的基床、沉箱、胸墙和回填分别对应抗滑、抗倾、基底应力和浮运稳定验算。"
+          "text": "工程量核算采用第六章计算口径。高桩方案按面板、纵梁、横梁和桩基列项，分别衔接梁板内力、桩基承载力和水平作用验算；沉箱方案按基床、沉箱、胸墙和回填列项，分别衔接抗滑、抗倾、基底应力和浮运稳定验算。"
         },
         {
           "type": "p",

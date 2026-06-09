@@ -30,7 +30,7 @@
               "type": "formula",
               "number": "（4.1）",
               "latex": "\\begin{aligned}\nN_d=321\\ \\mathrm{d},\\quad t_d=21\\ \\mathrm{h/d}\\\\\nT_y=N_dt_d=321\\times21=6741\\ \\mathrm{h}\\\\\nq_h=\\frac{Q_a}{T_y}=\\frac{3.00\\times10^6}{6741}=445\\ \\mathrm{t/h}\n\\end{aligned}",
-              "text": "N_d=321\\ d,\\quad t_d=21\\ h/d\\\\; T_y=N_dt_d=321\\times21=6741\\ h\\\\; q_h=\\frac{Q_a{T_y=\\frac{3.00\\times10^6{6741=445\\ t/h"
+              "text": "beginaligned\nNd=321 d,quad td=21 h/d\nTy=Ndtd=321×21=6741 h\nqₕ=(Qₐ)/(Ty)=(3.00×10⁶)/(6741)=445 t/h\nendaligned"
             },
             {
               "type": "terms",
@@ -62,7 +62,7 @@
               "type": "formula",
               "number": "（4.2）",
               "latex": "\\begin{aligned}\nQ_a=3.00\\times10^6\\ \\mathrm{t/a},\\quad N_d=321\\ \\mathrm{d}\\\\\nq_d=\\frac{Q_a}{N_d}=\\frac{3.00\\times10^6}{321}=9346\\ \\mathrm{t/d}\\\\\nq_{d,h}=\\frac{q_d}{t_d}=\\frac{9346}{21}=445\\ \\mathrm{t/h}\n\\end{aligned}",
-              "text": "Q_a=3.00\\times10^6\\ t/a,\\quad N_d=321\\ d\\\\; q_d=\\frac{Q_a{N_d=\\frac{3.00\\times10^6{321=9346\\ t/d\\\\; q_{d,h=\\frac{q_d{t_d=\\frac{9346{21=445\\ t/h"
+              "text": "beginaligned\nQₐ=3.00×10⁶ t/a,quad Nd=321 d\nqd=(Qₐ)/(Nd)=(3.00×10⁶)/(321)=9346 t/d\nqd,ₕ=(qd)/(td)=(9346)/(21)=445 t/h\nendaligned"
             },
             {
               "type": "terms",
@@ -86,6 +86,48 @@
               ]
             },
             {
+              "type": "table",
+              "caption": "表4-1 设计吞吐量计算表",
+              "headers": [
+                "项目",
+                "取值",
+                "代入过程",
+                "结果"
+              ],
+              "rows": [
+                [
+                  "年设计吞吐量",
+                  "Q_a=3.00×10^6t/a",
+                  "由电厂燃煤需求确定",
+                  "300万t/a"
+                ],
+                [
+                  "年有效作业时间",
+                  "N_d×t_d",
+                  "321×21=6741h",
+                  "6741h"
+                ],
+                [
+                  "平均小时能力",
+                  "q_h=Q_a/T_y",
+                  "3.00×10^6/6741=445t/h",
+                  "445t/h"
+                ],
+                [
+                  "平均日能力",
+                  "q_d=Q_a/N_d",
+                  "3.00×10^6/321=9346t/d",
+                  "9346t/d"
+                ]
+              ],
+              "widths_in": [
+                1.25,
+                1.65,
+                1.65,
+                1.25
+              ]
+            },
+            {
               "type": "p",
               "text": "平均小时能力仅反映全年均衡生产状态。船舶集中到港、设备检修、雨雾停工和生产调度均会造成能力折减，因此主要设备额定能力应高于平均值。"
             }
@@ -102,7 +144,7 @@
               "type": "formula",
               "number": "（4.3）",
               "latex": "\\begin{aligned}\nQ_s=50000\\ \\mathrm{t}\\\\\nt_s=36\\ \\mathrm{h}\\\\\nP_s=\\frac{Q_s}{t_s}=\\frac{50000}{36}=1389\\ \\mathrm{t/h}\\\\\nP_{s0}\\approx1400\\ \\mathrm{t/h}\n\\end{aligned}",
-              "text": "Q_s=50000\\ t\\\\; t_s=36\\ h\\\\; P_s=\\frac{Q_s{t_s=\\frac{50000{36=1389\\ t/h\\\\; P_{s0\\approx1400\\ t/h"
+              "text": "beginaligned\nQₛ=50000 t\ntₛ=36 h\nPₛ=(Qₛ)/(tₛ)=(50000)/(36)=1389 t/h\nPₛ₀≈1400 t/h\nendaligned"
             },
             {
               "type": "terms",
@@ -133,7 +175,7 @@
               "type": "formula",
               "number": "（4.4）",
               "latex": "\\begin{aligned}\nP_s=1389\\ \\mathrm{t/h}\\\\\nq_h=445\\ \\mathrm{t/h}\\\\\nK_p=\\frac{P_s}{q_h}=\\frac{1389}{445}=3.12\n\\end{aligned}",
-              "text": "P_s=1389\\ t/h\\\\; q_h=445\\ t/h\\\\; K_p=\\frac{P_s{q_h=\\frac{1389{445=3.12"
+              "text": "beginaligned\nPₛ=1389 t/h\nqₕ=445 t/h\nKₚ=(Pₛ)/(qₕ)=(1389)/(445)=3.12\nendaligned"
             },
             {
               "type": "terms",
@@ -154,6 +196,54 @@
                   "t/h"
                 ]
               ]
+            },
+            {
+              "type": "table",
+              "caption": "表4-2 卸船作业能力计算表",
+              "headers": [
+                "项目",
+                "取值",
+                "代入过程",
+                "结果"
+              ],
+              "rows": [
+                [
+                  "单船货量",
+                  "Q_s=50000t",
+                  "按5万吨级散货船计",
+                  "50000t"
+                ],
+                [
+                  "目标卸船时间",
+                  "t_s=36h",
+                  "按集中卸船控制",
+                  "36h"
+                ],
+                [
+                  "平均作业能力",
+                  "P_s=Q_s/t_s",
+                  "50000/36=1389t/h",
+                  "约1400t/h"
+                ],
+                [
+                  "全年平均小时能力",
+                  "q_h=445t/h",
+                  "由式（4.1）确定",
+                  "445t/h"
+                ],
+                [
+                  "峰值系数",
+                  "K_p=P_s/q_h",
+                  "1389/445=3.12",
+                  "3.12"
+                ]
+              ],
+              "widths_in": [
+                1.25,
+                1.65,
+                1.65,
+                1.25
+              ]
             }
           ]
         },
@@ -168,7 +258,7 @@
               "type": "formula",
               "number": "（4.5）",
               "latex": "\\begin{aligned}\nN_dt_dP=321\\times21\\times1500=1.011\\times10^7\\ \\mathrm{t/a}\\\\\nQ_{y0}=1.011\\times10^7\\ \\mathrm{t/a}\\\\\nQ_y=Q_{y0}\\eta=1.011\\times10^7\\times0.70=7.08\\times10^6\\ \\mathrm{t/a}\n\\end{aligned}",
-              "text": "N_dt_dP=321\\times21\\times1500=1.011\\times10^7\\ t/a\\\\; Q_{y0=1.011\\times10^7\\ t/a\\\\; Q_y=Q_{y0\\eta=1.011\\times10^7\\times0.70=7.08\\times10^6\\ t/a"
+              "text": "beginaligned\nNdtdP=321×21×1500=1.011×10⁷ t/a\nQy₀=1.011×10⁷ t/a\nQy=Qy₀η=1.011×10⁷×0.70=7.08×10⁶ t/a\nendaligned"
             },
             {
               "type": "terms",
@@ -208,7 +298,7 @@
               "type": "formula",
               "number": "（4.6）",
               "latex": "\\begin{aligned}\nt_r\\eta_s=48\\times0.70=33.6\\ \\mathrm{h}\\\\\nQ_s=50000\\ \\mathrm{t}\\\\\nP_r=\\frac{Q_s}{t_r\\eta_s}=\\frac{50000}{33.6}=1488\\ \\mathrm{t/h}\\\\\nP_r\\approx1500\\ \\mathrm{t/h}\n\\end{aligned}",
-              "text": "t_r\\eta_s=48\\times0.70=33.6\\ h\\\\; Q_s=50000\\ t\\\\; P_r=\\frac{Q_s{t_r\\eta_s=\\frac{50000{33.6=1488\\ t/h\\\\; P_r\\approx1500\\ t/h"
+              "text": "beginaligned\ntᵣηₛ=48×0.70=33.6 h\nQₛ=50000 t\nPᵣ=(Qₛ)/(tᵣηₛ)=(50000)/(33.6)=1488 t/h\nPᵣ≈1500 t/h\nendaligned"
             },
             {
               "type": "terms",
@@ -243,7 +333,7 @@
               "type": "formula",
               "number": "（4.7）",
               "latex": "\\begin{aligned}\nK_y=\\frac{Q_y}{Q_a}=\\frac{7.08\\times10^6}{3.00\\times10^6}=2.36\\\\\n\\eta_b=\\frac{Q_a}{Q_y}=\\frac{3.00\\times10^6}{7.08\\times10^6}=0.42\\\\\nK_y>1.0,\\quad \\eta_b=42\\%\n\\end{aligned}",
-              "text": "K_y=\\frac{Q_y{Q_a=\\frac{7.08\\times10^6{3.00\\times10^6=2.36\\\\; \\eta_b=\\frac{Q_a{Q_y=\\frac{3.00\\times10^6{7.08\\times10^6=0.42\\\\; K_y>1.0,\\quad \\eta_b=42\\%"
+              "text": "beginaligned\nKy=(Qy)/(Qₐ)=(7.08×10⁶)/(3.00×10⁶)=2.36\nηb=(Qₐ)/(Qy)=(3.00×10⁶)/(7.08×10⁶)=0.42\nKy>1.0,quad ηb=42%\nendaligned"
             },
             {
               "type": "terms",
@@ -257,6 +347,54 @@
                   "η_b",
                   "按设计吞吐量折算的泊位利用率"
                 ]
+              ]
+            },
+            {
+              "type": "table",
+              "caption": "表4-3 年通过能力复核表",
+              "headers": [
+                "项目",
+                "取值",
+                "代入过程",
+                "结果"
+              ],
+              "rows": [
+                [
+                  "未折减年能力",
+                  "Q_y0=N_dt_dP",
+                  "321×21×1500=1.011×10^7t/a",
+                  "1011万t/a"
+                ],
+                [
+                  "折减后年能力",
+                  "Q_y=Q_y0η",
+                  "1.011×10^7×0.70=7.08×10^6t/a",
+                  "708万t/a"
+                ],
+                [
+                  "单船反算能力",
+                  "P_r=Q_s/(t_rη_s)",
+                  "50000/(48×0.70)=1488t/h",
+                  "约1500t/h"
+                ],
+                [
+                  "能力储备系数",
+                  "K_y=Q_y/Q_a",
+                  "7.08×10^6/3.00×10^6=2.36",
+                  "2.36"
+                ],
+                [
+                  "折算泊位利用率",
+                  "η_b=Q_a/Q_y",
+                  "3.00×10^6/7.08×10^6=0.42",
+                  "42%"
+                ]
+              ],
+              "widths_in": [
+                1.25,
+                1.65,
+                1.65,
+                1.25
               ]
             }
           ]
@@ -276,7 +414,7 @@
         },
         {
           "type": "table",
-          "caption": "表4-1 装卸工艺主要参数",
+          "caption": "表4-4 装卸工艺主要参数",
           "headers": [
             "项目",
             "采用值",
@@ -323,7 +461,7 @@
           "type": "formula",
           "number": "（4.8）",
           "latex": "\\begin{aligned}\nB_f+B_r=4+10=14\\ \\mathrm{m}\\\\\nB_l+B_m=6+5=11\\ \\mathrm{m}\\\\\nB_p=14+11=25\\ \\mathrm{m}\n\\end{aligned}",
-          "text": "B_f+B_r=4+10=14\\ m\\\\; B_l+B_m=6+5=11\\ m\\\\; B_p=14+11=25\\ m"
+          "text": "beginaligned\nBf+Bᵣ=4+10=14 m\nBₗ+Bₘ=6+5=11 m\nBₚ=14+11=25 m\nendaligned"
         },
         {
           "type": "terms",
@@ -360,7 +498,7 @@
           "type": "formula",
           "number": "（4.9）",
           "latex": "\\begin{aligned}\nG_e=3200\\ \\mathrm{kN},\\quad n=8\\\\\nG_w=\\frac{G_e}{n}=\\frac{3200}{8}=400\\ \\mathrm{kN}\\\\\nA_w=5.0\\ \\mathrm{m^2}\\\\\nq_e=\\frac{G_w}{A_w}=\\frac{400}{5.0}=80\\ \\mathrm{kN/m^2}\n\\end{aligned}",
-          "text": "G_e=3200\\ kN,\\quad n=8\\\\; G_w=\\frac{G_e{n=\\frac{3200{8=400\\ kN\\\\; A_w=5.0\\ m^2\\\\; q_e=\\frac{G_w{A_w=\\frac{400{5.0=80\\ kN/m^2"
+          "text": "beginaligned\nGₑ=3200 kN,quad n=8\nGw=(Gₑ)/(n)=(3200)/(8)=400 kN\nAw=5.0 m²\nqₑ=(Gw)/(Aw)=(400)/(5.0)=80 kN/m²\nendaligned"
         },
         {
           "type": "terms",
@@ -393,6 +531,54 @@
           ]
         },
         {
+          "type": "table",
+          "caption": "表4-5 码头平台功能带与设备荷载计算表",
+          "headers": [
+            "项目",
+            "取值",
+            "代入过程",
+            "结果"
+          ],
+          "rows": [
+            [
+              "前沿及轨道带",
+              "B_f+B_r",
+              "4+10=14m",
+              "14m"
+            ],
+            [
+              "廊道及服务带",
+              "B_l+B_m",
+              "6+5=11m",
+              "11m"
+            ],
+            [
+              "功能带合计宽度",
+              "B_p",
+              "14+11=25m",
+              "25m"
+            ],
+            [
+              "单轮组荷载",
+              "G_w=G_e/n",
+              "3200/8=400kN",
+              "400kN"
+            ],
+            [
+              "设备等效面荷载",
+              "q_e=G_w/A_w",
+              "400/5.0=80kN/m2",
+              "80kPa"
+            ]
+          ],
+          "widths_in": [
+            1.25,
+            1.65,
+            1.65,
+            1.25
+          ]
+        },
+        {
           "type": "p",
           "text": "按设备总重3200kN、8个轮组、单轮扩散面积5.0m2计，轨道带局部等效荷载约80kN/m2。轨道梁位置同时验算最大轮压控制截面和相邻轮压共同作用截面。"
         }
@@ -422,7 +608,7 @@
               "type": "formula",
               "number": "（4.10）",
               "latex": "\\begin{aligned}\n\\frac{Q_at_c}{365}=\\frac{3.00\\times10^6\\times20}{365}=1.64\\times10^5\\ \\mathrm{t}\\\\\nE_0=1.64\\times10^5\\ \\mathrm{t}\\\\\nE=1.10E_0=1.10\\times1.64\\times10^5=1.80\\times10^5\\ \\mathrm{t}\n\\end{aligned}",
-              "text": "\\frac{Q_at_c{365=\\frac{3.00\\times10^6\\times20{365=1.64\\times10^5\\ t\\\\; E_0=1.64\\times10^5\\ t\\\\; E=1.10E_0=1.10\\times1.64\\times10^5=1.80\\times10^5\\ t"
+              "text": "beginaligned\n(Qₐtc)/(365)=(3.00×10⁶×20)/(365)=1.64×10⁵ t\nE₀=1.64×10⁵ t\nE=1.10E₀=1.10×1.64×10⁵=1.80×10⁵ t\nendaligned"
             },
             {
               "type": "terms",
@@ -446,6 +632,48 @@
               ]
             },
             {
+              "type": "table",
+              "caption": "表4-6 堆场储量计算表",
+              "headers": [
+                "项目",
+                "取值",
+                "代入过程",
+                "结果"
+              ],
+              "rows": [
+                [
+                  "储备天数",
+                  "t_c=20d",
+                  "按电厂燃料储备要求取值",
+                  "20d"
+                ],
+                [
+                  "理论储量",
+                  "E_0=Q_at_c/365",
+                  "3.00×10^6×20/365=1.64×10^5t",
+                  "16.4万t"
+                ],
+                [
+                  "调度系数",
+                  "1.10",
+                  "考虑煤种分区和检修备用",
+                  "1.10"
+                ],
+                [
+                  "设计容量",
+                  "E=1.10E_0",
+                  "1.10×1.64×10^5=1.80×10^5t",
+                  "18万t"
+                ]
+              ],
+              "widths_in": [
+                1.25,
+                1.65,
+                1.65,
+                1.25
+              ]
+            },
+            {
               "type": "p",
               "text": "考虑煤种分区、检修备用和运行调度，堆场设计容量取18万t。该容量能够覆盖20d储备量，并为来船不均衡和短期设备检修留出余量。"
             }
@@ -462,7 +690,7 @@
               "type": "formula",
               "number": "（4.11）",
               "latex": "\\begin{aligned}\nV_c=\\frac{E}{\\rho}=\\frac{180000}{0.85}=211765\\ \\mathrm{m^3}\\\\\nh\\varphi=10\\times0.65=6.50\\ \\mathrm{m}\\\\\nA_e=\\frac{V_c}{h\\varphi}=\\frac{211765}{6.50}=32579\\ \\mathrm{m^2}\n\\end{aligned}",
-              "text": "V_c=\\frac{E{\\rho=\\frac{180000{0.85=211765\\ m^3\\\\; h\\varphi=10\\times0.65=6.50\\ m\\\\; A_e=\\frac{V_c{h\\varphi=\\frac{211765{6.50=32579\\ m^2"
+              "text": "beginaligned\nVc=(E)/(ρ)=(180000)/(0.85)=211765 m³\nhvarphi=10×0.65=6.50 m\nAₑ=(Vc)/(hvarphi)=(211765)/(6.50)=32579 m²\nendaligned"
             },
             {
               "type": "terms",
@@ -498,7 +726,7 @@
               "type": "formula",
               "number": "（4.12）",
               "latex": "\\begin{aligned}\nA_a=0.35A_e=0.35\\times32579=11403\\ \\mathrm{m^2}\\\\\nA=A_e+A_a=32579+11403=43982\\ \\mathrm{m^2}\\\\\nA\\approx4.4\\times10^4\\ \\mathrm{m^2}\n\\end{aligned}",
-              "text": "A_a=0.35A_e=0.35\\times32579=11403\\ m^2\\\\; A=A_e+A_a=32579+11403=43982\\ m^2\\\\; A\\approx4.4\\times10^4\\ m^2"
+              "text": "beginaligned\nAₐ=0.35Aₑ=0.35×32579=11403 m²\nA=Aₑ+Aₐ=32579+11403=43982 m²\nA≈4.4×10⁴ m²\nendaligned"
             },
             {
               "type": "terms",
@@ -517,6 +745,54 @@
               ]
             },
             {
+              "type": "table",
+              "caption": "表4-7 堆场面积计算表",
+              "headers": [
+                "项目",
+                "取值",
+                "代入过程",
+                "结果"
+              ],
+              "rows": [
+                [
+                  "煤堆体积",
+                  "V_c=E/ρ",
+                  "180000/0.85=211765m3",
+                  "211765m3"
+                ],
+                [
+                  "有效堆高",
+                  "hφ",
+                  "10×0.65=6.50m",
+                  "6.50m"
+                ],
+                [
+                  "有效堆存面积",
+                  "A_e=V_c/(hφ)",
+                  "211765/6.50=32579m2",
+                  "32579m2"
+                ],
+                [
+                  "辅助面积",
+                  "A_a=0.35A_e",
+                  "0.35×32579=11403m2",
+                  "11403m2"
+                ],
+                [
+                  "总占地面积",
+                  "A=A_e+A_a",
+                  "32579+11403=43982m2",
+                  "约4.4万m2"
+                ]
+              ],
+              "widths_in": [
+                1.25,
+                1.65,
+                1.65,
+                1.25
+              ]
+            },
+            {
               "type": "p",
               "text": "考虑道路、排水、消防和设备运行空间，堆场总面积取约4.4万m2。堆场布置时，斗轮堆取料机轨道、皮带机廊道、喷淋管线和含煤污水沟应与堆垛边界协调。"
             },
@@ -524,7 +800,7 @@
               "type": "formula",
               "number": "（4.13）",
               "latex": "\\begin{aligned}\nA=43982\\ \\mathrm{m^2}\\\\\nB_s=110\\ \\mathrm{m}\\\\\nL_s=\\frac{A}{B_s}=\\frac{43982}{110}=400\\ \\mathrm{m}\n\\end{aligned}",
-              "text": "A=43982\\ m^2\\\\; B_s=110\\ m\\\\; L_s=\\frac{A{B_s=\\frac{43982{110=400\\ m"
+              "text": "beginaligned\nA=43982 m²\nBₛ=110 m\nLₛ=(A)/(Bₛ)=(43982)/(110)=400 m\nendaligned"
             },
             {
               "type": "terms",
@@ -544,7 +820,7 @@
             },
             {
               "type": "table",
-              "caption": "表4-2 库场容量与面积计算结果",
+              "caption": "表4-8 库场容量与面积计算结果",
               "headers": [
                 "项目",
                 "计算式或参数",

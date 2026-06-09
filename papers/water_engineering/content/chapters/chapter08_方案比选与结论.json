@@ -86,7 +86,7 @@
           "type": "formula",
           "number": "（8.1）",
           "latex": "\\begin{aligned}\nC_2-C_1=12200-6500=5700\\ \\mathrm{万元}\\\\\n\\Delta C=5700\\ \\mathrm{万元}\\\\\nR_c=\\frac{\\Delta C}{C_1}\\times100\\%=\\frac{5700}{6500}\\times100\\%=87.7\\%\n\\end{aligned}",
-          "text": "C_2-C_1=12200-6500=5700\\ 万元\\\\; \\Delta C=5700\\ 万元\\\\; R_c=\\frac{\\Delta C{C_1\\times100\\%=\\frac{5700{6500\\times100\\%=87.7\\%"
+          "text": "beginaligned\nC₂-C₁=12200-6500=5700 万元\nΔ C=5700 万元\nRc=(Δ C)/(C₁)×100%=(5700)/(6500)×100%=87.7%\nendaligned"
         },
         {
           "type": "terms",
@@ -171,7 +171,7 @@
           "type": "formula",
           "number": "（8.2）",
           "latex": "\\begin{aligned}\nS=\\sum w_is_i\\\\\nw_1+w_2+w_3+w_4+w_5=0.30+0.25+0.20+0.15+0.10=1.00\\\\\nS=0.30s_1+0.25s_2+0.20s_3+0.15s_4+0.10s_5\n\\end{aligned}",
-          "text": "S=\\sum w_is_i\\\\; w_1+w_2+w_3+w_4+w_5=0.30+0.25+0.20+0.15+0.10=1.00\\\\; S=0.30s_1+0.25s_2+0.20s_3+0.15s_4+0.10s_5"
+          "text": "beginaligned\nS=Σ wᵢsᵢ\nw₁+w₂+w₃+w₄+w₅=0.30+0.25+0.20+0.15+0.10=1.00\nS=0.30s₁+0.25s₂+0.20s₃+0.15s₄+0.10s₅\nendaligned"
         },
         {
           "type": "terms",
@@ -194,16 +194,54 @@
         {
           "type": "formula",
           "number": "（8.3）",
-          "latex": "\\begin{aligned}\nS_{1a}=0.30\\times88+0.25\\times90=48.9\\\\\nS_{1b}=0.20\\times86+0.15\\times92+0.10\\times82=39.2\\\\\nS_1=S_{1a}+S_{1b}=48.9+39.2=88.1\n\\end{aligned}"
+          "latex": "\\begin{aligned}\nS_{1a}=0.30\\times88+0.25\\times90=48.9\\\\\nS_{1b}=0.20\\times86+0.15\\times92+0.10\\times82=39.2\\\\\nS_1=S_{1a}+S_{1b}=48.9+39.2=88.1\n\\end{aligned}",
+          "text": "beginaligned\nS₁ₐ=0.30×88+0.25×90=48.9\nS₁b=0.20×86+0.15×92+0.10×82=39.2\nS₁=S₁ₐ+S₁b=48.9+39.2=88.1\nendaligned"
         },
         {
           "type": "formula",
           "number": "（8.4）",
-          "latex": "\\begin{aligned}\nS_{2a}=0.30\\times84+0.25\\times70=42.7\\\\\nS_{2b}=0.20\\times68+0.15\\times60+0.10\\times78=30.4\\\\\nS_2=S_{2a}+S_{2b}=42.7+30.4=73.1\n\\end{aligned}"
+          "latex": "\\begin{aligned}\nS_{2a}=0.30\\times84+0.25\\times70=42.7\\\\\nS_{2b}=0.20\\times68+0.15\\times60+0.10\\times78=30.4\\\\\nS_2=S_{2a}+S_{2b}=42.7+30.4=73.1\n\\end{aligned}",
+          "text": "beginaligned\nS₂ₐ=0.30×84+0.25×70=42.7\nS₂b=0.20×68+0.15×60+0.10×78=30.4\nS₂=S₂ₐ+S₂b=42.7+30.4=73.1\nendaligned"
         },
         {
           "type": "table",
-          "caption": "表8-3 推荐方案综合评价",
+          "caption": "表8-3 综合得分公式代入表",
+          "headers": [
+            "方案",
+            "安全与地基分项",
+            "施工、造价与运维分项",
+            "综合得分"
+          ],
+          "rows": [
+            [
+              "高桩梁板式",
+              "0.30×88+0.25×90=48.9",
+              "0.20×86+0.15×92+0.10×82=39.2",
+              "88.1"
+            ],
+            [
+              "重力式沉箱",
+              "0.30×84+0.25×70=42.7",
+              "0.20×68+0.15×60+0.10×78=30.4",
+              "73.1"
+            ],
+            [
+              "推荐结果",
+              "高桩梁板式得分较高",
+              "88.1-73.1=15.0",
+              "采用高桩梁板式"
+            ]
+          ],
+          "widths_in": [
+            1.25,
+            1.75,
+            1.95,
+            0.9
+          ]
+        },
+        {
+          "type": "table",
+          "caption": "表8-4 推荐方案综合评价",
           "headers": [
             "指标",
             "权重",

@@ -1,0 +1,58 @@
+[
+  {
+    "threshold": 0.1,
+    "retained_edges": 14244,
+    "clusters": 2257,
+    "ari": 0.8693188601724724,
+    "nmi": 0.9882323732262523,
+    "incorrect_rate": 0.12336573918873617
+  },
+  {
+    "threshold": 0.2,
+    "retained_edges": 13058,
+    "clusters": 2331,
+    "ari": 0.8664297488208166,
+    "nmi": 0.9875403129137884,
+    "incorrect_rate": 0.11930434782608695
+  },
+  {
+    "threshold": 0.3,
+    "retained_edges": 10872,
+    "clusters": 2565,
+    "ari": 0.8434529017325773,
+    "nmi": 0.9837163090988392,
+    "incorrect_rate": 0.109765625
+  },
+  {
+    "threshold": 0.4,
+    "retained_edges": 7942,
+    "clusters": 2956,
+    "ari": 0.7923638692813479,
+    "nmi": 0.9753509810383838,
+    "incorrect_rate": 0.10801393728222997
+  },
+  {
+    "threshold": 0.5,
+    "retained_edges": 4963,
+    "clusters": 3400,
+    "ari": 0.6875840876935341,
+    "nmi": 0.9652788699832576,
+    "incorrect_rate": 0.09008379888268156
+  },
+  {
+    "threshold": 0.6,
+    "retained_edges": 2591,
+    "clusters": 3821,
+    "ari": 0.5223984655033563,
+    "nmi": 0.9552570281576751,
+    "incorrect_rate": 0.08156028368794327
+  },
+  {
+    "threshold": 0.7,
+    "retained_edges": 1028,
+    "clusters": 4139,
+    "ari": 0.2701430304691498,
+    "nmi": 0.9466331103111433,
+    "incorrect_rate": 0.05747126436781609
+  }
+]

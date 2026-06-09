@@ -80,13 +80,21 @@
             },
             {
               "type": "p",
+              "text": "按码头面高程+3.60m和平均桩长32m控制，桩底控制高程约为-28.40m。实际沉桩时以进入持力层和贯入度控制为准，端部及局部深槽位置可根据详勘成果调整桩长。"
+            },
+            {
+              "type": "p",
               "text": "标准结构单元纵向长度取27m，按9m间距形成三跨布置。横向布置三排桩，前排桩靠近前沿梁和靠船构件，承担较大的水平作用；中、后排桩主要承担平台恒载、设备荷载和廊道支座反力。"
+            },
+            {
+              "type": "p",
+              "text": "码头平台横向总宽按32.5m控制，其中前方桩台约16.0m，后方桩台约16.5m。横向功能带由靠船带、卸船机轨道带、漏斗及给料带、皮带机廊道带和检修通道组成，平面及断面图中的32500、16000和16500尺寸按该布置表达。"
             },
             {
               "type": "formula",
               "number": "（5.1）",
               "latex": "\\begin{aligned}\n\\frac{L_b}{L_u}=\\frac{260}{27}=9.63\\\\\nn_u=\\left\\lceil9.63\\right\\rceil=10\\\\\nn_p=n_un_{pu}=10\\times12=120\\ \\mathrm{根}\n\\end{aligned}",
-              "text": "\\frac{L_b{L_u=\\frac{260{27=9.63\\\\; n_u=\\left\\lceil9.63\\right\\rceil=10\\\\; n_p=n_un_{pu=10\\times12=120\\ 根"
+              "text": "beginaligned\n(Lb)/(Lᵤ)=(260)/(27)=9.63\nnᵤ=ceil(9.63)=10\nnₚ=nᵤnₚᵤ=10×12=120 根\nendaligned"
             },
             {
               "type": "terms",
@@ -122,7 +130,7 @@
               "type": "formula",
               "number": "（5.2）",
               "latex": "\\begin{aligned}\nD^2-d^2=0.80^2-0.54^2=0.3484\\ \\mathrm{m^2}\\\\\nA_p=\\frac{\\pi}{4}(D^2-d^2)=0.7854\\times0.3484=0.274\\ \\mathrm{m^2}\\\\\nG_{p,m}=\\gamma_cA_p=25\\times0.274=6.85\\ \\mathrm{kN/m}\n\\end{aligned}",
-              "text": "D^2-d^2=0.80^2-0.54^2=0.3484\\ m^2\\\\; A_p=\\frac{\\pi{4(D^2-d^2)=0.7854\\times0.3484=0.274\\ m^2\\\\; G_{p,m=\\gamma_cA_p=25\\times0.274=6.85\\ kN/m"
+              "text": "beginaligned\nD²-d²=0.80²-0.54²=0.3484 m²\nAₚ=(π)/(4)(D²-d²)=0.7854×0.3484=0.274 m²\nGₚ,ₘ=γcAₚ=25×0.274=6.85 kN/m\nendaligned"
             },
             {
               "type": "terms",
@@ -151,18 +159,78 @@
               ]
             },
             {
+              "type": "table",
+              "caption": "表5-2 高桩标准单元与PHC管桩计算表",
+              "headers": [
+                "项目",
+                "取值",
+                "代入过程",
+                "结果"
+              ],
+              "rows": [
+                [
+                  "泊位长度",
+                  "L_b=260m",
+                  "按总平面布置确定",
+                  "260m"
+                ],
+                [
+                  "标准单元长度",
+                  "L_u=27m",
+                  "按9m三跨布置",
+                  "27m"
+                ],
+                [
+                  "结构单元数量",
+                  "n_u=ceil(L_b/L_u)",
+                  "ceil(260/27)=10",
+                  "10个"
+                ],
+                [
+                  "每单元桩数",
+                  "n_pu=12根",
+                  "按横向三排、纵向四列布置",
+                  "12根"
+                ],
+                [
+                  "PHC管桩总数",
+                  "n_p=n_un_pu",
+                  "10×12=120根",
+                  "120根"
+                ],
+                [
+                  "管桩截面面积",
+                  "A_p=π(D2-d2)/4",
+                  "π(0.80^2-0.54^2)/4=0.274m2",
+                  "0.274m2"
+                ],
+                [
+                  "管桩每米自重",
+                  "G_p,m=γ_cA_p",
+                  "25×0.274=6.85kN/m",
+                  "6.85kN/m"
+                ]
+              ],
+              "widths_in": [
+                1.25,
+                1.65,
+                1.65,
+                1.25
+              ]
+            },
+            {
               "type": "p",
               "text": "桩帽采用现浇钢筋混凝土，平面尺寸约1800mm×1800mm，高度约1000mm。桩顶嵌入桩帽约100mm，桩顶锚筋与桩帽、横梁钢筋绑扎后整体浇筑。桩帽既调整沉桩偏差，也把桩顶集中反力扩散至横梁节点。"
             },
             {
               "type": "figure",
-              "path": "images/user_provided/panxin_20260603/fig5-1-phc-pile-cap-panxin.png",
-              "caption": "图5-1 PHC管桩与桩帽构造示意",
+              "path": "images/cad_sheets_20260604/S-01_high_pile_plan_elevation.png",
+              "caption": "图5-1 高桩梁板式码头平面及立面图",
               "width_in": 5.8
             },
             {
               "type": "table",
-              "caption": "表5-2 PHC管桩与桩帽构造控制表",
+              "caption": "表5-3 PHC管桩与桩帽构造控制表",
               "headers": [
                 "项目",
                 "取值或做法",
@@ -241,8 +309,8 @@
             },
             {
               "type": "figure",
-              "path": "images/user_provided/panxin_20260603/fig5-2-beam-sections-panxin.png",
-              "caption": "图5-2 高桩梁板式横梁、纵梁及轨道梁断面图",
+              "path": "images/cad_sheets_20260604/S-02_high_pile_section.png",
+              "caption": "图5-2 高桩梁板式码头断面图",
               "width_in": 5.8
             },
             {
@@ -280,7 +348,7 @@
             },
             {
               "type": "table",
-              "caption": "表5-3 纵梁、横梁与面板传力关系",
+              "caption": "表5-4 纵梁、横梁与面板传力关系",
               "headers": [
                 "构件",
                 "主要荷载来源",
@@ -339,8 +407,8 @@
             },
             {
               "type": "figure",
-              "path": "images/user_provided/detail_20260603/fig5-3-berthing-detail.png",
-              "caption": "图5-3 靠船构件、护舷及系船柱基础断面图",
+              "path": "images/cad_sheets_20260604/S-05_component_sections.png",
+              "caption": "图5-3 横梁、纵梁及靠船构件断面图",
               "width_in": 5.8
             },
             {
@@ -349,7 +417,7 @@
             },
             {
               "type": "table",
-              "caption": "表5-4 高桩梁板式方案主要构造参数",
+              "caption": "表5-5 高桩梁板式方案主要构造参数",
               "headers": [
                 "构造部位",
                 "初拟尺度或材料",
@@ -451,12 +519,17 @@
               "type": "formula",
               "number": "（5.3）",
               "latex": "\\begin{aligned}\n\\frac{L_b}{L_c}=\\frac{260}{22}=11.82\\\\\nn_c=\\left\\lceil11.82\\right\\rceil=12\\\\\nL_{end}=n_cL_c-L_b=12\\times22-260=4\\ \\mathrm{m}\n\\end{aligned}",
-              "text": "\\frac{L_b{L_c=\\frac{260{22=11.82\\\\; n_c=\\left\\lceil11.82\\right\\rceil=12\\\\"
+              "text": "beginaligned\n(Lb)/(Lc)=(260)/(22)=11.82\nnc=ceil(11.82)=12\nLₑₙd=ncLc-Lb=12×22-260=4 m\nendaligned"
             },
             {
               "type": "terms",
               "intro": "式中：",
               "items": [
+                [
+                  "L_b",
+                  "泊位控制长度",
+                  "m"
+                ],
                 [
                   "n_c",
                   "沉箱数量",
@@ -475,10 +548,14 @@
               ]
             },
             {
+              "type": "p",
+              "text": "按22m标准沉箱布置时，12节沉箱形成约264m结构长度。与260m泊位控制长度相比，端部多出的约4m可通过端部沉箱位置、缝宽和胸墙端部构造统一调整。"
+            },
+            {
               "type": "formula",
               "number": "（5.4）",
               "latex": "\\begin{aligned}\nB_c=22\\ \\mathrm{m},\\quad b_s=2.5\\ \\mathrm{m}\\\\\n2b_s=2\\times2.5=5.0\\ \\mathrm{m}\\\\\nB_b=B_c+2b_s=22+5.0=27\\ \\mathrm{m}\n\\end{aligned}",
-              "text": "B_c=22\\ m,\\quad b_s=2.5\\ m\\\\; 2b_s=2\\times2.5=5.0\\ m\\\\; B_b=B_c+2b_s=22+5.0=27\\ m"
+              "text": "beginaligned\nBc=22 m,quad bₛ=2.5 m\n2bₛ=2×2.5=5.0 m\nBb=Bc+2bₛ=22+5.0=27 m\nendaligned"
             },
             {
               "type": "terms",
@@ -502,12 +579,72 @@
               ]
             },
             {
+              "type": "table",
+              "caption": "表5-6 沉箱数量与基床尺度计算表",
+              "headers": [
+                "项目",
+                "取值",
+                "代入过程",
+                "结果"
+              ],
+              "rows": [
+                [
+                  "泊位控制长度",
+                  "L_b=260m",
+                  "与总平面泊位长度一致",
+                  "260m"
+                ],
+                [
+                  "单节沉箱长度",
+                  "L_c=22m",
+                  "按标准沉箱节长取值",
+                  "22m"
+                ],
+                [
+                  "沉箱节数",
+                  "n_c=ceil(L_b/L_c)",
+                  "ceil(260/22)=12",
+                  "12节"
+                ],
+                [
+                  "结构总长度",
+                  "n_cL_c",
+                  "12×22=264m",
+                  "264m"
+                ],
+                [
+                  "端部调整量",
+                  "L_end=n_cL_c-L_b",
+                  "264-260=4m",
+                  "4m"
+                ],
+                [
+                  "沉箱底宽",
+                  "B_c=22m",
+                  "按单节沉箱宽度取值",
+                  "22m"
+                ],
+                [
+                  "基床底宽",
+                  "B_b=B_c+2b_s",
+                  "22+2×2.5=27m",
+                  "27m"
+                ]
+              ],
+              "widths_in": [
+                1.25,
+                1.6,
+                1.8,
+                1.2
+              ]
+            },
+            {
               "type": "p",
               "text": "仓格布置兼顾浮运稳定、压载调节、模板施工和后期填料施工。沉箱安装就位后，仓格内分层填块石或开山石，提高有效自重并改善抗滑和抗倾可靠储备。"
             },
             {
               "type": "table",
-              "caption": "表5-5 重力式沉箱局部构造分项说明表",
+              "caption": "表5-7 重力式沉箱局部构造分项说明表",
               "headers": [
                 "部位",
                 "尺度或布置",
@@ -561,7 +698,7 @@
             },
             {
               "type": "table",
-              "caption": "表5-6 重力式沉箱方案主要构造参数",
+              "caption": "表5-8 重力式沉箱方案主要构造参数",
               "headers": [
                 "构造部位",
                 "初拟尺度或材料",
@@ -646,7 +783,7 @@
             },
             {
               "type": "table",
-              "caption": "表5-7 沉箱构造与计算控制关系表",
+              "caption": "表5-9 沉箱构造与计算控制关系表",
               "headers": [
                 "构造项目",
                 "对应计算",

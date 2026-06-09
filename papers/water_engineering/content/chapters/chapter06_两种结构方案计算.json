@@ -134,7 +134,7 @@
             },
             {
               "type": "formula",
-              "text": "作用组合设计值：S_d=\\sum\\gamma_GG_k+\\sum\\psi_i\\gamma_QQ_{ki}=1.2\\times10.75+1.4\\times60=96.9\\ \\mathrm{kN/m^2}",
+              "text": "beginaligned\nSG=1.2×10.75=12.90 kN/m²\nSQ=1.4×60=84.00 kN/m²\nSd=SG+SQ=12.90+84.00=96.90 kN/m²\nendaligned",
               "latex": "\\begin{aligned}\nS_G=1.2\\times10.75=12.90\\ \\mathrm{kN/m^2}\\\\\nS_Q=1.4\\times60=84.00\\ \\mathrm{kN/m^2}\\\\\nS_d=S_G+S_Q=12.90+84.00=96.90\\ \\mathrm{kN/m^2}\n\\end{aligned}",
               "number": "（6.1）"
             },
@@ -171,7 +171,7 @@
             },
             {
               "type": "formula",
-              "text": "H_f+H_m=1200+850=2050\\ kN\\\\; H_w+H_c=450+300=750\\ kN\\\\; H_d=2050+750=2800\\ kN",
+              "text": "beginaligned\nHf+Hₘ=1200+850=2050 kN\nHw+Hc=450+300=750 kN\nHd=2050+750=2800 kN\nendaligned",
               "latex": "\\begin{aligned}\nH_f+H_m=1200+850=2050\\ \\mathrm{kN}\\\\\nH_w+H_c=450+300=750\\ \\mathrm{kN}\\\\\nH_d=2050+750=2800\\ \\mathrm{kN}\n\\end{aligned}",
               "number": "（6.2）"
             },
@@ -345,7 +345,7 @@
             {
               "type": "formula",
               "latex": "\\begin{aligned}\ng_s=\\gamma_ch=25\\times0.35=8.75\\ \\mathrm{kN/m^2}\\\\\nq_s+q_v=2.0+15=17.00\\ \\mathrm{kN/m^2}\\\\\nq_m=g_s+q_s+q_v=8.75+17.00=25.75\\ \\mathrm{kN/m^2}\n\\end{aligned}",
-              "text": "g_s=\\gamma_ch=25\\times0.35=8.75\\ kN/m^2\\\\; q_s+q_v=2.0+15=17.00\\ kN/m^2\\\\; q_m=g_s+q_s+q_v=8.75+17.00=25.75\\ kN/m^2",
+              "text": "beginaligned\ngₛ=γch=25×0.35=8.75 kN/m²\nqₛ+qᵥ=2.0+15=17.00 kN/m²\nqₘ=gₛ+qₛ+qᵥ=8.75+17.00=25.75 kN/m²\nendaligned",
               "number": "（6.3）"
             },
             {
@@ -386,7 +386,7 @@
             {
               "type": "formula",
               "latex": "\\begin{aligned}\nq_{r0}=\\gamma_ch_s+q_s=8.75+2.0=10.75\\ \\mathrm{kN/m^2}\\\\\nA_e=b_es_e=3.0\\times3.0=9.0\\ \\mathrm{m^2}\\\\\nq_{w}=\\frac{P_w}{A_e}=\\frac{360}{9.0}=40.00\\ \\mathrm{kN/m^2}\\\\\nq_r=q_{r0}+q_w=10.75+40.00=50.75\\ \\mathrm{kN/m^2}\n\\end{aligned}",
-              "text": "qr=8.75+2.0+360/(3.0×3.0)=50.75kN/m2",
+              "text": "beginaligned\nqᵣ₀=γchₛ+qₛ=8.75+2.0=10.75 kN/m²\nAₑ=bₑsₑ=3.0×3.0=9.0 m²\nqw=(Pw)/(Aₑ)=(360)/(9.0)=40.00 kN/m²\nqᵣ=qᵣ₀+qw=10.75+40.00=50.75 kN/m²\nendaligned",
               "number": "（6.4）"
             },
             {
@@ -422,7 +422,7 @@
             {
               "type": "formula",
               "latex": "\\begin{aligned}\nq_{h0}=8.75+2.0=10.75\\ \\mathrm{kN/m^2}\\\\\nq_{imp}=1.30\\times18=23.40\\ \\mathrm{kN/m^2}\\\\\nq_h=q_{h0}+25+q_{imp}=10.75+25+23.40=59.15\\ \\mathrm{kN/m^2}\n\\end{aligned}",
-              "text": "qh=8.75+2.0+25+1.30×18=59.15kN/m2",
+              "text": "beginaligned\nqₕ₀=8.75+2.0=10.75 kN/m²\nqᵢₘₚ=1.30×18=23.40 kN/m²\nqₕ=qₕ₀+25+qᵢₘₚ=10.75+25+23.40=59.15 kN/m²\nendaligned",
               "number": "（6.5）"
             },
             {
@@ -457,7 +457,7 @@
             {
               "type": "formula",
               "latex": "\\begin{aligned}\nn_wP_w=4\\times360=1440\\ \\mathrm{kN}\\\\\n\\frac{n_wP_w}{l_h}=\\frac{1440}{9.0}=160\\ \\mathrm{kN/m}\\\\\nq_{rw}=160+25=185\\ \\mathrm{kN/m}\n\\end{aligned}",
-              "text": "n_wP_w=4\\times360=1440\\ kN\\\\; \\frac{n_wP_w{l_h=\\frac{1440{9.0=160\\ kN/m\\\\; q_{rw=160+25=185\\ kN/m",
+              "text": "beginaligned\nnwPw=4×360=1440 kN\n(nwPw)/(lₕ)=(1440)/(9.0)=160 kN/m\nqᵣw=160+25=185 kN/m\nendaligned",
               "number": "（6.6）"
             },
             {
@@ -492,7 +492,7 @@
             {
               "type": "formula",
               "latex": "\\begin{aligned}\nq_h=59.15\\ \\mathrm{kN/m^2}\\\\\nb_h=3.0\\ \\mathrm{m}\\\\\nq_{hl}=q_hb_h=59.15\\times3.0=177.45\\ \\mathrm{kN/m}\n\\end{aligned}",
-              "text": "q_h=59.15\\ kN/m^2\\\\; b_h=3.0\\ m\\\\; q_{hl=q_hb_h=59.15\\times3.0=177.45\\ kN/m",
+              "text": "beginaligned\nqₕ=59.15 kN/m²\nbₕ=3.0 m\nqₕₗ=qₕbₕ=59.15×3.0=177.45 kN/m\nendaligned",
               "number": "（6.7）"
             },
             {
@@ -618,7 +618,7 @@
             {
               "type": "formula",
               "latex": "\\begin{aligned}\nP_wl_z=360\\times9.0=3240\\ \\mathrm{kN\\cdot m}\\\\\n\\frac{P_wl_z}{4}=\\frac{3240}{4}\\\\\nM_{w,mid}=810\\ \\mathrm{kN\\cdot m}\n\\end{aligned}",
-              "text": "P_wl_z=360\\times9.0=3240\\ kN\\cdot m\\\\; \\frac{P_wl_z{4=\\frac{3240{4\\\\; M_{w,mid=810\\ kN\\cdot m",
+              "text": "beginaligned\nPwlz=360×9.0=3240 kN· m\n(Pwlz)/(4)=(3240)/(4)\nMw,ₘᵢd=810 kN· m\nendaligned",
               "number": "（6.8）"
             },
             {
@@ -645,7 +645,7 @@
             {
               "type": "formula",
               "latex": "\\begin{aligned}\na+b=1.5+7.5=9.0\\ \\mathrm{m}=l_z\\\\\nP_wab=360\\times1.5\\times7.5=4050\\ \\mathrm{kN\\cdot m^2}\\\\\nM_{w,s}=\\frac{P_wab}{l_z}=\\frac{4050}{9.0}=450\\ \\mathrm{kN\\cdot m}\n\\end{aligned}",
-              "text": "Mw,s=360×1.5×7.5/9.0=450kN·m",
+              "text": "beginaligned\na+b=1.5+7.5=9.0 m=lz\nPwab=360×1.5×7.5=4050 kN· m²\nMw,ₛ=(Pwab)/(lz)=(4050)/(9.0)=450 kN· m\nendaligned",
               "number": "（6.9）"
             },
             {
@@ -667,7 +667,7 @@
             {
               "type": "formula",
               "latex": "\\begin{aligned}\nP_wb=360\\times7.5=2700\\ \\mathrm{kN\\cdot m}\\\\\n\\frac{P_wb}{l_z}=\\frac{2700}{9.0}\\\\\nV_{w,s}=300\\ \\mathrm{kN}\n\\end{aligned}",
-              "text": "P_wb=360\\times7.5=2700\\ kN\\cdot m\\\\; \\frac{P_wb{l_z=\\frac{2700{9.0\\\\; V_{w,s=300\\ kN",
+              "text": "beginaligned\nPwb=360×7.5=2700 kN· m\n(Pwb)/(lz)=(2700)/(9.0)\nVw,ₛ=300 kN\nendaligned",
               "number": "（6.10）"
             },
             {
@@ -850,7 +850,8 @@
             {
               "type": "formula",
               "number": "（6.11）",
-              "latex": "\\begin{aligned}\nF_a=\\frac{1}{2}C_a\\rho_a V_a^2 A_a/1000\\\\\n=\\frac{1}{2}\\times1.20\\times1.25\\times22^2\\times3200/1000\\\\\n=1162\\ \\mathrm{kN}\n\\end{aligned}"
+              "latex": "\\begin{aligned}\nF_a=\\frac{1}{2}C_a\\rho_a V_a^2 A_a/1000\\\\\n=\\frac{1}{2}\\times1.20\\times1.25\\times22^2\\times3200/1000\\\\\n=1162\\ \\mathrm{kN}\n\\end{aligned}",
+              "text": "beginaligned\nFₐ=(1)/(2)Cₐρₐ Vₐ² Aₐ/1000\n=(1)/(2)×1.20×1.25×22²×3200/1000\n=1162 kN\nendaligned"
             },
             {
               "type": "terms",
@@ -885,7 +886,8 @@
             {
               "type": "formula",
               "number": "（6.12）",
-              "latex": "\\begin{aligned}\nF_c=\\frac{1}{2}C_c\\frac{\\gamma_w}{g}v_c^2A_c\\\\\n=\\frac{1}{2}\\times1.00\\times\\frac{10.25}{9.81}\\times0.45^2\\times2700\\\\\n=286\\ \\mathrm{kN}\n\\end{aligned}"
+              "latex": "\\begin{aligned}\nF_c=\\frac{1}{2}C_c\\frac{\\gamma_w}{g}v_c^2A_c\\\\\n=\\frac{1}{2}\\times1.00\\times\\frac{10.25}{9.81}\\times0.45^2\\times2700\\\\\n=286\\ \\mathrm{kN}\n\\end{aligned}",
+              "text": "beginaligned\nFc=(1)/(2)Cc(γw)/(g)vc²Ac\n=(1)/(2)×1.00×(10.25)/(9.81)×0.45²×2700\n=286 kN\nendaligned"
             },
             {
               "type": "terms",
@@ -925,7 +927,8 @@
             {
               "type": "formula",
               "number": "（6.13）",
-              "latex": "\\begin{aligned}\nR_0=\\sqrt{F_a^2+F_c^2}=\\sqrt{1162^2+286^2}=1197\\ \\mathrm{kN}\\\\\nN_m=\\frac{K_mR_0}{n\\sin\\alpha\\cos\\beta}\\\\\n=\\frac{1.10\\times1197}{4\\times\\sin30^\\circ\\times\\cos15^\\circ}\\\\\n=682\\ \\mathrm{kN}\\leq850\\ \\mathrm{kN}\n\\end{aligned}"
+              "latex": "\\begin{aligned}\nR_0=\\sqrt{F_a^2+F_c^2}=\\sqrt{1162^2+286^2}=1197\\ \\mathrm{kN}\\\\\nN_m=\\frac{K_mR_0}{n\\sin\\alpha\\cos\\beta}\\\\\n=\\frac{1.10\\times1197}{4\\times\\sin30^\\circ\\times\\cos15^\\circ}\\\\\n=682\\ \\mathrm{kN}\\leq850\\ \\mathrm{kN}\n\\end{aligned}",
+              "text": "beginaligned\nR₀=sqrtFₐ²+Fc²=sqrt1162²+286²=1197 kN\nNₘ=(KₘR₀)/(nsinalphacosbeta)\n=(1.10×1197)/(4×sin30°×cos15°)\n=682 kN≤850 kN\nendaligned"
             },
             {
               "type": "terms",
@@ -966,7 +969,8 @@
             {
               "type": "formula",
               "number": "（6.14）",
-              "latex": "\\begin{aligned}\nE_b=\\frac{1}{2}M_sv_b^2C_eC_m/1000\\\\\n=\\frac{1}{2}\\times6.50\\times10^7\\times0.11^2\\times0.70\\times1.50/1000\\\\\n=413\\ \\mathrm{kN\\cdot m}\\\\\nR_f=\\frac{E_b}{\\eta_f\\delta_f}=\\frac{413}{0.85\\times0.40}=1215\\ \\mathrm{kN}\n\\end{aligned}"
+              "latex": "\\begin{aligned}\nE_b=\\frac{1}{2}M_sv_b^2C_eC_m/1000\\\\\n=\\frac{1}{2}\\times6.50\\times10^7\\times0.11^2\\times0.70\\times1.50/1000\\\\\n=413\\ \\mathrm{kN\\cdot m}\\\\\nR_f=\\frac{E_b}{\\eta_f\\delta_f}=\\frac{413}{0.85\\times0.40}=1215\\ \\mathrm{kN}\n\\end{aligned}",
+              "text": "beginaligned\nEb=(1)/(2)Mₛvb²CₑCₘ/1000\n=(1)/(2)×6.50×10⁷×0.11²×0.70×1.50/1000\n=413 kN· m\nRf=(Eb)/(ηfδf)=(413)/(0.85×0.40)=1215 kN\nendaligned"
             },
             {
               "type": "terms",
@@ -1018,7 +1022,8 @@
             {
               "type": "formula",
               "number": "（6.15）",
-              "latex": "\\begin{aligned}\nu_{max}=\\frac{\\pi H}{T_w}=\\frac{3.1416\\times1.50}{6.50}=0.725\\ \\mathrm{m/s}\\\\\na_{max}=\\frac{2\\pi^2H}{T_w^2}=\\frac{2\\times3.1416^2\\times1.50}{6.50^2}=0.701\\ \\mathrm{m/s^2}\\\\\nf_D=\\frac{1}{2}C_D\\rho_wDu_{max}^2/1000=0.258\\ \\mathrm{kN/m}\\\\\nf_I=C_M\\rho_w\\frac{\\pi D^2}{4}a_{max}/1000=0.724\\ \\mathrm{kN/m}\n\\end{aligned}"
+              "latex": "\\begin{aligned}\nu_{max}=\\frac{\\pi H}{T_w}=\\frac{3.1416\\times1.50}{6.50}=0.725\\ \\mathrm{m/s}\\\\\na_{max}=\\frac{2\\pi^2H}{T_w^2}=\\frac{2\\times3.1416^2\\times1.50}{6.50^2}=0.701\\ \\mathrm{m/s^2}\\\\\nf_D=\\frac{1}{2}C_D\\rho_wDu_{max}^2/1000=0.258\\ \\mathrm{kN/m}\\\\\nf_I=C_M\\rho_w\\frac{\\pi D^2}{4}a_{max}/1000=0.724\\ \\mathrm{kN/m}\n\\end{aligned}",
+              "text": "beginaligned\nuₘₐₓ=(π H)/(Tw)=(3.1416×1.50)/(6.50)=0.725 m/s\naₘₐₓ=(2π²H)/(Tw²)=(2×3.1416²×1.50)/(6.50²)=0.701 m/s²\nfD=(1)/(2)CDρwDuₘₐₓ²/1000=0.258 kN/m\nfI=CMρw(π D²)/(4)aₘₐₓ/1000=0.724 kN/m\nendaligned"
             },
             {
               "type": "terms",
@@ -1064,7 +1069,8 @@
             {
               "type": "formula",
               "number": "（6.16）",
-              "latex": "\\begin{aligned}\nf_w=f_D+f_I=0.258+0.724=0.982\\ \\mathrm{kN/m}\\\\\nF_{wp}=f_wl_e=0.982\\times14=13.7\\ \\mathrm{kN/桩}\\\\\nF_{wu}=18F_{wp}=18\\times13.7=247\\ \\mathrm{kN}\n\\end{aligned}"
+              "latex": "\\begin{aligned}\nf_w=f_D+f_I=0.258+0.724=0.982\\ \\mathrm{kN/m}\\\\\nF_{wp}=f_wl_e=0.982\\times14=13.7\\ \\mathrm{kN/桩}\\\\\nF_{wu}=18F_{wp}=18\\times13.7=247\\ \\mathrm{kN}\n\\end{aligned}",
+              "text": "beginaligned\nfw=fD+fI=0.258+0.724=0.982 kN/m\nFwₚ=fwlₑ=0.982×14=13.7 kN/桩\nFwᵤ=18Fwₚ=18×13.7=247 kN\nendaligned"
             },
             {
               "type": "terms",
@@ -1192,7 +1198,8 @@
             {
               "type": "formula",
               "number": "（6.17）",
-              "latex": "\\begin{aligned}\nS_d=\\gamma_GS_G+\\gamma_Q\\psi S_Q\\\\\nS_{d1}=1.2G_k+1.4Q_k\\qquad\\text{普通梁板组合}\\\\\nS_{d2}=1.2G_k+1.4(Q_k+H_k)\\qquad\\text{靠船和排架组合}\\\\\nS_{d3}=1.2G_k+1.3S_{c}\\qquad\\text{施工组合}\n\\end{aligned}"
+              "latex": "\\begin{aligned}\nS_d=\\gamma_GS_G+\\gamma_Q\\psi S_Q\\\\\nS_{d1}=1.2G_k+1.4Q_k\\qquad\\text{普通梁板组合}\\\\\nS_{d2}=1.2G_k+1.4(Q_k+H_k)\\qquad\\text{靠船和排架组合}\\\\\nS_{d3}=1.2G_k+1.3S_{c}\\qquad\\text{施工组合}\n\\end{aligned}",
+              "text": "beginaligned\nSd=γGSG+γQpsi SQ\nSd₁=1.2Gₖ+1.4Qₖqquadtext普通梁板组合\nSd₂=1.2Gₖ+1.4(Qₖ+Hₖ)qquadtext靠船和排架组合\nSd₃=1.2Gₖ+1.3Scqquadtext施工组合\nendaligned"
             },
             {
               "type": "terms",
@@ -1252,7 +1259,7 @@
             },
             {
               "type": "p",
-              "text": "面板荷载归集后，还需把面板反力传给纵梁。单位宽度板带计算得到的弯矩和剪力只用于板自身配筋，进入纵梁计算时应按纵梁分配宽度折算为线荷载。这样处理后，面板、纵梁和横梁之间的传力路径较清楚，第七章工程量统计也能对应到具体构件。"
+              "text": "面板荷载归集后，面板反力继续传至纵梁。单位宽度板带弯矩和剪力用于面板配筋，纵梁计算则按分配宽度折算为线荷载。面板、纵梁和横梁的受力分工明确，工程量统计按具体构件分别列项。"
             },
             {
               "type": "figure",
@@ -1304,7 +1311,8 @@
             {
               "type": "formula",
               "number": "（6.18）",
-              "latex": "\\begin{aligned}\nh_s=0.35\\ \\mathrm{m}\\\\\n\\gamma_c=25\\ \\mathrm{kN/m^3}\\\\\ng_s=\\gamma_ch_s=25\\times0.35=8.75\\ \\mathrm{kN/m^2}\n\\end{aligned}"
+              "latex": "\\begin{aligned}\nh_s=0.35\\ \\mathrm{m}\\\\\n\\gamma_c=25\\ \\mathrm{kN/m^3}\\\\\ng_s=\\gamma_ch_s=25\\times0.35=8.75\\ \\mathrm{kN/m^2}\n\\end{aligned}",
+              "text": "beginaligned\nhₛ=0.35 m\nγc=25 kN/m³\ngₛ=γchₛ=25×0.35=8.75 kN/m²\nendaligned"
             },
             {
               "type": "terms",
@@ -1388,7 +1396,8 @@
             {
               "type": "formula",
               "number": "（6.19）",
-              "latex": "\\begin{aligned}\nS_G=1.2G_k=1.2\\times10.75=12.90\\ \\mathrm{kN/m^2}\\\\\nS_Q=1.4Q_k=1.4\\times25=35.00\\ \\mathrm{kN/m^2}\\\\\nq_{d1}=S_G+S_Q=12.90+35.00=47.90\\ \\mathrm{kN/m^2}\n\\end{aligned}"
+              "latex": "\\begin{aligned}\nS_G=1.2G_k=1.2\\times10.75=12.90\\ \\mathrm{kN/m^2}\\\\\nS_Q=1.4Q_k=1.4\\times25=35.00\\ \\mathrm{kN/m^2}\\\\\nq_{d1}=S_G+S_Q=12.90+35.00=47.90\\ \\mathrm{kN/m^2}\n\\end{aligned}",
+              "text": "beginaligned\nSG=1.2Gₖ=1.2×10.75=12.90 kN/m²\nSQ=1.4Qₖ=1.4×25=35.00 kN/m²\nqd₁=SG+SQ=12.90+35.00=47.90 kN/m²\nendaligned"
             },
             {
               "type": "terms",
@@ -1415,7 +1424,7 @@
               "type": "formula",
               "number": "（6.20）",
               "latex": "\\begin{aligned}\nQ_{k3}=Q_k+q_e=60+12=72\\ \\mathrm{kN/m^2}\\\\\n1.2G_k=1.2\\times10.75=12.90\\ \\mathrm{kN/m^2}\\\\\n1.4Q_{k3}=1.4\\times72=100.80\\ \\mathrm{kN/m^2}\\\\\nq_{d3}=12.90+100.80=113.70\\ \\mathrm{kN/m^2}\n\\end{aligned}",
-              "text": "Q_{k3=Q_k+q_e=60+12=72\\ kN/m^2\\\\; 1.2G_k=1.2\\times10.75=12.90\\ kN/m^2\\\\; 1.4Q_{k3=1.4\\times72=100.80\\ kN/m^2\\\\; q_{d3=12.90+100.80=113.70\\ kN/m^2"
+              "text": "beginaligned\nQₖ₃=Qₖ+qₑ=60+12=72 kN/m²\n1.2Gₖ=1.2×10.75=12.90 kN/m²\n1.4Qₖ₃=1.4×72=100.80 kN/m²\nqd₃=12.90+100.80=113.70 kN/m²\nendaligned"
             },
             {
               "type": "terms",
@@ -1437,7 +1446,7 @@
               "type": "formula",
               "number": "（6.21）",
               "latex": "\\begin{aligned}\nl_b^2=3.0^2=9.0\\ \\mathrm{m^2}\\\\\nq_dl_b^2=113.70\\times9.0=1023.30\\ \\mathrm{kN\\cdot m/m}\\\\\nM_b=\\frac{1023.30}{8}=127.91\\ \\mathrm{kN\\cdot m/m}\n\\end{aligned}",
-              "text": "l_b^2=3.0^2=9.0\\ m^2\\\\; q_dl_b^2=113.70\\times9.0=1023.30\\ kN\\cdot m/m\\\\; M_b=\\frac{1023.30{8=127.91\\ kN\\cdot m/m"
+              "text": "beginaligned\nlb²=3.0²=9.0 m²\nqdlb²=113.70×9.0=1023.30 kN· m/m\nMb=(1023.30)/(8)=127.91 kN· m/m\nendaligned"
             },
             {
               "type": "terms",
@@ -1464,7 +1473,7 @@
               "type": "formula",
               "number": "（6.22）",
               "latex": "\\begin{aligned}\nq_dl_b=113.70\\times3.0=341.10\\ \\mathrm{kN/m}\\\\\n\\frac{q_dl_b}{2}=\\frac{341.10}{2}\\\\\nV_b=170.55\\ \\mathrm{kN/m}\n\\end{aligned}",
-              "text": "q_dl_b=113.70\\times3.0=341.10\\ kN/m\\\\; \\frac{q_dl_b{2=\\frac{341.10{2\\\\; V_b=170.55\\ kN/m"
+              "text": "beginaligned\nqdlb=113.70×3.0=341.10 kN/m\n(qdlb)/(2)=(341.10)/(2)\nVb=170.55 kN/m\nendaligned"
             },
             {
               "type": "terms",
@@ -1576,13 +1585,13 @@
             },
             {
               "type": "p",
-              "text": "轨道梁荷载进入横梁时，先按轮压移动位置确定控制内力，再折算到横梁和桩列。轮压位于跨中时控制梁跨正弯矩，轮压靠近支座时控制支座剪力，两台设备相邻时控制局部叠加效应。上述结果在表6-7中列出，并与表6-15、表6-17的配筋结果相互对应。"
+              "text": "轨道梁荷载进入横梁时，先按轮压移动位置确定控制内力，再折算到横梁和桩列。轮压位于跨中时控制梁跨正弯矩，轮压靠近支座时控制支座剪力，两台设备相邻时控制局部叠加效应。表6-7给出轮压控制工况，表6-15和表6-17据此复核纵横梁配筋。"
             },
             {
               "type": "formula",
               "number": "（6.23）",
               "latex": "\\begin{aligned}\nb_z=0.8\\ \\mathrm{m},\\quad h_z=1.2\\ \\mathrm{m}\\\\\nA_z=b_zh_z=0.8\\times1.2=0.96\\ \\mathrm{m^2}\\\\\ng_z=\\gamma_cA_z=25\\times0.96=24.00\\ \\mathrm{kN/m}\n\\end{aligned}",
-              "text": "b_z=0.8\\ m,\\quad h_z=1.2\\ m\\\\; A_z=b_zh_z=0.8\\times1.2=0.96\\ m^2\\\\; g_z=\\gamma_cA_z=25\\times0.96=24.00\\ kN/m"
+              "text": "beginaligned\nbz=0.8 m,quad hz=1.2 m\nAz=bzhz=0.8×1.2=0.96 m²\ngz=γcAz=25×0.96=24.00 kN/m\nendaligned"
             },
             {
               "type": "terms",
@@ -1609,7 +1618,7 @@
               "type": "formula",
               "number": "（6.24）",
               "latex": "\\begin{aligned}\nq_{b,z}=q_{d1}b_t=47.90\\times3.0=143.70\\ \\mathrm{kN/m}\\\\\ng_z=24.00\\ \\mathrm{kN/m}\\\\\nq_z=g_z+q_{b,z}=24.00+143.70=167.70\\ \\mathrm{kN/m}\n\\end{aligned}",
-              "text": "q_{b,z=q_{d1b_t=47.90\\times3.0=143.70\\ kN/m\\\\; g_z=24.00\\ kN/m\\\\; q_z=g_z+q_{b,z=24.00+143.70=167.70\\ kN/m"
+              "text": "beginaligned\nqb,z=qd₁bₜ=47.90×3.0=143.70 kN/m\ngz=24.00 kN/m\nqz=gz+qb,z=24.00+143.70=167.70 kN/m\nendaligned"
             },
             {
               "type": "terms",
@@ -1636,7 +1645,7 @@
               "type": "formula",
               "number": "（6.25）",
               "latex": "\\begin{aligned}\nl_z^2=9.0^2=81.0\\ \\mathrm{m^2}\\\\\nq_zl_z^2=167.70\\times81.0=13583.70\\ \\mathrm{kN\\cdot m}\\\\\nM_z=\\frac{13583.70}{8}=1697.96\\ \\mathrm{kN\\cdot m}\n\\end{aligned}",
-              "text": "l_z^2=9.0^2=81.0\\ m^2\\\\; q_zl_z^2=167.70\\times81.0=13583.70\\ kN\\cdot m\\\\; M_z=\\frac{13583.70{8=1697.96\\ kN\\cdot m"
+              "text": "beginaligned\nlz²=9.0²=81.0 m²\nqzlz²=167.70×81.0=13583.70 kN· m\nMz=(13583.70)/(8)=1697.96 kN· m\nendaligned"
             },
             {
               "type": "terms",
@@ -1663,7 +1672,7 @@
               "type": "formula",
               "number": "（6.26）",
               "latex": "\\begin{aligned}\nq_zl_z=167.70\\times9.0=1509.30\\ \\mathrm{kN}\\\\\n\\frac{q_zl_z}{2}=754.65\\ \\mathrm{kN}\\\\\nV_z=754.65\\ \\mathrm{kN}\n\\end{aligned}",
-              "text": "q_zl_z=167.70\\times9.0=1509.30\\ kN\\\\; \\frac{q_zl_z{2=754.65\\ kN\\\\; V_z=754.65\\ kN"
+              "text": "beginaligned\nqzlz=167.70×9.0=1509.30 kN\n(qzlz)/(2)=754.65 kN\nVz=754.65 kN\nendaligned"
             },
             {
               "type": "terms",
@@ -1689,7 +1698,8 @@
             {
               "type": "formula",
               "number": "（6.27）",
-              "latex": "\\begin{aligned}\n\\alpha_{s,z}=\\frac{M_z\\times10^6}{f_cb_zh_0^2}=\\frac{1697.96\\times10^6}{19.1\\times800\\times1120^2}=0.0886\\\\\n\\xi_z=1-\\sqrt{1-2\\alpha_{s,z}}=1-\\sqrt{1-2\\times0.0886}=0.0928<\\xi_b\\\\\nA_{s,z}=\\frac{\\xi_zf_cb_zh_0}{f_y}=\\frac{0.0928\\times19.1\\times800\\times1120}{360}=4410\\ \\mathrm{mm^2}\n\\end{aligned}"
+              "latex": "\\begin{aligned}\n\\alpha_{s,z}=\\frac{M_z\\times10^6}{f_cb_zh_0^2}=\\frac{1697.96\\times10^6}{19.1\\times800\\times1120^2}=0.0886\\\\\n\\xi_z=1-\\sqrt{1-2\\alpha_{s,z}}=1-\\sqrt{1-2\\times0.0886}=0.0928<\\xi_b\\\\\nA_{s,z}=\\frac{\\xi_zf_cb_zh_0}{f_y}=\\frac{0.0928\\times19.1\\times800\\times1120}{360}=4410\\ \\mathrm{mm^2}\n\\end{aligned}",
+              "text": "beginaligned\nalphaₛ,z=(Mz×10⁶)/(fcbzh₀²)=(1697.96×10⁶)/(19.1×800×1120²)=0.0886\nxiz=1-sqrt1-2alphaₛ,z=1-sqrt1-2×0.0886=0.0928<xib\nAₛ,z=(xizfcbzh₀)/(fy)=(0.0928×19.1×800×1120)/(360)=4410 mm²\nendaligned"
             },
             {
               "type": "terms",
@@ -1724,7 +1734,7 @@
               "type": "formula",
               "number": "（6.28）",
               "latex": "\\begin{aligned}\nq_{b,e}=q_{d3}b_t=113.70\\times3.0=341.10\\ \\mathrm{kN/m}\\\\\ng_z=24.00\\ \\mathrm{kN/m}\\\\\nq_{z,e}=g_z+q_{b,e}=24.00+341.10=365.10\\ \\mathrm{kN/m}\n\\end{aligned}",
-              "text": "q_{b,e=q_{d3b_t=113.70\\times3.0=341.10\\ kN/m\\\\; g_z=24.00\\ kN/m\\\\; q_{z,e=g_z+q_{b,e=24.00+341.10=365.10\\ kN/m"
+              "text": "beginaligned\nqb,ₑ=qd₃bₜ=113.70×3.0=341.10 kN/m\ngz=24.00 kN/m\nqz,ₑ=gz+qb,ₑ=24.00+341.10=365.10 kN/m\nendaligned"
             },
             {
               "type": "terms",
@@ -1746,7 +1756,7 @@
               "type": "formula",
               "number": "（6.29）",
               "latex": "\\begin{aligned}\nl_z^2=9.0^2=81.0\\ \\mathrm{m^2}\\\\\nq_{z,e}l_z^2=365.10\\times81.0=29573.10\\ \\mathrm{kN\\cdot m}\\\\\nM_{z,e}=\\frac{29573.10}{8}=3696.64\\ \\mathrm{kN\\cdot m}\n\\end{aligned}",
-              "text": "l_z^2=9.0^2=81.0\\ m^2\\\\; q_{z,el_z^2=365.10\\times81.0=29573.10\\ kN\\cdot m\\\\; M_{z,e=\\frac{29573.10{8=3696.64\\ kN\\cdot m"
+              "text": "beginaligned\nlz²=9.0²=81.0 m²\nqz,ₑlz²=365.10×81.0=29573.10 kN· m\nMz,ₑ=(29573.10)/(8)=3696.64 kN· m\nendaligned"
             },
             {
               "type": "terms",
@@ -1763,7 +1773,7 @@
               "type": "formula",
               "number": "（6.30）",
               "latex": "\\begin{aligned}\nb_h=1.8\\ \\mathrm{m},\\quad h_h=2.2\\ \\mathrm{m}\\\\\nA_h=b_hh_h=1.8\\times2.2=3.96\\ \\mathrm{m^2}\\\\\ng_h=\\gamma_cA_h=25\\times3.96=99.00\\ \\mathrm{kN/m}\n\\end{aligned}",
-              "text": "b_h=1.8\\ m,\\quad h_h=2.2\\ m\\\\; A_h=b_hh_h=1.8\\times2.2=3.96\\ m^2\\\\; g_h=\\gamma_cA_h=25\\times3.96=99.00\\ kN/m"
+              "text": "beginaligned\nbₕ=1.8 m,quad hₕ=2.2 m\nAₕ=bₕhₕ=1.8×2.2=3.96 m²\ngₕ=γcAₕ=25×3.96=99.00 kN/m\nendaligned"
             },
             {
               "type": "terms",
@@ -1790,7 +1800,7 @@
               "type": "formula",
               "number": "（6.31）",
               "latex": "\\begin{aligned}\n3V_z=3\\times754.65=2263.95\\ \\mathrm{kN}\\\\\nq_{v,h}=\\frac{3V_z}{l_h}=\\frac{2263.95}{9.0}=251.55\\ \\mathrm{kN/m}\\\\\nq_h=99.00+251.55+80+120=550.55\\ \\mathrm{kN/m}\n\\end{aligned}",
-              "text": "3V_z=3\\times754.65=2263.95\\ kN\\\\; q_{v,h=\\frac{3V_z{l_h=\\frac{2263.95{9.0=251.55\\ kN/m\\\\; q_h=99.00+251.55+80+120=550.55\\ kN/m"
+              "text": "beginaligned\n3Vz=3×754.65=2263.95 kN\nqᵥ,ₕ=(3Vz)/(lₕ)=(2263.95)/(9.0)=251.55 kN/m\nqₕ=99.00+251.55+80+120=550.55 kN/m\nendaligned"
             },
             {
               "type": "terms",
@@ -1822,7 +1832,7 @@
               "type": "formula",
               "number": "（6.32）",
               "latex": "\\begin{aligned}\nl_h^2=9.0^2=81.0\\ \\mathrm{m^2}\\\\\nq_hl_h^2=550.55\\times81.0=44594.55\\ \\mathrm{kN\\cdot m}\\\\\nM_h=\\frac{44594.55}{8}=5574.32\\ \\mathrm{kN\\cdot m}\n\\end{aligned}",
-              "text": "l_h^2=9.0^2=81.0\\ m^2\\\\; q_hl_h^2=550.55\\times81.0=44594.55\\ kN\\cdot m\\\\; M_h=\\frac{44594.55{8=5574.32\\ kN\\cdot m"
+              "text": "beginaligned\nlₕ²=9.0²=81.0 m²\nqₕlₕ²=550.55×81.0=44594.55 kN· m\nMₕ=(44594.55)/(8)=5574.32 kN· m\nendaligned"
             },
             {
               "type": "terms",
@@ -1849,7 +1859,7 @@
               "type": "formula",
               "number": "（6.33）",
               "latex": "\\begin{aligned}\nq_hl_h=550.55\\times9.0=4954.95\\ \\mathrm{kN}\\\\\n\\frac{q_hl_h}{2}=2477.48\\ \\mathrm{kN}\\\\\nV_h=2477.48\\ \\mathrm{kN}\n\\end{aligned}",
-              "text": "q_hl_h=550.55\\times9.0=4954.95\\ kN\\\\; \\frac{q_hl_h{2=2477.48\\ kN\\\\; V_h=2477.48\\ kN"
+              "text": "beginaligned\nqₕlₕ=550.55×9.0=4954.95 kN\n(qₕlₕ)/(2)=2477.48 kN\nVₕ=2477.48 kN\nendaligned"
             },
             {
               "type": "terms",
@@ -1865,7 +1875,8 @@
             {
               "type": "formula",
               "number": "（6.34）",
-              "latex": "\\begin{aligned}\n\\alpha_{s,h}=\\frac{M_h\\times10^6}{f_cb_hh_0^2}=\\frac{5574.32\\times10^6}{19.1\\times1800\\times2050^2}=0.0386\\\\\n\\xi_h=1-\\sqrt{1-2\\alpha_{s,h}}=1-\\sqrt{1-2\\times0.0386}=0.0394<\\xi_b\\\\\nA_{s,h}=\\frac{\\xi_hf_cb_hh_0}{f_y}=\\frac{0.0394\\times19.1\\times1800\\times2050}{360}=7722\\ \\mathrm{mm^2}\n\\end{aligned}"
+              "latex": "\\begin{aligned}\n\\alpha_{s,h}=\\frac{M_h\\times10^6}{f_cb_hh_0^2}=\\frac{5574.32\\times10^6}{19.1\\times1800\\times2050^2}=0.0386\\\\\n\\xi_h=1-\\sqrt{1-2\\alpha_{s,h}}=1-\\sqrt{1-2\\times0.0386}=0.0394<\\xi_b\\\\\nA_{s,h}=\\frac{\\xi_hf_cb_hh_0}{f_y}=\\frac{0.0394\\times19.1\\times1800\\times2050}{360}=7722\\ \\mathrm{mm^2}\n\\end{aligned}",
+              "text": "beginaligned\nalphaₛ,ₕ=(Mₕ×10⁶)/(fcbₕh₀²)=(5574.32×10⁶)/(19.1×1800×2050²)=0.0386\nxiₕ=1-sqrt1-2alphaₛ,ₕ=1-sqrt1-2×0.0386=0.0394<xib\nAₛ,ₕ=(xiₕfcbₕh₀)/(fy)=(0.0394×19.1×1800×2050)/(360)=7722 mm²\nendaligned"
             },
             {
               "type": "terms",
@@ -1994,7 +2005,7 @@
               "type": "formula",
               "number": "（6.35）",
               "latex": "\\begin{aligned}\nz_b=0.90h_0=0.90\\times300=270\\ \\mathrm{mm}\\\\\nM_b\\times10^6=127.91\\times10^6\\ \\mathrm{N\\cdot mm}\\\\\nf_yz_b=360\\times270=97200\\ \\mathrm{N/mm}\\\\\nA_{s,b}=\\frac{127.91\\times10^6}{97200}=1316\\ \\mathrm{mm^2/m}\n\\end{aligned}",
-              "text": "z_b=0.90h_0=0.90\\times300=270\\ mm\\\\; M_b\\times10^6=127.91\\times10^6\\ N\\cdot mm\\\\; f_yz_b=360\\times270=97200\\ N/mm\\\\; A_{s,b=\\frac{127.91\\times10^6{97200=1316\\ mm^2/m"
+              "text": "beginaligned\nzb=0.90h₀=0.90×300=270 mm\nMb×10⁶=127.91×10⁶ N· mm\nfyzb=360×270=97200 N/mm\nAₛ,b=(127.91×10⁶)/(97200)=1316 mm²/m\nendaligned"
             },
             {
               "type": "terms",
@@ -2021,7 +2032,7 @@
               "type": "formula",
               "number": "（6.36）",
               "latex": "\\begin{aligned}\nbh_0=1000\\times300=300000\\ \\mathrm{mm^2}\\\\\n\\rho_b=\\frac{A_{s,b}}{bh_0}=\\frac{1316}{300000}=0.439\\%\\\\\n\\rho_b=0.439\\%>\\rho_{min}=0.15\\%\n\\end{aligned}",
-              "text": "bh_0=1000\\times300=300000\\ mm^2\\\\; \\rho_b=\\frac{A_{s,b{bh_0=\\frac{1316{300000=0.439\\%\\\\; \\rho_b=0.439\\%>\\rho_{min=0.15\\%"
+              "text": "beginaligned\nbh₀=1000×300=300000 mm²\nρb=(Aₛ,b)/(bh₀)=(1316)/(300000)=0.439%\nρb=0.439%>ρₘᵢₙ=0.15%\nendaligned"
             },
             {
               "type": "terms",
@@ -2040,7 +2051,8 @@
             {
               "type": "formula",
               "number": "（6.37）",
-              "latex": "\\begin{aligned}\nbh_0=1000\\times300=300000\\ \\mathrm{mm^2}\\\\\n0.7f_t=0.7\\times1.71=1.197\\ \\mathrm{N/mm^2}\\\\\nV_c=0.7f_tbh_0=1.197\\times300000=359\\ \\mathrm{kN/m}\n\\end{aligned}"
+              "latex": "\\begin{aligned}\nbh_0=1000\\times300=300000\\ \\mathrm{mm^2}\\\\\n0.7f_t=0.7\\times1.71=1.197\\ \\mathrm{N/mm^2}\\\\\nV_c=0.7f_tbh_0=1.197\\times300000=359\\ \\mathrm{kN/m}\n\\end{aligned}",
+              "text": "beginaligned\nbh₀=1000×300=300000 mm²\n0.7fₜ=0.7×1.71=1.197 N/mm²\nVc=0.7fₜbh₀=1.197×300000=359 kN/m\nendaligned"
             },
             {
               "type": "terms",
@@ -2062,7 +2074,7 @@
               "type": "formula",
               "number": "（6.38）",
               "latex": "\\begin{aligned}\nEI=3.25\\times10^7\\times0.115=3.74\\times10^6\\ \\mathrm{kN\\cdot m^2}\\\\\nl_z^4=9.0^4=6561\\ \\mathrm{m^4}\\\\\nf_l=\\frac{5q_zl_z^4}{384EI}=\\frac{5\\times167.70\\times6561}{384\\times3.74\\times10^6}=0.0038\\ \\mathrm{m}\\\\\nf_l=3.8\\ \\mathrm{mm}<l_z/400=22.5\\ \\mathrm{mm}\n\\end{aligned}",
-              "text": "EI=3.25\\times10^7\\times0.115=3.74\\times10^6\\ kN\\cdot m^2\\\\; l_z^4=9.0^4=6561\\ m^4\\\\; f_l=\\frac{5q_zl_z^4{384EI=\\frac{5\\times167.70\\times6561{384\\times3.74\\times10^6=0.0038\\ m\\\\; f_l=3.8\\ mm<l_z/400=22.5\\ mm"
+              "text": "beginaligned\nEI=3.25×10⁷×0.115=3.74×10⁶ kN· m²\nlz⁴=9.0⁴=6561 m⁴\nfₗ=(5qzlz⁴)/(384EI)=(5×167.70×6561)/(384×3.74×10⁶)=0.0038 m\nfₗ=3.8 mm<lz/400=22.5 mm\nendaligned"
             },
             {
               "type": "terms",
@@ -2089,7 +2101,7 @@
               "type": "formula",
               "number": "（6.39）",
               "latex": "\\begin{aligned}\n\\alpha_{cr}\\sigma_s=1.9\\times180=342\\ \\mathrm{MPa}\\\\\n\\alpha_{cr}\\sigma_sd_{eq}=342\\times18=6156\\\\\nw_{max}=\\frac{6156}{2.0\\times10^5}=0.031\\ \\mathrm{mm}\n\\end{aligned}",
-              "text": "\\alpha_{cr\\sigma_s=1.9\\times180=342\\ MPa\\\\; \\alpha_{cr\\sigma_sd_{eq=342\\times18=6156\\\\; w_{max=\\frac{6156{2.0\\times10^5=0.031\\ mm"
+              "text": "beginaligned\nalphacᵣσₛ=1.9×180=342 MPa\nalphacᵣσₛdₑq=342×18=6156\nwₘₐₓ=(6156)/(2.0×10⁵)=0.031 mm\nendaligned"
             },
             {
               "type": "terms",
@@ -2310,7 +2322,8 @@
             {
               "type": "formula",
               "number": "（6.40）",
-              "latex": "\\begin{aligned}\nR_{s1}=12\\times2.51\\times10=301\\ \\mathrm{kN}\\\\\nR_{s2}=25\\times2.51\\times8=502\\ \\mathrm{kN}\\\\\nR_{s3}=45\\times2.51\\times10=1130\\ \\mathrm{kN}\\\\\nR_{s4}=80\\times2.51\\times4=804\\ \\mathrm{kN}\\\\\nR_s=R_{s1}+R_{s2}+R_{s3}+R_{s4}=301+502+1130+804=2737\\ \\mathrm{kN}\n\\end{aligned}"
+              "latex": "\\begin{aligned}\nR_{s1}=12\\times2.51\\times10=301\\ \\mathrm{kN}\\\\\nR_{s2}=25\\times2.51\\times8=502\\ \\mathrm{kN}\\\\\nR_{s3}=45\\times2.51\\times10=1130\\ \\mathrm{kN}\\\\\nR_{s4}=80\\times2.51\\times4=804\\ \\mathrm{kN}\\\\\nR_s=R_{s1}+R_{s2}+R_{s3}+R_{s4}=301+502+1130+804=2737\\ \\mathrm{kN}\n\\end{aligned}",
+              "text": "beginaligned\nRₛ₁=12×2.51×10=301 kN\nRₛ₂=25×2.51×8=502 kN\nRₛ₃=45×2.51×10=1130 kN\nRₛ₄=80×2.51×4=804 kN\nRₛ=Rₛ₁+Rₛ₂+Rₛ₃+Rₛ₄=301+502+1130+804=2737 kN\nendaligned"
             },
             {
               "type": "terms",
@@ -2342,7 +2355,7 @@
               "type": "formula",
               "number": "（6.41）",
               "latex": "\\begin{aligned}\nD_p=0.80\\ \\mathrm{m},\\quad A_p=0.503\\ \\mathrm{m^2}\\\\\nq_p=1800\\ \\mathrm{kPa}\\\\\nR_p=q_pA_p=1800\\times0.503=905\\ \\mathrm{kN}\n\\end{aligned}",
-              "text": "D_p=0.80\\ m,\\quad A_p=0.503\\ m^2\\\\; q_p=1800\\ kPa\\\\; R_p=q_pA_p=1800\\times0.503=905\\ kN"
+              "text": "beginaligned\nDₚ=0.80 m,quad Aₚ=0.503 m²\nqₚ=1800 kPa\nRₚ=qₚAₚ=1800×0.503=905 kN\nendaligned"
             },
             {
               "type": "terms",
@@ -2369,7 +2382,7 @@
               "type": "formula",
               "number": "（6.42）",
               "latex": "\\begin{aligned}\nR_s=2737\\ \\mathrm{kN},\\quad R_p=905\\ \\mathrm{kN}\\\\\nR_s+R_p=2737+905=3642\\ \\mathrm{kN}\\\\\nR_a=0.85(R_s+R_p)=0.85\\times3642=3096\\ \\mathrm{kN}\n\\end{aligned}",
-              "text": "R_s=2737\\ kN,\\quad R_p=905\\ kN\\\\; R_s+R_p=2737+905=3642\\ kN\\\\; R_a=0.85(R_s+R_p)=0.85\\times3642=3096\\ kN"
+              "text": "beginaligned\nRₛ=2737 kN,quad Rₚ=905 kN\nRₛ+Rₚ=2737+905=3642 kN\nRₐ=0.85(Rₛ+Rₚ)=0.85×3642=3096 kN\nendaligned"
             },
             {
               "type": "terms",
@@ -2386,7 +2399,7 @@
               "type": "formula",
               "number": "（6.43）",
               "latex": "\\begin{aligned}\n\\sum G+\\sum Q=48000+39000=87000\\ \\mathrm{kN}\\\\\nN_0=\\frac{87000}{42}=2071\\ \\mathrm{kN}\\\\\nN_d=N_0+\\Delta N=2071+210=2281\\ \\mathrm{kN}\n\\end{aligned}",
-              "text": "\\sum G+\\sum Q=48000+39000=87000\\ kN\\\\; N_0=\\frac{87000{42=2071\\ kN\\\\; N_d=N_0+\\Delta N=2071+210=2281\\ kN"
+              "text": "beginaligned\nΣ G+Σ Q=48000+39000=87000 kN\nN₀=(87000)/(42)=2071 kN\nNd=N₀+Δ N=2071+210=2281 kN\nendaligned"
             },
             {
               "type": "terms",
@@ -2417,7 +2430,8 @@
             {
               "type": "formula",
               "number": "（6.44）",
-              "latex": "\\begin{aligned}\nR_a=3096\\ \\mathrm{kN}\\\\\nN_d=2281\\ \\mathrm{kN}\\\\\nK_v=\\frac{R_a}{N_d}=\\frac{3096}{2281}=1.36\n\\end{aligned}"
+              "latex": "\\begin{aligned}\nR_a=3096\\ \\mathrm{kN}\\\\\nN_d=2281\\ \\mathrm{kN}\\\\\nK_v=\\frac{R_a}{N_d}=\\frac{3096}{2281}=1.36\n\\end{aligned}",
+              "text": "beginaligned\nRₐ=3096 kN\nNd=2281 kN\nKᵥ=(Rₐ)/(Nd)=(3096)/(2281)=1.36\nendaligned"
             },
             {
               "type": "terms",
@@ -2442,7 +2456,7 @@
               "type": "formula",
               "number": "（6.45）",
               "latex": "\\begin{aligned}\nE_cA=3.8\\times10^7\\times0.274=1.041\\times10^7\\ \\mathrm{kN}\\\\\nL_0=8.0\\ \\mathrm{m}\\\\\nC_v=\\frac{E_cA}{L_0}=\\frac{1.041\\times10^7}{8.0}=1.30\\times10^6\\ \\mathrm{kN/m}\n\\end{aligned}",
-              "text": "E_cA=3.8\\times10^7\\times0.274=1.041\\times10^7\\ kN\\\\; L_0=8.0\\ m\\\\; C_v=\\frac{E_cA{L_0=\\frac{1.041\\times10^7{8.0=1.30\\times10^6\\ kN/m"
+              "text": "beginaligned\nEcA=3.8×10⁷×0.274=1.041×10⁷ kN\nL₀=8.0 m\nCᵥ=(EcA)/(L₀)=(1.041×10⁷)/(8.0)=1.30×10⁶ kN/m\nendaligned"
             },
             {
               "type": "terms",
@@ -2469,6 +2483,58 @@
                   "m"
                 ]
               ]
+            },
+            {
+              "type": "table",
+              "caption": "表6-19 桩轴向刚度计算表",
+              "headers": [
+                "项目",
+                "取值",
+                "代入过程",
+                "结果"
+              ],
+              "rows": [
+                [
+                  "PHC管桩弹性模量",
+                  "E_c=3.8×10^7kN/m2",
+                  "按PHC管桩混凝土材料取值",
+                  "3.8×10^7kN/m2"
+                ],
+                [
+                  "管桩截面面积",
+                  "A=0.274m2",
+                  "由D=0.80m、d=0.54m计算",
+                  "0.274m2"
+                ],
+                [
+                  "轴向刚度分子",
+                  "E_cA",
+                  "3.8×10^7×0.274=1.041×10^7kN",
+                  "1.041×10^7kN"
+                ],
+                [
+                  "等效计算长度",
+                  "L_0=8.0m",
+                  "桩顶至入土控制段简化长度",
+                  "8.0m"
+                ],
+                [
+                  "单桩轴向刚度",
+                  "C_v=E_cA/L_0",
+                  "1.041×10^7/8.0=1.30×10^6kN/m",
+                  "1.30×10^6kN/m"
+                ]
+              ],
+              "widths_in": [
+                1.25,
+                1.45,
+                2.1,
+                1.1
+              ]
+            },
+            {
+              "type": "p",
+              "text": "桩轴向刚度计算结果用于排架竖向反力分配。前排桩、中排桩和后排桩采用相同截面时，反力差异主要由荷载位置、横梁刚度和桩顶约束条件决定。"
             }
           ]
         },
@@ -2479,7 +2545,7 @@
               "type": "formula",
               "number": "（6.46）",
               "latex": "\\begin{aligned}\nk_hb_p=18000\\times0.8=14400\\ \\mathrm{kN/m^2}\\\\\nL_e=3.0\\ \\mathrm{m}\\\\\nk_p=k_hb_pL_e=14400\\times3.0=43200\\ \\mathrm{kN/m}\n\\end{aligned}",
-              "text": "k_hb_p=18000\\times0.8=14400\\ kN/m^2\\\\; L_e=3.0\\ m\\\\; k_p=k_hb_pL_e=14400\\times3.0=43200\\ kN/m"
+              "text": "beginaligned\nkₕbₚ=18000×0.8=14400 kN/m²\nLₑ=3.0 m\nkₚ=kₕbₚLₑ=14400×3.0=43200 kN/m\nendaligned"
             },
             {
               "type": "terms",
@@ -2506,6 +2572,58 @@
                   "m"
                 ]
               ]
+            },
+            {
+              "type": "table",
+              "caption": "表6-20 支座水平刚度计算表",
+              "headers": [
+                "项目",
+                "取值",
+                "代入过程",
+                "结果"
+              ],
+              "rows": [
+                [
+                  "地基水平抗力系数",
+                  "k_h=18000kN/m4",
+                  "按地基水平抗力初步取值",
+                  "18000kN/m4"
+                ],
+                [
+                  "桩径",
+                  "b_p=0.8m",
+                  "PHC管桩外径",
+                  "0.8m"
+                ],
+                [
+                  "单位长度水平抗力",
+                  "k_hb_p",
+                  "18000×0.8=14400kN/m2",
+                  "14400kN/m2"
+                ],
+                [
+                  "水平作用等效长度",
+                  "L_e=3.0m",
+                  "按桩顶水平作用影响段取值",
+                  "3.0m"
+                ],
+                [
+                  "单桩水平等效刚度",
+                  "k_p=k_hb_pL_e",
+                  "14400×3.0=43200kN/m",
+                  "43200kN/m"
+                ]
+              ],
+              "widths_in": [
+                1.25,
+                1.45,
+                2.1,
+                1.1
+              ]
+            },
+            {
+              "type": "p",
+              "text": "水平等效刚度进入横向排架计算后，可用于估算桩顶水平位移和前排桩弯矩。靠船作用控制工况下，前排桩水平刚度对位移结果影响最明显。"
             }
           ]
         },
@@ -2520,7 +2638,7 @@
               "type": "formula",
               "number": "（6.47）",
               "latex": "\\begin{aligned}\nH_f+H_m=1200+850=2050\\ \\mathrm{kN}\\\\\nH_w=450\\ \\mathrm{kN}\\\\\nH_d=2050+450=2500\\ \\mathrm{kN}\n\\end{aligned}",
-              "text": "H_f+H_m=1200+850=2050\\ kN\\\\; H_w=450\\ kN\\\\; H_d=2050+450=2500\\ kN"
+              "text": "beginaligned\nHf+Hₘ=1200+850=2050 kN\nHw=450 kN\nHd=2050+450=2500 kN\nendaligned"
             },
             {
               "type": "terms",
@@ -2550,7 +2668,7 @@
             },
             {
               "type": "table",
-              "caption": "表6-19 标准单元水平作用分配表",
+              "caption": "表6-21 标准单元水平作用分配表",
               "headers": [
                 "作用来源",
                 "标准单元水平力(kN)",
@@ -2594,7 +2712,7 @@
               "type": "formula",
               "number": "（6.48）",
               "latex": "\\begin{aligned}\n\\frac{H_d}{n_f}=\\frac{2500}{6}=416.7\\ \\mathrm{kN}\\\\\n\\eta_i=0.35\\\\\nH_i=\\eta_i\\frac{H_d}{n_f}=0.35\\times416.7=146\\ \\mathrm{kN}\n\\end{aligned}",
-              "text": "\\frac{H_d{n_f=\\frac{2500{6=416.7\\ kN\\\\; \\eta_i=0.35\\\\; H_i=\\eta_i\\frac{H_d{n_f=0.35\\times416.7=146\\ kN"
+              "text": "beginaligned\n(Hd)/(nf)=(2500)/(6)=416.7 kN\nηᵢ=0.35\nHᵢ=ηᵢ(Hd)/(nf)=0.35×416.7=146 kN\nendaligned"
             },
             {
               "type": "terms",
@@ -2619,7 +2737,7 @@
               "type": "formula",
               "number": "（6.49）",
               "latex": "\\begin{aligned}\nH_i=146\\ \\mathrm{kN}\\\\\nz=4.0\\ \\mathrm{m}\\\\\nM_p=H_iz=146\\times4.0=584\\ \\mathrm{kN\\cdot m}\n\\end{aligned}",
-              "text": "H_i=146\\ kN\\\\; z=4.0\\ m\\\\; M_p=H_iz=146\\times4.0=584\\ kN\\cdot m"
+              "text": "beginaligned\nHᵢ=146 kN\nz=4.0 m\nMₚ=Hᵢz=146×4.0=584 kN· m\nendaligned"
             },
             {
               "type": "terms",
@@ -2641,7 +2759,7 @@
               "type": "formula",
               "number": "（6.50）",
               "latex": "\\begin{aligned}\nk_hb_p=18000\\times0.8=14400\\ \\mathrm{kN/m^2}\\\\\nEI=3.1\\times10^7\\times0.0159=4.929\\times10^5\\ \\mathrm{kN\\cdot m^2}\\\\\n\\frac{k_hb_p}{EI}=\\frac{14400}{4.929\\times10^5}=0.0292\\\\\nm_h=(0.0292)^{1/5}=0.49\\ \\mathrm{m^{-1}}\n\\end{aligned}",
-              "text": "k_hb_p=18000\\times0.8=14400\\ kN/m^2\\\\; EI=3.1\\times10^7\\times0.0159=4.929\\times10^5\\ kN\\cdot m^2\\\\; \\frac{k_hb_p{EI=\\frac{14400{4.929\\times10^5=0.0292\\\\; m_h=(0.0292)^{1/5=0.49\\ m^{-1"
+              "text": "beginaligned\nkₕbₚ=18000×0.8=14400 kN/m²\nEI=3.1×10⁷×0.0159=4.929×10⁵ kN· m²\n(kₕbₚ)/(EI)=(14400)/(4.929×10⁵)=0.0292\nmₕ=(0.0292)¹/⁵=0.49 mathrmm⁻¹\nendaligned"
             },
             {
               "type": "terms",
@@ -2673,7 +2791,7 @@
               "type": "formula",
               "number": "（6.51）",
               "latex": "\\begin{aligned}\nk_hb_pL_e=18000\\times0.8\\times3.0=43200\\ \\mathrm{kN/m}\\\\\nu_0=\\frac{H_i}{k_hb_pL_e}=\\frac{146}{43200}=0.0034\\ \\mathrm{m}\\\\\nu_0=3.4\\ \\mathrm{mm}\n\\end{aligned}",
-              "text": "k_hb_pL_e=18000\\times0.8\\times3.0=43200\\ kN/m\\\\; u_0=\\frac{H_i{k_hb_pL_e=\\frac{146{43200=0.0034\\ m\\\\; u_0=3.4\\ mm"
+              "text": "beginaligned\nkₕbₚLₑ=18000×0.8×3.0=43200 kN/m\nu₀=(Hᵢ)/(kₕbₚLₑ)=(146)/(43200)=0.0034 m\nu₀=3.4 mm\nendaligned"
             },
             {
               "type": "terms",
@@ -2693,7 +2811,7 @@
             },
             {
               "type": "table",
-              "caption": "表6-20 桩基水平位移和弯矩验算表",
+              "caption": "表6-22 桩基水平位移和弯矩验算表",
               "headers": [
                 "工况",
                 "控制水平力(kN)",
@@ -2749,7 +2867,7 @@
               "type": "formula",
               "number": "（6.52）",
               "latex": "\\begin{aligned}\nN_d=2281\\ \\mathrm{kN}\\\\\n\\Delta N_h=189\\ \\mathrm{kN}\\\\\nN_f=N_d+\\Delta N_h=2281+189=2470\\ \\mathrm{kN}\n\\end{aligned}",
-              "text": "N_d=2281\\ kN\\\\; \\Delta N_h=189\\ kN\\\\; N_f=N_d+\\Delta N_h=2281+189=2470\\ kN"
+              "text": "beginaligned\nNd=2281 kN\nΔ Nₕ=189 kN\nNf=Nd+Δ Nₕ=2281+189=2470 kN\nendaligned"
             },
             {
               "type": "terms",
@@ -2774,7 +2892,7 @@
             },
             {
               "type": "table",
-              "caption": "表6-21 横向排架刚度与桩顶反力复核表",
+              "caption": "表6-23 横向排架刚度与桩顶反力复核表",
               "headers": [
                 "位置",
                 "桩数",
@@ -2828,11 +2946,11 @@
             },
             {
               "type": "p",
-              "text": "表6-21中前排桩反力最大，取2470kN进入桩身组合应力验算。该值与式中弯矩584kN·m共同作用，用于判断PHC管桩在靠船控制工况下的压应力和局部拉应力。"
+              "text": "表6-23中前排桩反力最大，取2470kN进入桩身组合应力验算。该值与式中弯矩584kN·m共同作用，用于判断PHC管桩在靠船控制工况下的压应力和局部拉应力。"
             },
             {
               "type": "p",
-              "text": "水平位移控制值按初步设计阶段不大于10mm考虑，表6-20各工况均满足。靠船控制工况弯矩最大，已在表6-22单桩应力验算中采用。"
+              "text": "水平位移控制值按初步设计阶段不大于10mm考虑，表6-22各工况均满足。靠船控制工况弯矩最大，已在表6-24单桩应力验算中采用。"
             }
           ]
         },
@@ -2851,7 +2969,7 @@
               "type": "formula",
               "number": "（6.53）",
               "latex": "\\begin{aligned}\nD^2-d^2=0.80^2-0.54^2=0.3484\\ \\mathrm{m^2}\\\\\n\\frac{\\pi}{4}=0.7854\\\\\nA=0.7854\\times0.3484=0.274\\ \\mathrm{m^2}\n\\end{aligned}",
-              "text": "D^2-d^2=0.80^2-0.54^2=0.3484\\ m^2\\\\; \\frac{\\pi{4=0.7854\\\\; A=0.7854\\times0.3484=0.274\\ m^2"
+              "text": "beginaligned\nD²-d²=0.80²-0.54²=0.3484 m²\n(π)/(4)=0.7854\nA=0.7854×0.3484=0.274 m²\nendaligned"
             },
             {
               "type": "terms",
@@ -2878,7 +2996,7 @@
               "type": "formula",
               "number": "（6.54）",
               "latex": "\\begin{aligned}\nD^4-d^4=0.80^4-0.54^4=0.3245\\ \\mathrm{m^4}\\\\\n32D=32\\times0.80=25.60\\ \\mathrm{m}\\\\\nW_p=\\frac{\\pi(D^4-d^4)}{32D}=\\frac{3.1416\\times0.3245}{25.60}=0.0398\\ \\mathrm{m^3}\n\\end{aligned}",
-              "text": "D^4-d^4=0.80^4-0.54^4=0.3245\\ m^4\\\\; 32D=32\\times0.80=25.60\\ m\\\\; W_p=\\frac{\\pi(D^4-d^4){32D=\\frac{3.1416\\times0.3245{25.60=0.0398\\ m^3"
+              "text": "beginaligned\nD⁴-d⁴=0.80⁴-0.54⁴=0.3245 m⁴\n32D=32×0.80=25.60 m\nWₚ=(π(D⁴-d⁴))/(32D)=(3.1416×0.3245)/(25.60)=0.0398 m³\nendaligned"
             },
             {
               "type": "terms",
@@ -2895,7 +3013,7 @@
               "type": "formula",
               "number": "（6.55）",
               "latex": "\\begin{aligned}\n\\sigma_N=\\frac{N}{A}=\\frac{2470}{0.274}=9.0\\ \\mathrm{MPa}\\\\\n\\sigma_M=\\frac{M}{W_p}=\\frac{584}{0.0398}=14.7\\ \\mathrm{MPa}\\\\\n\\sigma_{max}=\\sigma_N+\\sigma_M=9.0+14.7=23.7\\ \\mathrm{MPa}\\\\\n\\sigma_{min}=\\sigma_N-\\sigma_M=9.0-14.7=-5.7\\ \\mathrm{MPa}\n\\end{aligned}",
-              "text": "sigmaN=2470/0.274=9.0MPa；sigmaM=584/0.0398=14.7MPa；sigma_max=23.7MPa；sigma_min=-5.7MPa"
+              "text": "beginaligned\nσN=(N)/(A)=(2470)/(0.274)=9.0 MPa\nσM=(M)/(Wₚ)=(584)/(0.0398)=14.7 MPa\nσₘₐₓ=σN+σM=9.0+14.7=23.7 MPa\nσₘᵢₙ=σN-σM=9.0-14.7=-5.7 MPa\nendaligned"
             },
             {
               "type": "terms",
@@ -2925,7 +3043,7 @@
             },
             {
               "type": "table",
-              "caption": "表6-22 PHC管桩轴力、弯矩与应力组合验算表",
+              "caption": "表6-24 PHC管桩轴力、弯矩与应力组合验算表",
               "headers": [
                 "桩位",
                 "N(kN)",
@@ -3020,7 +3138,7 @@
             },
             {
               "type": "p",
-              "text": "群桩效应按标准单元复核。前、中、后三排桩共同承受竖向作用，但局部荷载会使前排桩和轨道带附近桩反力增大。表6-23按0.92的群桩折减系数估算整体承载储备，结果显示标准单元仍满足竖向承载要求，但施工偏载和设备调试阶段应控制临时堆载位置。"
+              "text": "群桩效应按标准单元复核。前、中、后三排桩共同承受竖向作用，但局部荷载会使前排桩和轨道带附近桩反力增大。表6-25按0.92的群桩折减系数估算整体承载储备，结果显示标准单元仍满足竖向承载要求，但施工偏载和设备调试阶段应控制临时堆载位置。"
             },
             {
               "type": "p",
@@ -3029,7 +3147,7 @@
             {
               "type": "formula",
               "latex": "\\begin{aligned}\nN_1+N_2+N_3=2470+2110+1850=6430\\ \\mathrm{kN}\\\\\nn_f=6\\\\\nN_{sum}=n_f\\times6430=6\\times6430=38580\\ \\mathrm{kN}\n\\end{aligned}",
-              "text": "N_1+N_2+N_3=2470+2110+1850=6430\\ kN\\\\; n_f=6\\\\; N_{sum=n_f\\times6430=6\\times6430=38580\\ kN",
+              "text": "beginaligned\nN₁+N₂+N₃=2470+2110+1850=6430 kN\nnf=6\nNₛᵤₘ=nf×6430=6×6430=38580 kN\nendaligned",
               "number": "（6.56）"
             },
             {
@@ -3051,7 +3169,7 @@
             {
               "type": "formula",
               "latex": "\\begin{aligned}\nn_pR_a=18\\times2540=45720\\ \\mathrm{kN}\\\\\n\\eta_g=0.92\\\\\nR_g=\\eta_gn_pR_a=0.92\\times45720=42062\\ \\mathrm{kN}\n\\end{aligned}",
-              "text": "n_pR_a=18\\times2540=45720\\ kN\\\\; \\eta_g=0.92\\\\; R_g=\\eta_gn_pR_a=0.92\\times45720=42062\\ kN",
+              "text": "beginaligned\nnₚRₐ=18×2540=45720 kN\nηg=0.92\nRg=ηgnₚRₐ=0.92×45720=42062 kN\nendaligned",
               "number": "（6.57）"
             },
             {
@@ -3082,7 +3200,7 @@
             {
               "type": "formula",
               "latex": "\\begin{aligned}\nR_g=42062\\ \\mathrm{kN}\\\\\nN_{sum}=38580\\ \\mathrm{kN}\\\\\nK_g=\\frac{R_g}{N_{sum}}=\\frac{42062}{38580}=1.09\n\\end{aligned}",
-              "text": "Kg=42062/38580=1.09",
+              "text": "beginaligned\nRg=42062 kN\nNₛᵤₘ=38580 kN\nKg=(Rg)/(Nₛᵤₘ)=(42062)/(38580)=1.09\nendaligned",
               "number": "（6.58）"
             },
             {
@@ -3097,7 +3215,7 @@
             },
             {
               "type": "table",
-              "caption": "表6-23 群桩效应与桩身弯矩复核表",
+              "caption": "表6-25 群桩效应与桩身弯矩复核表",
               "headers": [
                 "项目",
                 "计算值",
@@ -3153,7 +3271,7 @@
             },
             {
               "type": "table",
-              "caption": "表6-24 高桩梁板式方案计算闭合表",
+              "caption": "表6-26 高桩梁板式方案计算闭合表",
               "headers": [
                 "步骤",
                 "输入参数",
@@ -3207,7 +3325,7 @@
             },
             {
               "type": "p",
-              "text": "按表6-24检查后，高桩方案的关键控制点为轨道及漏斗附近纵梁、靠船横梁、前排PHC管桩组合应力和桩顶节点构造。第七章工程量统计应与这些控制构件对应。"
+              "text": "按表6-26检查后，高桩方案的关键控制点为轨道及漏斗附近纵梁、靠船横梁、前排PHC管桩组合应力和桩顶节点构造。第七章工程量统计应与这些控制构件对应。"
             }
           ]
         }
@@ -3226,7 +3344,7 @@
             },
             {
               "type": "p",
-              "text": "沉箱自重计算按构件分项列出，底板、前壁、后壁、侧壁、隔墙、胸墙和箱内填料分别统计。各项重量除用于求有效竖向力外，还用于计算合力位置和抗倾力矩，因此表6-25同时列出力臂和力矩。"
+              "text": "沉箱自重计算按构件分项列出，底板、前壁、后壁、侧壁、隔墙、胸墙和箱内填料分别统计。各项重量除用于求有效竖向力外，还用于计算合力位置和抗倾力矩，因此表6-27同时列出力臂和力矩。"
             },
             {
               "type": "p",
@@ -3234,7 +3352,7 @@
             },
             {
               "type": "table",
-              "caption": "表6-25 沉箱自重及力矩臂分项表",
+              "caption": "表6-27 沉箱自重及力矩臂分项表",
               "headers": [
                 "项目",
                 "体积(m3)",
@@ -3313,7 +3431,8 @@
             {
               "type": "formula",
               "number": "（6.59）",
-              "latex": "\\begin{aligned}\nV_c=410+360+360+1290+1144=3604\\ \\mathrm{m^3}\\\\\n\\gamma_c=25\\ \\mathrm{kN/m^3}\\\\\nG_c=\\gamma_cV_c=25\\times3604=90100\\ \\mathrm{kN}\n\\end{aligned}"
+              "latex": "\\begin{aligned}\nV_c=410+360+360+1290+1144=3604\\ \\mathrm{m^3}\\\\\n\\gamma_c=25\\ \\mathrm{kN/m^3}\\\\\nG_c=\\gamma_cV_c=25\\times3604=90100\\ \\mathrm{kN}\n\\end{aligned}",
+              "text": "beginaligned\nVc=410+360+360+1290+1144=3604 m³\nγc=25 kN/m³\nGc=γcVc=25×3604=90100 kN\nendaligned"
             },
             {
               "type": "terms",
@@ -3329,7 +3448,8 @@
             {
               "type": "formula",
               "number": "（6.60）",
-              "latex": "\\begin{aligned}\nV_f=4850\\ \\mathrm{m^3}\\\\\n\\gamma_f=18\\ \\mathrm{kN/m^3}\\\\\nG_f=\\gamma_fV_f=18\\times4850=87300\\ \\mathrm{kN}\n\\end{aligned}"
+              "latex": "\\begin{aligned}\nV_f=4850\\ \\mathrm{m^3}\\\\\n\\gamma_f=18\\ \\mathrm{kN/m^3}\\\\\nG_f=\\gamma_fV_f=18\\times4850=87300\\ \\mathrm{kN}\n\\end{aligned}",
+              "text": "beginaligned\nVf=4850 m³\nγf=18 kN/m³\nGf=γfVf=18×4850=87300 kN\nendaligned"
             },
             {
               "type": "terms",
@@ -3355,7 +3475,8 @@
             {
               "type": "formula",
               "number": "（6.61）",
-              "latex": "\\begin{aligned}\nA_b=BL=22\\times22=484\\ \\mathrm{m^2}\\\\\nV_u=A_bh_w=484\\times7.2=3484.8\\ \\mathrm{m^3}\\\\\nU=\\gamma_wV_u=10.25\\times3484.8=35719\\ \\mathrm{kN}\n\\end{aligned}"
+              "latex": "\\begin{aligned}\nA_b=BL=22\\times22=484\\ \\mathrm{m^2}\\\\\nV_u=A_bh_w=484\\times7.2=3484.8\\ \\mathrm{m^3}\\\\\nU=\\gamma_wV_u=10.25\\times3484.8=35719\\ \\mathrm{kN}\n\\end{aligned}",
+              "text": "beginaligned\nAb=BL=22×22=484 m²\nVᵤ=Abhw=484×7.2=3484.8 m³\nU=γwVᵤ=10.25×3484.8=35719 kN\nendaligned"
             },
             {
               "type": "terms",
@@ -3386,7 +3507,8 @@
             {
               "type": "formula",
               "number": "（6.62）",
-              "latex": "\\begin{aligned}\nG_c+G_f=90100+87300=177400\\ \\mathrm{kN}\\\\\nU=35719\\ \\mathrm{kN}\\\\\nW=G_c+G_f-U=177400-35719=141681\\ \\mathrm{kN}\n\\end{aligned}"
+              "latex": "\\begin{aligned}\nG_c+G_f=90100+87300=177400\\ \\mathrm{kN}\\\\\nU=35719\\ \\mathrm{kN}\\\\\nW=G_c+G_f-U=177400-35719=141681\\ \\mathrm{kN}\n\\end{aligned}",
+              "text": "beginaligned\nGc+Gf=90100+87300=177400 kN\nU=35719 kN\nW=Gc+Gf-U=177400-35719=141681 kN\nendaligned"
             },
             {
               "type": "terms",
@@ -3402,7 +3524,8 @@
             {
               "type": "formula",
               "number": "（6.63）",
-              "latex": "\\begin{aligned}\n\\sum G_ix_i=1877450\\ \\mathrm{kN\\cdot m}\\\\\n\\sum G_i=176400\\ \\mathrm{kN}\\\\\nx_W=\\frac{\\sum G_ix_i}{\\sum G_i}=\\frac{1877450}{176400}=10.64\\ \\mathrm{m}\n\\end{aligned}"
+              "latex": "\\begin{aligned}\n\\sum G_ix_i=1877450\\ \\mathrm{kN\\cdot m}\\\\\n\\sum G_i=176400\\ \\mathrm{kN}\\\\\nx_W=\\frac{\\sum G_ix_i}{\\sum G_i}=\\frac{1877450}{176400}=10.64\\ \\mathrm{m}\n\\end{aligned}",
+              "text": "beginaligned\nΣ Gᵢxᵢ=1877450 kN· m\nΣ Gᵢ=176400 kN\nxW=(Σ Gᵢxᵢ)/(Σ Gᵢ)=(1877450)/(176400)=10.64 m\nendaligned"
             },
             {
               "type": "terms",
@@ -3442,7 +3565,7 @@
               "type": "formula",
               "number": "（6.64）",
               "latex": "\\begin{aligned}\n\\frac{\\varphi}{2}=\\frac{35^\\circ}{2}=17.5^\\circ\\\\\n\\theta_a=45^\\circ-17.5^\\circ=27.5^\\circ\\\\\nK_a=\\tan^2\\theta_a=\\tan^2 27.5^\\circ=0.27\n\\end{aligned}",
-              "text": "\\frac{\\varphi{2=\\frac{35^\\circ{2=17.5^\\circ\\\\; \\theta_a=45^\\circ-17.5^\\circ=27.5^\\circ\\\\; K_a=\\tan^2\\theta_a=\\tan^2 27.5^\\circ=0.27"
+              "text": "beginaligned\n(varphi)/(2)=(35°)/(2)=17.5°\nθₐ=45°-17.5°=27.5°\nKₐ=tan²θₐ=tan² 27.5°=0.27\nendaligned"
             },
             {
               "type": "terms",
@@ -3462,7 +3585,7 @@
               "type": "formula",
               "number": "（6.65）",
               "latex": "\\begin{aligned}\nh^2=12^2=144\\ \\mathrm{m^2}\\\\\n\\gamma h^2=18\\times144=2592\\ \\mathrm{kN/m}\\\\\nE_a=\\frac{1}{2}K_a\\gamma h^2=0.5\\times0.27\\times2592=349.9\\ \\mathrm{kN/m}\n\\end{aligned}",
-              "text": "h^2=12^2=144\\ m^2\\\\; \\gamma h^2=18\\times144=2592\\ kN/m\\\\; E_a=\\frac{1{2K_a\\gamma h^2=0.5\\times0.27\\times2592=349.9\\ kN/m"
+              "text": "beginaligned\nh²=12²=144 m²\nγ h²=18×144=2592 kN/m\nEₐ=(1)/(2)Kₐγ h²=0.5×0.27×2592=349.9 kN/m\nendaligned"
             },
             {
               "type": "terms",
@@ -3488,7 +3611,8 @@
             {
               "type": "formula",
               "number": "（6.66）",
-              "latex": "\\begin{aligned}\nqh=40\\times12=480\\ \\mathrm{kN/m}\\\\\nK_a=0.27\\\\\nE_q=K_aqh=0.27\\times480=129.6\\ \\mathrm{kN/m}\n\\end{aligned}"
+              "latex": "\\begin{aligned}\nqh=40\\times12=480\\ \\mathrm{kN/m}\\\\\nK_a=0.27\\\\\nE_q=K_aqh=0.27\\times480=129.6\\ \\mathrm{kN/m}\n\\end{aligned}",
+              "text": "beginaligned\nqh=40×12=480 kN/m\nKₐ=0.27\nEq=Kₐqh=0.27×480=129.6 kN/m\nendaligned"
             },
             {
               "type": "terms",
@@ -3509,7 +3633,8 @@
             {
               "type": "formula",
               "number": "（6.67）",
-              "latex": "\\begin{aligned}\nh_w^2=4.0^2=16.0\\ \\mathrm{m^2}\\\\\n\\frac{1}{2}\\gamma_w=0.5\\times10.25=5.125\\ \\mathrm{kN/m^3}\\\\\nP_w=\\frac{1}{2}\\gamma_wh_w^2=5.125\\times16.0=82.0\\ \\mathrm{kN/m}\n\\end{aligned}"
+              "latex": "\\begin{aligned}\nh_w^2=4.0^2=16.0\\ \\mathrm{m^2}\\\\\n\\frac{1}{2}\\gamma_w=0.5\\times10.25=5.125\\ \\mathrm{kN/m^3}\\\\\nP_w=\\frac{1}{2}\\gamma_wh_w^2=5.125\\times16.0=82.0\\ \\mathrm{kN/m}\n\\end{aligned}",
+              "text": "beginaligned\nhw²=4.0²=16.0 m²\n(1)/(2)γw=0.5×10.25=5.125 kN/m³\nPw=(1)/(2)γwhw²=5.125×16.0=82.0 kN/m\nendaligned"
             },
             {
               "type": "terms",
@@ -3529,7 +3654,7 @@
             },
             {
               "type": "table",
-              "caption": "表6-26 沉箱单节水平作用计算表",
+              "caption": "表6-28 沉箱单节水平作用计算表",
               "headers": [
                 "作用",
                 "单位长度作用(kN/m)",
@@ -3591,7 +3716,7 @@
             },
             {
               "type": "p",
-              "text": "表6-25为基本工况。回填偏压、施工阶段和极端水位作用按表6-30分别列出，便于核对各工况下水平作用和稳定指标。"
+              "text": "表6-27为基本工况。回填偏压、施工阶段和极端水位作用按表6-32分别列出，便于核对各工况下水平作用和稳定指标。"
             }
           ]
         },
@@ -3606,7 +3731,7 @@
               "type": "formula",
               "number": "（6.68）",
               "latex": "\\begin{aligned}\n\\mu=0.60\\\\\nW=141681\\ \\mathrm{kN}\\\\\n\\mu W=0.60\\times141681\\\\\nR_s=85009\\ \\mathrm{kN}\n\\end{aligned}",
-              "text": "\\mu=0.60\\\\; W=141681\\ kN\\\\; \\mu W=0.60\\times141681\\\\; R_s=85009\\ kN"
+              "text": "beginaligned\nmu=0.60\nW=141681 kN\nmu W=0.60×141681\nRₛ=85009 kN\nendaligned"
             },
             {
               "type": "terms",
@@ -3631,7 +3756,8 @@
             {
               "type": "formula",
               "number": "（6.69）",
-              "latex": "\\begin{aligned}\nE_a+E_q=7698+2851=10549\\ \\mathrm{kN}\\\\\nP_w+P_m+P_f=1804+6500+1200=9504\\ \\mathrm{kN}\\\\\nS_s=E_a+E_q+P_w+P_m+P_f=10549+9504=20053\\ \\mathrm{kN}\n\\end{aligned}"
+              "latex": "\\begin{aligned}\nE_a+E_q=7698+2851=10549\\ \\mathrm{kN}\\\\\nP_w+P_m+P_f=1804+6500+1200=9504\\ \\mathrm{kN}\\\\\nS_s=E_a+E_q+P_w+P_m+P_f=10549+9504=20053\\ \\mathrm{kN}\n\\end{aligned}",
+              "text": "beginaligned\nEₐ+Eq=7698+2851=10549 kN\nPw+Pₘ+Pf=1804+6500+1200=9504 kN\nSₛ=Eₐ+Eq+Pw+Pₘ+Pf=10549+9504=20053 kN\nendaligned"
             },
             {
               "type": "terms",
@@ -3657,7 +3783,8 @@
             {
               "type": "formula",
               "number": "（6.70）",
-              "latex": "\\begin{aligned}\n\\sigma_R=\\delta_R\\mu_R=0.15\\times85009=12751\\ \\mathrm{kN}\\\\\n\\sigma_S=\\delta_S\\mu_S=0.20\\times20053=4011\\ \\mathrm{kN}\\\\\n\\sigma_Z=\\sqrt{\\sigma_R^2+\\sigma_S^2}=\\sqrt{12751^2+4011^2}=13366\\ \\mathrm{kN}\\\\\n\\beta_s=\\frac{\\mu_R-\\mu_S}{\\sigma_Z}=\\frac{85009-20053}{13366}=4.86\n\\end{aligned}"
+              "latex": "\\begin{aligned}\n\\sigma_R=\\delta_R\\mu_R=0.15\\times85009=12751\\ \\mathrm{kN}\\\\\n\\sigma_S=\\delta_S\\mu_S=0.20\\times20053=4011\\ \\mathrm{kN}\\\\\n\\sigma_Z=\\sqrt{\\sigma_R^2+\\sigma_S^2}=\\sqrt{12751^2+4011^2}=13366\\ \\mathrm{kN}\\\\\n\\beta_s=\\frac{\\mu_R-\\mu_S}{\\sigma_Z}=\\frac{85009-20053}{13366}=4.86\n\\end{aligned}",
+              "text": "beginaligned\nσR=δRmuR=0.15×85009=12751 kN\nσS=δSmuS=0.20×20053=4011 kN\nσZ=sqrtσR²+σS²=sqrt12751²+4011²=13366 kN\nbetaₛ=(muR-muS)/(σZ)=(85009-20053)/(13366)=4.86\nendaligned"
             },
             {
               "type": "terms",
@@ -3689,7 +3816,7 @@
             },
             {
               "type": "table",
-              "caption": "表6-27 沉箱抗滑可靠指标分工况表",
+              "caption": "表6-29 沉箱抗滑可靠指标分工况表",
               "headers": [
                 "工况",
                 "W(kN)",
@@ -3768,7 +3895,7 @@
             },
             {
               "type": "table",
-              "caption": "表6-28 沉箱抗倾力矩分项表",
+              "caption": "表6-30 沉箱抗倾力矩分项表",
               "headers": [
                 "项目",
                 "作用(kN)",
@@ -3831,7 +3958,8 @@
             {
               "type": "formula",
               "number": "（6.71）",
-              "latex": "\\begin{aligned}\nW=141681\\ \\mathrm{kN}\\\\\nx_W=10.64\\ \\mathrm{m}\\\\\nM_R=Wx_W=141681\\times10.64=1.508\\times10^6\\ \\mathrm{kN\\cdot m}\n\\end{aligned}"
+              "latex": "\\begin{aligned}\nW=141681\\ \\mathrm{kN}\\\\\nx_W=10.64\\ \\mathrm{m}\\\\\nM_R=Wx_W=141681\\times10.64=1.508\\times10^6\\ \\mathrm{kN\\cdot m}\n\\end{aligned}",
+              "text": "beginaligned\nW=141681 kN\nxW=10.64 m\nMR=WxW=141681×10.64=1.508×10⁶ kN· m\nendaligned"
             },
             {
               "type": "terms",
@@ -3852,7 +3980,8 @@
             {
               "type": "formula",
               "number": "（6.72）",
-              "latex": "\\begin{aligned}\nM_{O1}=30792+17106+4871=52769\\ \\mathrm{kN\\cdot m}\\\\\nM_{O2}=68250+6000=74250\\ \\mathrm{kN\\cdot m}\\\\\nM_O=M_{O1}+M_{O2}=52769+74250=127019\\ \\mathrm{kN\\cdot m}\n\\end{aligned}"
+              "latex": "\\begin{aligned}\nM_{O1}=30792+17106+4871=52769\\ \\mathrm{kN\\cdot m}\\\\\nM_{O2}=68250+6000=74250\\ \\mathrm{kN\\cdot m}\\\\\nM_O=M_{O1}+M_{O2}=52769+74250=127019\\ \\mathrm{kN\\cdot m}\n\\end{aligned}",
+              "text": "beginaligned\nMO₁=30792+17106+4871=52769 kN· m\nMO₂=68250+6000=74250 kN· m\nMO=MO₁+MO₂=52769+74250=127019 kN· m\nendaligned"
             },
             {
               "type": "terms",
@@ -3868,7 +3997,8 @@
             {
               "type": "formula",
               "number": "（6.73）",
-              "latex": "\\begin{aligned}\n\\sigma_{MR}=0.12M_R=0.12\\times1507510=180901\\ \\mathrm{kN\\cdot m}\\\\\n\\sigma_{MO}=0.18M_O=0.18\\times127019=22863\\ \\mathrm{kN\\cdot m}\\\\\n\\sigma_Z=\\sqrt{\\sigma_{MR}^2+\\sigma_{MO}^2}=182340\\ \\mathrm{kN\\cdot m}\\\\\n\\beta_o=\\frac{M_R-M_O}{\\sigma_Z}=\\frac{1507510-127019}{182340}=7.57\n\\end{aligned}"
+              "latex": "\\begin{aligned}\n\\sigma_{MR}=0.12M_R=0.12\\times1507510=180901\\ \\mathrm{kN\\cdot m}\\\\\n\\sigma_{MO}=0.18M_O=0.18\\times127019=22863\\ \\mathrm{kN\\cdot m}\\\\\n\\sigma_Z=\\sqrt{\\sigma_{MR}^2+\\sigma_{MO}^2}=182340\\ \\mathrm{kN\\cdot m}\\\\\n\\beta_o=\\frac{M_R-M_O}{\\sigma_Z}=\\frac{1507510-127019}{182340}=7.57\n\\end{aligned}",
+              "text": "beginaligned\nσMR=0.12MR=0.12×1507510=180901 kN· m\nσMO=0.18MO=0.18×127019=22863 kN· m\nσZ=sqrtσMR²+σMO²=182340 kN· m\nbetaₒ=(MR-MO)/(σZ)=(1507510-127019)/(182340)=7.57\nendaligned"
             },
             {
               "type": "terms",
@@ -3883,7 +4013,8 @@
             {
               "type": "formula",
               "number": "（6.74）",
-              "latex": "\\begin{aligned}\n\\frac{M_O}{W}=\\frac{127019}{141681}=0.90\\ \\mathrm{m}\\\\\ne=\\left|\\frac{B}{2}-x_W+\\frac{M_O}{W}\\right|=\\left|11.0-10.64+0.90\\right|=1.26\\ \\mathrm{m}\\\\\n\\frac{B}{6}=\\frac{22}{6}=3.67\\ \\mathrm{m},\\quad e<\\frac{B}{6}\n\\end{aligned}"
+              "latex": "\\begin{aligned}\n\\frac{M_O}{W}=\\frac{127019}{141681}=0.90\\ \\mathrm{m}\\\\\ne=\\left|\\frac{B}{2}-x_W+\\frac{M_O}{W}\\right|=\\left|11.0-10.64+0.90\\right|=1.26\\ \\mathrm{m}\\\\\n\\frac{B}{6}=\\frac{22}{6}=3.67\\ \\mathrm{m},\\quad e<\\frac{B}{6}\n\\end{aligned}",
+              "text": "beginaligned\n(MO)/(W)=(127019)/(141681)=0.90 m\ne=|(B)/(2)-xW+(MO)/(W)|=|11.0-10.64+0.90|=1.26 m\n(B)/(6)=(22)/(6)=3.67 m,quad e<(B)/(6)\nendaligned"
             },
             {
               "type": "terms",
@@ -3904,7 +4035,8 @@
             {
               "type": "formula",
               "number": "（6.75）",
-              "latex": "\\begin{aligned}\n\\sigma_0=\\frac{W}{BL}=\\frac{141681}{22\\times22}=292.7\\ \\mathrm{kPa}\\\\\n\\lambda_e=\\frac{6e}{B}=\\frac{6\\times1.26}{22}=0.344\\\\\n\\sigma_{max}=\\sigma_0(1+\\lambda_e)=292.7\\times1.344=393\\ \\mathrm{kPa}\\\\\n\\sigma_{min}=\\sigma_0(1-\\lambda_e)=292.7\\times0.656=192\\ \\mathrm{kPa}\n\\end{aligned}"
+              "latex": "\\begin{aligned}\n\\sigma_0=\\frac{W}{BL}=\\frac{141681}{22\\times22}=292.7\\ \\mathrm{kPa}\\\\\n\\lambda_e=\\frac{6e}{B}=\\frac{6\\times1.26}{22}=0.344\\\\\n\\sigma_{max}=\\sigma_0(1+\\lambda_e)=292.7\\times1.344=393\\ \\mathrm{kPa}\\\\\n\\sigma_{min}=\\sigma_0(1-\\lambda_e)=292.7\\times0.656=192\\ \\mathrm{kPa}\n\\end{aligned}",
+              "text": "beginaligned\nσ₀=(W)/(BL)=(141681)/(22×22)=292.7 kPa\nlambdaₑ=(6e)/(B)=(6×1.26)/(22)=0.344\nσₘₐₓ=σ₀(1+lambdaₑ)=292.7×1.344=393 kPa\nσₘᵢₙ=σ₀(1-lambdaₑ)=292.7×0.656=192 kPa\nendaligned"
             },
             {
               "type": "terms",
@@ -3919,7 +4051,7 @@
             },
             {
               "type": "table",
-              "caption": "表6-29 抗倾可靠指标与基底应力表",
+              "caption": "表6-31 抗倾可靠指标与基底应力表",
               "headers": [
                 "工况",
                 "MR(kN·m)",
@@ -3985,7 +4117,7 @@
             },
             {
               "type": "p",
-              "text": "按表6-28，基底偏心距均小于B/6，基底保持全截面受压；最大基底压应力小于地基处理后允许承载力600kPa。"
+              "text": "按表6-30，基底偏心距均小于B/6，基底保持全截面受压；最大基底压应力小于地基处理后允许承载力600kPa。"
             }
           ]
         },
@@ -4011,7 +4143,8 @@
             {
               "type": "formula",
               "number": "（6.76）",
-              "latex": "\\begin{aligned}\nV_d=8200\\ \\mathrm{m^3}\\\\\n\\gamma_w=10.25\\ \\mathrm{kN/m^3}\\\\\nF_b=\\gamma_wV_d=10.25\\times8200=84050\\ \\mathrm{kN}\n\\end{aligned}"
+              "latex": "\\begin{aligned}\nV_d=8200\\ \\mathrm{m^3}\\\\\n\\gamma_w=10.25\\ \\mathrm{kN/m^3}\\\\\nF_b=\\gamma_wV_d=10.25\\times8200=84050\\ \\mathrm{kN}\n\\end{aligned}",
+              "text": "beginaligned\nVd=8200 m³\nγw=10.25 kN/m³\nFb=γwVd=10.25×8200=84050 kN\nendaligned"
             },
             {
               "type": "terms",
@@ -4033,7 +4166,7 @@
               "type": "formula",
               "number": "（6.77）",
               "latex": "\\begin{aligned}\nV_d=8200\\ \\mathrm{m^3}\\\\\nA_w=1139\\ \\mathrm{m^2}\\\\\nT_t=\\frac{V_d}{A_w}=\\frac{8200}{1139}=7.20\\ \\mathrm{m}\n\\end{aligned}",
-              "text": "T_t=Vd/Aw=8200/1139=7.20m"
+              "text": "beginaligned\nVd=8200 m³\nAw=1139 m²\nTₜ=(Vd)/(Aw)=(8200)/(1139)=7.20 m\nendaligned"
             },
             {
               "type": "terms",
@@ -4058,7 +4191,8 @@
             {
               "type": "formula",
               "number": "（6.78）",
-              "latex": "\\begin{aligned}\nI_w=34850\\ \\mathrm{m^4}\\\\\nV_d=8200\\ \\mathrm{m^3}\\\\\nBM=\\frac{I_w}{V_d}=\\frac{34850}{8200}=4.25\\ \\mathrm{m}\n\\end{aligned}"
+              "latex": "\\begin{aligned}\nI_w=34850\\ \\mathrm{m^4}\\\\\nV_d=8200\\ \\mathrm{m^3}\\\\\nBM=\\frac{I_w}{V_d}=\\frac{34850}{8200}=4.25\\ \\mathrm{m}\n\\end{aligned}",
+              "text": "beginaligned\nIw=34850 m⁴\nVd=8200 m³\nBM=(Iw)/(Vd)=(34850)/(8200)=4.25 m\nendaligned"
             },
             {
               "type": "terms",
@@ -4080,7 +4214,7 @@
               "type": "formula",
               "number": "（6.79）",
               "latex": "\\begin{aligned}\nKB+BM=3.60+4.25=7.85\\ \\mathrm{m}\\\\\nGM_0=KB+BM-KG=7.85-6.80=1.05\\ \\mathrm{m}\\\\\nGM=GM_0-\\Delta GM_f=1.05-0.18=0.87\\ \\mathrm{m}\n\\end{aligned}",
-              "text": "KB+BM=3.60+4.25=7.85\\ m\\\\; GM_0=KB+BM-KG=7.85-6.80=1.05\\ m\\\\; GM=GM_0-\\Delta GM_f=1.05-0.18=0.87\\ m"
+              "text": "beginaligned\nKB+BM=3.60+4.25=7.85 m\nGM₀=KB+BM-KG=7.85-6.80=1.05 m\nGM=GM₀-Δ GMf=1.05-0.18=0.87 m\nendaligned"
             },
             {
               "type": "terms",
@@ -4112,7 +4246,7 @@
               "type": "formula",
               "number": "（6.80）",
               "latex": "\\begin{aligned}\nH_c=13.0\\ \\mathrm{m}\\\\\nT_t=7.2\\ \\mathrm{m}\\\\\nh_f=H_c-T_t=13.0-7.2=5.8\\ \\mathrm{m}\n\\end{aligned}",
-              "text": "H_c=13.0\\ m\\\\; T_t=7.2\\ m\\\\; h_f=H_c-T_t=13.0-7.2=5.8\\ m"
+              "text": "beginaligned\nHc=13.0 m\nTₜ=7.2 m\nhf=Hc-Tₜ=13.0-7.2=5.8 m\nendaligned"
             },
             {
               "type": "terms",
@@ -4137,7 +4271,7 @@
             },
             {
               "type": "table",
-              "caption": "表6-30 沉箱浮运稳定计算表",
+              "caption": "表6-32 沉箱浮运稳定计算表",
               "headers": [
                 "项目",
                 "计算值",
@@ -4198,7 +4332,7 @@
             },
             {
               "type": "table",
-              "caption": "表6-31 沉箱水位工况作用汇总表",
+              "caption": "表6-33 沉箱水位工况作用汇总表",
               "headers": [
                 "工况",
                 "有效竖向力W(kN)",
@@ -4259,7 +4393,8 @@
             {
               "type": "formula",
               "number": "（6.81）",
-              "latex": "\\begin{aligned}\n\\alpha_z=0.14\\\\\n\\sigma_{max}=393\\ \\mathrm{kPa}\\\\\n\\Delta\\sigma_z=\\alpha_z\\sigma_{max}=0.14\\times393=55.0\\ \\mathrm{kPa}\n\\end{aligned}"
+              "latex": "\\begin{aligned}\n\\alpha_z=0.14\\\\\n\\sigma_{max}=393\\ \\mathrm{kPa}\\\\\n\\Delta\\sigma_z=\\alpha_z\\sigma_{max}=0.14\\times393=55.0\\ \\mathrm{kPa}\n\\end{aligned}",
+              "text": "beginaligned\nalphaz=0.14\nσₘₐₓ=393 kPa\nΔσz=alphazσₘₐₓ=0.14×393=55.0 kPa\nendaligned"
             },
             {
               "type": "terms",
@@ -4284,7 +4419,8 @@
             {
               "type": "formula",
               "number": "（6.82）",
-              "latex": "\\begin{aligned}\ns_1=0.028\\ \\mathrm{m}\\\\\ns_2=0.021\\ \\mathrm{m}\\\\\ns_3=0.016\\ \\mathrm{m}\\\\\ns=s_1+s_2+s_3=0.028+0.021+0.016=0.065\\ \\mathrm{m}\n\\end{aligned}"
+              "latex": "\\begin{aligned}\ns_1=0.028\\ \\mathrm{m}\\\\\ns_2=0.021\\ \\mathrm{m}\\\\\ns_3=0.016\\ \\mathrm{m}\\\\\ns=s_1+s_2+s_3=0.028+0.021+0.016=0.065\\ \\mathrm{m}\n\\end{aligned}",
+              "text": "beginaligned\ns₁=0.028 m\ns₂=0.021 m\ns₃=0.016 m\ns=s₁+s₂+s₃=0.028+0.021+0.016=0.065 m\nendaligned"
             },
             {
               "type": "terms",
@@ -4314,7 +4450,7 @@
             },
             {
               "type": "table",
-              "caption": "表6-32 沉箱基床承载与沉降复核表",
+              "caption": "表6-34 沉箱基床承载与沉降复核表",
               "headers": [
                 "项目",
                 "计算值",
@@ -4381,7 +4517,7 @@
             },
             {
               "type": "table",
-              "caption": "表6-33 沉箱施工阶段稳定控制表",
+              "caption": "表6-35 沉箱施工阶段稳定控制表",
               "headers": [
                 "阶段",
                 "主要风险",
@@ -4431,7 +4567,7 @@
               "type": "formula",
               "number": "（6.83）",
               "latex": "\\begin{aligned}\nG=91000\\ \\mathrm{kN}\\\\\nU=84050\\ \\mathrm{kN}\\\\\nK_f=\\frac{G}{U}=\\frac{91000}{84050}=1.08\n\\end{aligned}",
-              "text": "G=91000\\ kN\\\\; U=84050\\ kN\\\\; K_f=\\frac{G{U=\\frac{91000{84050=1.08"
+              "text": "beginaligned\nG=91000 kN\nU=84050 kN\nKf=(G)/(U)=(91000)/(84050)=1.08\nendaligned"
             },
             {
               "type": "terms",
@@ -4456,7 +4592,8 @@
             {
               "type": "formula",
               "number": "（6.84）",
-              "latex": "\\begin{aligned}\nWGM=84050\\times0.87=73124\\ \\mathrm{kN\\cdot m}\\\\\n\\frac{M_h}{WGM}=\\frac{1850}{73124}=0.0253\\\\\n\\theta=\\arctan(0.0253)=1.45^\\circ\n\\end{aligned}"
+              "latex": "\\begin{aligned}\nWGM=84050\\times0.87=73124\\ \\mathrm{kN\\cdot m}\\\\\n\\frac{M_h}{WGM}=\\frac{1850}{73124}=0.0253\\\\\n\\theta=\\arctan(0.0253)=1.45^\\circ\n\\end{aligned}",
+              "text": "beginaligned\nWGM=84050×0.87=73124 kN· m\n(Mₕ)/(WGM)=(1850)/(73124)=0.0253\nθ=arctan(0.0253)=1.45°\nendaligned"
             },
             {
               "type": "terms",
@@ -4510,7 +4647,7 @@
             {
               "type": "formula",
               "latex": "\\begin{aligned}\nA_w\\Delta T=1139\\times0.40=455.6\\ \\mathrm{m^3}\\\\\n\\gamma_w=10.25\\ \\mathrm{kN/m^3}\\\\\n\\Delta G_b=\\gamma_wA_w\\Delta T=10.25\\times455.6=4670\\ \\mathrm{kN}\n\\end{aligned}",
-              "text": "A_w\\Delta T=1139\\times0.40=455.6\\ m^3\\\\; \\gamma_w=10.25\\ kN/m^3\\\\; \\Delta G_b=\\gamma_wA_w\\Delta T=10.25\\times455.6=4670\\ kN",
+              "text": "beginaligned\nAwΔ T=1139×0.40=455.6 m³\nγw=10.25 kN/m³\nΔ Gb=γwAwΔ T=10.25×455.6=4670 kN\nendaligned",
               "number": "（6.85）"
             },
             {
@@ -4537,7 +4674,7 @@
             {
               "type": "formula",
               "latex": "\\begin{aligned}\nT_t=7.20\\ \\mathrm{m}\\\\\n\\Delta T=0.40\\ \\mathrm{m}\\\\\nT_b=T_t+\\Delta T=7.20+0.40=7.60\\ \\mathrm{m}\n\\end{aligned}",
-              "text": "Tb=7.20+0.40=7.60m",
+              "text": "beginaligned\nTₜ=7.20 m\nΔ T=0.40 m\nTb=Tₜ+Δ T=7.20+0.40=7.60 m\nendaligned",
               "number": "（6.86）"
             },
             {
@@ -4559,7 +4696,7 @@
             {
               "type": "formula",
               "latex": "\\begin{aligned}\nH_c=13.0\\ \\mathrm{m}\\\\\nT_b=7.60\\ \\mathrm{m}\\\\\nh_{fb}=H_c-T_b=13.0-7.60=5.40\\ \\mathrm{m}\n\\end{aligned}",
-              "text": "hfb=13.0-7.60=5.40m",
+              "text": "beginaligned\nHc=13.0 m\nTb=7.60 m\nhfb=Hc-Tb=13.0-7.60=5.40 m\nendaligned",
               "number": "（6.87）"
             },
             {
@@ -4575,7 +4712,7 @@
             },
             {
               "type": "table",
-              "caption": "表6-34 沉箱浮运压载计算表",
+              "caption": "表6-36 沉箱浮运压载计算表",
               "headers": [
                 "阶段",
                 "压载状态",
@@ -4634,7 +4771,7 @@
             },
             {
               "type": "table",
-              "caption": "表6-35 沉箱方案计算闭合表",
+              "caption": "表6-37 沉箱方案计算闭合表",
               "headers": [
                 "步骤",
                 "主要输入",
@@ -4699,11 +4836,11 @@
       "blocks": [
         {
           "type": "p",
-          "text": "两种方案的主要计算结果汇总见表6-36。高桩梁板式方案重点由轨道及漏斗附近纵梁、靠船横梁和前排PHC管桩控制；重力式沉箱方案重点由地基处理后的基底应力、施工偏压和浮运稳定控制。"
+          "text": "两种方案的主要计算结果汇总见表6-38。高桩梁板式方案重点由轨道及漏斗附近纵梁、靠船横梁和前排PHC管桩控制；重力式沉箱方案重点由地基处理后的基底应力、施工偏压和浮运稳定控制。"
         },
         {
           "type": "table",
-          "caption": "表6-36 两种结构方案主要计算结果汇总",
+          "caption": "表6-38 两种结构方案主要计算结果汇总",
           "headers": [
             "项目",
             "高桩梁板式方案",
@@ -4795,7 +4932,7 @@
         },
         {
           "type": "table",
-          "caption": "表6-37 荷载分解与控制构件对应表",
+          "caption": "表6-39 荷载分解与控制构件对应表",
           "headers": [
             "作用项目",
             "计算形式",
@@ -4849,7 +4986,7 @@
         },
         {
           "type": "table",
-          "caption": "表6-38 高桩梁板式控制结果复核表",
+          "caption": "表6-40 高桩梁板式控制结果复核表",
           "headers": [
             "项目",
             "采用数值",
@@ -4903,7 +5040,7 @@
         },
         {
           "type": "table",
-          "caption": "表6-39 沉箱方案控制结果复核表",
+          "caption": "表6-41 沉箱方案控制结果复核表",
           "headers": [
             "项目",
             "正常水位",

@@ -25,7 +25,7 @@
           "type": "formula",
           "number": "（3.1）",
           "latex": "\\begin{aligned}\nd=17.5\\ \\mathrm{m}\\\\\n2d=2\\times17.5=35.0\\ \\mathrm{m}\\\\\nL_b=L+2d=225+35.0=260\\ \\mathrm{m}\n\\end{aligned}",
-          "text": "d=17.5\\ m\\\\; 2d=2\\times17.5=35.0\\ m\\\\; L_b=L+2d=225+35.0=260\\ m"
+          "text": "beginaligned\nd=17.5 m\n2d=2×17.5=35.0 m\nLb=L+2d=225+35.0=260 m\nendaligned"
         },
         {
           "type": "terms",
@@ -56,7 +56,7 @@
           "type": "formula",
           "number": "（3.2）",
           "latex": "\\begin{aligned}\nZ_1+Z_2=0.10+0.20=0.30\\ \\mathrm{m}\\\\\nZ_3+Z_4=0.10+0.10=0.20\\ \\mathrm{m}\\\\\nZ=0.30+0.20=0.50\\ \\mathrm{m}\\\\\nD=T+Z=12.0+0.50=12.50\\ \\mathrm{m}\n\\end{aligned}",
-          "text": "Z_1+Z_2=0.10+0.20=0.30\\ m\\\\; Z_3+Z_4=0.10+0.10=0.20\\ m\\\\; Z=0.30+0.20=0.50\\ m\\\\; D=T+Z=12.0+0.50=12.50\\ m"
+          "text": "beginaligned\nZ₁+Z₂=0.10+0.20=0.30 m\nZ₃+Z₄=0.10+0.10=0.20 m\nZ=0.30+0.20=0.50 m\nD=T+Z=12.0+0.50=12.50 m\nendaligned"
         },
         {
           "type": "terms",
@@ -95,6 +95,60 @@
           ]
         },
         {
+          "type": "table",
+          "caption": "表3-1 泊位长度与前沿水深计算表",
+          "headers": [
+            "计算项目",
+            "取值",
+            "代入过程",
+            "采用值"
+          ],
+          "rows": [
+            [
+              "设计船长",
+              "L=225m",
+              "泊位长度按船长和两端富裕长度计算",
+              "225m"
+            ],
+            [
+              "端部富裕长度",
+              "d=17.5m",
+              "2d=2×17.5=35.0m",
+              "35.0m"
+            ],
+            [
+              "泊位长度",
+              "L_b=L+2d",
+              "225+35.0=260m",
+              "260m"
+            ],
+            [
+              "满载吃水",
+              "T=12.0m",
+              "设计船型满载控制",
+              "12.0m"
+            ],
+            [
+              "富裕水深",
+              "Z=0.50m",
+              "0.10+0.20+0.10+0.10=0.50m",
+              "0.50m"
+            ],
+            [
+              "前沿设计水深",
+              "D=T+Z",
+              "12.0+0.50=12.50m",
+              "12.50m"
+            ]
+          ],
+          "widths_in": [
+            1.25,
+            1.65,
+            1.65,
+            1.25
+          ]
+        },
+        {
           "type": "p",
           "text": "码头前沿设计水深按满载吃水、航行下沉、波浪富裕、回淤富裕和测量施工误差综合确定。计算结果为12.50m，断面图中前沿泥面线和设计底高程分别表达。"
         }
@@ -115,7 +169,7 @@
               "type": "formula",
               "number": "（3.3）",
               "latex": "\\begin{aligned}\na=1.20\\ \\mathrm{m},\\quad \\Delta h=0.49\\ \\mathrm{m}\\\\\nH_s=a+\\Delta h=1.20+0.49=1.69\\ \\mathrm{m}\\\\\nH_c=H_{dw}+H_s=1.91+1.69=3.60\\ \\mathrm{m}\n\\end{aligned}",
-              "text": "a=1.20\\ m,\\quad \\Delta h=0.49\\ m\\\\; H_s=a+\\Delta h=1.20+0.49=1.69\\ m\\\\; H_c=H_{dw+H_s=1.91+1.69=3.60\\ m"
+              "text": "beginaligned\na=1.20 m,quad Δ h=0.49 m\nHₛ=a+Δ h=1.20+0.49=1.69 m\nHc=Hdw+Hₛ=1.91+1.69=3.60 m\nendaligned"
             },
             {
               "type": "terms",
@@ -144,6 +198,54 @@
               ]
             },
             {
+              "type": "table",
+              "caption": "表3-2 码头面高程计算表",
+              "headers": [
+                "项目",
+                "取值",
+                "计算说明",
+                "结果"
+              ],
+              "rows": [
+                [
+                  "设计高水位",
+                  "H_dw=+1.91m",
+                  "采用设计水位资料",
+                  "+1.91m"
+                ],
+                [
+                  "作业安全超高",
+                  "a=1.20m",
+                  "保证码头面作业净空",
+                  "1.20m"
+                ],
+                [
+                  "波浪及作业富裕",
+                  "Δh=0.49m",
+                  "考虑波浪爬高和排水余量",
+                  "0.49m"
+                ],
+                [
+                  "高程增量",
+                  "H_s=a+Δh",
+                  "1.20+0.49=1.69m",
+                  "1.69m"
+                ],
+                [
+                  "码头面高程",
+                  "H_c=H_dw+H_s",
+                  "1.91+1.69=3.60m",
+                  "+3.60m"
+                ]
+              ],
+              "widths_in": [
+                1.25,
+                1.65,
+                1.65,
+                1.25
+              ]
+            },
+            {
               "type": "p",
               "text": "式中，Hc为码头面高程，Hdw为设计高水位，a为作业安全超高，Δh为波浪爬高或作业富裕值。综合取码头面高程为3.60m，胸墙或上部构造局部高程根据靠船构件、系船柱和设备基础再作构造调整。"
             }
@@ -160,7 +262,7 @@
               "type": "formula",
               "number": "（3.4）",
               "latex": "\\begin{aligned}\nB=32.3\\ \\mathrm{m}\\\\\n2B=2\\times32.3=64.6\\ \\mathrm{m}\\\\\nB_t=64.6\\ \\mathrm{m}\\approx65\\ \\mathrm{m}\n\\end{aligned}",
-              "text": "B=32.3\\ m\\\\; 2B=2\\times32.3=64.6\\ m\\\\; B_t=64.6\\ m\\approx65\\ m"
+              "text": "beginaligned\nB=32.3 m\n2B=2×32.3=64.6 m\nBₜ=64.6 m≈65 m\nendaligned"
             },
             {
               "type": "terms",
@@ -186,7 +288,7 @@
               "type": "formula",
               "number": "（3.5）",
               "latex": "\\begin{aligned}\nL_b=260\\ \\mathrm{m},\\quad B_t=65\\ \\mathrm{m}\\\\\nL_bB_t=260\\times65\\\\\nA_t=16900\\ \\mathrm{m^2}\n\\end{aligned}",
-              "text": "L_b=260\\ m,\\quad B_t=65\\ m\\\\; L_bB_t=260\\times65\\\\; A_t=16900\\ m^2"
+              "text": "beginaligned\nLb=260 m,quad Bₜ=65 m\nLbBₜ=260×65\nAₜ=16900 m²\nendaligned"
             },
             {
               "type": "terms",
@@ -208,6 +310,48 @@
                   "m"
                 ]
               ]
+            },
+            {
+              "type": "table",
+              "caption": "表3-3 停泊水域尺度计算表",
+              "headers": [
+                "项目",
+                "取值",
+                "代入过程",
+                "采用值"
+              ],
+              "rows": [
+                [
+                  "设计船宽",
+                  "B=32.3m",
+                  "设计船型宽度",
+                  "32.3m"
+                ],
+                [
+                  "停泊水域宽度",
+                  "B_t=2B",
+                  "2×32.3=64.6m",
+                  "65m"
+                ],
+                [
+                  "停泊水域长度",
+                  "L_b=260m",
+                  "与泊位长度一致",
+                  "260m"
+                ],
+                [
+                  "停泊水域面积",
+                  "A_t=L_bB_t",
+                  "260×65=16900m2",
+                  "16900m2"
+                ]
+              ],
+              "widths_in": [
+                1.25,
+                1.65,
+                1.65,
+                1.25
+              ]
             }
           ]
         },
@@ -222,7 +366,7 @@
               "type": "formula",
               "number": "（3.6）",
               "latex": "\\begin{aligned}\nL=225\\ \\mathrm{m}\\\\\n2L=2\\times225=450\\ \\mathrm{m}\\\\\nD_t=450\\ \\mathrm{m}\n\\end{aligned}",
-              "text": "L=225\\ m\\\\; 2L=2\\times225=450\\ m\\\\; D_t=450\\ m"
+              "text": "beginaligned\nL=225 m\n2L=2×225=450 m\nDₜ=450 m\nendaligned"
             },
             {
               "type": "terms",
@@ -248,7 +392,7 @@
               "type": "formula",
               "number": "（3.7）",
               "latex": "\\begin{aligned}\nD_t=450\\ \\mathrm{m}\\\\\nD_t^2=450^2=202500\\ \\mathrm{m^2}\\\\\n\\frac{\\pi D_t^2}{4}=\\frac{3.14\\times202500}{4}=1.59\\times10^5\\ \\mathrm{m^2}\\\\\nA_r=1.59\\times10^5\\ \\mathrm{m^2}\n\\end{aligned}",
-              "text": "D_t=450\\ m\\\\; D_t^2=450^2=202500\\ m^2\\\\; \\frac{\\pi D_t^2{4=\\frac{3.14\\times202500{4=1.59\\times10^5\\ m^2\\\\; A_r=1.59\\times10^5\\ m^2"
+              "text": "beginaligned\nDₜ=450 m\nDₜ²=450²=202500 m²\n(π Dₜ²)/(4)=(3.14×202500)/(4)=1.59×10⁵ m²\nAᵣ=1.59×10⁵ m²\nendaligned"
             },
             {
               "type": "terms",
@@ -265,6 +409,48 @@
                   "m"
                 ]
               ]
+            },
+            {
+              "type": "table",
+              "caption": "表3-4 回旋水域尺度计算表",
+              "headers": [
+                "项目",
+                "取值",
+                "代入过程",
+                "采用值"
+              ],
+              "rows": [
+                [
+                  "设计船长",
+                  "L=225m",
+                  "设计船型控制",
+                  "225m"
+                ],
+                [
+                  "回旋水域直径",
+                  "D_t=2L",
+                  "2×225=450m",
+                  "450m"
+                ],
+                [
+                  "直径平方",
+                  "D_t^2",
+                  "450^2=202500m2",
+                  "202500m2"
+                ],
+                [
+                  "回旋面积",
+                  "A_r=πD_t^2/4",
+                  "3.14×202500/4=1.59×10^5m2",
+                  "1.59×10^5m2"
+                ]
+              ],
+              "widths_in": [
+                1.25,
+                1.65,
+                1.65,
+                1.25
+              ]
             }
           ]
         },
@@ -279,7 +465,7 @@
               "type": "formula",
               "number": "（3.8）",
               "latex": "\\begin{aligned}\nB=32.3\\ \\mathrm{m},\\quad b=25\\ \\mathrm{m}\\\\\n2b=2\\times25=50\\ \\mathrm{m}\\\\\nB_c=B+2b=32.3+50=82.3\\ \\mathrm{m}\n\\end{aligned}",
-              "text": "B=32.3\\ m,\\quad b=25\\ m\\\\; 2b=2\\times25=50\\ m\\\\; B_c=B+2b=32.3+50=82.3\\ m"
+              "text": "beginaligned\nB=32.3 m,quad b=25 m\n2b=2×25=50 m\nBc=B+2b=32.3+50=82.3 m\nendaligned"
             },
             {
               "type": "terms",
@@ -310,7 +496,7 @@
               "type": "formula",
               "number": "（3.9）",
               "latex": "\\begin{aligned}\nB_c=82.3\\ \\mathrm{m}\\\\\n\\Delta B=90.0-82.3=7.7\\ \\mathrm{m}\\\\\nB_{c0}=B_c+\\Delta B=82.3+7.7=90.0\\ \\mathrm{m}\n\\end{aligned}",
-              "text": "B_c=82.3\\ m\\\\; \\Delta B=90.0-82.3=7.7\\ m\\\\; B_{c0=B_c+\\Delta B=82.3+7.7=90.0\\ m"
+              "text": "beginaligned\nBc=82.3 m\nΔ B=90.0-82.3=7.7 m\nBc₀=Bc+Δ B=82.3+7.7=90.0 m\nendaligned"
             },
             {
               "type": "terms",
@@ -327,6 +513,54 @@
                   "m"
                 ]
               ]
+            },
+            {
+              "type": "table",
+              "caption": "表3-5 航道宽度计算表",
+              "headers": [
+                "项目",
+                "取值",
+                "代入过程",
+                "采用值"
+              ],
+              "rows": [
+                [
+                  "设计船宽",
+                  "B=32.3m",
+                  "设计船型宽度",
+                  "32.3m"
+                ],
+                [
+                  "单侧富裕宽度",
+                  "b=25m",
+                  "两侧均计入",
+                  "25m"
+                ],
+                [
+                  "计算底宽",
+                  "B_c=B+2b",
+                  "32.3+2×25=82.3m",
+                  "82.3m"
+                ],
+                [
+                  "取整富裕量",
+                  "ΔB=7.7m",
+                  "90.0-82.3=7.7m",
+                  "7.7m"
+                ],
+                [
+                  "采用底宽",
+                  "B_c0=B_c+ΔB",
+                  "82.3+7.7=90.0m",
+                  "90m"
+                ]
+              ],
+              "widths_in": [
+                1.25,
+                1.65,
+                1.65,
+                1.25
+              ]
             }
           ]
         },
@@ -341,7 +575,7 @@
               "type": "formula",
               "number": "（3.10）",
               "latex": "\\begin{aligned}\nL=225\\ \\mathrm{m}\\\\\n3L=3\\times225=675\\ \\mathrm{m}\\\\\nR_a=675\\ \\mathrm{m}\\approx700\\ \\mathrm{m}\n\\end{aligned}",
-              "text": "L=225\\ m\\\\; 3L=3\\times225=675\\ m\\\\; R_a=675\\ m\\approx700\\ m"
+              "text": "beginaligned\nL=225 m\n3L=3×225=675 m\nRₐ=675 m≈700 m\nendaligned"
             },
             {
               "type": "terms",
@@ -367,7 +601,7 @@
               "type": "formula",
               "number": "（3.11）",
               "latex": "\\begin{aligned}\nR_a=700\\ \\mathrm{m}\\\\\nR_a^2=700^2=490000\\ \\mathrm{m^2}\\\\\nA_a=\\pi R_a^2=3.14\\times490000=1.54\\times10^6\\ \\mathrm{m^2}\n\\end{aligned}",
-              "text": "R_a=700\\ m\\\\; R_a^2=700^2=490000\\ m^2\\\\; A_a=\\pi R_a^2=3.14\\times490000=1.54\\times10^6\\ m^2"
+              "text": "beginaligned\nRₐ=700 m\nRₐ²=700²=490000 m²\nAₐ=π Rₐ²=3.14×490000=1.54×10⁶ m²\nendaligned"
             },
             {
               "type": "terms",
@@ -383,6 +617,48 @@
                   "单船锚泊回旋半径",
                   "m"
                 ]
+              ]
+            },
+            {
+              "type": "table",
+              "caption": "表3-6 锚地尺度计算表",
+              "headers": [
+                "项目",
+                "取值",
+                "代入过程",
+                "采用值"
+              ],
+              "rows": [
+                [
+                  "设计船长",
+                  "L=225m",
+                  "设计船型控制",
+                  "225m"
+                ],
+                [
+                  "回旋半径计算",
+                  "R_a=3L",
+                  "3×225=675m",
+                  "约700m"
+                ],
+                [
+                  "采用半径",
+                  "R_a=700m",
+                  "按计算值向上取整",
+                  "700m"
+                ],
+                [
+                  "单船锚泊面积",
+                  "A_a=πR_a^2",
+                  "3.14×700^2=1.54×10^6m2",
+                  "1.54×10^6m2"
+                ]
+              ],
+              "widths_in": [
+                1.25,
+                1.65,
+                1.65,
+                1.25
               ]
             }
           ]
@@ -429,7 +705,7 @@
             },
             {
               "type": "figure",
-              "path": "images/user_provided/panxin_20260603/fig3-1-general-layout-panxin.png",
+              "path": "images/cad_sheets_20260604/G-01_general_layout.png",
               "caption": "图3-1 煤码头总平面布置图",
               "width_in": 5.8
             }
@@ -466,7 +742,7 @@
         },
         {
           "type": "table",
-          "caption": "表3-2 总平面主要尺度计算结果",
+          "caption": "表3-7 总平面主要尺度计算结果",
           "headers": [
             "项目",
             "采用值",

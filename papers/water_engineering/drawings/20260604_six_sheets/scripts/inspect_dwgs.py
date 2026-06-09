@@ -10,7 +10,7 @@ import win32com.client
 ROOT = Path(r"\\Mac\Home\Downloads\Users\a136\vs\45425\thesis_project")
 SOURCE_DIR = ROOT / r"papers\water_engineering\drawings\20260604_six_sheets\source"
 OUTPUT_DIR = ROOT / r"papers\water_engineering\drawings\20260604_six_sheets\output"
-DWGS = list(SOURCE_DIR.glob("*.dwg")) + list(OUTPUT_DIR.glob("*.dwg"))
+DWGS = sorted(OUTPUT_DIR.glob("*.dwg"))
 OUT = ROOT / r"papers\water_engineering\drawings\20260604_six_sheets\dwg_inspection.json"
 
 
@@ -51,6 +51,7 @@ def inspect_one(app, path):
     retry(app.ActiveDocument.SetVariable, "FILEDIA", 0)
     texts = []
     dimensions = []
+    attributes = []
     counts = {}
     minp = maxp = None
     try:
@@ -90,8 +91,21 @@ def inspect_one(app, path):
                 dim_data[attr] = value
             if len(dim_data) > 1:
                 dimensions.append(dim_data)
+        if obj == "AcDbBlockReference":
+            try:
+                attrs = ent.GetAttributes()
+            except Exception:
+                attrs = []
+            for attr in attrs:
+                try:
+                    text = attr.TextString
+                    tag = attr.TagString
+                except Exception:
+                    continue
+                if str(text).strip():
+                    attributes.append({"block": getattr(ent, "Name", ""), "tag": tag, "text": text})
     retry(doc.Close, False)
-    return {"path": str(path), "extmin": minp, "extmax": maxp, "counts": counts, "texts": texts, "dimensions": dimensions}
+    return {"path": str(path), "extmin": minp, "extmax": maxp, "counts": counts, "texts": texts, "dimensions": dimensions, "attributes": attributes}
 
 
 def main():
@@ -100,7 +114,7 @@ def main():
     OUT.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
     print(str(OUT))
     for item in data:
-        print(Path(item["path"]).name, "texts", len(item["texts"]), "dims", len(item.get("dimensions", [])), "counts", item["counts"])
+        print(Path(item["path"]).name, "texts", len(item["texts"]), "dims", len(item.get("dimensions", [])), "attrs", len(item.get("attributes", [])), "counts", item["counts"])
 
 
 if __name__ == "__main__":

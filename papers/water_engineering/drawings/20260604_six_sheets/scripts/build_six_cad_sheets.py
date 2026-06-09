@@ -297,6 +297,10 @@ class Sheet:
 def replace_source_text(doc):
     repl = {
         "+4.50": "+3.60",
+        "4.50": "+3.60",
+        "4.40": "+3.56",
+        "4.00": "+3.60",
+        "2.28": "+1.91",
         "+4.00": "+3.56",
         "+3.50": "+1.91",
         "+2.20": "+0.80",
@@ -309,6 +313,7 @@ def replace_source_text(doc):
         "码头前沿高程": "码头面高程",
         "平均水位": "平均水位",
         "高桩码头": "高桩梁板式码头",
+        "门机轨道梁": "卸船机轨道梁",
         "课程名称": "工程名称",
         "汕尾电厂配套煤码头初步设计": TITLE,
         "2026.03": DATE,
@@ -320,6 +325,25 @@ def replace_source_text(doc):
             obj = ent.ObjectName
         except Exception:
             continue
+        if obj == "AcDbBlockReference":
+            try:
+                attrs = ent.GetAttributes()
+            except Exception:
+                attrs = []
+            for attr in attrs:
+                try:
+                    s = attr.TextString
+                except Exception:
+                    continue
+                ns = s
+                for a, b in repl.items():
+                    ns = ns.replace(a, b)
+                ns = ns.replace("++", "+")
+                if ns != s:
+                    try:
+                        attr.TextString = ns
+                    except Exception:
+                        pass
         if obj not in ("AcDbText", "AcDbMText"):
             continue
         try:
@@ -329,6 +353,7 @@ def replace_source_text(doc):
         ns = s
         for a, b in repl.items():
             ns = ns.replace(a, b)
+        ns = ns.replace("++", "+")
         if "图纸编号" not in ns and ns.strip() in ("2/6", "3/6"):
             # sheet number is handled by caller
             pass
@@ -351,13 +376,27 @@ def copy_modify_source(app, src_name, out_name, sheet_no, title):
         try:
             if ent.ObjectName in ("AcDbText", "AcDbMText"):
                 s = ent.TextString
-                if "图纸编号" not in s:
-                    if s.strip() in ("2/6", "3/6"):
-                        ent.TextString = f"{sheet_no}/6"
-                    if "高桩梁板式码头平面图" in s or "高桩梁板式码头断面图" in s:
-                        ent.TextString = s.replace("高桩梁板式码头平面图、立面图", title).replace("高桩梁板式码头断面图", title)
+                ns = s.replace("++", "+")
+                if "2/6" in ns or "3/6" in ns:
+                    ns = ns.replace("2/6", f"{sheet_no}/6").replace("3/6", f"{sheet_no}/6")
+                if "高桩梁板式码头平面图" in ns or "高桩梁板式码头断面图" in ns:
+                    ns = ns.replace("高桩梁板式码头平面图、立面图", title).replace("高桩梁板式码头断面图", title)
+                if ns != s:
+                    ent.TextString = ns
         except Exception:
             pass
+    try:
+        ms = doc.ModelSpace
+        if sheet_no == 2:
+            for x, y in [(72000, 19000), (52000, 7600)]:
+                e = retry(ms.AddText, "PHC管桩", pt(x, y), 420)
+                e.Layer = "TEXT"
+        if sheet_no == 3:
+            e = retry(ms.AddText, "PHC管桩", pt(31000, 11300), 430)
+            e.Layer = "TEXT"
+            retry(ms.AddLine, pt(30500, 11100), pt(28000, 7900)).Layer = "THIN"
+    except Exception:
+        pass
     retry(doc.SaveAs, str(dst))
     retry(doc.Close, False)
     return dst
@@ -385,8 +424,7 @@ def general_layout(app):
     s.rect(ox + 3000, oy + 14500, 48000, 1700, "THIN")
     s.text(ox + 27000, oy + 15050, "前沿作业带、卸船机轨道及皮带机廊道", 420, "TEXT", "C")
     # rail/berth equipment markers
-    for i in range(6):
-        x = ox + 6000 + i * 7600
+    for x in (ox + 15500, ox + 34500):
         s.rect(x, oy + 11600, 2100, 1200, "THIN")
         s.text(x + 1050, oy + 11900, "卸船机", 280, "TEXT", "C")
     s.line(ox + 3500, oy + 12550, ox + 52000, oy + 12550, "CENTER")
@@ -494,87 +532,9 @@ def caisson_section(app):
 
 def component_detail(app):
     s = Sheet(app, "S-05_典型构件尺寸图.dwg", 6, "典型构件尺寸图", "1:50")
-    s.text(15000, 51500, "纵梁、横梁及靠船构件断面图（单位：mm）", 560, "TEXT", "L")
+    from s05_components import draw_s05_components
 
-    # 1. Rail beam / longitudinal beam section, following the reference PDF style.
-    x, y = 9000, 35000
-    s.text(x + 4200, y + 11800, "轨道梁断面", 460, "TEXT", "C")
-    s.rect(x, y, 8000, 12000, "THICK")
-    # recessed rail groove, kept shallow to avoid inventing complicated rebar.
-    s.rect(x + 2500, y + 4700, 3000, 4600, "THIN")
-    s.hatch_diag_rect(x, y, 8000, 4700, 950)
-    s.hatch_diag_rect(x, y + 9300, 8000, 2700, 950)
-    s.hatch_diag_rect(x, y + 4700, 2500, 4600, 950)
-    s.hatch_diag_rect(x + 5500, y + 4700, 2500, 4600, 950)
-    s.text(x + 4000, y + 6000, "预留槽", 340, "TEXT", "C", 90)
-    s.dimh(x, y + 12000, x + 8000, "800", 1200)
-    s.dimv(x + 8300, y, y + 12000, "1200", 1200)
-    s.dimh(x + 2500, y + 4700, x + 5500, "300", 900)
-    s.dimv(x + 5600, y + 4700, y + 9300, "460", 900)
-
-    # 2. General longitudinal beam.
-    x2, y2 = 23500, 35000
-    s.text(x2 + 4000, y2 + 11800, "一般纵梁断面", 460, "TEXT", "C")
-    s.rect(x2, y2, 8000, 12000, "THICK")
-    s.hatch_diag_rect(x2, y2, 8000, 12000, 950)
-    s.dimh(x2, y2 + 12000, x2 + 8000, "800", 1200)
-    s.dimv(x2 + 8300, y2, y2 + 12000, "1200", 1200)
-
-    # 3. Inverted-T transverse beam, dimensions tied to thesis calculation b=1.8m, h=2.2m.
-    x3, y3 = 39000, 33000
-    s.text(x3 + 9000, y3 + 15000, "横梁断面", 460, "TEXT", "C")
-    t_pts = [
-        (x3, y3),
-        (x3 + 18000, y3),
-        (x3 + 18000, y3 + 6500),
-        (x3 + 13000, y3 + 6500),
-        (x3 + 13000, y3 + 22000),
-        (x3 + 5000, y3 + 22000),
-        (x3 + 5000, y3 + 6500),
-        (x3, y3 + 6500),
-    ]
-    s.poly(t_pts, True, "THICK")
-    s.hatch_diag_rect(x3, y3, 18000, 6500, 1100)
-    s.hatch_diag_rect(x3 + 5000, y3 + 6500, 8000, 15500, 1100)
-    s.dimh(x3, y3, x3 + 18000, "1800", 1200)
-    s.dimh(x3 + 5000, y3 + 22000, x3 + 13000, "800", -1100)
-    s.dimv(x3 + 18700, y3, y3 + 6500, "650", 1200)
-    s.dimv(x3 + 20500, y3 + 6500, y3 + 22000, "1550", 1200)
-    s.dimv(x3 + 22300, y3, y3 + 22000, "2200", 1200)
-
-    # 4. Berthing component section, copied in spirit from the reference figure and adjusted for this wharf.
-    bx, by = 10500, 10500
-    s.text(bx + 6200, by - 1700, "靠船构件断面", 430, "TEXT", "C")
-    kc_pts = [
-        (bx + 1250, by),
-        (bx + 2500, by),
-        (bx + 4300, by + 12250),
-        (bx + 10500, by + 12250),
-        (bx + 10500, by + 13750),
-        (bx + 5200, by + 13750),
-        (bx + 4300, by + 19000),
-        (bx + 5400, by + 19000),
-        (bx + 5400, by + 20000),
-        (bx + 4300, by + 20000),
-        (bx + 4300, by + 19000),
-        (bx + 3500, by + 19000),
-        (bx + 2000, by + 12250),
-    ]
-    s.poly(kc_pts, True, "THICK")
-    s.hatch_diag_rect(bx + 1700, by + 500, 1700, 11200, 850)
-    s.hatch_diag_rect(bx + 3150, by + 12700, 1800, 6100, 850)
-    s.hatch_diag_rect(bx + 5350, by + 12600, 4800, 1100, 850)
-    s.rect(bx + 3000, by + 19000, 1400, 900, "THIN")
-    s.dimh(bx + 5200, by + 13750, bx + 10500, "1000", -900)
-    s.dimh(bx + 1250, by, bx + 2500, "250", 1000)
-    s.dimv(bx - 700, by, by + 20000, "4000", 1200)
-    s.dimv(bx + 250, by, by + 12250, "2450", 900)
-    s.dimv(bx + 250, by + 12250, by + 13750, "300", 900)
-    s.dimv(bx + 250, by + 13750, by + 19000, "1050", 900)
-    s.dimh(bx + 4300, by + 20000, bx + 5400, "200", -850)
-    s.dimh(bx + 3500, by + 19000, bx + 4300, "150", -850)
-
-    s.mtext(53500, 19500, 16000, "说明：\\P1. 图中尺寸单位为mm。\\P2. 纵梁及轨道梁按800×1200绘制，轨道梁中部预留槽不作混凝土剖面填充。\\P3. 横梁按1800×2200控制，底部加宽段与桩帽整体连接。\\P4. 靠船构件按前沿局部受力构件绘制，护舷和系船柱连接区应按构造加强。", 380)
+    draw_s05_components(s)
     return s.save()
 
 

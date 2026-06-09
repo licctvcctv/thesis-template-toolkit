@@ -8,26 +8,26 @@
   {
     "id": "fig-3-1",
     "source_category": "user_provided",
-    "path": "images/user_provided/panxin_20260603/fig3-1-general-layout-panxin.png",
+    "path": "images/cad_sheets_20260604/G-01_general_layout.png",
     "caption": "图3-1 煤码头总平面布置图"
   },
   {
     "id": "fig-5-1",
     "source_category": "user_provided",
-    "path": "images/user_provided/panxin_20260603/fig5-1-phc-pile-cap-panxin.png",
-    "caption": "图5-1 PHC管桩与桩帽构造示意"
+    "path": "images/cad_sheets_20260604/S-01_high_pile_plan_elevation.png",
+    "caption": "图5-1 高桩梁板式码头平面及立面图"
   },
   {
     "id": "fig-5-2",
     "source_category": "user_provided",
-    "path": "images/user_provided/panxin_20260603/fig5-2-beam-sections-panxin.png",
-    "caption": "图5-2 高桩梁板式横梁、纵梁及轨道梁断面图"
+    "path": "images/cad_sheets_20260604/S-02_high_pile_section.png",
+    "caption": "图5-2 高桩梁板式码头断面图"
   },
   {
     "id": "fig-5-3",
     "source_category": "user_provided",
-    "path": "images/user_provided/detail_20260603/fig5-3-berthing-detail.png",
-    "caption": "图5-3 靠船构件、护舷及系船柱基础断面图"
+    "path": "images/cad_sheets_20260604/S-05_component_sections.png",
+    "caption": "图5-3 横梁、纵梁及靠船构件断面图"
   },
   {
     "id": "fig-6-1",
