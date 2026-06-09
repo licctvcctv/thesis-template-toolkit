@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <title id="page-title">期货智能体模拟系统</title>
+    <link rel="icon" href="data:," />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      :root {
+        color-scheme: light;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background: #f3f4f6;
+        color: #1f2937;
+        font-family: 'Inter', 'Noto Sans SC', -apple-system, sans-serif;
+      }
+      #app-shell { min-height: 100vh; }
+    </style>
+  </head>
+  <body>
+    <div id="connection-status" data-state="connecting">连接中...</div>
+    <div id="app-shell"></div>
+    <script src="main.js" type="module"></script>
+  </body>
+</html>

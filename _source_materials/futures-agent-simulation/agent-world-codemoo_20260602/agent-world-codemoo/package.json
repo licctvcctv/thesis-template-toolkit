@@ -1,0 +1,22 @@
+{
+  "name": "futures-agent-simulation",
+  "version": "0.3.0",
+  "private": true,
+  "type": "commonjs",
+  "description": "Private futures trading multi-agent simulation system with real LLM decision loops.",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "node server/index.js",
+    "test": "node --test test/localDataLoader.test.js test/simulationEngine.test.js test/server.test.js test/llmClient.test.js test/stateBroadcast.test.js test/runRecorder.test.js"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "express": "^4.19.2",
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.58.0"
+  }
+}

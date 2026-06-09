@@ -1,0 +1,28 @@
+# Node dependencies
+node_modules/
+
+# Environment variables
+.env
+
+# Optional sprite sheets are local-only. The empty manifest stays present so
+# the app can render with procedural fallback art.
+assets/pixymoon/*
+!assets/pixymoon/**/.gitkeep
+!assets/pixymoon/.gitkeep
+!assets/pixymoon/Cute RPG World/
+/assets/pixymoon/Cute\ RPG\ World/*
+!/assets/pixymoon/Cute\ RPG\ World/asset-manifest.json
+
+# Mac and editor junk
+.DS_Store
+.vscode/
+
+logs/
+output.log
+runs/
+
+# Playwright outputs
+test-results/
+playwright-report/
+
+data/repoAssignments.json

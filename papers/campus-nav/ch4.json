@@ -20,12 +20,13 @@
               "width": 148,
               "caption": "图4-1　系统登录页面"
             },
-            "主要核心代码：",
+            "登录接口的核心在于账号查询、密码哈希校验和JWT令牌签发。后端使用bcrypt.compare对明文密码和数据库中的哈希值进行比对，验证失败时统一返回401，避免泄露账号是否存在；验证通过后用jwt.sign写入用户编号、用户名和角色信息，前端据此保存登录状态并控制后续请求权限。主要代码如下。",
             {
               "type": "code",
               "language": "javascript",
               "content": "router.post('/login', async (req, res) => {\n  const { username, password } = req.body;\n  const user = db.queryOne(\n    'SELECT * FROM users WHERE username = ?', [username]);\n  if (!user) return res.status(401).json(\n    { error: '用户名或密码错误' });\n  const valid = await bcrypt.compare(password, user.password);\n  if (!valid) return res.status(401).json(\n    { error: '用户名或密码错误' });\n  const token = jwt.sign(\n    { id: user.id, username: user.username, role: user.role },\n    JWT_SECRET, { expiresIn: '7d' });\n  res.json({ token, user: { id: user.id,\n    username: user.username, role: user.role } });\n});"
-            }
+            },
+            "这段代码体现了认证模块的两个技术点：一是密码不以明文形式保存，登录时只做哈希比对；二是登录成功后返回的Token携带role字段，为管理端路由守卫和接口中间件提供权限判断依据。"
           ]
         },
         {
@@ -45,12 +46,13 @@
               "width": 148,
               "caption": "图4-3　三维视角切换工具栏"
             },
-            "主要核心代码：",
+            "三维视角切换由前端地图实例直接完成。组件内部用is3D记录当前视角状态，按钮触发后调用MapLibre GL的easeTo方法平滑调整pitch和bearing参数：pitch为60时进入三维透视视角，pitch恢复为0时回到二维平面视角。主要代码如下。",
             {
               "type": "code",
               "language": "typescript",
               "content": "function toggle3D() {\n  is3D.value = !is3D.value;\n  if (!map) return;\n  if (is3D.value) {\n    map.easeTo({ pitch: 60, bearing: -20,\n      duration: 800 });\n  } else {\n    map.easeTo({ pitch: 0, bearing: 0,\n      duration: 800 });\n  }\n}"
-            }
+            },
+            "该函数没有重新加载地图底图和兴趣点数据，只改变相机参数，因此切换过程开销较小。duration参数用于控制动画时长，能够减少视角突变带来的操作割裂感。"
           ]
         },
         {
@@ -91,12 +93,13 @@
               "width": 148,
               "caption": "图4-7　路径规划结果展示"
             },
-            "主要核心代码：",
+            "路径规划函数封装了避障路径和备用道路网络两种计算方式。前端先加载建筑物轮廓并构建可视图，在起点、终点和障碍物外扩顶点之间寻找可通行边；当可视图结果为空时，再调用Dijkstra备用算法，保证用户仍能得到一条可用路线。主要代码如下。",
             {
               "type": "code",
               "language": "typescript",
               "content": "async function planRoute(start: LngLat, end: LngLat) {\n  const buildings = await loadBuildings();\n  const vg = new VisibilityGraph(buildings);\n  const path = vg.findPath(start, end);\n  if (!path || path.length === 0) {\n    return dijkstraFallback(start, end);\n  }\n  const dist = calcTotalDistance(path);\n  const time = Math.ceil(dist / 80);\n  return { path, distance: dist, duration: time };\n}"
-            }
+            },
+            "函数返回值同时包含路径坐标、总距离和预计步行时间。距离由路径各段累加得到，时间按校园步行场景中常用的80米/分钟进行估算，结果会被地图折线图层和路径信息面板共同使用。"
           ]
         },
         {
@@ -139,12 +142,13 @@
           "number": "4.2.1",
           "content": [
             "管理员登录后进入统计仪表盘页面。页面顶部使用四个NStatistic卡片分别显示注册用户总数、兴趣点总数、导航总次数和今日导航次数，数据通过/api/admin/stats接口从后端获取。页面中部用ECharts绘制近7天导航趋势折线图和热门路线柱状图。页面底部用NDataTable展示最近20条导航日志，列包含用户名、起点、终点、距离和时间。",
-            "主要核心代码：",
+            "管理员统计接口用于支撑后台仪表盘。接口先通过adminMiddleware确认访问者具有管理员角色，再分别统计注册用户数、兴趣点数量、导航总次数，并按日期聚合最近7天的导航日志，供前端折线图展示。主要代码如下。",
             {
               "type": "code",
               "language": "javascript",
               "content": "router.get('/stats', adminMiddleware, (req, res) => {\n  const totalUsers = db.queryOne(\n    'SELECT COUNT(*) as c FROM users').c;\n  const totalPOIs = db.queryOne(\n    'SELECT COUNT(*) as c FROM pois').c;\n  const totalNav = db.queryOne(\n    'SELECT COUNT(*) as c FROM nav_logs').c;\n  const navTrend = db.queryAll(\n    'SELECT DATE(created_at) as date, COUNT(*) as count ' +\n    'FROM nav_logs WHERE created_at >= ' +\n    'DATE(\"now\", \"-7 days\") GROUP BY date ORDER BY date');\n  res.json({ totalUsers, totalPOIs, totalNav, navTrend });\n});"
-            }
+            },
+            "该接口采用聚合查询而不是把全部日志返回前端再计算，可以减少传输数据量。按DATE(created_at)分组后，前端只需要处理日期和次数两个字段，图表渲染逻辑也更简单。"
           ]
         },
         {
